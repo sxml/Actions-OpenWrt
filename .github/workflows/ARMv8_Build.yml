@@ -81,9 +81,9 @@ jobs:
         sudo xz -d Armbian*Aml*\+\.img\.xz
         sudo xz -d Armbian*Aml*\+o*
         #sudo xz -d Armbian*Beike*\+\.img\.xz
-        sudo xz -d Armbian*Beike*\+o*
+        #sudo xz -d Armbian*Beike*\+o*
         #sudo xz -d Armbian*L1*\+\.img\.xz
-        sudo xz -d Armbian*L1*\+o*
+        #sudo xz -d Armbian*L1*\+o*
         sudo mv *.img imgs
         cd /opt/openwrt
         sudo wget $(curl -s https://api.github.com/repos/HoldOnBro/Actions-OpenWrt/releases/34554768 | grep browser_download_url | cut -d '"' -f 4)
@@ -91,12 +91,13 @@ jobs:
         chmod +x $GITHUB_WORKSPACE/$Update_Ver_SH
         sudo $GITHUB_WORKSPACE/$Update_Ver_SH
         sudo ./mk_n1_opimg.sh
+        sudo ./mk_n1_opimg_sfe.sh
         sudo ./mk_s905x3_opimg.sh
-        sudo ./mk_beikeyun_opimg.sh
-        sudo ./mk_l1pro_opimg.sh
+        #sudo ./mk_beikeyun_opimg.sh
+        #sudo ./mk_l1pro_opimg.sh
         sudo ./mk_s905x3_opimg_sfe.sh
-        sudo ./mk_s922x_opimg.sh
-        sudo ./n1-to-vplus.sh
+        #sudo ./mk_s922x_opimg.sh
+        #sudo ./n1-to-vplus.sh
         sudo cp ./S-AllPackages.tar.gz ./tmp/
         echo "::set-output name=status::success"
 
@@ -107,13 +108,13 @@ jobs:
         cd /opt/openwrt/tmp/
         bzip2 *.img
         sudo rm btld-rk3328.bin
-        rename 's/Beike/S-Beike/' Beike*bz2
-        rename 's/L1/S-L1/' L1*bz2
+        #rename 's/Beike/S-Beike/' Beike*bz2
+        #rename 's/L1/S-L1/' L1*bz2
         rename 's/N1/S-N1/' N1*bz2
         rename 's/openwrt/S-openwrt/' openwrt*gz
         rename 's/S905x3/S-S905x3/' S905x3*bz2
-        rename 's/S922x/S-S922x/' S922x*bz2
-        rename 's/VPlus/S-VPlus/' VPlus*bz2
+        #rename 's/S922x/S-S922x/' S922x*bz2
+        #rename 's/VPlus/S-VPlus/' VPlus*bz2
         echo "FIRMWARE=$PWD" >> $GITHUB_ENV
         echo "::set-output name=status::success"
 
