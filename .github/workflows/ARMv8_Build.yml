@@ -2,12 +2,14 @@ name: ARMv8_Build
 
 on:
   repository_dispatch:
-#  release:
-#    types: published
+  workflow_dispatch:
+    inputs:
+      ssh:
+        description: 'SSH connection to Actions'
+        required: false
+        default: 'false'
   schedule:
-    - cron: 30 23 * * *
-  watch:
-    types: started
+    - cron: 0 16 * * *
 
 env:
   REPO_URL: https://github.com/coolsnowwolf/lede
@@ -20,7 +22,7 @@ env:
   Update_Ver_SH: aarch64/autoVersion.sh
   Get_Imgs_SH: aarch64/getImgs.sh
   DOCKER_BUILD_SH: buildImage.sh
-#   SSH_ACTIONS: false
+  SSH_ACTIONS: false
   UPLOAD_BIN_DIR: false
   UPLOAD_FIRMWARE: false
   UPLOAD_COWTRANSFER: false
