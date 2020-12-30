@@ -2,6 +2,13 @@ name: ARMv8_SFE
 
 on:
   repository_dispatch:
+#  release:
+#    types: published
+  push:
+    branches:
+      - master
+    paths:
+      - 'aarch64/ARMv8_SFE.config'
   workflow_dispatch:
     inputs:
       ssh:
