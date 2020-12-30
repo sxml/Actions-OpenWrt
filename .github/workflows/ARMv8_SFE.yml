@@ -2,11 +2,6 @@ name: ARMv8_SFE
 
 on:
   repository_dispatch:
-  push:
-    branches:
-      - master
-    paths:
-      - 'aarch64/ARMv8_SFE.config'
   workflow_dispatch:
     inputs:
       ssh:
@@ -14,7 +9,7 @@ on:
         required: false
         default: 'false'
   schedule:
-    - cron: 0 16 * * *
+    - cron: 0 16 * 11 *
 
 env:
   REPO_URL: https://github.com/coolsnowwolf/lede
@@ -26,8 +21,9 @@ env:
   MRG_ADD_SH: aarch64/ARMv8.sh
   Update_Ver_SH: aarch64/autoVersion.sh
   Get_Imgs_SH: aarch64/getImgs.sh
+  DOCKER_BUILD_SH: buildImage.sh
   SSH_ACTIONS: false
-  UPLOAD_BIN_DIR: true
+  UPLOAD_BIN_DIR: false
   UPLOAD_FIRMWARE: false
   UPLOAD_COWTRANSFER: false
   UPLOAD_WETRANSFER: false
@@ -104,7 +100,7 @@ jobs:
       env:
         TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
         TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
-        
+
     - name: Download package
       id: package
       run: |
