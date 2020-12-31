@@ -1,5 +1,13 @@
 小白 搬运 https://github.com/HoldOnBro/Actions-OpenWrt
 
+获取最新版本
+https://api.github.com/repos/nickchou/paopao/releases/latest
+
+获取版本列表
+https://api.github.com/repos/nickchou/paopao/releases
+
+nickhou：github账号，根据需要换成需要的
+paopao：github托管的repo项目名，更换为自己想要的
 
 # Actions-OpenWrt
 
