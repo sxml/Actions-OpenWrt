@@ -2,13 +2,6 @@ name: ARMv8_FOL
 
 on:
   repository_dispatch:
-#  release:
-#    types: published
-  push:
-    branches:
-      - master
-    paths:
-      - 'aarch64/ARMv8_FOL.config'
   workflow_dispatch:
     inputs:
       ssh:
