@@ -100,7 +100,6 @@ jobs:
       run: |
         cd /opt/openwrt/tmp/
         bzip2 *.img
-        sudo rm btld-rk3328.bin
         rename 's/N1/S-N1/' N1*bz2
         rename 's/openwrt/S-openwrt/' openwrt*gz
         rename 's/S905x3/S-S905x3/' S905x3*bz2
