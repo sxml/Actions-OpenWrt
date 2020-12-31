@@ -2,17 +2,18 @@ name: ARMv8_Build
 
 on:
   repository_dispatch:
-#  release:
-#    types: published
-  push:
-    branches:
-      - master
-    paths:
-      - 'aarch64/ARMv8.config'
+  workflow_dispatch:
+    inputs:
+      days:
+        description: 'Number of days.'
+        required: true
+        default: 60
+      minimum_runs:
+        description: 'The minimum runs to keep for each workflow.'
+        required: true
+        default: 6
   schedule:
-    - cron: 0 16 * * *
-  watch:
-    types: started
+    - cron: 0 22 * * *
 
 env:
   REPO_URL: https://github.com/coolsnowwolf/lede
