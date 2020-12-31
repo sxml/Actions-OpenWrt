@@ -2,14 +2,17 @@ name: ARMv8_Build
 
 on:
   repository_dispatch:
-  workflow_dispatch:
-    inputs:
-      ssh:
-        description: 'SSH connection to Actions'
-        required: false
-        default: 'false'
+#  release:
+#    types: published
+  push:
+    branches:
+      - master
+    paths:
+      - 'aarch64/ARMv8.config'
   schedule:
-    - cron: 0 16 1 * *
+    - cron: 0 16 * * *
+  watch:
+    types: started
 
 env:
   REPO_URL: https://github.com/coolsnowwolf/lede
