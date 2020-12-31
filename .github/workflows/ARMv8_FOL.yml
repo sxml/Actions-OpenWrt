@@ -62,6 +62,10 @@ jobs:
         sudo timedatectl set-timezone "$TZ"
         sudo mkdir -p /workdir
         sudo chown $USER:$GROUPS /workdir
+    
+    - name: 编译前硬盘容量
+      if: (!cancelled())
+      run: df -hT       
 
     - name: Clone source code
       working-directory: /workdir
@@ -164,6 +168,10 @@ jobs:
         echo "FIRMWARE=$PWD" >> $GITHUB_ENV
         echo "::set-output name=status::success"
 
+    - name: 编译后硬盘容量
+      if: (!cancelled())
+      run: df -hT
+      
     - name: Upload bin directory
       uses: actions/upload-artifact@master
       if: steps.compile.outputs.status == 'success' && env.UPLOAD_BIN_DIR == 'true'
