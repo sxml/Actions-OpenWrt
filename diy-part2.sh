@@ -12,7 +12,7 @@
 #sed -i 's/192.168.1.1/192.168.50.5/g' package/base-files/files/bin/config_generate
 #移除不用软件包    
 rm -rf package/lean/luci-app-dockerman
-#rm -rf package/lean/luci-app-wrtbwmon
+rm -rf package/lean/luci-app-wrtbwmon
 rm -rf package/lean/luci-theme-argon
 
 git clone https://github.com/jerrykuku/luci-app-jd-dailybonus.git package/luci-app-jd-dailybonus
