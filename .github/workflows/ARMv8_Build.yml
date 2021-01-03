@@ -97,7 +97,7 @@ jobs:
         chmod +x $GITHUB_WORKSPACE/$Update_Ver_SH
         sudo $GITHUB_WORKSPACE/$Update_Ver_SH
         sudo ./mk_n1_opimg.sh
-        #sudo ./mk_n1_opimg_sfe.sh
+        sudo ./mk_n1_opimg_sfe.sh
         sudo ./mk_s905x3_opimg.sh
         sudo ./mk_s905x3_opimg_sfe.sh
         sudo cp ./S-AllPackages.tar.gz ./tmp/
