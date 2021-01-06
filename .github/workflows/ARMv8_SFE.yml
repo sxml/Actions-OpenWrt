@@ -2,13 +2,6 @@ name: ARMv8_SFE
 
 on:
   repository_dispatch:
-#  release:
-#    types: published
-  push:
-    branches:
-      - master
-    paths:
-      - 'aarch64/ARMv8_SFE.config'
   workflow_dispatch:
     inputs:
       ssh:
@@ -28,12 +21,12 @@ env:
   MRG_ADD_SH: aarch64/ARMv8.sh
   Update_Ver_SH: aarch64/autoVersion.sh
   Get_Imgs_SH: aarch64/getImgs.sh
-  #SSH_ACTIONS: true
+  DOCKER_BUILD_SH: buildImage.sh
+#   SSH_ACTIONS: false
   UPLOAD_BIN_DIR: false
   UPLOAD_FIRMWARE: false
   UPLOAD_COWTRANSFER: false
   UPLOAD_WETRANSFER: false
-  RECENT_LASTEST: 30
   TZ: Asia/Shanghai
   FILE_NAME: Files4Build
   PRODUCT_NAME: ARMv8_SFE
@@ -62,12 +55,8 @@ jobs:
         sudo -E apt-get -qq clean
         sudo timedatectl set-timezone "$TZ"
         sudo mkdir -p /workdir
-        sudo chown $USER:$GROUPS /workdir 
+        sudo chown $USER:$GROUPS /workdir
 
-    - name: Check space usage
-      if: (!cancelled())
-      run: df -hT
-      
     - name: Clone source code
       working-directory: /workdir
       run: |
@@ -143,18 +132,12 @@ jobs:
         echo "FIRMWARE=$PWD" >> $GITHUB_ENV
         echo "::set-output name=status::success"
 
-    - name: Check space usage
-      if: (!cancelled())
-      run: df -hT
-      
     - name: Upload bin directory
       uses: actions/upload-artifact@master
       if: steps.compile.outputs.status == 'success' && env.UPLOAD_BIN_DIR == 'true'
       with:
         name: OpenWrt_bin${{ env.DEVICE_NAME }}${{ env.FILE_DATE }}
         path: openwrt/bin/targets/*/*/bin.tar.gz
-        retention-days: ${{ env.RECENT_LASTEST }}
-        if-no-files-found: ignore
 
     - name: Upload firmware directory
       uses: actions/upload-artifact@master
@@ -162,8 +145,6 @@ jobs:
       with:
         name: OpenWrt_firmware${{ env.DEVICE_NAME }}${{ env.FILE_DATE }}
         path: ${{ env.FIRMWARE }}
-        retention-days: ${{ env.RECENT_LASTEST }}
-        if-no-files-found: ignore
 
     - name: Create release
       id: release
