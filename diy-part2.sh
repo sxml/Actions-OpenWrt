@@ -34,6 +34,9 @@ svn co https://github.com/xiaorouji/openwrt-passwall/trunk/luci-app-passwall pac
 svn co https://github.com/xiaorouji/openwrt-passwall/trunk/ssocks package/ssocks
 #svn co https://github.com/xiaorouji/openwrt-passwall/trunk/xray package/xray
 
+#kcptun
+git clone https://github.com/kuoruan/luci-app-kcptun.git package/luci-app-kcptun
+
 #依IP地址限速
 svn co https://github.com/kenzok8/openwrt-packages/trunk/luci-app-eqos package/luci-app-eqos
 
