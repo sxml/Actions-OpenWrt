@@ -148,12 +148,12 @@ jobs:
         retention-days: ${{ env.RECENT_LASTEST }}
         if-no-files-found: ignore
 
-    - name: Upload firmware directory
-      uses: actions/upload-artifact@master
-      if: env.UPLOAD_FIRMWARE == 'true' && steps.organize.outputs.status == 'success' && !cancelled()
+    - name: Upload armvirt firmware directory
+      uses: actions/upload-artifact@v2
+      if: steps.organize.outputs.status == 'success' && env.UPLOAD_FIRMWARE == 'true' && !cancelled()
       with:
-        name: OpenWrt_firmware${{ env.DEVICE_NAME }}${{ env.FILE_DATE }}
-        path: ${{ env.FIRMWARE }}
+        name: openwrt_armvirt_64_${{ env.FILE_DATE }}
+        path: ${{ env.TMPFILEPATH }}
         retention-days: ${{ env.RECENT_LASTEST }}
         if-no-files-found: ignore
 
