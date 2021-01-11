@@ -11,13 +11,24 @@
 #sed -i 's/192.168.1.1/192.168.50.5/g' package/base-files/files/bin/config_generate
 #移除不用软件包
 rm -rf package/lean/luci-app-dockerman
+rm -rf package/lean/luci-app-docker
 rm -rf package/lean/luci-app-wrtbwmon
-
+rm -rf package/lean/luci-app-accesscontrol
+rm -rf package/lean/luci-app-rclone
+rm -rf package/lean/rclone-ng
+rm -rf package/lean/rclone-webui-react
+rm -rf package/lean/rclone
+rm -rf package/lean/luci-app-unblockmusic
+rm -rf package/lean/UnblockNeteaseMusic
+rm -rf package/lean/UnblockNeteaseMusicGo
+rm -rf package/lean/luci-app-vlmcsd
+rm -rf package/lean/vlmcsd
+rm -rf package/lean/luci-app-vsftpd
+rm -rf package/lean/wol
 #添加额外软件包
 #git clone https://github.com/destan19/OpenAppFilter.git package/OpenAppFilter
 
 git clone https://github.com/jerrykuku/luci-app-jd-dailybonus.git package/luci-app-jd-dailybonus
-
 # 编译 po2lmo (如果有po2lmo可跳过)
 #pushd package/luci-app-openclash/tools/po2lmo
 #make && sudo make install
@@ -38,13 +49,10 @@ svn co https://github.com/xiaorouji/openwrt-passwall/trunk/trojan-plus package/t
 svn co https://github.com/project-openwrt/openwrt/trunk/package/ctcgfw/luci-app-filebrowser package/luci-app-filebrowser
 svn co https://github.com/project-openwrt/openwrt/trunk/package/ctcgfw/filebrowser package/filebrowser
 svn co https://github.com/project-openwrt/openwrt/trunk/package/lienol/luci-app-fileassistant package/luci-app-fileassistant
-
 #kcptun
 git clone https://github.com/kuoruan/luci-app-kcptun.git package/luci-app-kcptun
-
 #依IP地址限速
 svn co https://github.com/kenzok8/openwrt-packages/trunk/luci-app-eqos package/luci-app-eqos
-
 # 流量监控
 svn co https://github.com/brvphoenix/wrtbwmon/trunk/wrtbwmon package/wrtbwmon
 git clone https://github.com/brvphoenix/luci-app-wrtbwmon
@@ -54,21 +62,17 @@ cd ..
 # themes
 svn co https://github.com/kenzok8/openwrt-packages/trunk/luci-theme-edge package/luci-theme-edge
 svn co https://github.com/rosywrt/luci-theme-rosy/trunk/luci-theme-rosy package/luci-theme-rosy
-
 #luci-app-koolddns阿里解析
 git clone https://github.com/xrouterservice/luci-app-koolddns.git package/luci-app-koolddns
 #赋予koolddns权限
 chmod 0755 package/luci-app-koolddns/root/etc/init.d/koolddns
 chmod 0755 package/luci-app-koolddns/root/usr/share/koolddns/aliddns
-
 #naiveproxy代理
 svn co https://github.com/fw876/helloworld/trunk/naiveproxy package/naiveproxy
-
 #添加smartdns
 svn co https://github.com/project-openwrt/openwrt/trunk/package/ntlf9t/smartdns package/smartdns
 svn co https://github.com/project-openwrt/openwrt/trunk/package/ntlf9t/luci-app-smartdns package/luci-app-smartdns
-
-# udp2raw
+#udp2raw
 git clone https://github.com/sxml/openwrt-udp2raw.git package/udp2raw-tunnel
 git clone https://github.com/sxml/luci-app-udp2raw.git package/luci-app-udp2raw
 
@@ -77,7 +81,6 @@ git clone https://github.com/sxml/luci-app-udp2raw.git package/luci-app-udp2raw
 
 #readd cpufreq for aarch64 cpu调频
 sed -i 's/LUCI_DEPENDS.*/LUCI_DEPENDS:=\@\(arm\|\|aarch64\)/g' package/lean/luci-app-cpufreq/Makefile
-
 #replace coremark.sh with the new one
 #rm package/lean/coremark/coremark.sh
 #cp $GITHUB_WORKSPACE/general/coremark.sh package/lean/coremark/
