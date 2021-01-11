@@ -19,10 +19,9 @@ rm -rf package/lean/luci-app-vlmcsd
 rm -rf package/lean/luci-app-vsftpd
 rm -rf package/lean/luci-app-wol
 rm -rf package/lean/luci-app-udpxy
-
 #添加额外软件包
 #git clone https://github.com/destan19/OpenAppFilter.git package/OpenAppFilter
-
+#京东签到
 git clone https://github.com/jerrykuku/luci-app-jd-dailybonus.git package/luci-app-jd-dailybonus
 
 # 编译 po2lmo (如果有po2lmo可跳过)
@@ -30,18 +29,22 @@ git clone https://github.com/jerrykuku/luci-app-jd-dailybonus.git package/luci-a
 #make && sudo make install
 #popd
 
+#ssr-plus
+svn co https://github.com/fw876/helloworld/trunk/luci-app-ssr-plus package/luci-app-ssr-plus
+#passwall
+svn co https://github.com/xiaorouji/openwrt-passwall/trunk/luci-app-passwall package/luci-app-passwall
 svn co https://github.com/xiaorouji/openwrt-passwall/trunk/brook package/brook
 svn co https://github.com/xiaorouji/openwrt-passwall/trunk/chinadns-ng package/chinadns-ng
 svn co https://github.com/xiaorouji/openwrt-passwall/trunk/tcping package/tcping
 svn co https://github.com/xiaorouji/openwrt-passwall/trunk/trojan-go package/trojan-go
 svn co https://github.com/xiaorouji/openwrt-passwall/trunk/trojan-plus package/trojan-plus
+svn co https://github.com/xiaorouji/openwrt-passwall/trunk/ssocks package/ssocks
+#svn co https://github.com/xiaorouji/openwrt-passwall/trunk/xray package/xray
+
 #luci-app-filebrowser文件助手（可在线查看路由器上的文件）
 svn co https://github.com/project-openwrt/openwrt/trunk/package/ctcgfw/luci-app-filebrowser package/luci-app-filebrowser
 svn co https://github.com/project-openwrt/openwrt/trunk/package/ctcgfw/filebrowser package/filebrowser
 svn co https://github.com/project-openwrt/openwrt/trunk/package/lienol/luci-app-fileassistant package/luci-app-fileassistant
-svn co https://github.com/xiaorouji/openwrt-passwall/trunk/luci-app-passwall package/luci-app-passwall
-svn co https://github.com/xiaorouji/openwrt-passwall/trunk/ssocks package/ssocks
-#svn co https://github.com/xiaorouji/openwrt-passwall/trunk/xray package/xray
 
 #kcptun
 git clone https://github.com/kuoruan/luci-app-kcptun.git package/luci-app-kcptun
@@ -55,6 +58,7 @@ git clone https://github.com/brvphoenix/luci-app-wrtbwmon
 cd luci-app-wrtbwmon
 git reset --hard ff7773abbf71120fc39a276393b29ba47353a7e2 && cp -r luci-app-wrtbwmon ../package/
 cd ..
+
 # themes
 svn co https://github.com/kenzok8/openwrt-packages/trunk/luci-theme-edge package/luci-theme-edge
 svn co https://github.com/rosywrt/luci-theme-rosy/trunk/luci-theme-rosy package/luci-theme-rosy
@@ -65,7 +69,6 @@ git clone https://github.com/xrouterservice/luci-app-koolddns.git package/luci-a
 chmod 0755 package/luci-app-koolddns/root/etc/init.d/koolddns
 chmod 0755 package/luci-app-koolddns/root/usr/share/koolddns/aliddns
 
-svn co https://github.com/fw876/helloworld/trunk/luci-app-ssr-plus package/luci-app-ssr-plus
 #naiveproxy代理
 svn co https://github.com/fw876/helloworld/trunk/naiveproxy package/naiveproxy
 
@@ -73,7 +76,7 @@ svn co https://github.com/fw876/helloworld/trunk/naiveproxy package/naiveproxy
 svn co https://github.com/project-openwrt/openwrt/trunk/package/ntlf9t/smartdns package/smartdns
 svn co https://github.com/project-openwrt/openwrt/trunk/package/ntlf9t/luci-app-smartdns package/luci-app-smartdns
 
-# udp2raw
+#udp2raw
 git clone https://github.com/sxml/openwrt-udp2raw.git package/udp2raw-tunnel
 git clone https://github.com/sxml/luci-app-udp2raw.git package/luci-app-udp2raw
 
