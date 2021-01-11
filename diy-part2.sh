@@ -10,7 +10,6 @@
 # Modify default IP
 #sed -i 's/192.168.1.1/192.168.50.5/g' package/base-files/files/bin/config_generate
 #移除不用软件包
-rm -rf package/lean/luci-app-dockerman
 rm -rf package/lean/luci-app-docker
 rm -rf package/lean/luci-app-wrtbwmon
 rm -rf package/lean/luci-app-accesscontrol
@@ -24,7 +23,6 @@ rm -rf package/lean/UnblockNeteaseMusicGo
 rm -rf package/lean/luci-app-vlmcsd
 rm -rf package/lean/vlmcsd
 rm -rf package/lean/luci-app-vsftpd
-rm -rf package/lean/wol
 #添加额外软件包
 #git clone https://github.com/destan19/OpenAppFilter.git package/OpenAppFilter
 
