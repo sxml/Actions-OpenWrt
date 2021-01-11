@@ -9,22 +9,9 @@
 #============================================================
 # Modify default IP
 #sed -i 's/192.168.1.1/192.168.50.5/g' package/base-files/files/bin/config_generate
-#移除不用软件包    
+#移除不用软件包
 rm -rf package/lean/luci-app-dockerman
-rm -rf package/lean/luci-app-docker
 rm -rf package/lean/luci-app-wrtbwmon
-rm -rf package/lean/luci-app-accesscontrol
-rm -rf package/lean/luci-app-rclone
-rm -rf package/lean/rclone-ng
-rm -rf package/lean/rclone-webui-react
-rm -rf package/lean/rclone
-rm -rf package/lean/luci-app-unblockmusic
-rm -rf package/lean/UnblockNeteaseMusic
-rm -rf package/lean/UnblockNeteaseMusicGo
-rm -rf package/lean/luci-app-vlmcsd
-rm -rf package/lean/vlmcsd
-rm -rf package/lean/luci-app-vsftpd
-rm -rf package/lean/wol
 
 #添加额外软件包
 #git clone https://github.com/destan19/OpenAppFilter.git package/OpenAppFilter
@@ -36,18 +23,21 @@ git clone https://github.com/jerrykuku/luci-app-jd-dailybonus.git package/luci-a
 #make && sudo make install
 #popd
 
+#SSR
+svn co https://github.com/fw876/helloworld/trunk/luci-app-ssr-plus package/luci-app-ssr-plus
+#passwall
+svn co https://github.com/xiaorouji/openwrt-passwall/trunk/luci-app-passwall package/luci-app-passwall
+svn co https://github.com/xiaorouji/openwrt-passwall/trunk/ssocks package/ssocks
 svn co https://github.com/xiaorouji/openwrt-passwall/trunk/brook package/brook
 svn co https://github.com/xiaorouji/openwrt-passwall/trunk/chinadns-ng package/chinadns-ng
 svn co https://github.com/xiaorouji/openwrt-passwall/trunk/tcping package/tcping
 svn co https://github.com/xiaorouji/openwrt-passwall/trunk/trojan-go package/trojan-go
 svn co https://github.com/xiaorouji/openwrt-passwall/trunk/trojan-plus package/trojan-plus
+#svn co https://github.com/xiaorouji/openwrt-passwall/trunk/xray package/xray
 #luci-app-filebrowser文件助手（可在线查看路由器上的文件）
 svn co https://github.com/project-openwrt/openwrt/trunk/package/ctcgfw/luci-app-filebrowser package/luci-app-filebrowser
 svn co https://github.com/project-openwrt/openwrt/trunk/package/ctcgfw/filebrowser package/filebrowser
 svn co https://github.com/project-openwrt/openwrt/trunk/package/lienol/luci-app-fileassistant package/luci-app-fileassistant
-svn co https://github.com/xiaorouji/openwrt-passwall/trunk/luci-app-passwall package/luci-app-passwall
-svn co https://github.com/xiaorouji/openwrt-passwall/trunk/ssocks package/ssocks
-#svn co https://github.com/xiaorouji/openwrt-passwall/trunk/xray package/xray
 
 #kcptun
 git clone https://github.com/kuoruan/luci-app-kcptun.git package/luci-app-kcptun
@@ -71,7 +61,6 @@ git clone https://github.com/xrouterservice/luci-app-koolddns.git package/luci-a
 chmod 0755 package/luci-app-koolddns/root/etc/init.d/koolddns
 chmod 0755 package/luci-app-koolddns/root/usr/share/koolddns/aliddns
 
-svn co https://github.com/fw876/helloworld/trunk/luci-app-ssr-plus package/luci-app-ssr-plus
 #naiveproxy代理
 svn co https://github.com/fw876/helloworld/trunk/naiveproxy package/naiveproxy
 
