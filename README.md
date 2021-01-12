@@ -9,11 +9,16 @@ ServerChan
 
 [2] releases新建 Files4Compile标签  
 上传F大Armbian 和 mk打包文件
+
 Armbian_20.10_Aml-s9xxx_buster_5.4.86-flippy-51+o.img.xz
+
 Armbian_20.10_Aml-s9xxx_buster_5.9.16-flippy-51+.img.xz
+
 mk_openwrt_src_20201231.tar.gz
 
+
 [3] 运行ARMv8_SFE.yml
+
 单击Run workflow右侧的按钮。设置SSH connection to Actions: true为使用tmate
 SSH显示Web终端地址 打开 
 按Ctrl+C 粘贴命令： cd openwrt && make menuconfig   进行个性化配置
@@ -21,13 +26,17 @@ SSH显示Web终端地址 打开
 编译完成生成标签Files4Build 打包用文件
 
 [4] 修改 ARMv8_Build.yml 第95行  Files4Build  ID  
+
 sudo wget $(curl -s https://api.github.com/repos/sxml/Actions-OpenWrt/releases/XXXXX | grep browser_download_url | cut -d '"' -f 4)
 
 获取最新版本
 https://api.github.com/repos/sxml/Actions-OpenWrt/releases/latest
+
 获取版本列表
 https://api.github.com/repos/sxml/Actions-OpenWrt/releases
+
 sxml：github账号，根据需要换成需要的
+
 Actions-OpenWrt：github托管的repo项目名，更换为自己想要的
 
 
