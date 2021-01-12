@@ -25,7 +25,8 @@ env:
   MRG_ADD_SH: aarch64/ARMv8.sh
   Update_Ver_SH: aarch64/autoVersion.sh
   Get_Imgs_SH: aarch64/getImgs.sh
-  SSH_ACTIONS: false
+
+  #SSH_ACTIONS: false
   UPLOAD_BIN_DIR: false
   UPLOAD_FIRMWARE: false
   UPLOAD_COWTRANSFER: false
@@ -42,7 +43,7 @@ jobs:
     steps:
     #- name: WeChat notification
     #  run: curl https://sc.ftqq.com/${{ secrets.ServerChan }}.send?text=${{ env.FILE_NAME }}开始编译
-      
+
     - name: Checkout
       uses: actions/checkout@master
 
@@ -65,7 +66,7 @@ jobs:
     - name: 编译前硬盘容量
       if: (!cancelled())
       run: df -hT
-      
+
     - name: Clone source code
       working-directory: /workdir
       run: |
@@ -118,7 +119,7 @@ jobs:
     - name: 编译后硬盘容量
       if: (!cancelled())
       run: df -hT
-      
+
     - name: Upload bin directory
       uses: actions/upload-artifact@master
       if: steps.compile.outputs.status == 'success' && env.UPLOAD_BIN_DIR == 'true'
@@ -136,7 +137,7 @@ jobs:
         path: ${{ env.FIRMWARE }}
         retention-days: ${{ env.RECENT_LASTEST }}
         if-no-files-found: ignore
-    
+
     - name: Create release
       id: release
       uses: ncipollo/release-action@v1
@@ -151,7 +152,7 @@ jobs:
           当前使用版本:【编译前的最后一次[➦主源码](https://github.com/coolsnowwolf/lede)更新记录】
           参见 Files4Build 内记录
         artifacts: ${{ env.FIRMWARE }}/*
-    
+
     - name: WeChat notification
       if: steps.organize.outputs.status == 'success' && !cancelled()
       run: curl https://sc.ftqq.com/${{ secrets.ServerChan }}.send?text=${{ env.PRODUCT_NAME }}打包完成
