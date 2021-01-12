@@ -2,6 +2,7 @@
 
 
 备注
+
 [1] 设置令牌 / 微信通知
 RELEASES_TOKEN
 ServerChan
