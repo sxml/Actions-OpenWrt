@@ -19,11 +19,16 @@ mk_openwrt_src_20201231.tar.gz
 
 [3] 运行ARMv8_SFE.yml
 
-单击Run workflow右侧的按钮。设置SSH connection to Actions: true为使用tmate
-SSH显示Web终端地址 打开 
+单击Run workflow右侧的按钮。设置SSH connection to Actions 为 true
+
+SSH显示Web终端地址 打开
+
 按Ctrl+C 粘贴命令： cd openwrt && make menuconfig   进行个性化配置
+
 完成后，按快捷键Ctrl+D或执行exit命令以退出，随后的编译工作将自动进行。
+
 编译完成生成标签Files4Build 打包用文件
+
 
 [4] 修改 ARMv8_Build.yml 第95行  Files4Build  ID  
 
