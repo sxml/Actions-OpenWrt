@@ -110,7 +110,7 @@ jobs:
         cd /opt/openwrt/tmp/
         bzip2 *.img
         rename 's/N1/S-N1/' N1*bz2
-        #rename 's/openwrt/S-openwrt/' openwrt*gz
+        rename 's/openwrt/S-openwrt/' openwrt*gz
         rename 's/S905x3/S-S905x3/' S905x3*bz2
         echo "FIRMWARE=$PWD" >> $GITHUB_ENV
         echo "::set-output name=status::success"
