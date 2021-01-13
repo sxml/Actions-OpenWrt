@@ -21,7 +21,7 @@ env:
   MRG_ADD_SH: aarch64/ARMv8.sh
   Update_Ver_SH: aarch64/autoVersion.sh
   Get_Imgs_SH: aarch64/getImgs.sh
-#   SSH_ACTIONS: false
+#SSH_ACTIONS: false
   UPLOAD_BIN_DIR:  false
   UPLOAD_FIRMWARE: false
   UPLOAD_COWTRANSFER: false
@@ -91,7 +91,7 @@ jobs:
         chmod +x $DIY_P2_SH
         cd openwrt
         $GITHUB_WORKSPACE/$DIY_P2_SH
-        sed -i 's/192.168.1.1/192.168.123.1/g' package/base-files/files/bin/config_generate
+        sed -i 's/192.168.1.1/192.168.2.1/g' package/base-files/files/bin/config_generate
         sed -i 's/OpenWrt/MRG AutoBuild ${{ env.DATE1 }} @ OpenWrt/g' package/lean/default-settings/files/zzz-default-settings
         
     - name: SSH connection to Actions
@@ -164,7 +164,7 @@ jobs:
         token: ${{ secrets.RELEASES_TOKEN }}
         body: |
           这是打包用，不能刷！！！
-          直刷固件参见下方tag名为ARMv8的release
+          直刷固件在release里F版S版
           当前使用版本:【编译前的最后一次[➦主源码](https://github.com/coolsnowwolf/lede)更新记录】
           ${{ env.useVersionInfo }}
         artifacts: ${{ env.FIRMWARE }}/*
