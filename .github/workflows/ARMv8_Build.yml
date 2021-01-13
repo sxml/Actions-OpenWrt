@@ -99,7 +99,7 @@ jobs:
         sudo $GITHUB_WORKSPACE/$Update_Ver_SH
         sudo ./mk_n1_opimg.sh
         #sudo ./mk_n1_opimg_sfe.sh
-        sudo ./mk_s905x3_opimg.sh
+        #sudo ./mk_s905x3_opimg.sh
         sudo ./mk_s905x3_opimg_sfe.sh
         sudo cp ./S-AllPackages.tar.gz ./tmp/
         echo "::set-output name=status::success"
@@ -149,6 +149,7 @@ jobs:
         token: ${{ secrets.RELEASES_TOKEN }}
         body: |
           默认IP：192.168.123.1 默认密码： password
+          ( F为 flowoffload加速, S为 sfe加速 )
           当前使用版本:【编译前的最后一次[➦主源码](https://github.com/coolsnowwolf/lede)更新记录】
           参见 Files4Build 内记录
         artifacts: ${{ env.FIRMWARE }}/*
