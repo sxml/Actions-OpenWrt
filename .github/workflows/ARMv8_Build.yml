@@ -33,7 +33,7 @@ env:
   UPLOAD_WETRANSFER: false
   RECENT_LASTEST: 30
   TZ: Asia/Shanghai
-  FILE_NAME: ARMv8
+  FILE_NAME: ARMv8_SFE
   PRODUCT_NAME: ARMv8_SFE
 jobs:
   build:
@@ -149,7 +149,7 @@ jobs:
         token: ${{ secrets.RELEASES_TOKEN }}
         body: |
           默认IP：192.168.123.1 默认密码： password
-          ( F为 flowoffload加速, S为 sfe加速 )
+          ( S版 sfe加速 )
           当前使用版本:【编译前的最后一次[➦主源码](https://github.com/coolsnowwolf/lede)更新记录】
           参见 Files4Build 内记录
         artifacts: ${{ env.FIRMWARE }}/*
