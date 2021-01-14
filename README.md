@@ -1,4 +1,5 @@
-![ARMv8_FOL](https://github.com/sxml/Actions-OpenWrt/workflows/ARMv8_FOL/badge.svg)
+![ARMv8_FOL](https://github.com/sxml/Actions-OpenWrt/workflows/ARMv8_FOL/badge.svg?event=workflow_dispatch)
+
 小白 搬运 https://github.com/HoldOnBro/Actions-OpenWrt
 
 
