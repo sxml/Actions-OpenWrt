@@ -1,21 +1,12 @@
 ## F大 flowoffload/sfe .config文件对比区别
-
 ## flowoffload.config
-
 2174    CONFIG_PACKAGE_kmod-ipt-offload=y
-
 2303 # CONFIG_PACKAGE_kmod-fast-classifier is not set
-
 2366 # CONFIG_PACKAGE_kmod-shortcut-fe is not set
-
 3090    CONFIG_PACKAGE_kmod-nf-flow=y
-
 4611    CONFIG_PACKAGE_luci-app-flowoffload=y
-
 4696 # CONFIG_PACKAGE_luci-app-sfe is not set
-
 4905    CONFIG_PACKAGE_luci-i18n-flowoffload-zh-cn=y
-
 5063  无
 
 
