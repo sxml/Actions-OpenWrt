@@ -1,18 +1,3 @@
-# 文件以及参数说明(自理解仅供参考)
-
-## 固件说明--只提供说明，建议自己选择好配置文件替换来编译
-
-- 设备有关参数见 public.sh 或者对应设备的 sh
-- openwrt 编译较慢，所以需要编译多设备自己根据 backups 的模板修改
-
-## 主题
-
-| 变量                                 | 名字      |
-| ----------------------------------- | --------- |
-| CONFIG_PACKAGE_luci-theme-bootstrap | bootstrap |
-| CONFIG_PACKAGE_luci-theme-material  | material  |
-| CONFIG_PACKAGE_luci-theme-netgear   | netgear   |
-| CONFIG_PACKAGE_luci-theme-argon     | argon     |
 
 ## 插件说明 CONFIG*PACKAGE*
 
