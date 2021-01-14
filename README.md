@@ -1,3 +1,4 @@
+![ARMv8_FOL](https://github.com/sxml/Actions-OpenWrt/workflows/ARMv8_FOL/badge.svg)
 小白 搬运 https://github.com/HoldOnBro/Actions-OpenWrt
 
 
