@@ -1,4 +1,4 @@
-name: ARMv8_SFE
+name: ARMv8_SFE1
 
 on:
   repository_dispatch:
