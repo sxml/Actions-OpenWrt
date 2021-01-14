@@ -1,4 +1,3 @@
-
 ##F大 flowoffload/sfe .config文件对比区别
 
 ## flowoffload.config
@@ -20,7 +19,7 @@
 4696    CONFIG_PACKAGE_luci-app-sfe=y
 4905   无
 5063    CONFIG_PACKAGE_luci-i18n-sfe-zh-cn=y
- ------------------------------------------------- -------------------------------------------------
+| ----------------------------------- | --------- |
 
 ## 插件说明 CONFIG*PACKAGE*
 
