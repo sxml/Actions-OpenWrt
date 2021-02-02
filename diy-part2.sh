@@ -19,6 +19,8 @@ git clone https://github.com/jerrykuku/luci-app-jd-dailybonus.git package/luci-a
 #make && sudo make install
 #popd
 
+#Bypass
+git clone https://github.com/garypang13/luci-app-bypass.git package/luci-app-bypass
 #SSR
 svn co https://github.com/fw876/helloworld/trunk/luci-app-ssr-plus package/luci-app-ssr-plus
 #passwall
