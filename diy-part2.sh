@@ -20,7 +20,7 @@ git clone https://github.com/jerrykuku/luci-app-jd-dailybonus.git package/luci-a
 #popd
 
 #Bypass
-git clone https://github.com/garypang13/luci-app-bypass.git package/luci-app-bypass
+svn co https://github.com/garypang13/openwrt-packages/trunk/luci-app-bypass package/luci-app-bypass
 #SSR
 svn co https://github.com/fw876/helloworld/trunk/luci-app-ssr-plus package/luci-app-ssr-plus
 #passwall
