@@ -5,11 +5,15 @@
 
 备注
 
-[1] 设置令牌 / 微信通知
+[1] 
+
+设置令牌 / 微信通知
 RELEASES_TOKEN
 ServerChan
 
-[2] releases新建 Files4Compile标签  
+[2] 
+
+releases新建 Files4Compile标签  
 上传F大Armbian 和 mk打包文件
 
 Armbian_20.10_Aml-s9xxx_buster_5.4.86-flippy-51+o.img.xz
@@ -18,8 +22,19 @@ Armbian_20.10_Aml-s9xxx_buster_5.9.16-flippy-51+.img.xz
 
 mk_openwrt_src_20201231.tar.gz
 
+[3]
 
-[3] 运行ARMv8_SFE.yml
+修改 Files4Compile ID 
+
+文件路径 aarch64/getImgs.sh
+
+#Files4CompileID获取 https://api.github.com/repos/sxml/Actions-OpenWrt/releases/latest
+
+wget $(curl -s https://api.github.com/repos/sxml/Actions-OpenWrt/releases/ xxxxx | grep browser_download_url | cut -d '"' -f 4)
+
+[4] 
+
+运行ARMv8_SFE.yml
 
 单击Run workflow右侧的按钮。设置SSH connection to Actions 为 true
 
@@ -32,7 +47,11 @@ SSH显示Web终端地址 打开
 编译完成生成标签Files4Build 打包用文件
 
 
-[4] 修改 ARMv8_Build.yml 第95行  Files4Build  ID  
+[5]
+
+修改 Files4Build  ID 
+
+ARMv8_Build.yml 第95行  
 
 sudo wget $(curl -s https://api.github.com/repos/sxml/Actions-OpenWrt/releases/XXXXX | grep browser_download_url | cut -d '"' -f 4)
 
