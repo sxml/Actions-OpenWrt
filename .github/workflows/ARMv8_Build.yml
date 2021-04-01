@@ -98,10 +98,10 @@ jobs:
         sudo $GITHUB_WORKSPACE/$Update_Ver_SH
         #sudo ./mk_s905d_n1.sh
         #sudo ./mk_s905d_n1_fol.sh
-        sudo ./mk_s905d_n1_tf.sh
+        sudo ./mk_s905d_n1_plus.sh
         #sudo ./mk_s905x3_multi.sh
         #sudo ./mk_s905x3_multi_fol.sh
-        sudo ./mk_s905x3_multi_tf.sh
+        sudo ./mk_s905x3_multi_plus.sh
         #sudo cp ./S-AllPackages.tar.gz ./tmp/
         echo "::set-output name=status::success"
 
