@@ -155,9 +155,13 @@ jobs:
           参见 Files4Build 内记录
         artifacts: ${{ env.FIRMWARE }}/*
 
-    - name: WeChat notification
-      if: steps.organize.outputs.status == 'success' && !cancelled()
-      run: curl https://sc.ftqq.com/${{ secrets.ServerChan }}.send?text=${{ env.PRODUCT_NAME }}打包完成
+    - name: Telegram notification
+      if: steps.pigz.outputs.status == 'success' && !cancelled()
+      run: curl -k --data chat_id="${{ secrets.TELEGRAM_CHAT_ID }}" --data "text=${{ env.FILE_NAME }}打包完成" "https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage"
+    
+#    - name: WeChat notification
+#      if: steps.organize.outputs.status == 'success' && !cancelled()
+#      run: curl https://sc.ftqq.com/${{ secrets.ServerChan }}.send?text=${{ env.PRODUCT_NAME }}打包完成
 
 #     - name: Upload package
 #       id: upload_package
