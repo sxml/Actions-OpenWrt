@@ -156,7 +156,7 @@ jobs:
         artifacts: ${{ env.FIRMWARE }}/*
 
     - name: Telegram notification
-      if: steps.pigz.outputs.status == 'success' && !cancelled()
+      if: steps.organize.outputs.status == 'success' && !cancelled()
       run: curl -k --data chat_id="${{ secrets.TELEGRAM_CHAT_ID }}" --data "text=${{ env.FILE_NAME }}打包完成" "https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage"
     
 #    - name: WeChat notification
