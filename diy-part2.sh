@@ -24,6 +24,8 @@ git clone https://github.com/jerrykuku/luci-app-jd-dailybonus.git package/luci-a
 #git clone https://github.com/garypang13/luci-app-bypass package/luci-app-bypass
 #SSR
 svn co https://github.com/fw876/helloworld/trunk/luci-app-ssr-plus package/luci-app-ssr-plus
+#naiveproxy代理
+svn co https://github.com/fw876/helloworld/trunk/naiveproxy package/naiveproxy
 #passwall
 svn co https://github.com/xiaorouji/openwrt-passwall/trunk/luci-app-passwall package/luci-app-passwall
 svn co https://github.com/xiaorouji/openwrt-passwall/trunk/ssocks package/ssocks
@@ -58,8 +60,6 @@ git clone https://github.com/xrouterservice/luci-app-koolddns.git package/luci-a
 #赋予koolddns权限
 chmod 0755 package/luci-app-koolddns/root/etc/init.d/koolddns
 chmod 0755 package/luci-app-koolddns/root/usr/share/koolddns/aliddns
-#naiveproxy代理
-svn co https://github.com/fw876/helloworld/trunk/naiveproxy package/naiveproxy
 #添加smartdns
 svn co https://github.com/project-openwrt/openwrt/trunk/package/ntlf9t/smartdns package/smartdns
 svn co https://github.com/project-openwrt/openwrt/trunk/package/ntlf9t/luci-app-smartdns package/luci-app-smartdns
