@@ -13,7 +13,7 @@ on:
         required: true
         default: 6
   schedule:
-    - cron: 0 22 2 * *
+    - cron: 0 22 * 11 *
 
 env:
   REPO_URL: https://github.com/coolsnowwolf/lede
@@ -25,6 +25,7 @@ env:
   MRG_ADD_SH: aarch64/ARMv8.sh
   Update_Ver_SH: aarch64/autoVersion.sh
   Get_Imgs_SH: aarch64/getImgs.sh
+
   #SSH_ACTIONS: false
   UPLOAD_BIN_DIR: false
   UPLOAD_FIRMWARE: false
@@ -32,7 +33,7 @@ env:
   UPLOAD_WETRANSFER: false
   RECENT_LASTEST: 30
   TZ: Asia/Shanghai
-  FILE_NAME: ARMv8_SFE
+  FILE_NAME: ARMv8
   PRODUCT_NAME: ARMv8_SFE
 jobs:
   build:
@@ -54,6 +55,7 @@ jobs:
         sudo -E apt-get -qq update
         sudo -E apt-get -qq install $(curl -fsSL git.io/depends-ubuntu-1804)
         sudo -E apt-get -qq install rename
+        sudo -E apt-get -qq install pigz                                
         sudo -E apt-get -qq install time
         sudo -E apt-get -qq install sshpass
         sudo -E apt-get -qq autoremove --purge
@@ -83,26 +85,22 @@ jobs:
     - name: Build firmware
       id: build
       run: |
-        cd /opt
+        sudo mkdir /opt/kernel
+        cd /opt/kernel
         chmod +x $GITHUB_WORKSPACE/$Get_Imgs_SH
         sudo $GITHUB_WORKSPACE/$Get_Imgs_SH
-        sudo tar xvzf *.tar.gz
-        sudo mkdir imgs
-        sudo xz -d Armbian*Aml*\+\.img\.xz
-        #sudo xz -d Armbian*Aml*\+o*
-        sudo mv *.img imgs
+        sudo cp mk_*.tar.gz ../ && cd ..
+        sudo tar xvzf mk_*.tar.gz
         cd /opt/openwrt
-        sudo wget $(curl -s https://api.github.com/repos/sxml/Actions-OpenWrt/releases/39397290 | grep browser_download_url | cut -d '"' -f 4)
+        sudo wget $(curl -s https://api.github.com/repos/sxml/Actions-OpenWrt/releases/36245809 | grep browser_download_url | cut -d '"' -f 4)
         sudo cp ./openwrt-armvirt-64-default-rootfs.tar.gz ./sfe-openwrt-armvirt-64-default-rootfs.tar.gz
         chmod +x $GITHUB_WORKSPACE/$Update_Ver_SH
         sudo $GITHUB_WORKSPACE/$Update_Ver_SH
-        sudo ./mk_s905d_n1.sh
-        #sudo ./mk_s905d_n1_fol.sh
-        #sudo ./mk_s905d_n1_plus.sh
-        sudo ./mk_s905x3_multi.sh
-        #sudo ./mk_s905x3_multi_fol.sh
-        #sudo ./mk_s905x3_multi_plus.sh
-        #sudo cp ./S-AllPackages.tar.gz ./tmp/
+        sudo ./mk_n1_opimg.sh
+        #sudo ./mk_n1_opimg_sfe.sh
+        sudo ./mk_s905x3_opimg.sh
+        sudo ./mk_s905x3_opimg_sfe.sh
+        sudo cp ./S-AllPackages.tar.gz ./tmp/
         echo "::set-output name=status::success"
 
     - name: Organize files
@@ -110,9 +108,9 @@ jobs:
       if: steps.build.outputs.status == 'success' && !cancelled()
       run: |
         cd /opt/openwrt/tmp/
-        bzip2 *.img
+        pigz -6 -p $(nproc) *.img
         rename 's/N1/S-N1/' N1*bz2
-        #rename 's/openwrt/S-openwrt/' openwrt*gz
+        rename 's/openwrt/S-openwrt/' openwrt*gz
         rename 's/S905x3/S-S905x3/' S905x3*bz2
         echo "FIRMWARE=$PWD" >> $GITHUB_ENV
         echo "::set-output name=status::success"
@@ -149,19 +147,14 @@ jobs:
         commit: master
         token: ${{ secrets.RELEASES_TOKEN }}
         body: |
-          默认IP：192.168.2.1 默认密码： password
-          ( S版 sfe加速 )
+          默认IP：192.168.123.1 默认密码： password
           当前使用版本:【编译前的最后一次[➦主源码](https://github.com/coolsnowwolf/lede)更新记录】
           参见 Files4Build 内记录
         artifacts: ${{ env.FIRMWARE }}/*
 
-    - name: Telegram notification
+    - name: WeChat notification
       if: steps.organize.outputs.status == 'success' && !cancelled()
-      run: curl -k --data chat_id="${{ secrets.TELEGRAM_CHAT_ID }}" --data "text=${{ env.FILE_NAME }}打包完成" "https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage"
-    
-#    - name: WeChat notification
-#      if: steps.organize.outputs.status == 'success' && !cancelled()
-#      run: curl https://sc.ftqq.com/${{ secrets.ServerChan }}.send?text=${{ env.PRODUCT_NAME }}打包完成
+      run: curl https://sc.ftqq.com/${{ secrets.ServerChan }}.send?text=${{ env.PRODUCT_NAME }}打包完成
 
 #     - name: Upload package
 #       id: upload_package
