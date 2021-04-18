@@ -164,7 +164,7 @@ jobs:
         token: ${{ secrets.RELEASES_TOKEN }}
         body: |
           打包用，不能刷！！！
-          直刷固件在release里F版S版
+          直刷固件在Release , ARMv8标签里
           当前使用版本:【编译前的最后一次[➦主源码](https://github.com/coolsnowwolf/lede)更新记录】
           ${{ env.useVersionInfo }}
         artifacts: ${{ env.FIRMWARE }}/*
