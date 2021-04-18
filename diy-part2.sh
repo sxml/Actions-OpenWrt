@@ -61,8 +61,8 @@ git clone https://github.com/xrouterservice/luci-app-koolddns.git package/luci-a
 chmod 0755 package/luci-app-koolddns/root/etc/init.d/koolddns
 chmod 0755 package/luci-app-koolddns/root/usr/share/koolddns/aliddns
 #添加smartdns
-svn co https://github.com/project-openwrt/openwrt/trunk/package/ntlf9t/smartdns package/smartdns
-svn co https://github.com/project-openwrt/openwrt/trunk/package/ntlf9t/luci-app-smartdns package/luci-app-smartdns
+svn co https://github.com/garypang13/openwrt-packages/trunk/smartdns-le package/smartdns-le
+svn co https://github.com/kenzok8/openwrt-packages/trunk/luci-app-smartdns package/luci-app-smartdns
 #udp2raw
 git clone https://github.com/sxml/openwrt-udp2raw.git package/udp2raw-tunnel
 git clone https://github.com/sxml/luci-app-udp2raw.git package/luci-app-udp2raw
