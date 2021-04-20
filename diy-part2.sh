@@ -16,8 +16,11 @@ rm -rf package/lean/luci-app-wrtbwmon
 git clone https://github.com/jerrykuku/luci-app-jd-dailybonus.git package/luci-app-jd-dailybonus
 #解析
 #git clone https://github.com/jerrykuku/lua-maxminddb.git package/lua-maxminddb
+#AdGuardHome广告过滤
+git clone https://github.com/kongfl888/luci-app-adguardhome.git package/luci-app-adguardhome
 # 编译 po2lmo (如果有po2lmo可跳过)
-##make && sudo make install
+#pushd package/luci-app-openclash/tools/po2lmo
+#make && sudo make install
 #popd
 
 #Bypass
@@ -38,10 +41,11 @@ svn co https://github.com/xiaorouji/openwrt-passwall/trunk/trojan-plus package/t
 svn co https://github.com/fw876/helloworld/trunk/xray-core package/xray-core
 svn co https://github.com/fw876/helloworld/trunk/xray-plugin package/xray-plugin
 svn co https://github.com/fw876/helloworld/trunk/shadowsocks-rust package/shadowsocks-rust
+svn co https://github.com/immortalwrt/luci/branches/openwrt-18.06/applications/luci-app-socat package/luci-app-socat
 #luci-app-filebrowser文件助手（可在线查看路由器上的文件）
-svn co https://github.com/project-openwrt/openwrt/trunk/package/ctcgfw/luci-app-filebrowser package/luci-app-filebrowser
-svn co https://github.com/project-openwrt/openwrt/trunk/package/ctcgfw/filebrowser package/filebrowser
-svn co https://github.com/project-openwrt/openwrt/trunk/package/lienol/luci-app-fileassistant package/luci-app-fileassistant
+svn co https://github.com/immortalwrt/luci/branches/openwrt-18.06/applications/luci-app-filebrowser package/luci-app-filebrowser
+svn co https://github.com/immortalwrt/packages/branches/openwrt-18.06/utils/filebrowser package/filebrowser
+svn co https://github.com/immortalwrt/luci/branches/openwrt-18.06/applications/luci-app-fileassistant package/luci-app-fileassistant
 #kcptun
 git clone https://github.com/kuoruan/luci-app-kcptun.git package/luci-app-kcptun
 #依IP地址限速
@@ -61,6 +65,8 @@ git clone https://github.com/xrouterservice/luci-app-koolddns.git package/luci-a
 chmod 0755 package/luci-app-koolddns/root/etc/init.d/koolddns
 chmod 0755 package/luci-app-koolddns/root/usr/share/koolddns/aliddns
 #添加smartdns
+#svn co https://github.com/project-openwrt/openwrt/trunk/package/ntlf9t/smartdns package/smartdns
+#svn co https://github.com/project-openwrt/openwrt/trunk/package/ntlf9t/luci-app-smartdns package/luci-app-smartdns
 svn co https://github.com/garypang13/openwrt-packages/trunk/smartdns-le package/smartdns-le
 svn co https://github.com/kenzok8/openwrt-packages/trunk/luci-app-smartdns package/luci-app-smartdns
 #udp2raw
