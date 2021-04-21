@@ -1,69 +1,109 @@
 
 
-小白 搬运 https://github.com/HoldOnBro/Actions-OpenWrt
+小白 搬运  https://github.com/HoldOnBro/Actions-OpenWrt
 
+折腾 备注
 
-备注
+【1】 生成新令牌
 
-[1] 
+1 个人中心：设置→开发人员设置→个人访问令牌→生成新令牌
 
-设置令牌 / 微信通知
-RELEASES_TOKEN
-ServerChan
+（名称：RELEASES_TOKEN，勾择：public_repo，复制RELEASES_TOKEN令牌的值）。
 
-[2] 
+Settings → Developer settings → Personal access tokens → Generate new token
+2 操作代码中心：设置→机密→新机密（名称：RELEASES_TOKEN，值：粘贴令牌的值）。
 
-releases新建 Files4Compile标签  
-上传F大Armbian 和 mk打包文件
+Settings → Secrets → New secret
 
-Armbian_20.10_Aml-s9xxx_buster_5.4.86-flippy-51+o.img.xz
+如果需要telegram，电报推送消息 设置方法
 
-Armbian_20.10_Aml-s9xxx_buster_5.9.16-flippy-51+.img.xz
+https://github.com/danshui-git/shuoming/blob/master/bot.md
 
-mk_openwrt_src_20201231.tar.gz
+.yml 文件里开启
 
-[3]
+#- name: Telegram notification
 
-修改 Files4Compile ID 
+【2】在Releases 新建标签 Files4Compile
 
-文件路径 aarch64/getImgs.sh
+手动上传 F大 打包文件
 
-#Files4CompileID获取 https://api.github.com/repos/sxml/Actions-OpenWrt/releases/latest
+新的
 
-wget $(curl -s https://api.github.com/repos/sxml/Actions-OpenWrt/releases/ xxxxx | grep browser_download_url | cut -d '"' -f 4)
+boot-5.4.113-flippy-xxx+o.tar
 
-[4] 
+boot-5.10.31-flippy-xxx+.tar
 
-运行ARMv8_SFE.yml
+dtb-allwinner-5.4.113-flippy-xxx+o.tar
 
-单击Run workflow右侧的按钮。设置SSH connection to Actions 为 true
+dtb-allwinner-5.10.31-flippy-xxx+.tar
 
-SSH显示Web终端地址 打开
+dtb-amlogic-5.4.113-flippy-xxx+o.tar
 
-按Ctrl+C 粘贴命令： cd openwrt && make menuconfig   进行个性化配置
+dtb-amlogic-5.10.31-flippy-xxx+.tar
 
-完成后，按快捷键Ctrl+D或执行exit命令以退出，随后的编译工作将自动进行。
+dtb-rockchip-5.4.113-flippy-xxx+o.tar
 
-编译完成生成标签Files4Build 打包用文件
+dtb-rockchip-5.10.31-flippy-xxx+.tar
 
+modules-5.4.113-flippy-xxx+o.tar
 
-[5]
+modules-5.10.31-flippy-xxx+.tar
 
-修改 Files4Build  ID 
+mk_openwrt_src_xxx.tar
 
-ARMv8_Build.yml 第95行  
+旧的
 
-sudo wget $(curl -s https://api.github.com/repos/sxml/Actions-OpenWrt/releases/XXXXX | grep browser_download_url | cut -d '"' -f 4)
+#1.mk_openwrt_src_xxx.tar.gz /打包工具
 
-获取最新版本
-https://api.github.com/repos/sxml/Actions-OpenWrt/releases/latest
+#2.Armbian_20.10_Aml-s9xxx_buster_5.4.83-flippy-50+o.img.xz / Armbian +o 文件
 
-获取版本列表
+#3.Armbian_20.10_Aml-s9xxx_buster_5.9.14-flippy-50+.img.xz / Armbian + 文件
+
+【3】获取 Files4Compile ID
+
+github账号 Actions-OpenWrt 项目名 sxml/Actions-OpenWrt
+
 https://api.github.com/repos/sxml/Actions-OpenWrt/releases
 
-sxml：github账号，根据需要换成需要的
+修改 aarch64/getImgs.sh
 
-Actions-OpenWrt：github托管的repo项目名，更换为自己想要的
+wget $(curl -s https://api.github.com/repos/sxml/Actions-OpenWrt/releases/39391954 | grep browser_download_url | cut -d '"' -f 4)
+
+【4】Actions 运行
+
+ARMv8_SFE.yml 编译
+
+ARMv8_FOL.yml 编译
+
+【5】获取 Files4Build ID 修改ARMv8_Build.yml
+
+https://api.github.com/repos/sxml/Actions-OpenWrt/releases
+
+修改 ARMv8_Build.yml ID
+
+sudo wget $(curl -s https://api.github.com/repos/sxml/Actions-OpenWrt/releases/39397290 | grep browser_download_url | cut -d '"' -f 4)
+
+【6】运行 ARMv8_Build.yml 打包
+
+Actions 运行 ARMv8_SFE.yml
+
+--------------------------------------------------------------------------------------
+
+SSH 连接操作
+
+Actions→ 选择xxx.yml→ 然后单击Run workflow右侧的按钮。设置SSH connection to Actions: true →点 Run workflow 运行
+
+页面运行到SSH connection to Actions 点击显示的连接 进入SSH
+
+（Web终端可能会遇到黑屏，只需按即可Ctrl+C）
+
+输入命令：cd openwrt && make menuconfig 进行个性化配置。
+
+完成后，按快捷键Ctrl+D或执行exit命令以退出，随后的编译工作将自动进行
+
+--------------------------------------------------------------------------------------
+
+云编译说明 https://github.com/danshui-git/shuoming
 
 
 =======================================================
