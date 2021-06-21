@@ -12,7 +12,7 @@
 
 #移除不用软件包
 rm -rf package/lean/luci-app-dockerman
-rm -rf package/lean/luci-app-wrtbwmon
+#rm -rf package/lean/luci-app-wrtbwmon
 
 #京东
 git clone https://github.com/jerrykuku/luci-app-jd-dailybonus.git package/luci-app-jd-dailybonus
@@ -21,7 +21,7 @@ git clone https://github.com/jerrykuku/luci-app-jd-dailybonus.git package/luci-a
 git clone https://github.com/jerrykuku/lua-maxminddb.git package/lua-maxminddb
 
 #AdGuardHome广告过滤
-git clone https://github.com/kongfl888/luci-app-adguardhome.git package/luci-app-adguardhome
+#git clone https://github.com/kongfl888/luci-app-adguardhome.git package/luci-app-adguardhome
 
 #SSR
 svn co https://github.com/fw876/helloworld/trunk/luci-app-ssr-plus package/luci-app-ssr-plus
@@ -44,38 +44,40 @@ svn co https://github.com/fw876/helloworld/trunk/v2ray-plugin package/v2ray-plug
 #svn co https://github.com/immortalwrt/luci/branches/openwrt-18.06/applications/luci-app-socat package/luci-app-socat
 
 #luci-app-filebrowser文件助手（可在线查看路由器上的文件）
-svn co https://github.com/Lienol/openwrt-package/trunk/luci-app-filebrowser package/luci-app-filebrowser
+#文件浏览器
+#svn co https://github.com/Lienol/openwrt-package/trunk/luci-app-filebrowser package/luci-app-filebrowser
+#文件助手
 svn co https://github.com/Lienol/openwrt-package/trunk/luci-app-fileassistant package/luci-app-fileassistant
 
 #kcptun
 git clone https://github.com/kuoruan/luci-app-kcptun.git package/luci-app-kcptun
 
 #依IP地址限速
-svn co https://github.com/kenzok8/openwrt-packages/trunk/luci-app-eqos package/luci-app-eqos
+#svn co https://github.com/kenzok8/openwrt-packages/trunk/luci-app-eqos package/luci-app-eqos
 
 # 流量监控
-svn co https://github.com/brvphoenix/wrtbwmon/trunk/wrtbwmon package/wrtbwmon
-git clone https://github.com/brvphoenix/luci-app-wrtbwmon
-cd luci-app-wrtbwmon
-git reset --hard ff7773abbf71120fc39a276393b29ba47353a7e2 && cp -r luci-app-wrtbwmon ../package/
-cd ..
+#svn co https://github.com/brvphoenix/wrtbwmon/trunk/wrtbwmon package/wrtbwmon
+#git clone https://github.com/brvphoenix/luci-app-wrtbwmon
+#cd luci-app-wrtbwmon
+#git reset --hard ff7773abbf71120fc39a276393b29ba47353a7e2 && cp -r luci-app-wrtbwmon ../package/
+#cd ..
 
 # themes 主题
 svn co https://github.com/rosywrt/luci-theme-rosy/trunk/luci-theme-rosy package/luci-theme-rosy
 
 #luci-app-koolddns阿里解析
-git clone https://github.com/xrouterservice/luci-app-koolddns.git package/luci-app-koolddns
+#git clone https://github.com/xrouterservice/luci-app-koolddns.git package/luci-app-koolddns
 #赋予koolddns权限
-chmod 0755 package/luci-app-koolddns/root/etc/init.d/koolddns
-chmod 0755 package/luci-app-koolddns/root/usr/share/koolddns/aliddns
+#chmod 0755 package/luci-app-koolddns/root/etc/init.d/koolddns
+#chmod 0755 package/luci-app-koolddns/root/usr/share/koolddns/aliddns
 
 #添加smartdns
 svn co https://github.com/kenzok8/openwrt-packages/trunk/smartdns package/smartdns
 svn co https://github.com/kenzok8/openwrt-packages/trunk/luci-app-smartdns package/luci-app-smartdns
 
 #udp2raw
-git clone https://github.com/sxml/openwrt-udp2raw.git package/udp2raw-tunnel
-git clone https://github.com/sxml/luci-app-udp2raw.git package/luci-app-udp2raw
+#git clone https://github.com/sxml/openwrt-udp2raw.git package/udp2raw-tunnel
+#git clone https://github.com/sxml/luci-app-udp2raw.git package/luci-app-udp2raw
 
 ./scripts/feeds update -a
 ./scripts/feeds install -a
