@@ -85,8 +85,8 @@ svn co https://github.com/kenzok8/openwrt-packages/trunk/luci-app-smartdns packa
 #readd cpufreq for aarch64 cpu调频
 sed -i 's/LUCI_DEPENDS.*/LUCI_DEPENDS:=\@\(arm\|\|aarch64\)/g' package/lean/luci-app-cpufreq/Makefile
 #replace coremark.sh with the new one
-rm package/lean/coremark/coremark.sh
-cp $GITHUB_WORKSPACE/general/coremark.sh package/lean/coremark/
+#rm package/lean/coremark/coremark.sh
+#cp $GITHUB_WORKSPACE/general/coremark.sh package/lean/coremark/
 
 
 #temp fix for dnsforwarder
