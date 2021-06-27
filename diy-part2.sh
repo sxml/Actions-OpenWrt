@@ -42,12 +42,14 @@ svn co https://github.com/fw876/helloworld/trunk/shadowsocks-rust package/shadow
 svn co https://github.com/fw876/helloworld/trunk/shadowsocksr-libev package/shadowsocksr-libev
 svn co https://github.com/fw876/helloworld/trunk/v2ray-plugin package/v2ray-plugin
 #svn co https://github.com/immortalwrt/luci/branches/openwrt-18.06/applications/luci-app-socat package/luci-app-socat
+#svn co https://github.com/immortalwrt/luci/branches/openwrt-21.02/applications/luci-app-socat package/luci-app-socat
 
 #luci-app-filebrowser文件助手（可在线查看路由器上的文件）
 #文件浏览器
 #svn co https://github.com/Lienol/openwrt-package/trunk/luci-app-filebrowser package/luci-app-filebrowser
 #文件助手
-svn co https://github.com/Lienol/openwrt-package/trunk/luci-app-fileassistant package/luci-app-fileassistant
+#svn co https://github.com/Lienol/openwrt-package/trunk/luci-app-fileassistant package/luci-app-fileassistant
+svn co https://github.com/immortalwrt/luci/branches/openwrt-21.02/applications/luci-app-fileassistant package/luci-app-fileassistant
 
 #kcptun
 git clone https://github.com/kuoruan/luci-app-kcptun.git package/luci-app-kcptun
