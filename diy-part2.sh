@@ -49,7 +49,8 @@ svn co https://github.com/fw876/helloworld/trunk/v2ray-plugin package/v2ray-plug
 #svn co https://github.com/Lienol/openwrt-package/trunk/luci-app-filebrowser package/luci-app-filebrowser
 #文件助手
 #svn co https://github.com/Lienol/openwrt-package/trunk/luci-app-fileassistant package/luci-app-fileassistant
-svn co https://github.com/immortalwrt/luci/branches/openwrt-21.02/applications/luci-app-fileassistant package/luci-app-fileassistant
+#svn co https://github.com/immortalwrt/luci/branches/openwrt-21.02/applications/luci-app-fileassistant package/luci-app-fileassistant
+svn co https://github.com/immortalwrt/luci/branches/openwrt-18.06/applications/luci-app-fileassistant package/luci-app-fileassistant
 
 #kcptun
 git clone https://github.com/kuoruan/luci-app-kcptun.git package/luci-app-kcptun
@@ -65,7 +66,7 @@ git clone https://github.com/kuoruan/luci-app-kcptun.git package/luci-app-kcptun
 #cd ..
 
 # themes 主题
-svn co https://github.com/rosywrt/luci-theme-rosy/trunk/luci-theme-rosy package/luci-theme-rosy
+#svn co https://github.com/rosywrt/luci-theme-rosy/trunk/luci-theme-rosy package/luci-theme-rosy
 
 #luci-app-koolddns阿里解析
 #git clone https://github.com/xrouterservice/luci-app-koolddns.git package/luci-app-koolddns
@@ -86,6 +87,8 @@ svn co https://github.com/kenzok8/openwrt-packages/trunk/luci-app-smartdns packa
 
 #readd cpufreq for aarch64 cpu调频
 sed -i 's/LUCI_DEPENDS.*/LUCI_DEPENDS:=\@\(arm\|\|aarch64\)/g' package/lean/luci-app-cpufreq/Makefile
+sed -i 's/services/system/g' package/lean/luci-app-cpufreq/luasrc/controller/cpufreq.lua
+#sed -i 's/LUCI_DEPENDS.*/LUCI_DEPENDS:=\@\(arm\|\|aarch64\)/g' package/lean/luci-app-cpufreq/Makefile
 #replace coremark.sh with the new one
 #rm package/lean/coremark/coremark.sh
 #cp $GITHUB_WORKSPACE/general/coremark.sh package/lean/coremark/
