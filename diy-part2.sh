@@ -12,7 +12,7 @@
 
 #移除不用软件包
 rm -rf package/lean/luci-app-dockerman
-rm -rf package/lean/luci-app-wrtbwmon
+#rm -rf package/lean/luci-app-wrtbwmon
 
 #京东
 #git clone https://github.com/jerrykuku/luci-app-jd-dailybonus.git package/luci-app-jd-dailybonus
