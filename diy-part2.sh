@@ -12,7 +12,7 @@
 
 #移除不用软件包
 rm -rf package/lean/luci-app-dockerman
-#rm -rf package/lean/luci-app-wrtbwmon
+rm -rf package/lean/luci-app-wrtbwmon
 
 #京东
 #git clone https://github.com/jerrykuku/luci-app-jd-dailybonus.git package/luci-app-jd-dailybonus
@@ -59,11 +59,11 @@ git clone https://github.com/kuoruan/luci-app-kcptun.git package/luci-app-kcptun
 #svn co https://github.com/kenzok8/openwrt-packages/trunk/luci-app-eqos package/luci-app-eqos
 
 # 流量监控
-#svn co https://github.com/brvphoenix/wrtbwmon/trunk/wrtbwmon package/wrtbwmon
-#git clone https://github.com/brvphoenix/luci-app-wrtbwmon
-#cd luci-app-wrtbwmon
-#git reset --hard ff7773abbf71120fc39a276393b29ba47353a7e2 && cp -r luci-app-wrtbwmon ../package/
-#cd ..
+svn co https://github.com/brvphoenix/wrtbwmon/trunk/wrtbwmon package/wrtbwmon
+git clone https://github.com/brvphoenix/luci-app-wrtbwmon
+cd luci-app-wrtbwmon
+git reset --hard ff7773abbf71120fc39a276393b29ba47353a7e2 && cp -r luci-app-wrtbwmon ../package/
+cd ..
 
 # themes 主题
 svn co https://github.com/rosywrt/luci-theme-rosy/trunk/luci-theme-rosy package/luci-theme-rosy
@@ -86,8 +86,6 @@ svn co https://github.com/kenzok8/openwrt-packages/trunk/luci-app-smartdns packa
 ./scripts/feeds install -a
 
 #readd cpufreq for aarch64 cpu调频
-#sed -i 's/LUCI_DEPENDS.*/LUCI_DEPENDS:=\@\(arm\|\|aarch64\)/g' package/lean/luci-app-cpufreq/Makefile
-#sed -i 's/services/system/g' package/lean/luci-app-cpufreq/luasrc/controller/cpufreq.lua
 sed -i 's/LUCI_DEPENDS.*/LUCI_DEPENDS:=\@\(arm\|\|aarch64\)/g' package/lean/luci-app-cpufreq/Makefile
 #replace coremark.sh with the new one
 #rm package/lean/coremark/coremark.sh
