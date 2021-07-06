@@ -64,10 +64,10 @@ svn co https://github.com/garypang13/openwrt-packages/trunk/smartdns-le package/
 svn co https://github.com/kenzok8/openwrt-packages/trunk/luci-app-smartdns package/luci-app-smartdns
 
 #文件助手
-#svn co https://github.com/Lienol/openwrt-package/trunk/luci-app-fileassistant package/luci-app-fileassistant
+svn co https://github.com/Lienol/openwrt-package/trunk/luci-app-fileassistant package/luci-app-fileassistant
 
 #kcptun
-git clone https://github.com/kuoruan/luci-app-kcptun.git package/luci-app-kcptun
+#git clone https://github.com/kuoruan/luci-app-kcptun.git package/luci-app-kcptun
 
 #修改makefile
 find package/*/ -maxdepth 2 -path "*/Makefile" | xargs -i sed -i 's/include\ \.\.\/\.\.\/luci\.mk/include \$(TOPDIR)\/feeds\/luci\/luci\.mk/g' {}
