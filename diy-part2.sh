@@ -68,7 +68,7 @@ svn co https://github.com/Lienol/openwrt-package/trunk/luci-app-fileassistant pa
 #svn co https://github.com/Lienol/openwrt-package/trunk/luci-app-filebrowser package/luci-app-filebrowser
 
 #kcptun
-#git clone https://github.com/kuoruan/luci-app-kcptun.git package/luci-app-kcptun
+git clone https://github.com/kuoruan/luci-app-kcptun.git package/luci-app-kcptun
 
 # themes 主题
 svn co https://github.com/solidus1983/luci-theme-opentomato/trunk/luci/themes/luci-theme-opentomato package/luci-theme-opentomato
