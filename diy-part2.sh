@@ -71,7 +71,7 @@ svn co https://github.com/Lienol/openwrt-package/trunk/luci-app-fileassistant pa
 git clone https://github.com/kuoruan/luci-app-kcptun.git package/luci-app-kcptun
 
 # themes 主题
-svn co https://github.com/solidus1983/luci-theme-opentomato/trunk/luci/themes/luci-theme-opentomato package/luci-theme-opentomato
+#svn co https://github.com/solidus1983/luci-theme-opentomato/trunk/luci/themes/luci-theme-opentomato package/luci-theme-opentomato
 svn co https://github.com/rosywrt/luci-theme-rosy/trunk/luci-theme-rosy package/luci-theme-rosy
 
 # 流量监控
