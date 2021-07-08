@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash 2021-07-06-diy-part2
 #============================================================
 # https://github.com/P3TERX/Actions-OpenWrt
 # File name: diy-part2.sh
@@ -50,8 +50,8 @@ svn co https://github.com/fw876/helloworld/trunk/naiveproxy package/naiveproxy
 #解析
 git clone https://github.com/jerrykuku/lua-maxminddb.git package/lua-maxminddb
 
-#依IP地址限速
-#svn co https://github.com/kenzok8/openwrt-packages/trunk/luci-app-eqos package/luci-app-eqos
+依IP地址限速
+svn co https://github.com/kenzok8/openwrt-packages/trunk/luci-app-eqos package/luci-app-eqos
 
 #添加smartdns
 #svn co https://github.com/kenzok8/openwrt-packages/trunk/smartdns package/smartdns
@@ -75,11 +75,11 @@ git clone https://github.com/kuoruan/luci-app-kcptun.git package/luci-app-kcptun
 svn co https://github.com/rosywrt/luci-theme-rosy/trunk/luci-theme-rosy package/luci-theme-rosy
 
 # 流量监控
-#svn co https://github.com/brvphoenix/wrtbwmon/trunk/wrtbwmon package/wrtbwmon
-#git clone https://github.com/brvphoenix/luci-app-wrtbwmon
-#cd luci-app-wrtbwmon
-#git reset --hard ff7773abbf71120fc39a276393b29ba47353a7e2 && cp -r luci-app-wrtbwmon ../package/
-#cd ..
+svn co https://github.com/brvphoenix/wrtbwmon/trunk/wrtbwmon package/wrtbwmon
+git clone https://github.com/brvphoenix/luci-app-wrtbwmon
+cd luci-app-wrtbwmon
+git reset --hard ff7773abbf71120fc39a276393b29ba47353a7e2 && cp -r luci-app-wrtbwmon ../package/
+cd ..
 
 #京东
 #git clone https://github.com/jerrykuku/luci-app-jd-dailybonus.git package/luci-app-jd-dailybonus
