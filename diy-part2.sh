@@ -48,9 +48,6 @@ svn co https://github.com/garypang13/openwrt-packages/trunk/smartdns-le package/
 #文件助手
 svn co https://github.com/Lienol/openwrt-package/trunk/luci-app-fileassistant package/luci-app-fileassistant
 
-# themes 主题
-svn co https://github.com/rosywrt/luci-theme-rosy/trunk/luci-theme-rosy package/luci-theme-rosy
-
 # 流量监控
 svn co https://github.com/brvphoenix/wrtbwmon/trunk/wrtbwmon package/wrtbwmon
 git clone https://github.com/brvphoenix/luci-app-wrtbwmon
