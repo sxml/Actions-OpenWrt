@@ -50,7 +50,7 @@ svn co https://github.com/fw876/helloworld/trunk/naiveproxy package/naiveproxy
 #解析
 git clone https://github.com/jerrykuku/lua-maxminddb.git package/lua-maxminddb
 
-依IP地址限速
+#依IP地址限速
 svn co https://github.com/kenzok8/openwrt-packages/trunk/luci-app-eqos package/luci-app-eqos
 
 #添加smartdns
