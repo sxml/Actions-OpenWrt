@@ -15,6 +15,9 @@ rm -rf package/lean/luci-app-wrtbwmon
 sed -i 's/LUCI_DEPENDS.*/LUCI_DEPENDS:=\@\(arm\|\|aarch64\)/g' package/lean/luci-app-cpufreq/Makefile
 sed -i 's/services/system/g' package/lean/luci-app-cpufreq/luasrc/controller/cpufreq.lua
 
+#kcptun
+git clone https://github.com/kuoruan/luci-app-kcptun.git package/luci-app-kcptun
+
 #SSR
 svn co https://github.com/fw876/helloworld/trunk/luci-app-ssr-plus package/luci-app-ssr-plus
 
