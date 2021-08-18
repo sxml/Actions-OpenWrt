@@ -1,11 +1,12 @@
 #!/bin/bash
 #============================================================
+# 2021-07-15
 # https://github.com/P3TERX/Actions-OpenWrt
 # File name: diy-part2.sh
 # Description: OpenWrt DIY script part 2 (After Update feeds)
 # Lisence: MIT
 # Author: P3TERX
-# Blog: https://p3terx.com
+# Blog: https://p3terx.com 
 #============================================================
 #移除不用软件包
 rm -rf package/lean/luci-app-dockerman
@@ -31,6 +32,8 @@ svn co https://github.com/fw876/helloworld/trunk/xray-plugin package/xray-plugin
 svn co https://github.com/fw876/helloworld/trunk/shadowsocks-rust package/shadowsocks-rust
 svn co https://github.com/fw876/helloworld/trunk/shadowsocksr-libev package/shadowsocksr-libev
 svn co https://github.com/fw876/helloworld/trunk/v2ray-plugin package/v2ray-plugin
+svn co https://github.com/fw876/helloworld/trunk/v2ray-core package/v2ray-core
+svn co https://github.com/xiaorouji/openwrt-passwall/trunk/hysteria package/hysteria
 
 #naiveproxy代理
 svn co https://github.com/fw876/helloworld/trunk/naiveproxy package/naiveproxy
