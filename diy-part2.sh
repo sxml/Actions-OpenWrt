@@ -51,6 +51,9 @@ svn co https://github.com/garypang13/openwrt-packages/trunk/smartdns-le package/
 #文件助手
 svn co https://github.com/Lienol/openwrt-package/trunk/luci-app-fileassistant package/luci-app-fileassistant
 
+#kcptun
+git clone https://github.com/kuoruan/luci-app-kcptun.git package/luci-app-kcptun
+
 # 流量监控
 #vn co https://github.com/brvphoenix/wrtbwmon/trunk/wrtbwmon package/wrtbwmon
 #it clone https://github.com/brvphoenix/luci-app-wrtbwmon
