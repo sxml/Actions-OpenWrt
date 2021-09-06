@@ -1,6 +1,6 @@
 #!/bin/bash
 #============================================================
-# 2021-07-15
+# 2021-09-06
 # https://github.com/P3TERX/Actions-OpenWrt
 # File name: diy-part2.sh
 # Description: OpenWrt DIY script part 2 (After Update feeds)
@@ -51,8 +51,8 @@ svn co https://github.com/garypang13/openwrt-packages/trunk/smartdns-le package/
 #文件助手
 svn co https://github.com/Lienol/openwrt-package/trunk/luci-app-fileassistant package/luci-app-fileassistant
 
-#kcptun
-git clone https://github.com/kuoruan/luci-app-kcptun.git package/luci-app-kcptun
+#京东
+git clone https://github.com/jerrykuku/luci-app-jd-dailybonus.git package/luci-app-jd-dailybonus
 
 # 流量监控
 #vn co https://github.com/brvphoenix/wrtbwmon/trunk/wrtbwmon package/wrtbwmon
