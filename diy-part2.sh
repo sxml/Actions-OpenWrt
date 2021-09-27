@@ -1,6 +1,6 @@
 #!/bin/bash
 #============================================================
-# 2021-09-06
+# 2021-09-27
 # https://github.com/P3TERX/Actions-OpenWrt
 # File name: diy-part2.sh
 # Description: OpenWrt DIY script part 2 (After Update feeds)
@@ -53,6 +53,22 @@ svn co https://github.com/Lienol/openwrt-package/trunk/luci-app-fileassistant pa
 
 #京东
 git clone https://github.com/jerrykuku/luci-app-jd-dailybonus.git package/luci-app-jd-dailybonus
+
+#添加luci-app-amlogic
+svn co https://github.com/ophub/luci-app-amlogic/trunk/luci-app-amlogic package/luci-app-amlogic
+#修改晶晨宝盒默认配置
+
+# 1.设置OpenWrt 文件的下载仓库
+sed -i "s|https.*/OpenWrt|https://github.com/sxml/Actions-OpenWrt|g" package/luci-app-amlogic/root/etc/config/amlogic
+
+# 2.设置 Releases 里 Tags 的关键字
+# sed -i "s|ARMv8|ARMv8|g" package/luci-app-amlogic/root/etc/config/amlogic
+
+# 3.设置 Releases 里 OpenWrt 文件的后缀
+sed -i "s|.img.gz|+.img.gz|g" package/luci-app-amlogic/root/etc/config/amlogic
+
+# 4.设置 OpenWrt 内核的下载路径
+sed -i "s|opt/kernel|BuildARMv8|g" package/luci-app-amlogic/root/etc/config/amlogic
 
 # 流量监控
 #vn co https://github.com/brvphoenix/wrtbwmon/trunk/wrtbwmon package/wrtbwmon
