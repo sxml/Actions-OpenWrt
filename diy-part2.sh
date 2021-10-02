@@ -36,7 +36,7 @@ svn co https://github.com/fw876/helloworld/trunk/v2ray-core package/v2ray-core
 svn co https://github.com/xiaorouji/openwrt-passwall/trunk/hysteria package/hysteria
 
 #kcptun
-git clone https://github.com/kuoruan/luci-app-kcptun.git package/luci-app-kcptun
+#git clone https://github.com/kuoruan/luci-app-kcptun.git package/luci-app-kcptun
 
 #naiveproxy代理
 svn co https://github.com/fw876/helloworld/trunk/naiveproxy package/naiveproxy
