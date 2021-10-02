@@ -103,8 +103,8 @@ jobs:
         TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
 
     - name: Upload.config
-      uses: actions/upload-artifact@v2
-      if: env.UPLOAD_CONFIG == 'true'
+      uses: actions/upload-artifact@master
+      if: steps.compile.outputs.status == 'success' && env.UPLOAD_CONFIG == 'true'
       with:
         name: .config_${{ env.DEVICE_NAME }}${{ env.FILE_DATE }}
         path: config.txt
