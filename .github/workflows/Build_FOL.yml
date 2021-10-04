@@ -1,5 +1,15 @@
-name: ARMv8_diy
+# Copyright (c) 2019-2020 P3TERX <https://p3terx.com>
+#
+# This is free software, licensed under the MIT License.
+# See /LICENSE for more information.
+#
+# https://github.com/P3TERX/Actions-OpenWrt
+# Description: Build OpenWrt using GitHub Actions
+#
+# 2021.10.05  编译op包
+#
 
+name: 编译op包-F版
 on:
   repository_dispatch:
   workflow_dispatch:
@@ -7,9 +17,11 @@ on:
       ssh:
         description: 'SSH connection to Actions'
         required: false
-        default: 'false'								  
-  schedule:
-    - cron: 0 16 1 * *
+        default: 'false'
+
+# 定时触发开始编译(把下面两个#去掉开启,时间设置请看定时编译说明)
+#  schedule:
+#   - cron: 0 16 */2 * *
 
 env:
   REPO_URL: https://github.com/coolsnowwolf/lede
@@ -19,71 +31,74 @@ env:
   DIY_P1_SH: diy-part1.sh
   DIY_P2_SH: diy-part2.sh
   MRG_ADD_SH: aarch64/ARMv8.sh
-  Update_Ver_SH: aarch64/autoVersion.sh
-  Get_Imgs_SH: aarch64/getImgs.sh
-#SSH_ACTIONS: false
+  #Update_Ver_SH: aarch64/autoVersion.sh
+  #Get_Imgs_SH: aarch64/getImgs.sh
+  #SSH_ACTIONS: false
   UPLOAD_BIN_DIR: false
   UPLOAD_FIRMWARE: false
-  UPLOAD_COWTRANSFER: false
-  UPLOAD_WETRANSFER: false
-  UPLOAD_CONFIG: true
-  RECENT_LASTEST: 10
+  UPLOAD_RELEASE: false
+  USE_CACHEWRTBUILD: true # 缓存加速
+  UPLOAD_CONFIG: false # 提取.config 开关 true
+  #RECENT_LASTEST: 10  # bin文件和固件保留天数
   TZ: Asia/Shanghai
-  FILE_NAME: Files4Build
-  PRODUCT_NAME: ARMv8_diy
+  FILE_NAME: ARMv8_OpenWrt
+  PRODUCT_NAME: Build_FOL
+
 jobs:
   build:
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-20.04
     if: github.event.repository.owner.id == github.event.sender.id
+     
+    name: 编译op包-F版
+    strategy:
+      fail-fast: false
 
     steps:
-    #- name: WeChat notification
-    #  run: curl https://sc.ftqq.com/${{ secrets.ServerChan }}.send?text=${{ env.FILE_NAME }}开始编译
-      
-    - name: Checkout
+    - name: 准备结束
       uses: actions/checkout@master
 
-    - name: Initialization environment
+    - name: 部署编译环境
       env:
         DEBIAN_FRONTEND: noninteractive
       run: |
-        sudo rm -rf /etc/apt/sources.list.d/* /usr/share/dotnet /usr/local/lib/android /opt/ghc
+        sudo rm -rf /etc/apt/sources.list.d/* /usr/share/dotnet /usr/local/lib/android /usr/lib/jvm /opt/ghc
         sudo -E apt-get -qq update
         sudo -E apt-get -qq install -y build-essential asciidoc binutils bzip2 gawk gettext git libncurses5-dev libz-dev patch python3 python2.7 unzip zlib1g-dev lib32gcc1 libc6-dev-i386 lib32stdc++6 subversion flex uglifyjs git-core gcc-multilib p7zip p7zip-full msmtp libssl-dev texinfo libglib2.0-dev xmlto qemu-utils upx libelf-dev autoconf automake libtool autopoint device-tree-compiler g++-multilib antlr3 gperf wget curl rename libpcap0.8-dev swig rsync
+        sudo -E apt-get -qq install pigz
+        sudo -E apt-get -qq install time
+        sudo -E apt-get -qq install sshpass
         sudo -E apt-get -qq autoremove --purge
         sudo -E apt-get -qq clean
         sudo timedatectl set-timezone "$TZ"
         sudo mkdir -p /workdir
         sudo chown $USER:$GROUPS /workdir
 
-    - name: Clone source code
+    - name: 下载源码
       working-directory: /workdir
       run: |
         df -hT $PWD
-        git clone --depth 1 $REPO_URL -b $REPO_BRANCH openwrt
+        git clone $REPO_URL -b $REPO_BRANCH openwrt
         ln -sf /workdir/openwrt $GITHUB_WORKSPACE/openwrt
         cd openwrt
         useVersionInfo=$(git show -s --date=short --format="Author: %an<br/>date: %cd<br/>commit: %s<br/>commit hash: %H")
         echo "useVersionInfo=$useVersionInfo" >> $GITHUB_ENV
         echo "DATE=$(date "+%Y-%m-%d %H:%M:%S")" >> $GITHUB_ENV
         echo "DATE1=$(date "+%Y-%m-%d")" >> $GITHUB_ENV
-#        echo "::set-env name=useVersionInfo::$useVersionInfo"
-#        echo "::set-env name=DATE::$(date "+%Y-%m-%d %H:%M:%S")"
 
     #- name: Load custom feeds
     #  run: |
     #    [ -e $FEEDS_CONF ] && mv $FEEDS_CONF openwrt/feeds.conf.default
     #    chmod +x $DIY_P1_SH
     #    cd openwrt
-    #    ../$DIY_P1_SH
+    #    $GITHUB_WORKSPACE/$DIY_P1_SH
 
-    - name: Update feeds
+    - name: 更新软件包
       run: cd openwrt && ./scripts/feeds update -a
 
-    - name: Install feeds
+    - name: 安装软件包
       run: cd openwrt && ./scripts/feeds install -a
 
-    - name: Load custom configuration
+    - name: 加载自定义配置
       run: |
         [ -e files ] && mv files openwrt/files
         [ -e $CONFIG_FILE ] && mv $CONFIG_FILE openwrt/.config
@@ -93,21 +108,34 @@ jobs:
         sed -i 's/192.168.1.1/192.168.2.1/g' package/base-files/files/bin/config_generate
         sed -i 's/OpenWrt/MRG AutoBuild ${{ env.DATE1 }} @ OpenWrt/g' package/lean/default-settings/files/zzz-default-settings
 
-    - name: SSH connection to Actions
+    - name: 缓存加速(7天内对应源码相同机型二次编译有效，每次只保留一个源码的缓存)
+      if: env.USE_CACHEWRTBUILD == 'true'
+      uses: klever1988/cachewrtbuild@test
+      with:
+        ccache: 'true'
+        prefix: ${{ github.workspace }}/openwrt
+        
+    - name: SSH远程连接（配置固件）
       uses: P3TERX/ssh2actions@v1.0.0
       if: (github.event.inputs.ssh == 'true' && github.event.inputs.ssh  != 'false') || contains(github.event.action, 'ssh')
       env:
         TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
         TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
 
-    - name: Upload.config
+    - name: 生成.config配置文件
+      run: |
+        cd openwrt
+        make defconfig
+        ./scripts/diffconfig.sh > ${GITHUB_WORKSPACE}/config.txt
+    
+    - name: 上传.config配置文件
       uses: actions/upload-artifact@master
       if: env.UPLOAD_CONFIG == 'true'
       with:
         name: .config_${{ env.DEVICE_NAME }}${{ env.FILE_DATE }}
         path: config.txt
-
-    - name: Download package
+        
+    - name: 下载软件包
       id: package
       run: |
         cd openwrt
@@ -116,7 +144,7 @@ jobs:
         find dl -size -1024c -exec ls -l {} \;
         find dl -size -1024c -exec rm -f {} \;
 
-    - name: Compile the firmware
+    - name: 编译固件
       id: compile
       run: |
         cd openwrt
@@ -128,8 +156,8 @@ jobs:
         echo "FILE_DATE=_$(date +"%Y%m%d%H%M")" >> $GITHUB_ENV
         echo "DATE_YMD=_$(date +"%Y%m%d")" >> $GITHUB_ENV
         echo "::set-output name=status::success"
-
-    - name: Organize files
+        
+    - name: 整理固件文件夹
       id: organize
       if: steps.compile.outputs.status == 'success' && !cancelled()
       run: |
@@ -138,29 +166,34 @@ jobs:
         cp F-AllPackages.tar.gz $GITHUB_WORKSPACE/openwrt/bin/targets/*/*
         cd $GITHUB_WORKSPACE/openwrt/bin/targets/*/*
         rename 's/openwrt/F-openwrt/' openwrt*gz
-        rm -rf packages sha256sums feeds.buildinfo openwrt-armvirt-64-default.manifest openwrt-armvirt-64-Image openwrt-armvirt-64-rootfs-ext4.img version.buildinfo
-        echo "FIRMWARE=$PWD" >> $GITHUB_ENV
+        rm -rf packages sha256sums config.buildinfo feeds.buildinfo openwrt-armvirt-64-default.manifest openwrt-armvirt-64-Image openwrt-armvirt-64-rootfs-ext4.img version.buildinfo
+        echo "FIRMWARE=$PWD" >> $GITHUB_ENV   
         echo "::set-output name=status::success"
+# config.buildinfo feeds.buildinfo 去除掉就能上传到标签页里       
 
-    - name: Upload bin directory
+    - name: 检查空间使用情况
+      if: (!cancelled())
+      run: df -hT
+      
+    - name: 上传bin文件夹
       uses: actions/upload-artifact@master
       if: steps.compile.outputs.status == 'success' && env.UPLOAD_BIN_DIR == 'true'
       with:
         name: OpenWrt_bin${{ env.DEVICE_NAME }}${{ env.FILE_DATE }}
         path: openwrt/bin/targets/*/*/bin.tar.gz
-        retention-days: ${{ env.RECENT_LASTEST }}
-        if-no-files-found: ignore
-
-    - name: Upload firmware directory
+    #    retention-days: ${{ env.RECENT_LASTEST }}
+    #    if-no-files-found: ignore
+        
+    - name: 上传固件
       uses: actions/upload-artifact@master
       if: env.UPLOAD_FIRMWARE == 'true' && steps.organize.outputs.status == 'success' && !cancelled()
       with:
         name: OpenWrt_firmware${{ env.DEVICE_NAME }}${{ env.FILE_DATE }}
         path: ${{ env.FIRMWARE }}
-        retention-days: ${{ env.RECENT_LASTEST }}
-        if-no-files-found: ignore
-
-    - name: Create release
+    #    retention-days: ${{ env.RECENT_LASTEST }}
+    #    if-no-files-found: ignore
+        
+    - name: 固件发布信息
       id: release
       uses: ncipollo/release-action@v1
       with:
@@ -170,29 +203,26 @@ jobs:
         commit: master
         token: ${{ secrets.RELEASES_TOKEN }}
         body: |
-          打包用，不能刷！！！
+          编译Lede大op固件，Flippy打包用，不能直刷！！！
           当前使用版本:【编译前的最后一次[➦主源码](https://github.com/coolsnowwolf/lede)更新记录】
           ${{ env.useVersionInfo }}
         artifacts: ${{ env.FIRMWARE }}/*
-    
-    - name: Telegram notification
-      if: steps.organize.outputs.status == 'success' && !cancelled()
-      run: curl -k --data chat_id="${{ secrets.TELEGRAM_CHAT_ID }}" --data "text=${{ env.FILE_NAME }}编译完成" "https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage"
-    
-#    - name: WeChat notification
-#      if: steps.organize.outputs.status == 'success' && !cancelled()
-#      run: curl https://sc.ftqq.com/${{ secrets.ServerChan }}.send?text=${{ env.PRODUCT_NAME }}打包完成
 
-    - name: Upload firmware to cowtransfer
-      if: steps.organize.outputs.status == 'success' && env.UPLOAD_COWTRANSFER == 'true' && !cancelled()
-      run: |
-        curl -fsSL git.io/file-transfer | sh
-        ./transfer cow --block 2621440 -s -p 64 --no-progress ${FIRMWARE} 2>&1 | tee cowtransfer.log
-        echo "::warning file=cowtransfer.com::$(cat cowtransfer.log | grep https)"
+    #- name: 删除工作流运行
+    #  uses: GitRML/delete-workflow-runs@master
+    #  with:
+    #    retain_days: 1
+    #    keep_minimum_runs: 3
 
-    - name: Upload firmware to WeTransfer
-      if: steps.organize.outputs.status == 'success' && env.UPLOAD_WETRANSFER == 'true' && !cancelled()
-      run: |
-        curl -fsSL git.io/file-transfer | sh
-        ./transfer wet -s -p 16 --no-progress ${FIRMWARE} 2>&1 | tee wetransfer.log
-        echo "::warning file=wetransfer.com::$(cat wetransfer.log | grep https)"
+    #- name: 删除旧版本
+    #  uses: dev-drprasad/delete-older-releases@v0.1.0
+    #  if: env.UPLOAD_RELEASE == 'true' && !cancelled()
+    #  with:
+    #    keep_latest: 3
+    #    delete_tags: true
+    #  env:
+    #    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    #- name: 电报机器人信息通知
+    #  if: steps.organize.outputs.status == 'success' && !cancelled()
+    #  run: curl -k --data chat_id="${{ secrets.TELEGRAM_CHAT_ID }}" --data "text=${{ env.FILE_NAME }}编译完成" "https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage"
