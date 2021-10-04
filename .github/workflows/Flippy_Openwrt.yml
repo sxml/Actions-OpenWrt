@@ -161,9 +161,9 @@ jobs:
           参见 Files4Build 内记录
         artifacts: ${{ env.FIRMWARE }}/*
 
-#    - name: 电报机器人信息通知
-#      if: steps.organize.outputs.status == 'success' && !cancelled()
-#      run: curl -k --data chat_id="${{ secrets.TELEGRAM_CHAT_ID }}" --data "text=${{ env.FILE_NAME }}打包完成" "https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage"
+    - name: 电报机器人信息通知
+      if: steps.organize.outputs.status == 'success' && !cancelled()
+      run: curl -k --data chat_id="${{ secrets.TELEGRAM_CHAT_ID }}" --data "text=${{ env.FILE_NAME }}打包完成" "https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage"
 
 #    - name: 上传固件到 cowtransfer
 #      if: steps.organize.outputs.status == 'success' && env.UPLOAD_COWTRANSFER == 'true' && !cancelled()
