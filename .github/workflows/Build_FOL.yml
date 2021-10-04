@@ -223,6 +223,6 @@ jobs:
     #  env:
     #    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-    #- name: 电报机器人信息通知
-    #  if: steps.organize.outputs.status == 'success' && !cancelled()
-    #  run: curl -k --data chat_id="${{ secrets.TELEGRAM_CHAT_ID }}" --data "text=${{ env.FILE_NAME }}编译完成" "https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage"
+    - name: 电报机器人信息通知
+      if: steps.organize.outputs.status == 'success' && !cancelled()
+      run: curl -k --data chat_id="${{ secrets.TELEGRAM_CHAT_ID }}" --data "text=${{ env.FILE_NAME }}编译完成" "https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage"
