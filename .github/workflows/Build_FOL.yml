@@ -41,7 +41,7 @@ env:
   UPLOAD_CONFIG: false # 提取.config 开关 true
   #RECENT_LASTEST: 10  # bin文件和固件保留天数
   TZ: Asia/Shanghai
-  FILE_NAME: ARMv8_OpenWrt
+  FILE_NAME: Files4Build
   PRODUCT_NAME: Build_FOL
 
 jobs:
@@ -223,6 +223,6 @@ jobs:
     #  env:
     #    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-    - name: 电报机器人信息通知
-      if: steps.organize.outputs.status == 'success' && !cancelled()
-      run: curl -k --data chat_id="${{ secrets.TELEGRAM_CHAT_ID }}" --data "text=${{ env.FILE_NAME }}编译完成" "https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage"
+    #- name: 电报机器人信息通知
+    #  if: steps.organize.outputs.status == 'success' && !cancelled()
+    #  run: curl -k --data chat_id="${{ secrets.TELEGRAM_CHAT_ID }}" --data "text=${{ env.FILE_NAME }}编译完成" "https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage"
