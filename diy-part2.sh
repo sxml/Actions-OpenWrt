@@ -1,6 +1,6 @@
 #!/bin/bash
 #============================================================
-# 2021-09-27
+# 2021-10-05
 # https://github.com/P3TERX/Actions-OpenWrt
 # File name: diy-part2.sh
 # Description: OpenWrt DIY script part 2 (After Update feeds)
@@ -12,6 +12,9 @@
 rm -rf package/lean/luci-app-dockerman
 rm -rf package/lean/luci-app-wrtbwmon
 
+# 编译缺少upx依赖 添加这看看
+git clone https://github.com/kuoruan/openwrt-upx.git package/openwrt-upx
+
 #readd cpufreq for aarch64 cpu调频
 sed -i 's/LUCI_DEPENDS.*/LUCI_DEPENDS:=\@\(arm\|\|aarch64\)/g' package/lean/luci-app-cpufreq/Makefile
 sed -i 's/services/system/g' package/lean/luci-app-cpufreq/luasrc/controller/cpufreq.lua
@@ -20,23 +23,20 @@ sed -i 's/services/system/g' package/lean/luci-app-cpufreq/luasrc/controller/cpu
 svn co https://github.com/fw876/helloworld/trunk/luci-app-ssr-plus package/luci-app-ssr-plus
 
 #passwall
-svn co https://github.com/281677160/openwrt-passwall/trunk/luci-app-passwall package/luci-app-passwall
-svn co https://github.com/281677160/openwrt-passwall/trunk/ssocks package/ssocks
-svn co https://github.com/281677160/openwrt-passwall/trunk/brook package/brook
-svn co https://github.com/281677160/openwrt-passwall/trunk/chinadns-ng package/chinadns-ng
-svn co https://github.com/281677160/openwrt-passwall/trunk/tcping package/tcping
-svn co https://github.com/281677160/openwrt-passwall/trunk/trojan-go package/trojan-go
-svn co https://github.com/281677160/openwrt-passwall/trunk/trojan-plus package/trojan-plus
-svn co https://github.com/281677160/openwrt-passwall/trunk/xray-core package/xray-core
-svn co https://github.com/281677160/openwrt-passwall/trunk/xray-plugin package/xray-plugin
-svn co https://github.com/281677160/openwrt-passwall/trunk/shadowsocks-rust package/shadowsocks-rust
+svn co https://github.com/xiaorouji/openwrt-passwall/trunk/luci-app-passwall package/luci-app-passwall
+svn co https://github.com/xiaorouji/openwrt-passwall/trunk/ssocks package/ssocks
+svn co https://github.com/xiaorouji/openwrt-passwall/trunk/brook package/brook
+svn co https://github.com/xiaorouji/openwrt-passwall/trunk/chinadns-ng package/chinadns-ng
+svn co https://github.com/xiaorouji/openwrt-passwall/trunk/tcping package/tcping
+svn co https://github.com/xiaorouji/openwrt-passwall/trunk/trojan-go package/trojan-go
+svn co https://github.com/xiaorouji/openwrt-passwall/trunk/trojan-plus package/trojan-plus
+svn co https://github.com/fw876/helloworld/trunk/xray-core package/xray-core
+svn co https://github.com/fw876/helloworld/trunk/xray-plugin package/xray-plugin
+svn co https://github.com/fw876/helloworld/trunk/shadowsocks-rust package/shadowsocks-rust
 svn co https://github.com/fw876/helloworld/trunk/shadowsocksr-libev package/shadowsocksr-libev
-svn co https://github.com/281677160/openwrt-passwall/trunk/v2ray-plugin package/v2ray-plugin
-svn co https://github.com/281677160/openwrt-passwall/trunk/v2ray-core package/v2ray-core
-svn co https://github.com/281677160/openwrt-passwall/trunk/hysteria package/hysteria
-
-#kcptun
-#git clone https://github.com/kuoruan/luci-app-kcptun.git package/luci-app-kcptun
+svn co https://github.com/fw876/helloworld/trunk/v2ray-plugin package/v2ray-plugin
+svn co https://github.com/fw876/helloworld/trunk/v2ray-core package/v2ray-core
+svn co https://github.com/xiaorouji/openwrt-passwall/trunk/hysteria package/hysteria
 
 #naiveproxy代理
 svn co https://github.com/fw876/helloworld/trunk/naiveproxy package/naiveproxy
@@ -59,17 +59,14 @@ git clone https://github.com/jerrykuku/luci-app-jd-dailybonus.git package/luci-a
 
 #添加luci-app-amlogic
 svn co https://github.com/ophub/luci-app-amlogic/trunk/luci-app-amlogic package/luci-app-amlogic
-#修改晶晨宝盒默认配置
 
+#修改晶晨宝盒默认配置
 # 1.设置OpenWrt 文件的下载仓库
 sed -i "s|https.*/OpenWrt|https://github.com/sxml/Actions-OpenWrt|g" package/luci-app-amlogic/root/etc/config/amlogic
-
 # 2.设置 Releases 里 Tags 的关键字
-# sed -i "s|ARMv8|ARMv8|g" package/luci-app-amlogic/root/etc/config/amlogic
-
+sed -i "s|ARMv8|ARMv8|g" package/luci-app-amlogic/root/etc/config/amlogic
 # 3.设置 Releases 里 OpenWrt 文件的后缀
 sed -i "s|.img.gz|+.img.gz|g" package/luci-app-amlogic/root/etc/config/amlogic
-
 # 4.设置 OpenWrt 内核的下载路径
 sed -i "s|opt/kernel|BuildARMv8|g" package/luci-app-amlogic/root/etc/config/amlogic
 
