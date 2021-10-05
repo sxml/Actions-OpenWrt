@@ -8,8 +8,9 @@ on:
         description: 'SSH connection to Actions'
         required: false
         default: 'false'								  
-  schedule:
-    - cron: 0 16 1 * *
+# 定时触发开始编译(把下面两个#去掉开启,时间设置请看定时编译说明)
+#  schedule:
+#   - cron: 0 16 */2 * *
 
 env:
   REPO_URL: https://github.com/coolsnowwolf/lede
@@ -18,10 +19,10 @@ env:
   CONFIG_FILE: aarch64/ARMv8_FOL.config
   DIY_P1_SH: diy-part1.sh
   DIY_P2_SH: diy-part2.sh
-  MRG_ADD_SH: aarch64/ARMv8.sh
-  Update_Ver_SH: aarch64/autoVersion.sh
-  Get_Imgs_SH: aarch64/getImgs.sh
-#SSH_ACTIONS: false
+#  MRG_ADD_SH: aarch64/ARMv8.sh
+#  Update_Ver_SH: aarch64/autoVersion.sh
+#  Get_Imgs_SH: aarch64/getImgs.sh
+#  SSH_ACTIONS: false
   UPLOAD_BIN_DIR: false
   UPLOAD_FIRMWARE: false
   UPLOAD_COWTRANSFER: false
@@ -49,8 +50,6 @@ jobs:
         sudo rm -rf /etc/apt/sources.list.d/* /usr/share/dotnet /usr/local/lib/android /opt/ghc
         sudo -E apt-get -qq update
         sudo -E apt-get -qq install $(curl -fsSL git.io/depends-ubuntu-1804)
-        sudo -E apt-get -qq install rename
-        sudo -E apt-get -qq install time
         sudo -E apt-get -qq autoremove --purge
         sudo -E apt-get -qq clean
         sudo timedatectl set-timezone "$TZ"
@@ -132,9 +131,10 @@ jobs:
         cp F-AllPackages.tar.gz $GITHUB_WORKSPACE/openwrt/bin/targets/*/*
         cd $GITHUB_WORKSPACE/openwrt/bin/targets/*/*
         rename 's/openwrt/F-openwrt/' openwrt*gz
-        rm -rf packages sha256sums feeds.buildinfo openwrt-armvirt-64-default.manifest openwrt-armvirt-64-Image openwrt-armvirt-64-rootfs-ext4.img version.buildinfo
+        rm -rf packages sha256sums config.buildinfo feeds.buildinfo openwrt-armvirt-64-default.manifest openwrt-armvirt-64-Image openwrt-armvirt-64-rootfs-ext4.img version.buildinfo
         echo "FIRMWARE=$PWD" >> $GITHUB_ENV
         echo "::set-output name=status::success"
+# config.buildinfo feeds.buildinfo 去除掉就能上传到标签页里
 
     - name: Upload bin directory
       uses: actions/upload-artifact@master
@@ -177,16 +177,16 @@ jobs:
 #      if: steps.organize.outputs.status == 'success' && !cancelled()
 #      run: curl https://sc.ftqq.com/${{ secrets.ServerChan }}.send?text=${{ env.PRODUCT_NAME }}打包完成
 
-    - name: Upload firmware to cowtransfer
-      if: steps.organize.outputs.status == 'success' && env.UPLOAD_COWTRANSFER == 'true' && !cancelled()
-      run: |
-        curl -fsSL git.io/file-transfer | sh
-        ./transfer cow --block 2621440 -s -p 64 --no-progress ${FIRMWARE} 2>&1 | tee cowtransfer.log
-        echo "::warning file=cowtransfer.com::$(cat cowtransfer.log | grep https)"
+#    - name: Upload firmware to cowtransfer
+#      if: steps.organize.outputs.status == 'success' && env.UPLOAD_COWTRANSFER == 'true' && !cancelled()
+#      run: |
+#        curl -fsSL git.io/file-transfer | sh
+#        ./transfer cow --block 2621440 -s -p 64 --no-progress ${FIRMWARE} 2>&1 | tee cowtransfer.log
+#        echo "::warning file=cowtransfer.com::$(cat cowtransfer.log | grep https)"
 
-    - name: Upload firmware to WeTransfer
-      if: steps.organize.outputs.status == 'success' && env.UPLOAD_WETRANSFER == 'true' && !cancelled()
-      run: |
-        curl -fsSL git.io/file-transfer | sh
-        ./transfer wet -s -p 16 --no-progress ${FIRMWARE} 2>&1 | tee wetransfer.log
-        echo "::warning file=wetransfer.com::$(cat wetransfer.log | grep https)"
+#    - name: Upload firmware to WeTransfer
+#      if: steps.organize.outputs.status == 'success' && env.UPLOAD_WETRANSFER == 'true' && !cancelled()
+#      run: |
+#        curl -fsSL git.io/file-transfer | sh
+#        ./transfer wet -s -p 16 --no-progress ${FIRMWARE} 2>&1 | tee wetransfer.log
+#        echo "::warning file=wetransfer.com::$(cat wetransfer.log | grep https)"
