@@ -54,7 +54,7 @@ jobs:
       
     steps:
     - name: 准备结束
-      uses: actions/checkout@v2
+      uses: actions/checkout@master
 
     - name: 部署编译环境
       env:
@@ -123,7 +123,7 @@ jobs:
       run: df -hT
 
     - name: 上传bin文件夹
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@master
       if: steps.compile.outputs.status == 'success' && env.UPLOAD_BIN_DIR == 'true'
       with:
         name: OpenWrt_bin${{ env.DEVICE_NAME }}${{ env.FILE_DATE }}
@@ -132,7 +132,7 @@ jobs:
     #    if-no-files-found: ignore
 
     - name: 上传固件
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@master
       if: env.UPLOAD_FIRMWARE == 'true' && steps.organize.outputs.status == 'success' && !cancelled()
       with:
         name: OpenWrt_firmware${{ env.DEVICE_NAME }}${{ env.FILE_DATE }}
@@ -147,7 +147,7 @@ jobs:
         name: R${{ env.DATE }} for ${{ env.FILE_NAME }}
         allowUpdates: true
         tag: ${{ env.FILE_NAME }}
-        commit: v2
+        commit: master
         token: ${{ secrets.RELEASES_TOKEN }}
         body: |
           Flippy打包 
