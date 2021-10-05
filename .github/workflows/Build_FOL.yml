@@ -54,7 +54,7 @@ jobs:
 
     steps:
     - name: 准备结束
-      uses: actions/checkout@main
+      uses: actions/checkout@v2
 
     - name: 部署编译环境
       env:
@@ -117,7 +117,7 @@ jobs:
         ./scripts/diffconfig.sh > ${GITHUB_WORKSPACE}/config.txt
     
     - name: 上传.config配置文件
-      uses: actions/upload-artifact@main
+      uses: actions/upload-artifact@v2
       if: env.UPLOAD_CONFIG == 'true'
       with:
         name: .config_${{ env.DEVICE_NAME }}${{ env.FILE_DATE }}
@@ -164,7 +164,7 @@ jobs:
       run: df -hT
       
     - name: 上传bin文件夹
-      uses: actions/upload-artifact@main
+      uses: actions/upload-artifact@v2
       if: steps.compile.outputs.status == 'success' && env.UPLOAD_BIN_DIR == 'true'
       with:
         name: OpenWrt_bin${{ env.DEVICE_NAME }}${{ env.FILE_DATE }}
@@ -173,7 +173,7 @@ jobs:
     #    if-no-files-found: ignore
         
     - name: 上传固件
-      uses: actions/upload-artifact@main
+      uses: actions/upload-artifact@v2
       if: env.UPLOAD_FIRMWARE == 'true' && steps.organize.outputs.status == 'success' && !cancelled()
       with:
         name: OpenWrt_firmware${{ env.DEVICE_NAME }}${{ env.FILE_DATE }}
@@ -188,7 +188,7 @@ jobs:
         name: R${{ env.DATE }}
         allowUpdates: true
         tag: ${{ env.FILE_NAME }}
-        commit: main
+        commit: master
         token: ${{ secrets.RELEASES_TOKEN }}
         body: |
           编译Lede大op固件，Flippy打包用，不能直刷！！！
