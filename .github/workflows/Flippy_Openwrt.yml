@@ -34,12 +34,12 @@ env:
   MRG_ADD_SH: aarch64/ARMv8.sh
   Update_Ver_SH: aarch64/autoVersion.sh
   Get_Imgs_SH: aarch64/getImgs.sh
-  #SSH_ACTIONS: false
+# SSH_ACTIONS: false
   UPLOAD_BIN_DIR: false
   UPLOAD_FIRMWARE: false
   UPLOAD_COWTRANSFER: false
   UPLOAD_WETRANSFER: false
-  #RECENT_LASTEST: 30 # bin文件和固件保留天数
+# RECENT_LASTEST: 30 # bin文件和固件保留天数
   TZ: Asia/Shanghai
   FILE_NAME: ARMv8
   PRODUCT_NAME: Flippy_Openwrt
@@ -54,7 +54,7 @@ jobs:
       
     steps:
     - name: 准备结束
-      uses: actions/checkout@master
+      uses: actions/checkout@main
 
     - name: 部署编译环境
       env:
@@ -123,7 +123,7 @@ jobs:
       run: df -hT
 
     - name: 上传bin文件夹
-      uses: actions/upload-artifact@master
+      uses: actions/upload-artifact@main
       if: steps.compile.outputs.status == 'success' && env.UPLOAD_BIN_DIR == 'true'
       with:
         name: OpenWrt_bin${{ env.DEVICE_NAME }}${{ env.FILE_DATE }}
@@ -132,7 +132,7 @@ jobs:
     #    if-no-files-found: ignore
 
     - name: 上传固件
-      uses: actions/upload-artifact@master
+      uses: actions/upload-artifact@main
       if: env.UPLOAD_FIRMWARE == 'true' && steps.organize.outputs.status == 'success' && !cancelled()
       with:
         name: OpenWrt_firmware${{ env.DEVICE_NAME }}${{ env.FILE_DATE }}
@@ -147,7 +147,7 @@ jobs:
         name: R${{ env.DATE }} for ${{ env.FILE_NAME }}
         allowUpdates: true
         tag: ${{ env.FILE_NAME }}
-        commit: master
+        commit: main
         token: ${{ secrets.RELEASES_TOKEN }}
         body: |
           Flippy打包 
