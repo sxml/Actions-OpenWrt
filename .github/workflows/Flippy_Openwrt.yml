@@ -54,7 +54,7 @@ jobs:
       
     steps:
     - name: 准备结束
-      uses: actions/checkout@master
+      uses: actions/checkout@v2
 
     - name: 部署编译环境
       env:
@@ -63,9 +63,6 @@ jobs:
         sudo rm -rf /etc/apt/sources.list.d/* /usr/share/dotnet /usr/local/lib/android /opt/ghc
         sudo -E apt-get -qq update
         sudo -E apt-get -qq install $(curl -fsSL git.io/depends-ubuntu-2004)
-        sudo -E apt-get -qq install pigz
-        sudo -E apt-get -qq install time
-        sudo -E apt-get -qq install sshpass
         sudo -E apt-get -qq autoremove --purge
         sudo -E apt-get -qq clean
         sudo timedatectl set-timezone "$TZ"
@@ -126,7 +123,7 @@ jobs:
       run: df -hT
 
     - name: 上传bin文件夹
-      uses: actions/upload-artifact@master
+      uses: actions/upload-artifact@v2
       if: steps.compile.outputs.status == 'success' && env.UPLOAD_BIN_DIR == 'true'
       with:
         name: OpenWrt_bin${{ env.DEVICE_NAME }}${{ env.FILE_DATE }}
@@ -135,7 +132,7 @@ jobs:
     #    if-no-files-found: ignore
 
     - name: 上传固件
-      uses: actions/upload-artifact@master
+      uses: actions/upload-artifact@v2
       if: env.UPLOAD_FIRMWARE == 'true' && steps.organize.outputs.status == 'success' && !cancelled()
       with:
         name: OpenWrt_firmware${{ env.DEVICE_NAME }}${{ env.FILE_DATE }}
@@ -150,7 +147,7 @@ jobs:
         name: R${{ env.DATE }} for ${{ env.FILE_NAME }}
         allowUpdates: true
         tag: ${{ env.FILE_NAME }}
-        commit: master
+        commit: v2
         token: ${{ secrets.RELEASES_TOKEN }}
         body: |
           Flippy打包 
