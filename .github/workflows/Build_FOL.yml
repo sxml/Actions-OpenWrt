@@ -30,14 +30,13 @@ env:
   CONFIG_FILE: aarch64/ARMv8_FOL.config
   DIY_P1_SH: diy-part1.sh
   DIY_P2_SH: diy-part2.sh
-  MRG_ADD_SH: aarch64/ARMv8.sh
+  #MRG_ADD_SH: aarch64/ARMv8.sh
   #Update_Ver_SH: aarch64/autoVersion.sh
   #Get_Imgs_SH: aarch64/getImgs.sh
   #SSH_ACTIONS: false
   UPLOAD_BIN_DIR: false
   UPLOAD_FIRMWARE: false
   UPLOAD_RELEASE: false
-  USE_CACHEWRTBUILD: true # 缓存加速
   UPLOAD_CONFIG: false # 提取.config 开关 true
   #RECENT_LASTEST: 10  # bin文件和固件保留天数
   TZ: Asia/Shanghai
@@ -55,7 +54,7 @@ jobs:
 
     steps:
     - name: 准备结束
-      uses: actions/checkout@master
+      uses: actions/checkout@v2
 
     - name: 部署编译环境
       env:
@@ -64,9 +63,6 @@ jobs:
         sudo rm -rf /etc/apt/sources.list.d/* /usr/share/dotnet /usr/local/lib/android /usr/lib/jvm /opt/ghc
         sudo -E apt-get -qq update
         sudo -E apt-get -qq install -y build-essential asciidoc binutils bzip2 gawk gettext git libncurses5-dev libz-dev patch python3 python2.7 unzip zlib1g-dev lib32gcc1 libc6-dev-i386 lib32stdc++6 subversion flex uglifyjs git-core gcc-multilib p7zip p7zip-full msmtp libssl-dev texinfo libglib2.0-dev xmlto qemu-utils upx libelf-dev autoconf automake libtool autopoint device-tree-compiler g++-multilib antlr3 gperf wget curl rename libpcap0.8-dev swig rsync
-        sudo -E apt-get -qq install pigz
-        sudo -E apt-get -qq install time
-        sudo -E apt-get -qq install sshpass
         sudo -E apt-get -qq autoremove --purge
         sudo -E apt-get -qq clean
         sudo timedatectl set-timezone "$TZ"
@@ -108,9 +104,8 @@ jobs:
         sed -i 's/192.168.1.1/192.168.2.1/g' package/base-files/files/bin/config_generate
         sed -i 's/OpenWrt/MRG AutoBuild ${{ env.DATE1 }} @ OpenWrt/g' package/lean/default-settings/files/zzz-default-settings
 
-    - name: 缓存加速(7天内对应源码相同机型二次编译有效，每次只保留一个源码的缓存)
-      if: env.USE_CACHEWRTBUILD == 'true'
-      uses: klever1988/cachewrtbuild@test
+    - name: 缓存加速
+      uses: klever1988/cachewrtbuild@main
       with:
         ccache: 'true'
         prefix: ${{ github.workspace }}/openwrt
@@ -129,7 +124,7 @@ jobs:
         ./scripts/diffconfig.sh > ${GITHUB_WORKSPACE}/config.txt
     
     - name: 上传.config配置文件
-      uses: actions/upload-artifact@master
+      uses: actions/upload-artifact@v2
       if: env.UPLOAD_CONFIG == 'true'
       with:
         name: .config_${{ env.DEVICE_NAME }}${{ env.FILE_DATE }}
@@ -176,7 +171,7 @@ jobs:
       run: df -hT
       
     - name: 上传bin文件夹
-      uses: actions/upload-artifact@master
+      uses: actions/upload-artifact@v2
       if: steps.compile.outputs.status == 'success' && env.UPLOAD_BIN_DIR == 'true'
       with:
         name: OpenWrt_bin${{ env.DEVICE_NAME }}${{ env.FILE_DATE }}
@@ -185,7 +180,7 @@ jobs:
     #    if-no-files-found: ignore
         
     - name: 上传固件
-      uses: actions/upload-artifact@master
+      uses: actions/upload-artifact@v2
       if: env.UPLOAD_FIRMWARE == 'true' && steps.organize.outputs.status == 'success' && !cancelled()
       with:
         name: OpenWrt_firmware${{ env.DEVICE_NAME }}${{ env.FILE_DATE }}
@@ -200,7 +195,7 @@ jobs:
         name: R${{ env.DATE }}
         allowUpdates: true
         tag: ${{ env.FILE_NAME }}
-        commit: master
+        commit: v2
         token: ${{ secrets.RELEASES_TOKEN }}
         body: |
           编译Lede大op固件，Flippy打包用，不能直刷！！！
@@ -209,7 +204,7 @@ jobs:
         artifacts: ${{ env.FIRMWARE }}/*
 
     #- name: 删除工作流运行
-    #  uses: GitRML/delete-workflow-runs@master
+    #  uses: GitRML/delete-workflow-runs@v2
     #  with:
     #    retain_days: 1
     #    keep_minimum_runs: 3
