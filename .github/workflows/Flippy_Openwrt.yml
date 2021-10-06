@@ -6,7 +6,7 @@
 # https://github.com/P3TERX/Actions-OpenWrt
 # Description: Build OpenWrt using GitHub Actions
 #
-# 2021.10.05  Flippy打包
+# 2021.10.06  Flippy打包
 #
 name: Flippy打包
 
@@ -28,17 +28,17 @@ on:
 env:
   REPO_URL: https://github.com/coolsnowwolf/lede
   REPO_BRANCH: master
-  FEEDS_CONF: feeds.conf.default
-  DIY_P1_SH: diy-part1.sh
+  #FEEDS_CONF: feeds.conf.default
+  #DIY_P1_SH: diy-part1.sh
   DIY_P2_SH: diy-part2.sh
-  MRG_ADD_SH: aarch64/ARMv8.sh
+  #MRG_ADD_SH: aarch64/ARMv8.sh
   Update_Ver_SH: aarch64/autoVersion.sh
   Get_Imgs_SH: aarch64/getImgs.sh
 # SSH_ACTIONS: false
   UPLOAD_BIN_DIR: false
   UPLOAD_FIRMWARE: false
-  UPLOAD_COWTRANSFER: false
-  UPLOAD_WETRANSFER: false
+  #UPLOAD_COWTRANSFER: false
+  #UPLOAD_WETRANSFER: false
 # RECENT_LASTEST: 30 # bin文件和固件保留天数
   TZ: Asia/Shanghai
   FILE_NAME: ARMv8
@@ -54,7 +54,7 @@ jobs:
       
     steps:
     - name: 准备结束
-      uses: actions/checkout@main
+      uses: actions/checkout@master
 
     - name: 部署编译环境
       env:
@@ -63,6 +63,10 @@ jobs:
         sudo rm -rf /etc/apt/sources.list.d/* /usr/share/dotnet /usr/local/lib/android /opt/ghc
         sudo -E apt-get -qq update
         sudo -E apt-get -qq install $(curl -fsSL git.io/depends-ubuntu-2004)
+        sudo -E apt-get -qq install rename
+        sudo -E apt-get -qq install pigz
+        sudo -E apt-get -qq install time
+        sudo -E apt-get -qq install sshpass
         sudo -E apt-get -qq autoremove --purge
         sudo -E apt-get -qq clean
         sudo timedatectl set-timezone "$TZ"
@@ -123,7 +127,7 @@ jobs:
       run: df -hT
 
     - name: 上传bin文件夹
-      uses: actions/upload-artifact@main
+      uses: actions/upload-artifact@master
       if: steps.compile.outputs.status == 'success' && env.UPLOAD_BIN_DIR == 'true'
       with:
         name: OpenWrt_bin${{ env.DEVICE_NAME }}${{ env.FILE_DATE }}
@@ -132,7 +136,7 @@ jobs:
     #    if-no-files-found: ignore
 
     - name: 上传固件
-      uses: actions/upload-artifact@main
+      uses: actions/upload-artifact@master
       if: env.UPLOAD_FIRMWARE == 'true' && steps.organize.outputs.status == 'success' && !cancelled()
       with:
         name: OpenWrt_firmware${{ env.DEVICE_NAME }}${{ env.FILE_DATE }}
@@ -147,7 +151,7 @@ jobs:
         name: R${{ env.DATE }} for ${{ env.FILE_NAME }}
         allowUpdates: true
         tag: ${{ env.FILE_NAME }}
-        commit: main
+        commit: master
         token: ${{ secrets.RELEASES_TOKEN }}
         body: |
           Flippy打包 
