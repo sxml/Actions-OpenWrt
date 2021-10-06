@@ -34,12 +34,12 @@ env:
   #MRG_ADD_SH: aarch64/ARMv8.sh
   Update_Ver_SH: aarch64/autoVersion.sh
   Get_Imgs_SH: aarch64/getImgs.sh
-# SSH_ACTIONS: false
+  #SSH_ACTIONS: false
   UPLOAD_BIN_DIR: false
   UPLOAD_FIRMWARE: false
   #UPLOAD_COWTRANSFER: false
   #UPLOAD_WETRANSFER: false
-# RECENT_LASTEST: 30 # bin文件和固件保留天数
+  #RECENT_LASTEST: 30 # bin文件和固件保留天数
   TZ: Asia/Shanghai
   FILE_NAME: ARMv8
   PRODUCT_NAME: Flippy_Openwrt
@@ -73,9 +73,9 @@ jobs:
         sudo mkdir -p /workdir
         sudo chown $USER:$GROUPS /workdir
 
-#    - name: 检查空间使用情况
-#      if: (!cancelled())
-#      run: df -hT
+    #- name: 检查空间使用情况
+    #  if: (!cancelled())
+    #  run: df -hT
 
     - name: 克隆源代码
       working-directory: /workdir
