@@ -86,3 +86,84 @@ cd /root
 3.安装zerotier
 cd /root
 ./install-zerotier.sh
+
+
+----------------------------------------------------------------------------------------------------
+                                                        
+                                                        N1
+
+                                   重刷！
+
+
+ssh连入，
+cd /root 
+ ./install-to-emmc.sh
+
+（旧 ./inst-to-emmc.sh）
+
+输入y则真正刷入emmc写入
+完毕后，输入
+halt
+
+
+                                 升级
+                               
+升级降级方法统一为：
+
+把 update-amlogic-openwrt.sh 及 img镜像上传至  /mnt/mmcblk2p4
+cd /mnt/mmcblk2p4
+chmod 755 update-amlogic-openwrt.sh
+./update-amlogic-openwrt.sh xxxxx.img  
+------------------------------------------------------------------------------------
+                                                                          
+                                                                          x96max+                                                                
+
+                                重刷
+
+
+默认ip: 192.168.1.1
+root密码： password
+写入emmc的方法：
+
+cd /root
+./install-to-emmc.sh  （注意，与n1的命令不同， 是install不是inst)
+
+
+(中文界面，按照提示操作即可，需要把ssh客户端的字符集编码设定为UTF-8，否则是乱码）
+
+完毕后，输入
+halt
+
+-------------------------------------------------------------------------------------------------------
+
+                                             升级
+                               
+升级降级方法统一为：
+
+把 update-amlogic-openwrt.sh 及 img镜像上传至  /mnt/mmcblk2p4
+cd /mnt/mmcblk2p4
+chmod 755 update-amlogic-openwrt.sh
+./update-amlogic-openwrt.sh xxxxx.img  
+
+
+
+1. openwrt包名格式更改为：
+      openwrt_[soc]_[board]_Rxx.xx.xx_kxx.xx.xx.img  
+
+2. amlogic已支持 5.10内核，但是需要从 u盘或 tf卡启动，可以刷入emmc(仅数据分区），boot分区还是只能在 u盘或tf卡上面。
+    5.10内核的副作用是 905x3、922x等机型 hdmi 绿屏、启动时间较长、mac地址会发生变化等
+
+3. amlogic盒子统一用 update-amlogic-openwrt.sh 进行升级或降级。
+
+4. 新增了 N1 和章鱼星球的新格式镜像（4分区，支持在线升降级），至此，amlogic的盒子全部统一了分区格式
+    副作用是：不支持从旧格式升级，也不能降级到旧格式，mmc设备名从以前的 mmcblk1变成了mmcblk2
+
+5. 调大了个别固件的rootfs分区，因为以前的512MB快不够用了
+
+6. amlogic盒子的刷入emmc命令统一为：
+cd      /root
+./install-to-emmc.sh
+
+
+
+
