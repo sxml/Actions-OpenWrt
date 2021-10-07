@@ -29,7 +29,7 @@ env:
   #SSH_ACTIONS: false
   UPLOAD_BIN_DIR: false
   UPLOAD_FIRMWARE: false
-  UPLOAD_CONFIG: false
+  UPLOAD_CONFIG: false  #提取.config 开关 true
   #RECENT_LASTEST: 10  # bin文件和固件保留天数
   TZ: Asia/Shanghai
   FILE_NAME: Files4Build
@@ -39,9 +39,13 @@ jobs:
   build:
     runs-on: ubuntu-20.04
     if: github.event.repository.owner.id == github.event.sender.id
-    
+
+    name: 编译op包-F版
+    strategy:
+      fail-fast: false
+      
     steps:
-    - name: 准备结束
+    - name: 准备
       uses: actions/checkout@master
 
     - name: 部署编译环境
@@ -148,9 +152,9 @@ jobs:
         echo "FIRMWARE=$PWD" >> $GITHUB_ENV
         echo "::set-output name=status::success"
 
-    - name: 检查空间使用情况
-      if: (!cancelled())
-      run: df -hT
+    #- name: 检查空间使用情况
+    #  if: (!cancelled())
+    #  run: df -hT
       
     - name: 上传bin文件夹
       uses: actions/upload-artifact@master
