@@ -29,7 +29,8 @@ env:
   #SSH_ACTIONS: false
   UPLOAD_BIN_DIR: false
   UPLOAD_FIRMWARE: false
-  UPLOAD_CONFIG: false     #提取.config 开关 true
+  ##UPLOAD_CONFIG提取.config 开关 true
+  UPLOAD_CONFIG: false
   #RECENT_LASTEST: 10  # bin文件和固件保留天数
   TZ: Asia/Shanghai
   FILE_NAME: Files4Build
