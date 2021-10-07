@@ -41,13 +41,13 @@ telegram，电报推送消息 设置方法 https://github.com/danshui-git/shuomi
 【2】在Releases 新建标签 Files4Compile
 
       手动上传 F大 打包文件
-【3】获取 Files4Compile 标签ID （F大打包文件的 ID） https://api.github.com/repos/sxml2015/Actions-OpenWrt/releases
+【3】获取 Files4Compile 标签ID （F大打包文件的 ID） https://api.github.com/repos/sxml/Actions-OpenWrt/releases
 
        https://api.github.com/repos/（github账号）/（ 项目名称）/releases 
   
      修改 aarch64/getImgs.sh
 
-wget $(curl -s https://api.github.com/repos/sxml2015/Actions-OpenWrt/releases/（Files4Compile 标签ID）
+wget $(curl -s https://api.github.com/repos/sxml/Actions-OpenWrt/releases/（Files4Compile 标签ID）
 【4】Actions
 
     运行 编译*版op包 （Build_FOL.yml）
@@ -55,11 +55,11 @@ wget $(curl -s https://api.github.com/repos/sxml2015/Actions-OpenWrt/releases/�
      旧文件
      #ARMv8_SFE.yml 编译
      #ARMv8_FOL.yml 编译 
-【5】获取 Files4Build 标签ID https://api.github.com/repos/sxml2015/Actions-OpenWrt/releases
+【5】获取 Files4Build 标签ID https://api.github.com/repos/sxml/Actions-OpenWrt/releases
 
       修改 Flippy_Openwrt.yml 
   
-  sudo wget $(curl -s https://api.github.com/repos/sxml2015/Actions-OpenWrt/releases/（ARMv8_OpenWrt 标签ID )
+  sudo wget $(curl -s https://api.github.com/repos/sxml/Actions-OpenWrt/releases/（ARMv8_OpenWrt 标签ID )
      
      旧文件 
      #修改 ARMv8_Build.yml  (用 Files4Build ID)
