@@ -77,7 +77,7 @@ jobs:
         echo "DATE1=$(date "+%Y-%m-%d")" >> $GITHUB_ENV
 
     - name: 缓存加速
-      uses: klever1988/cachewrtbuild@main
+      uses: klever1988/cachewrtbuild@master
       with:
         ccache: 'true'
         prefix: ${{ github.workspace }}/openwrt
