@@ -48,9 +48,6 @@ jobs:
     steps:
     - name: 准备
       uses: actions/checkout@master
-      with:  
-        ref: master
-        fetch-depth: 0
    
     - name: 部署编译环境
       env:
