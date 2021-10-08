@@ -1,6 +1,6 @@
 #!/bin/bash
 #============================================================
-# 2021-10-05
+# 2021-10-08
 # https://github.com/P3TERX/Actions-OpenWrt
 # File name: diy-part2.sh
 # Description: OpenWrt DIY script part 2 (After Update feeds)
@@ -15,6 +15,9 @@ rm -rf package/lean/luci-app-wrtbwmon
 #readd cpufreq for aarch64 cpu调频
 sed -i 's/LUCI_DEPENDS.*/LUCI_DEPENDS:=\@\(arm\|\|aarch64\)/g' package/lean/luci-app-cpufreq/Makefile
 sed -i 's/services/system/g' package/lean/luci-app-cpufreq/luasrc/controller/cpufreq.lua
+
+# 编译缺少upx依赖 添加这看看
+git clone https://github.com/kuoruan/openwrt-upx.git package/openwrt-upx
 
 #SSR
 svn co https://github.com/fw876/helloworld/trunk/luci-app-ssr-plus package/luci-app-ssr-plus
@@ -73,9 +76,6 @@ git clone https://github.com/brvphoenix/luci-app-wrtbwmon
 cd luci-app-wrtbwmon
 git reset --hard ff7773abbf71120fc39a276393b29ba47353a7e2 && cp -r luci-app-wrtbwmon ../package/
 cd ..
-
-# 编译缺少upx依赖 添加这看看
-git clone https://github.com/kuoruan/openwrt-upx.git package/openwrt-upx
 
 # themes 主题
 svn co https://github.com/kenzok8/openwrt-packages/trunk/luci-theme-atmaterial_new package/luci-theme-atmaterial_new
