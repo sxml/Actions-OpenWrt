@@ -37,8 +37,6 @@ jobs:
   build:
     runs-on: ubuntu-20.04
     if: github.event.repository.owner.id == github.event.sender.id
-
-    name: 编译op包-F版
       
     steps:
     - name: 准备
