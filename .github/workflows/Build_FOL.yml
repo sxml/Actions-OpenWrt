@@ -1,5 +1,5 @@
 #
-# 2021.10.11  编译op包
+# 2021.10.11-2  编译op包
 #
 
 name: 编译op包-F版
@@ -29,8 +29,8 @@ env:
   #SSH_ACTIONS: false
   UPLOAD_BIN_DIR: false
   UPLOAD_FIRMWARE: false
-  #UPLOAD_CONFIG: false
-  #RECENT_LASTEST: 10  # bin文件和固件保留天数
+  UPLOAD_CONFIG: false
+  RECENT_LASTEST: 10
   TZ: Asia/Shanghai
   FILE_NAME: Files4Build
   PRODUCT_NAME: Build_FOL
@@ -97,25 +97,25 @@ jobs:
         ccache: 'true'
         prefix: ${{ github.workspace }}/openwrt
         
-    #- name: SSH远程连接（配置固件）
-    #  uses: P3TERX/ssh2actions@v1.0.0
-    #  if: (github.event.inputs.ssh == 'true' && github.event.inputs.ssh  != 'false') || contains(github.event.action, 'ssh')
-    #  env:
-    #    TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
-    #    TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+    - name: SSH远程连接（配置固件）
+      uses: P3TERX/ssh2actions@v1.0.0
+      if: (github.event.inputs.ssh == 'true' && github.event.inputs.ssh  != 'false') || contains(github.event.action, 'ssh')
+      env:
+        TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
 
-    #- name: 生成.config配置文件
-    #  run: |
-    #    cd openwrt
-    #    make defconfig
-    #    ./scripts/diffconfig.sh > ${GITHUB_WORKSPACE}/config.txt
+    - name: 生成.config配置文件
+      run: |
+        cd openwrt
+        make defconfig
+        ./scripts/diffconfig.sh > ${GITHUB_WORKSPACE}/config.txt
     
-    #- name: 上传.config配置文件
-    #  uses: actions/upload-artifact@master
-    #  if: env.UPLOAD_CONFIG == 'true'
-    #  with:
-    #    name: .config_${{ env.DEVICE_NAME }}${{ env.FILE_DATE }}
-    #    path: config.txt
+    - name: 上传.config配置文件
+      uses: actions/upload-artifact@master
+      if: env.UPLOAD_CONFIG == 'true'
+      with:
+        name: .config_${{ env.DEVICE_NAME }}${{ env.FILE_DATE }}
+        path: config.txt
         
     - name: 下载软件包
       id: package
@@ -152,9 +152,9 @@ jobs:
         echo "FIRMWARE=$PWD" >> $GITHUB_ENV
         echo "::set-output name=status::success"
 
-    #- name: 检查空间使用情况
-    #  if: (!cancelled())
-    #  run: df -hT
+    - name: 检查空间使用情况
+      if: (!cancelled())
+      run: df -hT
       
     - name: 上传bin文件夹
       uses: actions/upload-artifact@master
@@ -162,8 +162,8 @@ jobs:
       with:
         name: OpenWrt_bin${{ env.DEVICE_NAME }}${{ env.FILE_DATE }}
         path: openwrt/bin/targets/*/*/bin.tar.gz
-    #    retention-days: ${{ env.RECENT_LASTEST }}
-    #    if-no-files-found: ignore
+        retention-days: ${{ env.RECENT_LASTEST }}
+        if-no-files-found: ignore
         
     - name: 上传固件
       uses: actions/upload-artifact@master
@@ -171,8 +171,8 @@ jobs:
       with:
         name: OpenWrt_firmware${{ env.DEVICE_NAME }}${{ env.FILE_DATE }}
         path: ${{ env.FIRMWARE }}
-    #    retention-days: ${{ env.RECENT_LASTEST }}
-    #    if-no-files-found: ignore
+        retention-days: ${{ env.RECENT_LASTEST }}
+        if-no-files-found: ignore
         
     - name: 固件发布信息
       id: release
