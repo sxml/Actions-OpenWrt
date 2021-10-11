@@ -76,8 +76,11 @@ wget $(curl -s https://api.github.com/repos/sxml/Actions-OpenWrt/releases/（Fil
 
 2: https://github.com/281677160/build-actions
 
+3：https://github.com/ophub
+
 云编译说明 https://github.com/danshui-git/shuoming
 
+F大  https://github.com/unifreq/openwrt_packit
 ---------------------------------------------------------------------------------------
 ## Acknowledgments
 
