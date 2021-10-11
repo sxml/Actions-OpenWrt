@@ -4,11 +4,11 @@
                                SSH 连接操作 （SSH 现在只能 在线配置 提取.config用 不能编译固件 封号！！！）
 
 在线配置.config  提取                                                                                     
-                                     UPLOAD_CONFIG: true
+                                        UPLOAD_CONFIG: true
 
 
-运行 编译*版op包 （Build_FOL.yml）                                                                                 
-旧#运行 ARMv8_SFE.yml
+      运行 编译*版op包 （Build_FOL.yml）                                                                                 
+
 
     Actions→ 选择xxx.yml→ 然后单击Run workflow右侧的按钮。设置SSH connection to Actions 输入 true  点 Run workflow 运行
 
