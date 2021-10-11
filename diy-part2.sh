@@ -1,6 +1,6 @@
 #!/bin/bash
 #============================================================
-# 2021-10-09
+# 2021-10-11
 # https://github.com/P3TERX/Actions-OpenWrt
 # File name: diy-part2.sh
 # Description: OpenWrt DIY script part 2 (After Update feeds)
@@ -66,7 +66,7 @@ sed -i "s|https.*/OpenWrt|https://github.com/sxml/Actions-OpenWrt|g" package/luc
 # 2.设置 Releases 里 Tags 的关键字
 sed -i "s|ARMv8|ARMv8|g" package/luci-app-amlogic/root/etc/config/amlogic
 # 3.设置 Releases 里 OpenWrt 文件的后缀
-sed -i "s|.img.gz|+.img.gz|g" package/luci-app-amlogic/root/etc/config/amlogic
+sed -i "s|.img.gz|.img.gz|g" package/luci-app-amlogic/root/etc/config/amlogic
 # 4.设置 OpenWrt 内核的下载路径
 sed -i "s|opt/kernel|BuildARMv8|g" package/luci-app-amlogic/root/etc/config/amlogic
 
