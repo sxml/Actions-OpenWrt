@@ -6,7 +6,7 @@
 # https://github.com/P3TERX/Actions-OpenWrt
 # Description: Build OpenWrt using GitHub Actions
 #
-# 2021.10.06  Flippy打包
+# 2021.10.12  Flippy打包
 #
 name: Flippy打包
 
@@ -39,7 +39,7 @@ env:
   UPLOAD_FIRMWARE: false
   #UPLOAD_COWTRANSFER: false
   #UPLOAD_WETRANSFER: false
-  #RECENT_LASTEST: 30 # bin文件和固件保留天数
+  RECENT_LASTEST: 30 # bin文件和固件保留天数
   TZ: Asia/Shanghai
   FILE_NAME: ARMv8
   PRODUCT_NAME: Flippy_Openwrt
@@ -53,20 +53,16 @@ jobs:
       fail-fast: false
       
     steps:
-    - name: 准备结束
+    - name: 准备
       uses: actions/checkout@master
 
     - name: 部署编译环境
       env:
         DEBIAN_FRONTEND: noninteractive
       run: |
-        sudo rm -rf /etc/apt/sources.list.d/* /usr/share/dotnet /usr/local/lib/android /opt/ghc
+        sudo rm -rf /etc/apt/sources.list.d/* /usr/share/dotnet /usr/local/lib/android /usr/lib/jvm /opt/ghc
         sudo -E apt-get -qq update
-        sudo -E apt-get -qq install $(curl -fsSL git.io/depends-ubuntu-2004)
-        sudo -E apt-get -qq install rename
-        sudo -E apt-get -qq install pigz
-        sudo -E apt-get -qq install time
-        sudo -E apt-get -qq install sshpass
+        sudo -E apt-get -qq install -y build-essential asciidoc binutils bzip2 gawk gettext git libncurses5-dev libz-dev patch python3 python2.7 unzip zlib1g-dev lib32gcc1 libc6-dev-i386 lib32stdc++6 subversion flex uglifyjs git-core gcc-multilib p7zip p7zip-full msmtp libssl-dev texinfo libglib2.0-dev xmlto qemu-utils upx libelf-dev autoconf automake libtool autopoint device-tree-compiler g++-multilib antlr3 gperf wget curl rename libpcap0.8-dev swig rsync
         sudo -E apt-get -qq autoremove --purge
         sudo -E apt-get -qq clean
         sudo timedatectl set-timezone "$TZ"
@@ -88,8 +84,8 @@ jobs:
         echo "useVersionInfo=$useVersionInfo" >> $GITHUB_ENV
         echo "DATE=$(date "+%Y-%m-%d %H:%M:%S")" >> $GITHUB_ENV
         echo "DATE1=$(date "+%Y-%m-%d")" >> $GITHUB_ENV
-#        echo "::set-env name=useVersionInfo::$useVersionInfo"
-#        echo "::set-env name=DATE::$(date "+%Y-%m-%d %H:%M:%S")"
+        echo "::set-env name=useVersionInfo::$useVersionInfo"
+        echo "::set-env name=DATE::$(date "+%Y-%m-%d %H:%M:%S")"
 
     - name: 打包固件
       id: build
@@ -132,8 +128,8 @@ jobs:
       with:
         name: OpenWrt_bin${{ env.DEVICE_NAME }}${{ env.FILE_DATE }}
         path: openwrt/bin/targets/*/*/bin.tar.gz
-    #    retention-days: ${{ env.RECENT_LASTEST }}
-    #    if-no-files-found: ignore
+        retention-days: ${{ env.RECENT_LASTEST }}
+        if-no-files-found: ignore
 
     - name: 上传固件
       uses: actions/upload-artifact@master
@@ -141,8 +137,8 @@ jobs:
       with:
         name: OpenWrt_firmware${{ env.DEVICE_NAME }}${{ env.FILE_DATE }}
         path: ${{ env.FIRMWARE }}
-    #    retention-days: ${{ env.RECENT_LASTEST }}
-    #    if-no-files-found: ignore
+        retention-days: ${{ env.RECENT_LASTEST }}
+        if-no-files-found: ignore
 
     - name: 固件发布信息
       id: release
@@ -165,17 +161,3 @@ jobs:
     - name: 电报机器人信息通知
       if: steps.organize.outputs.status == 'success' && !cancelled()
       run: curl -k --data chat_id="${{ secrets.TELEGRAM_CHAT_ID }}" --data "text=${{ env.FILE_NAME }}打包完成" "https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage"
-
-#    - name: 上传固件到 cowtransfer
-#      if: steps.organize.outputs.status == 'success' && env.UPLOAD_COWTRANSFER == 'true' && !cancelled()
-#      run: |
-#        curl -fsSL git.io/file-transfer | sh
-#        ./transfer cow --block 2621440 -s -p 64 --no-progress ${FIRMWARE} 2>&1 | tee cowtransfer.log
-#        echo "::warning file=cowtransfer.com::$(cat cowtransfer.log | grep https)"
-
-#    - name: 上传固件到 WeTransfer
-#      if: steps.organize.outputs.status == 'success' && env.UPLOAD_WETRANSFER == 'true' && !cancelled()
-#      run: |
-#        curl -fsSL git.io/file-transfer | sh
-#        ./transfer wet -s -p 16 --no-progress ${FIRMWARE} 2>&1 | tee wetransfer.log
-#        echo "::warning file=wetransfer.com::$(cat wetransfer.log | grep https)"
