@@ -161,6 +161,7 @@ jobs:
     - name: 固件发布信息
       id: release
       uses: ncipollo/release-action@v1
+      if: env.PACKAGED_STATUS == 'success' && env.UPLOAD_RELEASE == 'true' && !cancelled()
       with:
         name: R${{ env.DATE }} for ${{ env.FILE_NAME }}
         allowUpdates: true
