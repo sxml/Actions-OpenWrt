@@ -177,14 +177,14 @@ jobs:
         artifacts: ${{ env.FIRMWARE }}/*
 
 
-    - name: Delete workflow runs
-      uses: GitRML/delete-workflow-runs@main
+    - name: 删除工作
+      uses: GitRML/delete-workflow-runs@master
       with:
         retain_days: 6
         keep_minimum_runs: 6
 
 
-    - name: Remove old Releases
+    - name: 删除旧版本
       uses: dev-drprasad/delete-older-releases@v0.2.0
       if: env.UPLOAD_RELEASE == 'true' && !cancelled()
       with:
