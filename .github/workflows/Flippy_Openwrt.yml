@@ -179,7 +179,7 @@ jobs:
 
 
     - name: 删除工作流程
-      uses: GitRML/delete-workflow-runs@master
+      uses: GitRML/delete-workflow-runs@main
       with:
         retain_days: 6
         keep_minimum_runs: 6
