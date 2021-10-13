@@ -88,7 +88,6 @@ jobs:
         echo "useVersionInfo=$useVersionInfo" >> $GITHUB_ENV
         echo "DATE=$(date "+%Y-%m-%d %H:%M:%S")" >> $GITHUB_ENV
         echo "DATE1=$(date "+%Y-%m-%d")" >> $GITHUB_ENV
-        echo "DATE2=$(date "+%Y%m%d%H%M")" >> $GITHUB_ENV
 #        echo "::set-env name=useVersionInfo::$useVersionInfo"
 #        echo "::set-env name=DATE::$(date "+%Y-%m-%d %H:%M:%S")"
 
@@ -149,7 +148,7 @@ jobs:
       id: release
       uses: ncipollo/release-action@v1
       with:
-        name: R${{ env.DATE2 }} for ${{ env.FILE_NAME }}
+        name: R${{ env.DATE }} for ${{ env.FILE_NAME }}
         allowUpdates: true
         tag: ${{ env.FILE_NAME }}
         commit: master
