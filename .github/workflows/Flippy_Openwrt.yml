@@ -149,9 +149,9 @@ jobs:
       id: release
       uses: ncipollo/release-action@v1
       with:
-        name: R${{ env.DATE }} for ${{ env.FILE_NAME }}
+        name: R${{ env.DATE2 }} for ${{ env.FILE_NAME }}
         allowUpdates: true
-        tag: R${{ env.DATE2 }} for ${{ env.FILE_NAME }}
+        tag: ${{ env.FILE_NAME }}
         commit: master
         token: ${{ secrets.RELEASES_TOKEN }}
         body: |
