@@ -177,7 +177,7 @@ jobs:
         artifacts: ${{ env.FIRMWARE }}/*
 
 
-    - name: 删除工作
+    - name: 删除工作流程
       uses: GitRML/delete-workflow-runs@master
       with:
         retain_days: 6
