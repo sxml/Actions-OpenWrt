@@ -154,8 +154,8 @@ jobs:
       with:
         name: OpenWrt_firmware${{ env.DEVICE_NAME }}${{ env.FILE_DATE }}
         path: ${{ env.FIRMWARE }}
-#        #retention-days: ${{ env.RECENT_LASTEST }}
-#        #if-no-files-found: ignor
+        #retention-days: ${{ env.RECENT_LASTEST }}
+        #if-no-files-found: ignor
 
 
     - name: 固件发布信息
