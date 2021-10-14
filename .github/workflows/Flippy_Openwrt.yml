@@ -103,7 +103,7 @@ jobs:
         sudo cp mk_*.tar.gz ../ && cd ..
         sudo tar xvzf mk_*.tar.gz
         cd /opt/openwrt
-        sudo wget $(curl -s https://api.github.com/repos/sxml/Actions-OpenWrt/releases/39397290 | grep browser_download_url | cut -d '"' -f 4)
+        sudo wget $(curl -s https://api.github.com/repos/sxml/Actions-OpenWrt/releases/51378035 | grep browser_download_url | cut -d '"' -f 4)
         chmod +x $GITHUB_WORKSPACE/$Update_Ver_SH
         sudo $GITHUB_WORKSPACE/$Update_Ver_SH
         sudo ./mk_s905d_n1.sh
