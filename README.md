@@ -1,7 +1,7 @@
                                                                                 折腾备注 
 
 
-                               SSH 连接操作 （SSH 现在只能 在线配置 提取.config用 不能编译固件 封号！！！）                                                                       
+                               SSH 连接操作 （SSH 在线配置 提取.config用  编译固件 小心封号！！！）                                                                       
 
 
     Actions→ 选择xxx.yml→ 然后单击Run workflow右侧的按钮。设置SSH connection to Actions 输入 true  点 Run workflow 运行
@@ -60,7 +60,7 @@
 【6】运行 Flippy打包 （Flippy_Openwrt.yml）
       
       完成
-      Releases/tag/ARMv8 标签里 下载
+      Releases/tag/ARMv8 标签里
 
   
   --------------------------------------------------------------------------------------
