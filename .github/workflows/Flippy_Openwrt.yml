@@ -148,7 +148,6 @@ jobs:
     - name: 固件发布信息
       id: release
       uses: ncipollo/release-action@v1
-      if: env.UPLOAD_RELEASE == 'true' && steps.organize.outputs.status == 'success' && !cancelled()
       with:
         name: R${{ env.DATE }} for ${{ env.FILE_NAME }}
         allowUpdates: true
@@ -164,19 +163,11 @@ jobs:
           参见 Files4Build 内记录
         artifacts: ${{ env.FIRMWARE }}/*
 
-    - name: 删除工作流
-      uses: GitRML/delete-workflow-runs@main
-      with:
-        retain_days: 6
-        keep_minimum_runs: 6
-
-    - name: 删除旧版本
-      uses: dev-drprasad/delete-older-releases@v0.2.0
+    - name: Remove old Releases
+      uses: dev-drprasad/delete-older-releases@v0.1.0
       if: env.UPLOAD_RELEASE == 'true' && !cancelled()
       with:
-        repo:
-        keep_latest: 6
-        delete_tag_pattern:
+        keep_latest: 1
         delete_tags: true
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
