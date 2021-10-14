@@ -43,7 +43,7 @@ env:
   #RECENT_LASTEST: 30 # bin文件和固件保留天数
   TZ: Asia/Shanghai
   FILE_NAME: ARMv8
-  PRODUCT_NAME: Flippy_Openwrt
+  PRODUCT_NAME: ARMv8
 
 jobs:
   build:
