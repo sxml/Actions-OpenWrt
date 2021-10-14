@@ -37,6 +37,7 @@ env:
   #SSH_ACTIONS: false
   UPLOAD_BIN_DIR: false
   UPLOAD_FIRMWARE: false
+  UPLOAD_RELEASE: true  
   #UPLOAD_COWTRANSFER: false
   #UPLOAD_WETRANSFER: false
   #RECENT_LASTEST: 30 # bin文件和固件保留天数
