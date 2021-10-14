@@ -6,7 +6,7 @@
 # https://github.com/P3TERX/Actions-OpenWrt
 # Description: Build OpenWrt using GitHub Actions
 #
-# 2021.10.14  Flippy打包
+# 2021.10.13  Flippy打包
 #
 name: Flippy打包
 
@@ -37,14 +37,12 @@ env:
   #SSH_ACTIONS: false
   UPLOAD_BIN_DIR: false
   UPLOAD_FIRMWARE: false
-  UPLOAD_RELEASE: true  
   #UPLOAD_COWTRANSFER: false
   #UPLOAD_WETRANSFER: false
-  #RECENT_LASTEST: 30 # bin文件和固件保留天数
+  RECENT_LASTEST: 30 # bin文件和固件保留天数
   TZ: Asia/Shanghai
   FILE_NAME: ARMv8
   PRODUCT_NAME: ARMv8
-
 jobs:
   build:
     runs-on: ubuntu-20.04
@@ -75,10 +73,6 @@ jobs:
         sudo mkdir -p /workdir
         sudo chown $USER:$GROUPS /workdir
 
-    #- name: 检查空间使用情况
-    #  if: (!cancelled())
-    #  run: df -hT
-
     - name: 克隆源代码
       working-directory: /workdir
       run: |
@@ -103,7 +97,7 @@ jobs:
         sudo cp mk_*.tar.gz ../ && cd ..
         sudo tar xvzf mk_*.tar.gz
         cd /opt/openwrt
-        sudo wget $(curl -s https://api.github.com/repos/sxml/Actions-OpenWrt/releases/51378035 | grep browser_download_url | cut -d '"' -f 4)
+        sudo wget $(curl -s https://api.github.com/repos/sxml/Actions-OpenWrt/releases/39397290 | grep browser_download_url | cut -d '"' -f 4)
         chmod +x $GITHUB_WORKSPACE/$Update_Ver_SH
         sudo $GITHUB_WORKSPACE/$Update_Ver_SH
         sudo ./mk_s905d_n1.sh
@@ -134,8 +128,8 @@ jobs:
       with:
         name: OpenWrt_bin${{ env.DEVICE_NAME }}${{ env.FILE_DATE }}
         path: openwrt/bin/targets/*/*/bin.tar.gz
-        #retention-days: ${{ env.RECENT_LASTEST }}
-        #if-no-files-found: ignore
+        retention-days: ${{ env.RECENT_LASTEST }}
+        if-no-files-found: ignore
 
     - name: 上传固件
       uses: actions/upload-artifact@master
@@ -143,8 +137,8 @@ jobs:
       with:
         name: OpenWrt_firmware${{ env.DEVICE_NAME }}${{ env.FILE_DATE }}
         path: ${{ env.FIRMWARE }}
-        #retention-days: ${{ env.RECENT_LASTEST }}
-        #if-no-files-found: ignore
+        retention-days: ${{ env.RECENT_LASTEST }}
+        if-no-files-found: ignore
 
     - name: 固件发布信息
       id: release
@@ -157,22 +151,13 @@ jobs:
         token: ${{ secrets.RELEASES_TOKEN }}
         body: |
           Flippy打包 
-          s905x3（X96-Max+, HK1-Box）
-          s905d（Phicomm-N1）
+          s905x3(X96-Max+,HK1-Box),s905d(Phicomm-N1)
           默认IP：192.168.2.1 默认密码： password
           当前使用版本:【编译前的最后一次[➦主源码](https://github.com/coolsnowwolf/lede)更新记录】
           参见 Files4Build 内记录
         artifacts: ${{ env.FIRMWARE }}/*
 
-    - name: Remove old Releases
-      uses: dev-drprasad/delete-older-releases@v0.1.0
-      if: env.UPLOAD_RELEASE == 'true' && !cancelled()
-      with:
-        keep_latest: 1
-        delete_tags: true
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        
     - name: 电报机器人信息通知
       if: steps.organize.outputs.status == 'success' && !cancelled()
       run: curl -k --data chat_id="${{ secrets.TELEGRAM_CHAT_ID }}" --data "text=${{ env.FILE_NAME }}打包完成" "https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage"
+
