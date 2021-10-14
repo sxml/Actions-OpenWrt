@@ -1,13 +1,7 @@
                                                                                 折腾备注 
 
 
-                               SSH 连接操作 （SSH 现在只能 在线配置 提取.config用 不能编译固件 封号！！！）
-
-在线配置.config  提取                                                                                     
-                                        UPLOAD_CONFIG: true
-
-
-      运行 编译*版op包 （Build_FOL.yml）                                                                                 
+                               SSH 连接操作 （SSH 现在只能 在线配置 提取.config用 不能编译固件 封号！！！）                                                                       
 
 
     Actions→ 选择xxx.yml→ 然后单击Run workflow右侧的按钮。设置SSH connection to Actions 输入 true  点 Run workflow 运行
@@ -33,40 +27,41 @@
       2 操作代码中心：设置→机密→新机密（名称：RELEASES_TOKEN，值：粘贴令牌的值）。
 
       Settings → Secrets → New secret
-telegram，电报推送消息 设置方法 https://github.com/danshui-git/shuoming/blob/master/bot.md
-
-       .yml文件里开启
+      
+     电报推送消息 设置方法 https://github.com/danshui-git/shuoming/blob/master/bot.md
 
        #- name: Telegram notification
-【2】在Releases 新建标签 Files4Compile
+       
+       
+【2】Releases 新建标签 Files
 
       手动上传 F大 打包文件
-【3】获取 Files4Compile 标签ID （F大打包文件的 ID） https://api.github.com/repos/sxml/Actions-OpenWrt/releases
-
+      
+【3】获取 Files 标签ID  （F大打包文件）  https://api.github.com/repos/sxml/Actions-OpenWrt/releases
+               
        https://api.github.com/repos/（github账号）/（ 项目名称）/releases 
   
      修改 aarch64/getImgs.sh
 
-wget $(curl -s https://api.github.com/repos/sxml/Actions-OpenWrt/releases/（Files4Compile 标签ID）
+    wget $(curl -s https://api.github.com/repos/sxml/Actions-OpenWrt/releases/（Files 标签ID）
+
 【4】Actions
 
     运行 编译*版op包 （Build_FOL.yml）
      
-     旧文件
-     #ARMv8_SFE.yml 编译
-     #ARMv8_FOL.yml 编译 
-【5】获取 Files4Build 标签ID https://api.github.com/repos/sxml/Actions-OpenWrt/releases
+     
+【5】获取 Build 标签ID
 
       修改 Flippy_Openwrt.yml 
   
-  sudo wget $(curl -s https://api.github.com/repos/sxml/Actions-OpenWrt/releases/（ARMv8_OpenWrt 标签ID )
+     sudo wget $(curl -s https://api.github.com/repos/sxml/Actions-OpenWrt/releases/（Build 标签ID )
      
-     旧文件 
-     #修改 ARMv8_Build.yml  (用 Files4Build ID)
+     
 【6】运行 Flippy打包 （Flippy_Openwrt.yml）
+      
+      完成
+      Releases/tag/ARMv8 标签里 下载
 
-  旧 #运行 
-  ARMv8_Build.yml 打包 
   
   --------------------------------------------------------------------------------------
   
