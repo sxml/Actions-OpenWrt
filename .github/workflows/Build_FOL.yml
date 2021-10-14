@@ -19,18 +19,13 @@ on:
 env:
   REPO_URL: https://github.com/coolsnowwolf/lede
   REPO_BRANCH: master
-  #FEEDS_CONF: feeds.conf.default
   CONFIG_FILE: aarch64/ARMv8_FOL.config
-  #DIY_P1_SH: diy-part1.sh
   DIY_P2_SH: diy-part2.sh
-  #MRG_ADD_SH: aarch64/ARMv8.sh
-  #Update_Ver_SH: aarch64/autoVersion.sh
-  #Get_Imgs_SH: aarch64/getImgs.sh
   #SSH_ACTIONS: false
   UPLOAD_BIN_DIR: false
   UPLOAD_FIRMWARE: false
   UPLOAD_CONFIG: false
-  RECENT_LASTEST: 10
+  #RECENT_LASTEST: 10
   TZ: Asia/Shanghai
   FILE_NAME: Build
   PRODUCT_NAME: Build
@@ -52,11 +47,12 @@ jobs:
       env:
         DEBIAN_FRONTEND: noninteractive
       run: |
-        sudo rm -rf /etc/apt/sources.list.d/* /usr/share/dotnet /usr/local/lib/android /opt/ghc
+        sudo rm -rf /etc/apt/sources.list.d/* /usr/share/dotnet /usr/local/lib/android /usr/lib/jvm /opt/ghc
         sudo -E apt-get -qq update
-        sudo -E apt-get -qq install $(curl -fsSL git.io/depends-ubuntu-2004)
-        sudo -E apt-get -qq install rename
+        sudo -E apt-get -qq install -y build-essential asciidoc binutils bzip2 gawk gettext git libncurses5-dev libz-dev patch python3 python2.7 unzip zlib1g-dev lib32gcc1 libc6-dev-i386 lib32stdc++6 subversion flex uglifyjs git-core gcc-multilib p7zip p7zip-full msmtp libssl-dev texinfo libglib2.0-dev xmlto qemu-utils upx libelf-dev autoconf automake libtool autopoint device-tree-compiler g++-multilib antlr3 gperf wget curl rename libpcap0.8-dev swig rsync
+        sudo -E apt-get -qq install pigz
         sudo -E apt-get -qq install time
+        sudo -E apt-get -qq install sshpass
         sudo -E apt-get -qq autoremove --purge
         sudo -E apt-get -qq clean
         sudo timedatectl set-timezone "$TZ"
@@ -131,7 +127,6 @@ jobs:
       run: |
         cd openwrt
         echo -e "$(nproc) thread compile"
-        make clean
         make -j$(nproc) || make -j1 || make -j1 V=s
         echo "::set-output name=status::success"
         grep '^CONFIG_TARGET.*DEVICE.*=y' .config | sed -r 's/.*DEVICE_(.*)=y/\1/' > DEVICE_NAME
@@ -163,8 +158,8 @@ jobs:
       with:
         name: OpenWrt_bin${{ env.DEVICE_NAME }}${{ env.FILE_DATE }}
         path: openwrt/bin/targets/*/*/bin.tar.gz
-        retention-days: ${{ env.RECENT_LASTEST }}
-        if-no-files-found: ignore
+        #retention-days: ${{ env.RECENT_LASTEST }}
+        #if-no-files-found: ignore
         
     - name: 上传固件
       uses: actions/upload-artifact@master
@@ -172,8 +167,8 @@ jobs:
       with:
         name: OpenWrt_firmware${{ env.DEVICE_NAME }}${{ env.FILE_DATE }}
         path: ${{ env.FIRMWARE }}
-        retention-days: ${{ env.RECENT_LASTEST }}
-        if-no-files-found: ignore
+        #retention-days: ${{ env.RECENT_LASTEST }}
+        #if-no-files-found: ignore
         
     - name: 固件发布信息
       id: release
