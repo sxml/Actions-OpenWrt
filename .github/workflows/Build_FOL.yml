@@ -32,8 +32,8 @@ env:
   UPLOAD_CONFIG: false
   RECENT_LASTEST: 10
   TZ: Asia/Shanghai
-  FILE_NAME: Files4Build
-  PRODUCT_NAME: Build_FOL
+  FILE_NAME: Build
+  PRODUCT_NAME: Build
 
 jobs:
   build:
