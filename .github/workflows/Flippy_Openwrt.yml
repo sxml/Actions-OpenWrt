@@ -1,5 +1,4 @@
- # Copyright (c) 2019-2020 P3TERX <https://p3terx.com>
-
+# Copyright (c) 2019-2020 P3TERX <https://p3terx.com>
 #
 # This is free software, licensed under the MIT License.
 # See /LICENSE for more information.
@@ -10,7 +9,6 @@
 # 2021.10.14  Flippy打包
 #
 name: Flippy打包
-
 
 on:
   repository_dispatch:
@@ -27,7 +25,6 @@ on:
 #  schedule:
 #    - cron: 0 22 * 11 *
 
-
 env:
   REPO_URL: https://github.com/coolsnowwolf/lede
   REPO_BRANCH: master
@@ -40,7 +37,6 @@ env:
   #SSH_ACTIONS: false
   UPLOAD_BIN_DIR: false
   UPLOAD_FIRMWARE: false
-  UPLOAD_RELEASE: true
   #UPLOAD_COWTRANSFER: false
   #UPLOAD_WETRANSFER: false
   #RECENT_LASTEST: 30 # bin文件和固件保留天数
@@ -52,7 +48,6 @@ jobs:
     runs-on: ubuntu-20.04
     if: github.event.repository.owner.id == github.event.sender.id
 
-
     name: Flippy打包
     strategy:
       fail-fast: false
@@ -60,7 +55,6 @@ jobs:
     steps:
     - name: 准备
       uses: actions/checkout@master
-
 
     - name: 部署编译环境
       env:
@@ -79,11 +73,9 @@ jobs:
         sudo mkdir -p /workdir
         sudo chown $USER:$GROUPS /workdir
 
-
-    - name: 检查空间使用情况
-      if: (!cancelled())
-      run: df -hT
-
+    #- name: 检查空间使用情况
+    #  if: (!cancelled())
+    #  run: df -hT
 
     - name: 克隆源代码
       working-directory: /workdir
@@ -98,7 +90,6 @@ jobs:
         echo "DATE1=$(date "+%Y-%m-%d")" >> $GITHUB_ENV
 #        echo "::set-env name=useVersionInfo::$useVersionInfo"
 #        echo "::set-env name=DATE::$(date "+%Y-%m-%d %H:%M:%S")"
-
 
     - name: 打包固件
       id: build
@@ -122,7 +113,6 @@ jobs:
         sudo cp ./*AllPackages.tar.gz ./tmp/
         echo "::set-output name=status::success"
 
-
     - name: 整理文件
       id: organize
       if: steps.build.outputs.status == 'success' && !cancelled()
@@ -132,11 +122,9 @@ jobs:
         echo "FIRMWARE=$PWD" >> $GITHUB_ENV
         echo "::set-output name=status::success"
 
-
     - name: 编译后硬盘容量
       if: (!cancelled())
       run: df -hT
-
 
     - name: 上传bin文件夹
       uses: actions/upload-artifact@master
@@ -144,9 +132,8 @@ jobs:
       with:
         name: OpenWrt_bin${{ env.DEVICE_NAME }}${{ env.FILE_DATE }}
         path: openwrt/bin/targets/*/*/bin.tar.gz
-        #retention-days: ${{ env.RECENT_LASTEST }
-        #if-no-files-found: ignor
-
+        #retention-days: ${{ env.RECENT_LASTEST }}
+        #if-no-files-found: ignore
 
     - name: 上传固件
       uses: actions/upload-artifact@master
@@ -155,13 +142,12 @@ jobs:
         name: OpenWrt_firmware${{ env.DEVICE_NAME }}${{ env.FILE_DATE }}
         path: ${{ env.FIRMWARE }}
         #retention-days: ${{ env.RECENT_LASTEST }}
-        #if-no-files-found: ignor
-
+        #if-no-files-found: ignore
 
     - name: 固件发布信息
       id: release
       uses: ncipollo/release-action@v1
-      if: env.PACKAGED_STATUS == 'success' && env.UPLOAD_RELEASE == 'true' && !cancelled()
+      if: env.UPLOAD_RELEASE == 'true' && steps.organize.outputs.status == 'success' && !cancelled()
       with:
         name: R${{ env.DATE }} for ${{ env.FILE_NAME }}
         allowUpdates: true
@@ -177,13 +163,11 @@ jobs:
           参见 Files4Build 内记录
         artifacts: ${{ env.FIRMWARE }}/*
 
-
-    - name: 删除工作流程
+    - name: 删除工作流
       uses: GitRML/delete-workflow-runs@main
       with:
         retain_days: 6
         keep_minimum_runs: 6
-
 
     - name: 删除旧版本
       uses: dev-drprasad/delete-older-releases@v0.2.0
@@ -195,8 +179,7 @@ jobs:
         delete_tags: true
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-
+        
     - name: 电报机器人信息通知
       if: steps.organize.outputs.status == 'success' && !cancelled()
       run: curl -k --data chat_id="${{ secrets.TELEGRAM_CHAT_ID }}" --data "text=${{ env.FILE_NAME }}打包完成" "https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage"
