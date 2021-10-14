@@ -47,7 +47,7 @@
 
 【4】Actions
 
-    运行 编译*版op包 （Build_FOL.yml）
+    运行-编译op包-x版（Build_FOL.yml）
      
      
 【5】获取 Build 标签ID
