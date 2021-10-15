@@ -6,7 +6,7 @@
 # https://github.com/P3TERX/Actions-OpenWrt
 # Description: Build OpenWrt using GitHub Actions
 #
-# 2021.10.14  Flippy打包加删除测试
+# 2021.10.15  Flippy打包加删除旧版本测试
 #
 name: Flippy打包
 
@@ -39,6 +39,8 @@ env:
   UPLOAD_FIRMWARE: false
   #UPLOAD_COWTRANSFER: false
   #UPLOAD_WETRANSFER: false
+  DELETE_RELEASE: true    # 删除旧版本   
+  DELETE_ARTIFACTS: true  # 删除旧的工作流程运行和工件
   RECENT_LASTEST: 30 # bin文件和固件保留天数
   TZ: Asia/Shanghai
   FILE_NAME: ARMv8
