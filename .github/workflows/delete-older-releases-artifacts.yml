@@ -27,7 +27,7 @@ jobs:
       if: env.DELETE_RELEASE == 'true'
       with:
         keep_latest: ${{ env.KEEP_MININUM_RELEASE }}   # 指定created_at要保留的最新版本数（按 排序）。通0如果要删除所有版本
-        delete_tag_pattern: beta # defaults to ""      # 指定要匹配的模式。如果未指定，则将针对每个版本。如果指定，例如，使用此选项删除旧的 Beta 版本。
+        delete_tag_pattern: ARMv81             # defaults to ""      # 指定要匹配的模式。如果未指定，则将针对每个版本。如果指定，例如，使用此选项删除旧的 Beta 版本。
         delete_tags: true                              #指定是否删除与旧版本关联的标签。不会删除没有任何关联版本的旧标签
       env:
         GITHUB_TOKEN: ${{ secrets.RELEASES_TOKEN }}    # 令牌
