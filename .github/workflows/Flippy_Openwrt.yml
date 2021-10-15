@@ -6,42 +6,23 @@
 # https://github.com/P3TERX/Actions-OpenWrt
 # Description: Build OpenWrt using GitHub Actions
 #
-# 2021.10.15  Flippy打包加删除旧版本测试
+# 2021.10.15  Flippy打包加删除旧版本测试2
 #
 name: Flippy打包
 
 on:
   repository_dispatch:
   workflow_dispatch:
-#    inputs:
-#      days:
-#        description: 'Number of days.'
-#        required: true
-#        default: 60
-#      minimum_runs:
-#        description: 'The minimum runs to keep for each workflow.'
-#        required: true
-#        default: 6
 #  schedule:
 #    - cron: 0 22 * 11 *
 
 env:
   REPO_URL: https://github.com/coolsnowwolf/lede
   REPO_BRANCH: master
-  #FEEDS_CONF: feeds.conf.default
-  #DIY_P1_SH: diy-part1.sh
-  DIY_P2_SH: diy-part2.sh
-  #MRG_ADD_SH: aarch64/ARMv8.sh
   Update_Ver_SH: aarch64/autoVersion.sh
   Get_Imgs_SH: aarch64/getImgs.sh
-  #SSH_ACTIONS: false
-  UPLOAD_BIN_DIR: false
-  UPLOAD_FIRMWARE: false
-  #UPLOAD_COWTRANSFER: false
-  #UPLOAD_WETRANSFER: false
   DELETE_RELEASE: true    # 删除旧版本   
   DELETE_ARTIFACTS: true  # 删除旧的工作流程运行和工件
-  #RECENT_LASTEST: 30 # bin文件和固件保留天数
   TZ: Asia/Shanghai
   FILE_NAME: ARMv8
   PRODUCT_NAME: ARMv8
@@ -85,9 +66,7 @@ jobs:
         useVersionInfo=$(git show -s --date=short --format="Author: %an<br/>date: %cd<br/>commit: %s<br/>commit hash: %H")
         echo "useVersionInfo=$useVersionInfo" >> $GITHUB_ENV
         echo "DATE=$(date "+%Y-%m-%d %H:%M:%S")" >> $GITHUB_ENV
-        echo "DATE1=$(date "+%Y-%m-%d")" >> $GITHUB_ENV
-#        echo "::set-env name=useVersionInfo::$useVersionInfo"
-#        echo "::set-env name=DATE::$(date "+%Y-%m-%d %H:%M:%S")"
+        echo "DATE1=$(date "+%Y%m%d%H%M")" >> $GITHUB_ENV
 
     - name: 打包固件
       id: build
@@ -123,34 +102,6 @@ jobs:
     - name: 编译后硬盘容量
       if: (!cancelled())
       run: df -hT
-
-    - name: 上传bin文件夹
-      uses: actions/upload-artifact@master
-      if: steps.compile.outputs.status == 'success' && env.UPLOAD_BIN_DIR == 'true'
-      with:
-        name: OpenWrt_bin${{ env.DEVICE_NAME }}${{ env.FILE_DATE }}
-        path: openwrt/bin/targets/*/*/bin.tar.gz
-        retention-days: ${{ env.RECENT_LASTEST }}
-        if-no-files-found: ignore
-
-    - name: 上传固件
-      uses: actions/upload-artifact@master
-      if: env.UPLOAD_FIRMWARE == 'true' && steps.organize.outputs.status == 'success' && !cancelled()
-      with:
-        name: OpenWrt_firmware${{ env.DEVICE_NAME }}${{ env.FILE_DATE }}
-        path: ${{ env.FIRMWARE }}
-        retention-days: ${{ env.RECENT_LASTEST }}
-        if-no-files-found: ignore
-
-    - name: 删除旧版本
-      uses: dev-drprasad/delete-older-releases@master
-      if: env.DELETE_RELEASE == 'true'
-      with:
-        keep_latest: 0                               # 要保留的最新版本数 0删除所有版本
-        delete_tag_pattern: ${{ env.FILE_NAME }}     # 指定标签
-        delete_tags: true                            #指定是否删除与旧版本关联的标签
-      env:
-        GITHUB_TOKEN: ${{ secrets.RELEASES_TOKEN }}  # 令牌
         
     - name: 固件发布信息
       id: release
@@ -158,7 +109,7 @@ jobs:
       with:
         name: R${{ env.DATE }} for ${{ env.FILE_NAME }}
         allowUpdates: true
-        tag: ${{ env.FILE_NAME }}
+        tag: ${{ env.FILE_NAME }}-${{ env.DATE1 }}
         commit: master
         token: ${{ secrets.RELEASES_TOKEN }}
         body: |
@@ -169,6 +120,16 @@ jobs:
           参见 Build 内记录
         artifacts: ${{ env.FIRMWARE }}/*
       
+    - name: 删除旧版本
+      uses: dev-drprasad/delete-older-releases@master
+      if: env.DELETE_RELEASE == 'true'
+      with:
+        keep_latest: 0                               # 要保留的最新版本数 0删除所有版本
+        delete_tag_pattern: ${{ env.FILE_NAME }}     # 指定标签
+        delete_tags: true                            #指定是否删除与旧版本关联的标签
+      env:
+        GITHUB_TOKEN: ${{ secrets.RELEASES_TOKEN }}  # 令牌
+
     - name: 删除旧的工作流程运行和工件
       uses: Mattraks/delete-workflow-runs@main
       if: env.DELETE_ARTIFACTS == 'true'
