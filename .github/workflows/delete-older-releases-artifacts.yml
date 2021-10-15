@@ -1,0 +1,42 @@
+name: 删除旧版本和工件
+
+on:
+  repository_dispatch:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 23 * * 0'
+
+env:
+  DELETE_RELEASE: true       
+  DELETE_ARTIFACTS: true
+  KEEP_DAY: 1
+  KEEP_MININUM_RUNS: 0
+  KEEP_MININUM_RELEASE: 22
+
+jobs:
+  build:
+    runs-on: ubuntu-20.04
+    if: github.event.repository.owner.id == github.event.sender.id
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@main
+
+    - name: 删除旧版本
+      uses: dev-drprasad/delete-older-releases@master
+      if: env.DELETE_RELEASE == 'true'
+      with:
+        keep_latest: ${{ env.KEEP_MININUM_RELEASE }}   # 指定created_at要保留的最新版本数（按 排序）。通0如果要删除所有版本
+        delete_tag_pattern: beta # defaults to ""      # 指定要匹配的模式。如果未指定，则将针对每个版本。如果指定，例如，使用此选项删除旧的 Beta 版本。
+        delete_tags: true                              #指定是否删除与旧版本关联的标签。不会删除没有任何关联版本的旧标签
+      env:
+        GITHUB_TOKEN: ${{ secrets.RELEASES_TOKEN }}    # 令牌
+
+    - name: 删除旧的工作流程运行和工件
+      uses: Mattraks/delete-workflow-runs@main
+      if: env.DELETE_ARTIFACTS == 'true'
+      with:
+        token: ${{ secrets.RELEASES_TOKEN }}      # 令牌
+        repository: ${{ github.repository }}    # repository 默认：${{ github.repository }} 运行工作流的存储库的名称。
+        retain_days: ${{ env.KEEP_DAY }}        #  retain_days 默认值：90 用于与每个工作流的保留天数进行比较的天数。        
+        keep_minimum_runs: ${{ env.KEEP_MININUM_RUNS }} # keep_minimum_runs: 默认值：6 为每个工作流程保留的最少运行次数
