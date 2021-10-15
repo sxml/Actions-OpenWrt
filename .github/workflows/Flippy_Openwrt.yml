@@ -124,7 +124,7 @@ jobs:
       uses: dev-drprasad/delete-older-releases@master
       if: env.DELETE_RELEASE == 'true'
       with:
-        keep_latest: 0                               # 要保留的最新版本数 0删除所有版本
+        keep_latest: 2                               # 要保留的最新版本数 0删除所有版本
         delete_tag_pattern: ${{ env.FILE_NAME }}     # 指定标签
         delete_tags: true                            #指定是否删除与旧版本关联的标签
       env:
@@ -137,7 +137,7 @@ jobs:
         token: ${{ secrets.RELEASES_TOKEN }}    # 令牌
         repository: ${{ github.repository }}    # 运行工作流的存储库的名称。
         retain_days: 1                          # 工作流的保留天数进行比较的天数       
-        keep_minimum_runs: 3                    # 工作流程保留的最少运行次数
+        keep_minimum_runs: 0                    # 工作流程保留的最少运行次数
    
     - name: 电报机器人信息通知
       if: steps.organize.outputs.status == 'success' && !cancelled()
