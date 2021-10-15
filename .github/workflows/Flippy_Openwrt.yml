@@ -6,7 +6,7 @@
 # https://github.com/P3TERX/Actions-OpenWrt
 # Description: Build OpenWrt using GitHub Actions
 #
-# 2021.10.13  Flippy打包
+# 2021.10.14  Flippy打包加删除测试
 #
 name: Flippy打包
 
@@ -97,7 +97,7 @@ jobs:
         sudo cp mk_*.tar.gz ../ && cd ..
         sudo tar xvzf mk_*.tar.gz
         cd /opt/openwrt
-        sudo wget $(curl -s https://api.github.com/repos/sxml/Actions-OpenWrt/releases/51378035 | grep browser_download_url | cut -d '"' -f 4)
+        sudo wget $(curl -s https://api.github.com/repos/sxml/Actions-OpenWrt/releases/39397290 | grep browser_download_url | cut -d '"' -f 4)
         chmod +x $GITHUB_WORKSPACE/$Update_Ver_SH
         sudo $GITHUB_WORKSPACE/$Update_Ver_SH
         sudo ./mk_s905d_n1.sh
@@ -140,6 +140,16 @@ jobs:
         retention-days: ${{ env.RECENT_LASTEST }}
         if-no-files-found: ignore
 
+    - name: 删除旧版本
+      uses: dev-drprasad/delete-older-releases@master
+      if: env.DELETE_RELEASE == 'true'
+      with:
+        keep_latest: 1                               # 要保留的最新版本数 0删除所有版本
+        delete_tag_pattern: ${{ env.FILE_NAME }}     # 指定标签
+        delete_tags: true                            #指定是否删除与旧版本关联的标签
+      env:
+        GITHUB_TOKEN: ${{ secrets.RELEASES_TOKEN }}  # 令牌
+        
     - name: 固件发布信息
       id: release
       uses: ncipollo/release-action@v1
@@ -156,7 +166,16 @@ jobs:
           当前使用版本:【编译前的最后一次[➦主源码](https://github.com/coolsnowwolf/lede)更新记录】
           参见 Build 内记录
         artifacts: ${{ env.FIRMWARE }}/*
-
+      
+    - name: 删除旧的工作流程运行和工件
+      uses: Mattraks/delete-workflow-runs@main
+      if: env.DELETE_ARTIFACTS == 'true'
+      with:
+        token: ${{ secrets.RELEASES_TOKEN }}    # 令牌
+        repository: ${{ github.repository }}    # 运行工作流的存储库的名称。
+        retain_days: 1                          # 工作流的保留天数进行比较的天数       
+        keep_minimum_runs: 3                    # 工作流程保留的最少运行次数
+   
     - name: 电报机器人信息通知
       if: steps.organize.outputs.status == 'success' && !cancelled()
       run: curl -k --data chat_id="${{ secrets.TELEGRAM_CHAT_ID }}" --data "text=${{ env.FILE_NAME }}打包完成" "https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage"
