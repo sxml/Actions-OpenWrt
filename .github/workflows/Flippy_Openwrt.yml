@@ -6,7 +6,7 @@
 # https://github.com/P3TERX/Actions-OpenWrt
 # Description: Build OpenWrt using GitHub Actions
 #
-# 2021.10.15  Flippy打包加删除旧版本测试2
+# 2021.10.16  Flippy打包
 #
 name: Flippy打包
 
@@ -26,6 +26,7 @@ env:
   TZ: Asia/Shanghai
   FILE_NAME: ARMv8
   PRODUCT_NAME: ARMv8
+
 jobs:
   build:
     runs-on: ubuntu-20.04
