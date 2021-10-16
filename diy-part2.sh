@@ -1,6 +1,6 @@
 #!/bin/bash
 #============================================================
-# 2021-10-11
+# 2021-10-16
 # https://github.com/P3TERX/Actions-OpenWrt
 # File name: diy-part2.sh
 # Description: OpenWrt DIY script part 2 (After Update feeds)
@@ -17,7 +17,7 @@ sed -i 's/LUCI_DEPENDS.*/LUCI_DEPENDS:=\@\(arm\|\|aarch64\)/g' package/lean/luci
 sed -i 's/services/system/g' package/lean/luci-app-cpufreq/luasrc/controller/cpufreq.lua
 
 # 编译缺少upx依赖 添加这看看
-git clone https://github.com/kuoruan/openwrt-upx.git package/openwrt-upx
+#git clone https://github.com/kuoruan/openwrt-upx.git package/openwrt-upx
 
 #SSR
 svn co https://github.com/fw876/helloworld/trunk/luci-app-ssr-plus package/luci-app-ssr-plus
