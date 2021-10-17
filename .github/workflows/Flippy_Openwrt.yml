@@ -114,10 +114,11 @@ jobs:
         commit: master
         token: ${{ secrets.RELEASES_TOKEN }}
         body: |
-          Flippy打包 自用无wifi 
+          Flippy打包,自用无wifi 
           s905x3(X96-Max+,HK1-Box),s905d(Phicomm-N1)
           +o（带Flowoffload加速,SFE加速),+（带Flowoffload加速)
           默认IP：192.168.2.1 默认密码： password
+          当前使用版本:【编译前的最后一次[➦主源码](https://github.com/coolsnowwolf/lede)更新记录】
         artifacts: ${{ env.FIRMWARE }}/*
       
     - name: 删除旧版本
