@@ -1,5 +1,5 @@
 #
-# 2021.10.16  编译op包
+# 2021.10.17  编译op包
 #
 
 name: 编译op包-F版
@@ -20,7 +20,7 @@ env:
   UPLOAD_CONFIG: false
   TZ: Asia/Shanghai
   FILE_NAME: Build
-  PRODUCT_NAME: Build
+  PRODUCT_NAME: Build_FOL
 
 jobs:
   build:
@@ -128,7 +128,7 @@ jobs:
       id: release
       uses: ncipollo/release-action@v1
       with:
-        name: R${{ env.DATE }}
+        name: ${{ env.FILE_NAME }} R${{ env.DATE }}
         allowUpdates: true
         tag: ${{ env.FILE_NAME }}
         commit: master
