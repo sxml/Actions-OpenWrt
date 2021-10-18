@@ -12,6 +12,8 @@
 rm -rf package/lean/luci-app-dockerman
 rm -rf package/lean/luci-app-wrtbwmon
 rm -rf feeds/packages/net/smartdns
+rm -rf package/feeds/kenzok/luci-app-smartdns/luci-app-smartdns
+
 
 #readd cpufreq for aarch64 cpu调频
 sed -i 's/LUCI_DEPENDS.*/LUCI_DEPENDS:=\@\(arm\|\|aarch64\)/g' package/lean/luci-app-cpufreq/Makefile
@@ -49,11 +51,8 @@ git clone https://github.com/jerrykuku/lua-maxminddb.git package/lua-maxminddb
 #svn co https://github.com/kenzok8/openwrt-packages/trunk/luci-app-eqos package/luci-app-eqos
 
 #添加smartdns
-#svn co https://github.com/kenzok8/openwrt-packages/trunk/luci-app-smartdns package/luci-app-smartdns
-#svn co https://github.com/garypang13/openwrt-packages/trunk/smartdns-le package/smartdns-le
-svn co https://github.com/kenzok8/openwrt-packages/trunk/smartdns package/smartdns
-svn co https://github.com/garypang13/openwrt-packages/trunk/smartdns-le package/smartdns-le
 svn co https://github.com/kenzok8/openwrt-packages/trunk/luci-app-smartdns package/luci-app-smartdns
+svn co https://github.com/kenzok8/openwrt-packages/trunk/smartdns package/smartdns
 
 #文件助手
 svn co https://github.com/Lienol/openwrt-package/trunk/luci-app-fileassistant package/luci-app-fileassistant
