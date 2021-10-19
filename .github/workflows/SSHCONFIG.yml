@@ -1,7 +1,3 @@
-#
-# 2021.10.11  提取config
-#
-
 name: 提取config
 on:
   repository_dispatch:
@@ -17,12 +13,14 @@ env:
   REPO_URL: https://github.com/coolsnowwolf/lede
   REPO_BRANCH: master
   CONFIG_FILE: aarch64/ARMv8_FOL.config
+  #CONFIG_FILE: aarch64/ARMv8_SF.config   
   DIY_P2_SH: diy-part2.sh
   SSH_ACTIONS: false
   UPLOAD_CONFIG: true
+  DELETE_ARTIFACTS: true   # 删除旧的工作流程运行和工件
   TZ: Asia/Shanghai
-  FILE_NAME: Files4Build
-  PRODUCT_NAME: Build_FOL
+  FILE_NAME: config
+  PRODUCT_NAME: Build_config
 
 jobs:
   build:
@@ -62,7 +60,7 @@ jobs:
         useVersionInfo=$(git show -s --date=short --format="Author: %an<br/>date: %cd<br/>commit: %s<br/>commit hash: %H")
         echo "useVersionInfo=$useVersionInfo" >> $GITHUB_ENV
         echo "DATE=$(date "+%Y-%m-%d %H:%M:%S")" >> $GITHUB_ENV
-        echo "DATE1=$(date "+%Y-%m-%d")" >> $GITHUB_ENV
+        echo "DATE1=$(date "+%Y.%m.%d.%H%M")" >> $GITHUB_ENV
 
     - name: 更新软件包
       run: cd openwrt && ./scripts/feeds update -a
@@ -97,13 +95,22 @@ jobs:
       uses: actions/upload-artifact@master
       if: env.UPLOAD_CONFIG == 'true'
       with:
-        name: .config_${{ env.DEVICE_NAME }}${{ env.FILE_DATE }}
+        name: ${{ env.FILE_NAME }}-${{ env.DATE1 }}-
         path: config.txt
         
     - name: 检查空间使用情况
       if: (!cancelled())
       run: df -hT
 
+    - name: 删除旧的工作流程运行和工件
+      uses: Mattraks/delete-workflow-runs@main
+      if: env.DELETE_ARTIFACTS == 'true'
+      with:
+        token: ${{ secrets.RELEASES_TOKEN }}    # 令牌
+        repository: ${{ github.repository }}    # 运行工作流的存储库的名称。
+        retain_days: 1                          # 工作流的保留天数进行比较的天数       
+        keep_minimum_runs: 0                    # 工作流程保留的最少运行次数
+        
     - name: 取消编译
       uses: potiuk/cancel-workflow-runs@master
       with:
