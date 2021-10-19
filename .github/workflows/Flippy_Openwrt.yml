@@ -6,7 +6,7 @@
 # https://github.com/P3TERX/Actions-OpenWrt
 # Description: Build OpenWrt using GitHub Actions
 #
-# 2021.10.17  Flippy打包
+# 2021.10.19  Flippy打包
 #
 name: Flippy打包
 
@@ -114,11 +114,10 @@ jobs:
         commit: master
         token: ${{ secrets.RELEASES_TOKEN }}
         body: |
-          Flippy打包,自用无wifi 
-          s905x3(X96-Max+,HK1-Box),s905d(Phicomm-N1)
-          +o（带Flowoffload加速,SFE加速),+（带Flowoffload加速)
           默认IP：192.168.2.1 默认密码： password
-          当前使用版本:【编译前的最后一次[➦主源码](https://github.com/coolsnowwolf/lede)更新记录】
+          Flippy打包,自用无wifi 
+          s905x3(X96-Max+),s905d(Phicomm-N1)
+          +o版（带Flowoffload加速,SFE加速),+版（带Flowoffload加速)
         artifacts: ${{ env.FIRMWARE }}/*
       
     - name: 删除旧版本
