@@ -15,6 +15,7 @@ rm -rf feeds/packages/net/smartdns
 
 # 应用商店
 svn co https://github.com/kenzok8/openwrt-packages/trunk/luci-app-store package/luci-app-store
+svn co https://github.com/linkease/istore-ui/trunk/app-store-ui package/app-store-ui
 
 # aliyundrive webdav
 svn co https://github.com/messense/aliyundrive-webdav/trunk/openwrt/aliyundrive-webdav package/aliyundrive-webdav
