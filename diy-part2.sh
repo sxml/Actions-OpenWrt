@@ -1,6 +1,6 @@
 #!/bin/bash
 #============================================================
-# 2021-10-20
+# 2021-10-19
 # https://github.com/P3TERX/Actions-OpenWrt
 # File name: diy-part2.sh
 # Description: OpenWrt DIY script part 2 (After Update feeds)
@@ -13,19 +13,15 @@ rm -rf package/lean/luci-app-dockerman
 rm -rf package/lean/luci-app-wrtbwmon
 rm -rf feeds/packages/net/smartdns
 
-# 应用商店
-svn co https://github.com/linkease/istore/trunk/luci/luci-app-store package/luci-app-store
-svn co https://github.com/linkease/istore-ui/trunk/app-store-ui package/app-store-ui
-
 # aliyundrive webdav
 svn co https://github.com/messense/aliyundrive-webdav/trunk/openwrt/aliyundrive-webdav package/aliyundrive-webdav
 svn co https://github.com/messense/aliyundrive-webdav/trunk/openwrt/luci-app-aliyundrive-webdav package/luci-app-aliyundrive-webdav
 
 #添加smartdns
-svn co https://github.com/kenzok8/openwrt-packages/trunk/luci-app-smartdns package/luci-app-smartdns
-svn co https://github.com/kenzok8/openwrt-packages/trunk/smartdns package/smartdns
-#svn co https://github.com/liuran001/openwrt-packages/trunk/luci-app-smartdns package/luci-app-smartdns
-#svn co https://github.com/liuran001/openwrt-packages/trunk/smartdns package/smartdns
+#svn co https://github.com/kenzok8/openwrt-packages/trunk/luci-app-smartdns package/luci-app-smartdns
+#svn co https://github.com/kenzok8/openwrt-packages/trunk/smartdns package/smartdns
+svn co https://github.com/liuran001/openwrt-packages/trunk/luci-app-smartdns package/luci-app-smartdns
+svn co https://github.com/liuran001/openwrt-packages/trunk/smartdns package/smartdns
 
 #SSR-plus
 svn co https://github.com/fw876/helloworld/trunk/luci-app-ssr-plus package/luci-app-ssr-plus
@@ -84,7 +80,7 @@ svn co https://github.com/Leo-Jo-My/luci-theme-opentomcat/trunk package/luci-the
 # 编译缺少upx依赖 添加这看看
 #git clone https://github.com/kuoruan/openwrt-upx.git package/openwrt-upx
 
-sed -i 's/"NAS"/"网络存储"/g' grep "NAS" -rl ./
+sed -i 's/"网络存储"/"NAS"/g' `grep "网络存储" -rl ./`
 
 #readd cpufreq for aarch64 cpu调频
 sed -i 's/LUCI_DEPENDS.*/LUCI_DEPENDS:=\@\(arm\|\|aarch64\)/g' package/lean/luci-app-cpufreq/Makefile
