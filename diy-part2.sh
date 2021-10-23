@@ -77,10 +77,8 @@ svn co https://github.com/Leo-Jo-My/luci-theme-opentomcat/trunk package/luci-the
 #git reset --hard ff7773abbf71120fc39a276393b29ba47353a7e2 && cp -r luci-app-wrtbwmon ../package/
 #cd ..
 
-# 编译缺少upx依赖 添加这看看
-#git clone https://github.com/kuoruan/openwrt-upx.git package/openwrt-upx
-
-sed -i 's/"网络存储"/"NAS"/g' `grep "网络存储" -rl ./`
+# 编译缺少upx依赖
+git clone https://github.com/kuoruan/openwrt-upx.git package/openwrt-upx
 
 #readd cpufreq for aarch64 cpu调频
 sed -i 's/LUCI_DEPENDS.*/LUCI_DEPENDS:=\@\(arm\|\|aarch64\)/g' package/lean/luci-app-cpufreq/Makefile
