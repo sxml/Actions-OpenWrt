@@ -124,7 +124,7 @@ jobs:
       uses: dev-drprasad/delete-older-releases@master
       if: env.DELETE_RELEASE == 'true'
       with:
-        keep_latest: 3                               # 要保留的最新版本数 0删除所有版本
+        keep_latest: 2                               # 要保留的最新版本数 0删除所有版本
         delete_tag_pattern: ${{ env.FILE_NAME }}     # 指定标签
         delete_tags: true                            #指定是否删除与旧版本关联的标签
       env:
