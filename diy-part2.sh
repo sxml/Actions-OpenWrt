@@ -1,6 +1,6 @@
 #!/bin/bash
 #============================================================
-# 2021-10-19
+# 2021-10-27
 # https://github.com/P3TERX/Actions-OpenWrt
 # File name: diy-part2.sh
 # Description: OpenWrt DIY script part 2 (After Update feeds)
@@ -40,6 +40,9 @@ svn co https://github.com/fw876/helloworld/trunk/shadowsocksr-libev package/shad
 svn co https://github.com/fw876/helloworld/trunk/v2ray-plugin package/v2ray-plugin
 svn co https://github.com/fw876/helloworld/trunk/v2ray-core package/v2ray-core
 svn co https://github.com/xiaorouji/openwrt-passwall/trunk/hysteria package/hysteria
+svn co https://github.com/xiaorouji/openwrt-passwall/trunk/simple-obfs package/simple-obfs
+svn co https://github.com/xiaorouji/openwrt-passwall/trunk/kcptun package/kcptun
+svn co https://github.com/xiaorouji/openwrt-passwall/trunk/trojan package/trojan
 
 #naiveproxy代理
 svn co https://github.com/fw876/helloworld/trunk/naiveproxy package/naiveproxy
@@ -77,7 +80,7 @@ svn co https://github.com/Leo-Jo-My/luci-theme-opentomcat/trunk package/luci-the
 #git reset --hard ff7773abbf71120fc39a276393b29ba47353a7e2 && cp -r luci-app-wrtbwmon ../package/
 #cd ..
 
-# 编译缺少upx依赖
+# 编译缺少upx依赖 添加这看看
 #git clone https://github.com/kuoruan/openwrt-upx.git package/openwrt-upx
 
 #readd cpufreq for aarch64 cpu调频
