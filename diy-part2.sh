@@ -1,6 +1,6 @@
 #!/bin/bash
 #============================================================
-# 2021-10-27
+# 2021-10-28
 # https://github.com/P3TERX/Actions-OpenWrt
 # File name: diy-part2.sh
 # Description: OpenWrt DIY script part 2 (After Update feeds)
@@ -13,6 +13,10 @@ rm -rf package/lean/luci-app-dockerman
 rm -rf package/lean/luci-app-wrtbwmon
 rm -rf feeds/packages/net/smartdns
 
+# luci-app-mosdns
+svn co https://github.com/QiuSimons/openwrt-mos/trunk/luci-app-mosdns package/luci-app-mosdns
+svn co https://github.com/QiuSimons/openwrt-mos/trunk/mosdns package/mosdns
+
 # aliyundrive webdav
 svn co https://github.com/messense/aliyundrive-webdav/trunk/openwrt/aliyundrive-webdav package/aliyundrive-webdav
 svn co https://github.com/messense/aliyundrive-webdav/trunk/openwrt/luci-app-aliyundrive-webdav package/luci-app-aliyundrive-webdav
@@ -20,8 +24,8 @@ svn co https://github.com/messense/aliyundrive-webdav/trunk/openwrt/luci-app-ali
 #添加smartdns
 #svn co https://github.com/kenzok8/openwrt-packages/trunk/luci-app-smartdns package/luci-app-smartdns
 #svn co https://github.com/kenzok8/openwrt-packages/trunk/smartdns package/smartdns
-svn co https://github.com/liuran001/openwrt-packages/trunk/luci-app-smartdns package/luci-app-smartdns
-svn co https://github.com/liuran001/openwrt-packages/trunk/smartdns package/smartdns
+#svn co https://github.com/liuran001/openwrt-packages/trunk/luci-app-smartdns package/luci-app-smartdns
+#svn co https://github.com/liuran001/openwrt-packages/trunk/smartdns package/smartdns
 
 #SSR-plus
 svn co https://github.com/fw876/helloworld/trunk/luci-app-ssr-plus package/luci-app-ssr-plus
