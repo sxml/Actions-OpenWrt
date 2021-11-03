@@ -6,7 +6,7 @@
 # https://github.com/P3TERX/Actions-OpenWrt
 # Description: Build OpenWrt using GitHub Actions
 #
-# 2021.11.1  Flippy打包
+# 2021.11.3  Flippy打包
 #
 name: Flippy打包
 
@@ -83,11 +83,9 @@ jobs:
         chmod +x $GITHUB_WORKSPACE/$Update_Ver_SH
         sudo $GITHUB_WORKSPACE/$Update_Ver_SH
         sudo ./mk_s905d_n1.sh
-        sudo ./mk_s905d_n1_fol.sh
-        #sudo ./mk_s905d_n1_plus.sh
+        sudo ./mk_s905d_n1_SF.sh
         sudo ./mk_s905x3_multi.sh
-        sudo ./mk_s905x3_multi_fol.sh
-        #sudo ./mk_s905x3_multi_plus.sh
+        sudo ./mk_s905x3_multi_SF.sh
         #sudo cp ./*AllPackages.tar.gz ./output/
         sudo cp ./files/update-amlogic-openwrt.sh ./output/
         echo "::set-output name=status::success"
