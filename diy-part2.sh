@@ -1,6 +1,6 @@
 #!/bin/bash
 #============================================================
-# 2021-12-20
+# # 2021-01-01
 # https://github.com/P3TERX/Actions-OpenWrt
 # File name: diy-part2.sh
 # Description: OpenWrt DIY script part 2 (After Update feeds)
@@ -14,8 +14,8 @@ rm -rf package/lean/luci-app-wrtbwmon
 rm -rf feeds/packages/net/smartdns
 
 # luci-app-mosdns
-svn co https://github.com/QiuSimons/openwrt-mos/trunk/luci-app-mosdns package/luci-app-mosdns
-svn co https://github.com/QiuSimons/openwrt-mos/trunk/mosdns package/mosdns
+#svn co https://github.com/QiuSimons/openwrt-mos/trunk/luci-app-mosdns package/luci-app-mosdns
+#svn co https://github.com/QiuSimons/openwrt-mos/trunk/mosdns package/mosdns
 
 # aliyundrive webdav
 svn co https://github.com/messense/aliyundrive-webdav/trunk/openwrt/aliyundrive-webdav package/aliyundrive-webdav
