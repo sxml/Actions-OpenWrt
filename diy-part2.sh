@@ -1,6 +1,6 @@
 #!/bin/bash
 #============================================================
-# # 2021-01-01
+# # 2021-03-02
 # https://github.com/P3TERX/Actions-OpenWrt
 # File name: diy-part2.sh
 # Description: OpenWrt DIY script part 2 (After Update feeds)
@@ -57,7 +57,7 @@ git clone https://github.com/jerrykuku/lua-maxminddb.git package/lua-maxminddb
 svn co https://github.com/Lienol/openwrt-package/trunk/luci-app-fileassistant package/luci-app-fileassistant
 
 #京东
-git clone https://github.com/jerrykuku/luci-app-jd-dailybonus.git package/luci-app-jd-dailybonus
+#git clone https://github.com/jerrykuku/luci-app-jd-dailybonus.git package/luci-app-jd-dailybonus
 
 #添加luci-app-amlogic
 svn co https://github.com/ophub/luci-app-amlogic/trunk/luci-app-amlogic package/luci-app-amlogic
