@@ -47,7 +47,7 @@ svn co https://github.com/fw876/helloworld/trunk/v2ray-plugin package/v2ray-plug
 svn co https://github.com/fw876/helloworld/trunk/v2ray-core package/v2ray-core
 svn co https://github.com/xiaorouji/openwrt-passwall/trunk/hysteria package/hysteria
 svn co https://github.com/xiaorouji/openwrt-passwall/trunk/simple-obfs package/simple-obfs
-git clone https://github.com/sxml/luci-app-kcptun.git package/kcptun
+#git clone https://github.com/sxml/luci-app-kcptun.git package/kcptun
 svn co https://github.com/xiaorouji/openwrt-passwall/trunk/trojan package/trojan
 
 #naiveproxy代理
@@ -87,7 +87,7 @@ svn co https://github.com/Leo-Jo-My/luci-theme-opentomcat/trunk package/luci-the
 #cd ..
 
 #kcptun
-git clone https://github.com/sxml/luci-app-kcptun.git package/luci-app-kcptun
+#git clone https://github.com/sxml/luci-app-kcptun.git package/luci-app-kcptun
 
 # 编译缺少upx依赖 添加这看看
 #git clone https://github.com/kuoruan/openwrt-upx.git package/openwrt-upx
