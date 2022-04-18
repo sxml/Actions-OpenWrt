@@ -42,6 +42,8 @@ svn co https://github.com/fw876/helloworld/trunk/shadowsocks-rust package/shadow
 svn co https://github.com/fw876/helloworld/trunk/shadowsocksr-libev package/shadowsocksr-libev
 svn co https://github.com/fw876/helloworld/trunk/v2ray-plugin package/v2ray-plugin
 svn co https://github.com/fw876/helloworld/trunk/v2ray-core package/v2ray-core
+svn co https://github.com/fw876/helloworld/trunk/v2ray-geodata package/v2ray-geodata
+svn co https://github.com/xiaorouji/openwrt-passwall/trunk/pdnsd-alt package/pdnsd-alt
 svn co https://github.com/xiaorouji/openwrt-passwall/trunk/hysteria package/hysteria
 svn co https://github.com/xiaorouji/openwrt-passwall/trunk/simple-obfs package/simple-obfs
 #git clone https://github.com/sxml/luci-app-kcptun.git package/kcptun
