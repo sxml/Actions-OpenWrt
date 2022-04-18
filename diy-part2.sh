@@ -1,6 +1,6 @@
 #!/bin/bash
 #============================================================
-# # 2021-04-14
+# # 2021-04-18
 # https://github.com/P3TERX/Actions-OpenWrt
 # File name: diy-part2.sh
 # Description: OpenWrt DIY script part 2 (After Update feeds)
@@ -10,12 +10,9 @@
 #============================================================
 #移除不用软件包
 rm -rf package/lean/luci-app-dockerman
-#rm -rf package/lean/luci-app-wrtbwmon
+rm -rf package/lean/luci-app-wrtbwmon
 rm -rf feeds/packages/net/smartdns
 
-# luci-app-mosdns
-#svn co https://github.com/QiuSimons/openwrt-mos/trunk/luci-app-mosdns package/luci-app-mosdns
-#svn co https://github.com/QiuSimons/openwrt-mos/trunk/mosdns package/mosdns
 
 # aliyundrive webdav
 svn co https://github.com/messense/aliyundrive-webdav/trunk/openwrt/aliyundrive-webdav package/aliyundrive-webdav
@@ -32,7 +29,7 @@ svn co https://github.com/fw876/helloworld/trunk/luci-app-ssr-plus package/luci-
 #passwall
 #svn co https://github.com/xiaorouji/openwrt-passwall/trunk/luci-app-passwall package/luci-app-passwall
 svn co https://github.com/kenzok8/openwrt-packages/trunk/luci-app-passwall package/luci-app-passwall
-#svn co https://github.com/xiaorouji/openwrt-passwall2/trunk/luci-app-passwall2 package/luci-app-passwall2
+svn co https://github.com/xiaorouji/openwrt-passwall2/trunk/luci-app-passwall2 package/luci-app-passwall2
 svn co https://github.com/xiaorouji/openwrt-passwall/trunk/ssocks package/ssocks
 svn co https://github.com/xiaorouji/openwrt-passwall/trunk/brook package/brook
 svn co https://github.com/xiaorouji/openwrt-passwall/trunk/chinadns-ng package/chinadns-ng
@@ -58,9 +55,6 @@ git clone https://github.com/jerrykuku/lua-maxminddb.git package/lua-maxminddb
 #文件助手
 svn co https://github.com/Lienol/openwrt-package/trunk/luci-app-fileassistant package/luci-app-fileassistant
 
-#京东
-#git clone https://github.com/jerrykuku/luci-app-jd-dailybonus.git package/luci-app-jd-dailybonus
-
 #添加luci-app-amlogic
 svn co https://github.com/ophub/luci-app-amlogic/trunk/luci-app-amlogic package/luci-app-amlogic
 #修改晶晨宝盒默认配置
@@ -80,12 +74,17 @@ svn co https://github.com/Leo-Jo-My/luci-theme-opentomcat/trunk package/luci-the
 #svn co https://github.com/kenzok8/openwrt-packages/trunk/luci-app-eqos package/luci-app-eqos
 
 # 流量监控
-#svn co https://github.com/brvphoenix/wrtbwmon/trunk/wrtbwmon package/wrtbwmon
-#git clone https://github.com/brvphoenix/luci-app-wrtbwmon
-#cd luci-app-wrtbwmon
-#git reset --hard ff7773abbf71120fc39a276393b29ba47353a7e2 && cp -r luci-app-wrtbwmon ../package/
-#cd ..
+svn co https://github.com/brvphoenix/wrtbwmon/trunk/wrtbwmon package/wrtbwmon
+git clone https://github.com/brvphoenix/luci-app-wrtbwmon
+cd luci-app-wrtbwmon
+git reset --hard ff7773abbf71120fc39a276393b29ba47353a7e2 && cp -r luci-app-wrtbwmon ../package/
+cd ..
 
+# luci-app-mosdns
+#svn co https://github.com/QiuSimons/openwrt-mos/trunk/luci-app-mosdns package/luci-app-mosdns
+#svn co https://github.com/QiuSimons/openwrt-mos/trunk/mosdns package/mosdns
+#京东
+#git clone https://github.com/jerrykuku/luci-app-jd-dailybonus.git package/luci-app-jd-dailybonus
 #kcptun
 #git clone https://github.com/sxml/luci-app-kcptun.git package/luci-app-kcptun
 
