@@ -116,7 +116,7 @@ jobs:
           默认IP：192.168.2.1 默认密码： password
           Flippy打包,自用无wifi 
           s905x3(X96-Max+),s905d(Phicomm-N1)
-          +o版（带Flowoffload加速,SFE加速),+版（带Flowoffload加速)
+          +o版 +版（Flowoffload加速+SFE加速)
         artifacts: ${{ env.FIRMWARE }}/*
       
     - name: 删除旧版本
