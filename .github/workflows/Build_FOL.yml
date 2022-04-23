@@ -78,6 +78,13 @@ jobs:
         echo "DATE=$(date "+%Y-%m-%d %H:%M:%S")" >> $GITHUB_ENV
         echo "DATE1=$(date "+%Y-%m-%d")" >> $GITHUB_ENV
 
+    - name: 缓存加速
+      uses: klever1988/cachewrtbuild@main
+      with:
+        ccache: 'true'
+        clean: 'false'
+        prefix: ${{ github.workspace }}/openwrt
+
     - name: 更新软件包
       run: cd openwrt && ./scripts/feeds update -a
 
@@ -94,12 +101,6 @@ jobs:
         sed -i 's/192.168.1.1/192.168.2.1/g' package/base-files/files/bin/config_generate
         sed -i 's/OpenWrt/MRG AutoBuild ${{ env.DATE1 }} @ OpenWrt/g' package/lean/default-settings/files/zzz-default-settings
 
-    - name: 缓存加速
-      uses: klever1988/cachewrtbuild@main
-      with:
-        ccache: 'true'
-        prefix: ${{ github.workspace }}/openwrt
-        
     - name: 下载软件包
       id: package
       run: |
