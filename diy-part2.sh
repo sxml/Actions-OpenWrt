@@ -13,7 +13,6 @@ rm -rf package/lean/luci-app-dockerman
 rm -rf package/lean/luci-app-wrtbwmon
 rm -rf feeds/packages/net/smartdns
 
-
 #添加smartdns
 #svn co https://github.com/kenzok8/openwrt-packages/trunk/luci-app-smartdns package/luci-app-smartdns
 #svn co https://github.com/kenzok8/openwrt-packages/trunk/smartdns package/smartdns
@@ -93,10 +92,6 @@ svn co https://github.com/Leo-Jo-My/luci-theme-opentomcat/trunk package/luci-the
 
 # 编译缺少upx依赖 添加这看看
 #git clone https://github.com/kuoruan/openwrt-upx.git package/openwrt-upx
-
-#readd cpufreq for aarch64 cpu调频
-#sed -i 's/LUCI_DEPENDS.*/LUCI_DEPENDS:=\@\(arm\|\|aarch64\)/g' package/lean/luci-app-cpufreq/Makefile
-#sed -i 's/services/system/g' package/lean/luci-app-cpufreq/luasrc/controller/cpufreq.lua
 
 #修改makefile
 find package/*/ -maxdepth 2 -path "*/Makefile" | xargs -i sed -i 's/include\ \.\.\/\.\.\/luci\.mk/include \$(TOPDIR)\/feeds\/luci\/luci\.mk/g' {}
