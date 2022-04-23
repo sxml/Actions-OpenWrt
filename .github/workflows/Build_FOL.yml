@@ -31,7 +31,7 @@ jobs:
     steps:
     - name: 准备
       uses: actions/checkout@master
-	  
+ 
     - name: 检查服务器性能
       run: |
         echo "警告⚠"
