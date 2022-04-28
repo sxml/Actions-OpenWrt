@@ -9,8 +9,8 @@
 # Blog: https://p3terx.com 
 #============================================================
 #移除不用软件包
-rm -rf feeds/luci/applications/luci-app-dockerman
-#rm -rf feeds/luci/applications/luci-app-wrtbwmon
+rm -rf package/lean/luci-app-dockerman
+#rm -rf package/lean/luci-app-wrtbwmon
 rm -rf feeds/packages/net/smartdns
 
 #添加smartdns
@@ -63,8 +63,8 @@ sed -i "s|ARMv8|ARMv8|g" package/luci-app-amlogic/root/etc/config/amlogic
 # 3.设置 Releases 里 OpenWrt 文件的后缀
 sed -i "s|.img.gz|.img.gz|g" package/luci-app-amlogic/root/etc/config/amlogic
 # 4.设置 OpenWrt 内核的下载路径
-#sed -i "s|opt/kernel|BuildARMv8|g" package/luci-app-amlogic/root/etc/config/amlogic
-sed -i "s|http.*/library|https://github.com/breakings/OpenWrt/tree/main/opt/kernel|g" package/luci-app-amlogic/root/etc/config/amlogic
+sed -i "s|opt/kernel|BuildARMv8|g" package/luci-app-amlogic/root/etc/config/amlogic
+#sed -i "s|http.*/library|https://github.com/breakings/OpenWrt/tree/main/opt/kernel|g" package/luci-app-amlogic/root/etc/config/amlogic
 
 # themes 主题
 svn co https://github.com/Leo-Jo-My/luci-theme-opentomcat/trunk package/luci-theme-opentomcat
