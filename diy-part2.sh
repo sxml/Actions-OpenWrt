@@ -9,8 +9,8 @@
 # Blog: https://p3terx.com 
 #============================================================
 #移除不用软件包
-rm -rf package/lean/luci-app-dockerman
-#rm -rf package/lean/luci-app-wrtbwmon
+rm -rf feeds/luci/applications/luci-app-dockerman
+#rm -rf feeds/luci/applications/luci-app-wrtbwmon
 rm -rf feeds/packages/net/smartdns
 
 #添加smartdns
