@@ -1,6 +1,6 @@
 #!/bin/bash
 #============================================================
-# # 2021-04-22
+# # 2021-05-12
 # https://github.com/P3TERX/Actions-OpenWrt
 # File name: diy-part2.sh
 # Description: OpenWrt DIY script part 2 (After Update feeds)
@@ -45,6 +45,8 @@ svn co https://github.com/xiaorouji/openwrt-passwall/trunk/hysteria package/hyst
 svn co https://github.com/xiaorouji/openwrt-passwall/trunk/simple-obfs package/simple-obfs
 #git clone https://github.com/sxml/luci-app-kcptun.git package/kcptun
 svn co https://github.com/xiaorouji/openwrt-passwall/trunk/trojan package/trojan
+svn co https://github.com/xiaorouji/openwrt-passwall/trunk/pdnsd-alt package/pdnsd-alt
+svn co https://github.com/xiaorouji/openwrt-passwall/trunk/dns2tcp package/dns2tcp
 
 #naiveproxy代理
 svn co https://github.com/fw876/helloworld/trunk/naiveproxy package/naiveproxy
