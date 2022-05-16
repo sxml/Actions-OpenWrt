@@ -4,7 +4,7 @@
                                SSH 连接操作 （SSH 在线配置 提取.config用  编译固件 小心封号！！！）                                                                       
 
 
-    Actions→ 选择xxx.yml→ 然后单击Run workflow右侧的按钮。设置SSH connection to Actions 输入 true  点 Run workflow 运行
+    Actions→ 选择 提取config.yml→ 然后单击Run workflow右侧的按钮。设置SSH connection to Actions 输入 true  点 Run workflow 运行
 
     页面运行到SSH connection to Actions 点击显示的连接 进入SSH
 
