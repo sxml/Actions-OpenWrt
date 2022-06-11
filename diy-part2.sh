@@ -47,7 +47,8 @@ svn co https://github.com/xiaorouji/openwrt-passwall/trunk/simple-obfs package/s
 svn co https://github.com/xiaorouji/openwrt-passwall/trunk/trojan package/trojan
 svn co https://github.com/xiaorouji/openwrt-passwall/trunk/pdnsd-alt package/pdnsd-alt
 svn co https://github.com/xiaorouji/openwrt-passwall/trunk/dns2tcp package/dns2tcp
-svn co https://github.com/xiaorouji/openwrt-passwall/trunk/sagernet-core package/sagernet-core
+#svn co https://github.com/xiaorouji/openwrt-passwall/trunk/sagernet-core package/sagernet-core
+svn co https://github.com/fw876/helloworld/trunk/sagernet-core package/sagernet-core
 
 #naiveproxy代理
 svn co https://github.com/fw876/helloworld/trunk/naiveproxy package/naiveproxy
