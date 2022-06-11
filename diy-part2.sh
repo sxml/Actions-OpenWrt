@@ -1,6 +1,6 @@
 #!/bin/bash
 #============================================================
-# # 2021-05-19
+# # 2021-06-11
 # https://github.com/P3TERX/Actions-OpenWrt
 # File name: diy-part2.sh
 # Description: OpenWrt DIY script part 2 (After Update feeds)
@@ -47,7 +47,7 @@ svn co https://github.com/xiaorouji/openwrt-passwall/trunk/simple-obfs package/s
 svn co https://github.com/xiaorouji/openwrt-passwall/trunk/trojan package/trojan
 svn co https://github.com/xiaorouji/openwrt-passwall/trunk/pdnsd-alt package/pdnsd-alt
 svn co https://github.com/xiaorouji/openwrt-passwall/trunk/dns2tcp package/dns2tcp
-#svn co https://github.com/xiaorouji/openwrt-passwall/trunk/sagernet-core package/sagernet-core
+svn co https://github.com/xiaorouji/openwrt-passwall/trunk/sagernet-core package/sagernet-core
 
 #naiveproxy代理
 svn co https://github.com/fw876/helloworld/trunk/naiveproxy package/naiveproxy
@@ -74,7 +74,7 @@ sed -i "s|http.*/library|https://github.com/breakings/OpenWrt/tree/main/opt/kern
 svn co https://github.com/Leo-Jo-My/luci-theme-opentomcat/trunk package/luci-theme-opentomcat
 
 #依IP地址限速
-svn co https://github.com/kenzok8/openwrt-packages/trunk/luci-app-eqos package/luci-app-eqos
+#svn co https://github.com/kenzok8/openwrt-packages/trunk/luci-app-eqos package/luci-app-eqos
 
 # 流量监控
 #svn co https://github.com/brvphoenix/wrtbwmon/trunk/wrtbwmon package/wrtbwmon
