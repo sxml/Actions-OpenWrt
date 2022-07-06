@@ -12,8 +12,8 @@ on:
 env:
   REPO_URL: https://github.com/coolsnowwolf/lede
   REPO_BRANCH: master
-  #CONFIG_FILE: aarch64/ARMv8_FOL.config
-  CONFIG_FILE: aarch64/ARMv8_SF.config   
+  CONFIG_FILE: aarch64/SSHCONFIG.config
+  #CONFIG_FILE: aarch64/ARMv8_SF.config   
   DIY_P2_SH: diy-part2.sh
   SSH_ACTIONS: false
   UPLOAD_CONFIG: true
