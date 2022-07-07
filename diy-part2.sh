@@ -1,6 +1,6 @@
 #!/bin/bash
 #============================================================
-# # 2021-07-0602
+# # 2021-07-07
 # https://github.com/P3TERX/Actions-OpenWrt
 # File name: diy-part2.sh
 # Description: OpenWrt DIY script part 2 (After Update feeds)
@@ -47,6 +47,9 @@ svn co https://github.com/xiaorouji/openwrt-passwall/trunk/simple-obfs package/s
 svn co https://github.com/xiaorouji/openwrt-passwall/trunk/trojan package/trojan
 svn co https://github.com/xiaorouji/openwrt-passwall/trunk/dns2tcp package/dns2tcp
 svn co https://github.com/fw876/helloworld/trunk/sagernet-core package/sagernet-core
+svn co https://github.com/xiaorouji/openwrt-passwall/trunk/microsocks package/microsocks
+svn co https://github.com/xiaorouji/openwrt-passwall/trunk/dns2socks package/dns2socks
+svn co https://github.com/xiaorouji/openwrt-passwall/trunk/ipt2socks package/ipt2socks
 
 #naiveproxy代理
 svn co https://github.com/fw876/helloworld/trunk/naiveproxy package/naiveproxy
@@ -83,8 +86,8 @@ svn co https://github.com/Leo-Jo-My/luci-theme-opentomcat/trunk package/luci-the
 #cd ..
 
 #阿里云盘
-#svn co https://github.com/messense/aliyundrive-webdav/trunk/openwrt/aliyundrive-webdav package/aliyundrive-webdav
-#svn co https://github.com/messense/aliyundrive-webdav/trunk/openwrt/luci-app-aliyundrive-webdav package/luci-app-aliyundrive-webdav
+svn co https://github.com/messense/aliyundrive-webdav/trunk/openwrt/aliyundrive-webdav package/aliyundrive-webdav
+svn co https://github.com/messense/aliyundrive-webdav/trunk/openwrt/luci-app-aliyundrive-webdav package/luci-app-aliyundrive-webdav
 
 # luci-app-mosdns
 #svn co https://github.com/QiuSimons/openwrt-mos/trunk/luci-app-mosdns package/luci-app-mosdns
@@ -96,6 +99,15 @@ svn co https://github.com/Leo-Jo-My/luci-theme-opentomcat/trunk package/luci-the
 
 # 编译缺少upx依赖 添加这看看
 #git clone https://github.com/kuoruan/openwrt-upx.git package/openwrt-upx
+
+# python3  （20220707试 python-cryptography 报错 和pip问题）
+#sed -i 's/PYTHON3_SETUPTOOLS_VERSION:=.*/PYTHON3_SETUPTOOLS_VERSION:=63.1.0/g' feeds/packages/lang/python/python3-version.mk
+#sed -i 's/PYTHON3_PIP_VERSION:=.*/PYTHON3_PIP_VERSION:=22.1.2/g' feeds/packages/lang/python/python3-version.mk
+
+# python-cryptography
+#rm -rf feeds/packages/lang/python/python-cryptography
+#svn co https://github.com/openwrt/packages/trunk/lang/python/python-cryptography feeds/packages/lang/python/python-cryptography
+
 
 #修改makefile
 find package/*/ -maxdepth 2 -path "*/Makefile" | xargs -i sed -i 's/include\ \.\.\/\.\.\/luci\.mk/include \$(TOPDIR)\/feeds\/luci\/luci\.mk/g' {}
