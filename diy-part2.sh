@@ -105,8 +105,8 @@ sed -i 's/PYTHON3_SETUPTOOLS_VERSION:=.*/PYTHON3_SETUPTOOLS_VERSION:=63.1.0/g' f
 sed -i 's/PYTHON3_PIP_VERSION:=.*/PYTHON3_PIP_VERSION:=22.1.2/g' feeds/packages/lang/python/python3-version.mk
 
 # python-cryptography
-rm -rf feeds/packages/lang/python/python-cryptography
-svn co https://github.com/openwrt/packages/trunk/lang/python/python-cryptography feeds/packages/lang/python/python-cryptography
+#rm -rf feeds/packages/lang/python/python-cryptography
+#svn co https://github.com/openwrt/packages/trunk/lang/python/python-cryptography feeds/packages/lang/python/python-cryptography
 
 
 #修改makefile
