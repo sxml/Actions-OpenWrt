@@ -1,5 +1,5 @@
 WHOAMI=sxml
-OPENWRT_VER="R22.7.7"
+OPENWRT_VER="R22.8.2"
 # 5.4内核是否启用wifi 1:启用 0.禁用
 ENABLE_WIFI_K504=0
 # 5.10内核是否启用wifi 1:启用 0.禁用
