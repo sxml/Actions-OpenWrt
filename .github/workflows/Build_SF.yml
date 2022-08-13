@@ -78,12 +78,12 @@ jobs:
         echo "DATE=$(date "+%Y-%m-%d %H:%M:%S")" >> $GITHUB_ENV
         echo "DATE1=$(date "+%Y-%m-%d")" >> $GITHUB_ENV
 
-    - name: 缓存加速
-      uses: klever1988/cachewrtbuild@main
-      with:
-        ccache: 'true'
-        clean: 'false'
-        prefix: ${{ github.workspace }}/openwrt
+#    - name: 缓存加速
+#      uses: klever1988/cachewrtbuild@main
+#      with:
+#        ccache: 'true'
+#        clean: 'false'
+#        prefix: ${{ github.workspace }}/openwrt
 
     - name: 更新软件包
       run: cd openwrt && ./scripts/feeds update -a
