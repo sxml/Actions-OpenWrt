@@ -50,6 +50,7 @@ svn co https://github.com/fw876/helloworld/trunk/sagernet-core package/sagernet-
 svn co https://github.com/xiaorouji/openwrt-passwall/trunk/microsocks package/microsocks
 svn co https://github.com/xiaorouji/openwrt-passwall/trunk/dns2socks package/dns2socks
 svn co https://github.com/xiaorouji/openwrt-passwall/trunk/ipt2socks package/ipt2socks
+svn co https://github.com/fw876/helloworld/trunk/lua-neturl package/lua-neturl
 
 #naiveproxy代理
 svn co https://github.com/fw876/helloworld/trunk/naiveproxy package/naiveproxy
