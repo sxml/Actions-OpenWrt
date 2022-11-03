@@ -1,6 +1,6 @@
 #!/bin/bash
 #============================================================
-# # 2021-09-7
+# # 2021-11-03
 # https://github.com/P3TERX/Actions-OpenWrt
 # File name: diy-part2.sh
 # Description: OpenWrt DIY script part 2 (After Update feeds)
@@ -58,7 +58,8 @@ svn co https://github.com/fw876/helloworld/trunk/naiveproxy package/naiveproxy
 git clone https://github.com/jerrykuku/lua-maxminddb.git package/lua-maxminddb
 
 #文件助手
-svn co https://github.com/Lienol/openwrt-package/trunk/luci-app-fileassistant package/luci-app-fileassistant
+#svn co https://github.com/Lienol/openwrt-package/trunk/luci-app-fileassistant package/luci-app-fileassistant
+svn co https://github.com/kenzok8/openwrt-packages/trunk/luci-app-fileassistant package/luci-app-fileassistant
 
 #添加luci-app-amlogic
 svn co https://github.com/ophub/luci-app-amlogic/trunk/luci-app-amlogic package/luci-app-amlogic
@@ -75,6 +76,10 @@ sed -i "s|http.*/library|https://github.com/breakings/OpenWrt/tree/main/opt/kern
 
 # themes 主题
 svn co https://github.com/Leo-Jo-My/luci-theme-opentomcat/trunk package/luci-theme-opentomcat
+svn co https://github.com/kenzok8/openwrt-packages/trunk/luci-theme-argonne package/luci-theme-argonne
+svn co https://github.com/kenzok8/openwrt-packages/trunk/luci-theme-tomato package/luci-theme-tomato
+svn co https://github.com/kenzok8/openwrt-packages/trunk/luci-theme-neobird package/luci-theme-neobird
+#svn co https://github.com/thinktip/luci-theme-neobird/trunk package/luci-theme-neobird
 
 #依IP地址限速
 #svn co https://github.com/kenzok8/openwrt-packages/trunk/luci-app-eqos package/luci-app-eqos
@@ -86,11 +91,11 @@ svn co https://github.com/Leo-Jo-My/luci-theme-opentomcat/trunk package/luci-the
 #git reset --hard ff7773abbf71120fc39a276393b29ba47353a7e2 && cp -r luci-app-wrtbwmon ../package/
 #cd ..
 
-svn co https://github.com/vernesong/OpenClash/trunk/luci-app-openclash package/luci-app-openclash
+#svn co https://github.com/vernesong/OpenClash/trunk/luci-app-openclash package/luci-app-openclash
 # 编译 po2lmo (如果有po2lmo可跳过)
-pushd package/luci-app-openclash/tools/po2lmo
-make && sudo make install
-popd
+#pushd package/luci-app-openclash/tools/po2lmo
+#make && sudo make install
+#popd
 
 #修改makefile
 find package/*/ -maxdepth 2 -path "*/Makefile" | xargs -i sed -i 's/include\ \.\.\/\.\.\/luci\.mk/include \$(TOPDIR)\/feeds\/luci\/luci\.mk/g' {}
