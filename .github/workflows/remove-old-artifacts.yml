@@ -6,6 +6,10 @@ on:
 #  schedule:
 #    - cron: 0 22 * 11 *
 
+env:
+  DELETE_RELEASE: true    # 删除旧版本   
+  DELETE_ARTIFACTS: true  # 删除旧的工作流程运行和工件
+
 jobs:
   remove-old-artifacts:
     runs-on: ubuntu-latest
