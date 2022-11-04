@@ -1,42 +1,31 @@
 name: 删除旧工件
+
 on:
-  repository_dispatch:
-  workflow_dispatch:
-    inputs:
-      ssh:
-        description: 'SSH connection to Actions'
-        required: false
-        default: 'false'
+  schedule:
+    # Every day at 1am
+    #- cron: '0 2 * * *'
+  watch:
+    types: started
 
 jobs:
-  build:
-    runs-on: ubuntu-20.04
-    if: github.event.repository.owner.id == github.event.sender.id
+  remove-old-artifacts:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3600
 
     name: 删除旧工件
     strategy:
       fail-fast: false
-      
+	  
     steps:
-    - name: 准备
-      uses: actions/checkout@master
-        
-    - name: 检查空间使用情况
-      if: (!cancelled())
-      run: df -hT
-
-    - name: 删除旧的工作流程运行和工件
-      uses: Mattraks/delete-workflow-runs@main
-      if: env.DELETE_ARTIFACTS == 'true'
+    #- name: Remove old artifacts
+    #  uses: c-hive/gha-remove-artifacts@v1
+    #  with:
+    #     age: '1 month'
+         #Optional inputs
+         #skip-tags: true
+         #skip-recent: 5
+    - name: Delete workflow runs
+      uses: GitRML/delete-workflow-runs@main
       with:
-        token: ${{ secrets.RELEASES_TOKEN }}    # 令牌
-        repository: ${{ github.repository }}    # 运行工作流的存储库的名称。
-        retain_days: 1                          # 工作流的保留天数进行比较的天数       
-        keep_minimum_runs: 0                    # 工作流程保留的最少运行次数
-        
-    - name: 取消编译
-      uses: potiuk/cancel-workflow-runs@master
-      with:
-        cancelMode: self
-        notifyPRCancel: true
-        token: ${{ secrets.RELEASES_TOKEN }}
+        retain_days: 14
+        keep_minimum_runs: 10
