@@ -6,7 +6,7 @@
 # https://github.com/P3TERX/Actions-OpenWrt
 # Description: Build OpenWrt using GitHub Actions
 #
-# 2022.05.16-01  Flippy打包
+# 2022.11.04  Flippy打包
 #
 name: Flippy打包
 
@@ -94,7 +94,7 @@ jobs:
         sudo ./mk_s905x3_multi_plus.sh
         #sudo cp ./*AllPackages.tar.gz ./output/
         sudo cp ./files/update-amlogic-openwrt.sh ./output/
-        echo "::set-output name=status::success"
+        echo "status=success" >> $GITHUB_OUTPUT
 
     - name: 整理文件
       id: organize
@@ -103,7 +103,7 @@ jobs:
         cd /opt/openwrt_packit/output
         pigz -6 -p $(nproc) *.img
         echo "FIRMWARE=$PWD" >> $GITHUB_ENV
-        echo "::set-output name=status::success"
+        echo "status=success" >> $GITHUB_OUTPUT
 
     - name: 编译后硬盘容量
       if: (!cancelled())
