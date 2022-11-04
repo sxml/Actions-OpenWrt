@@ -23,11 +23,8 @@ jobs:
          #Optional inputs
          #skip-tags: true
          #skip-recent: 5
-    - name: 删除旧的工作流程运行和工件
-      uses: Mattraks/delete-workflow-runs@main
-      if: env.DELETE_ARTIFACTS == 'true'
+    - name: Delete workflow runs
+      uses: GitRML/delete-workflow-runs@main
       with:
-        token: ${{ secrets.RELEASES_TOKEN }}    # 令牌
-        repository: ${{ github.repository }}    # 运行工作流的存储库的名称。
-        retain_days: 1                          # 工作流的保留天数进行比较的天数       
-        keep_minimum_runs: 0                    # 工作流程保留的最少运行次数
+        retain_days: 1
+        keep_minimum_runs: 10
