@@ -92,11 +92,6 @@ svn co https://github.com/kenzok8/openwrt-packages/trunk/luci-theme-tomato packa
 svn co https://github.com/kenzok8/openwrt-packages/trunk/luci-theme-neobird package/luci-theme-neobird
 #svn co https://github.com/thinktip/luci-theme-neobird/trunk package/luci-theme-neobird
 
-# libnetfilter-conntrack
-sed -i 's/PKG_VERSION:=.*/PKG_VERSION:=1.0.9/g' package/libs/libnetfilter-conntrack/Makefile
-sed -i 's/PKG_HASH:=.*/PKG_HASH:=67bd9df49fe34e8b82144f6dfb93b320f384a8ea59727e92ff8d18b5f4b579a8/g' package/libs/libnetfilter-conntrack/Makefile
-cp -rf $GITHUB_WORKSPACE/general/libnetfilter-conntrack/patches package/libs/libnetfilter-conntrack
-
 #svn co https://github.com/vernesong/OpenClash/trunk/luci-app-openclash package/luci-app-openclash
 # 编译 po2lmo (如果有po2lmo可跳过)
 #pushd package/luci-app-openclash/tools/po2lmo
