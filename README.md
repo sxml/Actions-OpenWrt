@@ -26,7 +26,7 @@
 
       2 操作代码中心：设置→机密→新机密（名称：RELEASES_TOKEN，值：粘贴令牌的值）。
 
-      Settings → Secrets → New secret
+      Settings → Secrets → Actions secrets   右上新建按键 New repository secret（名称：RELEASES_TOKEN，值：粘贴令牌的值）
       
      电报推送消息 设置方法 https://github.com/danshui-git/shuoming/blob/master/bot.md
 
