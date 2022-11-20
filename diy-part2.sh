@@ -14,7 +14,6 @@ rm -rf feeds/luci/applications/luci-app-dockerman
 #rm -rf package/lean/luci-app-wrtbwmon
 rm -rf feeds/packages/net/smartdns
 #rm -rf feeds/packages/net/kcptun
-rm -rf feeds/packages/lang/python/python3
 
 #添加smartdns
 svn co https://github.com/kenzok8/openwrt-packages/trunk/luci-app-smartdns package/luci-app-smartdns
