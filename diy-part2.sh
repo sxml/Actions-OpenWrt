@@ -13,7 +13,7 @@
 rm -rf feeds/luci/applications/luci-app-dockerman
 #rm -rf package/lean/luci-app-wrtbwmon
 rm -rf feeds/packages/net/smartdns
-rm -rf feeds/packages/net/kcptun
+#rm -rf feeds/packages/net/kcptun
 rm -rf feeds/packages/lang/python/python3
 
 #添加smartdns
@@ -59,6 +59,7 @@ svn co https://github.com/xiaorouji/openwrt-passwall/trunk/microsocks package/mi
 svn co https://github.com/xiaorouji/openwrt-passwall/trunk/dns2socks package/dns2socks
 svn co https://github.com/xiaorouji/openwrt-passwall/trunk/ipt2socks package/ipt2socks
 svn co https://github.com/fw876/helloworld/trunk/lua-neturl package/lua-neturl
+svn co https://github.com/fw876/helloworld/trunk/redsocks2 package/redsocks2
 
 #naiveproxy代理
 #svn co https://github.com/fw876/helloworld/trunk/naiveproxy package/naiveproxy
