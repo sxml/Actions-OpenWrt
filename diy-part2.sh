@@ -1,6 +1,6 @@
 #!/bin/bash
 #============================================================
-# # 2021-12-04
+# # 2021-12-09
 # https://github.com/P3TERX/Actions-OpenWrt
 # File name: diy-part2.sh
 # Description: OpenWrt DIY script part 2 (After Update feeds)
@@ -34,8 +34,8 @@ svn co https://github.com/xiaorouji/openwrt-passwall/trunk/trojan-go package/tro
 svn co https://github.com/xiaorouji/openwrt-passwall/trunk/trojan-plus package/trojan-plus
 svn co https://github.com/fw876/helloworld/trunk/xray-core package/xray-core
 #svn co https://github.com/xiaorouji/openwrt-passwall/trunk/xray-core package/xray-core
-svn co https://github.com/fw876/helloworld/trunk/xray-plugin package/xray-plugin
-#svn co https://github.com/xiaorouji/openwrt-passwall/trunk/xray-plugin package/xray-plugin
+#svn co https://github.com/fw876/helloworld/trunk/xray-plugin package/xray-plugin
+svn co https://github.com/xiaorouji/openwrt-passwall/trunk/xray-plugin package/xray-plugin
 #svn co https://github.com/fw876/helloworld/trunk/shadowsocks-rust package/shadowsocks-rust
 svn co https://github.com/xiaorouji/openwrt-passwall/trunk/shadowsocks-rust package/shadowsocks-rust
 svn co https://github.com/fw876/helloworld/trunk/shadowsocksr-libev package/shadowsocksr-libev
@@ -99,10 +99,10 @@ sed -i 's/PKG_VERSION:=.*/PKG_VERSION:=4.8/g' tools/sed/Makefile
 sed -i 's/PKG_HASH:=.*/PKG_HASH:=f79b0cfea71b37a8eeec8490db6c5f7ae7719c35587f21edb0617f370eeff633/g' tools/sed/Makefile
 
 # fullcone patch from lede(Non-public)
-mv -v package/network/config/firewall/patches/fullconenat.patch package/network/config/firewall/patches/100-fullconenat.patch
-cp -f $GITHUB_WORKSPACE/general/101-bcm-fullconenat.patch package/network/config/firewall/patches
-cp -f $GITHUB_WORKSPACE/general/900-bcm-fullconenat.patch package/network/utils/iptables/patches
-cp -f $GITHUB_WORKSPACE/general/982-add-bcm-fullconenat-support.patch target/linux/generic/hack-5.15
+#mv -v package/network/config/firewall/patches/fullconenat.patch package/network/config/firewall/patches/100-fullconenat.patch
+#cp -f $GITHUB_WORKSPACE/general/101-bcm-fullconenat.patch package/network/config/firewall/patches
+#cp -f $GITHUB_WORKSPACE/general/900-bcm-fullconenat.patch package/network/utils/iptables/patches
+#cp -f $GITHUB_WORKSPACE/general/982-add-bcm-fullconenat-support.patch target/linux/generic/hack-5.15
 
 ./scripts/feeds update -a
 ./scripts/feeds install -a
