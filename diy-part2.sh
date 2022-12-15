@@ -1,6 +1,6 @@
 #!/bin/bash
 #============================================================
-# # 2021-12-09
+# # 2021-12-15
 # https://github.com/P3TERX/Actions-OpenWrt
 # File name: diy-part2.sh
 # Description: OpenWrt DIY script part 2 (After Update feeds)
@@ -97,12 +97,6 @@ find package/*/ -maxdepth 2 -path "*/Makefile" | xargs -i sed -i 's/PKG_SOURCE_U
 # GNU sed (流编辑器)
 sed -i 's/PKG_VERSION:=.*/PKG_VERSION:=4.8/g' tools/sed/Makefile
 sed -i 's/PKG_HASH:=.*/PKG_HASH:=f79b0cfea71b37a8eeec8490db6c5f7ae7719c35587f21edb0617f370eeff633/g' tools/sed/Makefile
-
-# fullcone patch from lede(Non-public)
-#mv -v package/network/config/firewall/patches/fullconenat.patch package/network/config/firewall/patches/100-fullconenat.patch
-#cp -f $GITHUB_WORKSPACE/general/101-bcm-fullconenat.patch package/network/config/firewall/patches
-#cp -f $GITHUB_WORKSPACE/general/900-bcm-fullconenat.patch package/network/utils/iptables/patches
-#cp -f $GITHUB_WORKSPACE/general/982-add-bcm-fullconenat-support.patch target/linux/generic/hack-5.15
 
 ./scripts/feeds update -a
 ./scripts/feeds install -a
