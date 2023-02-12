@@ -74,8 +74,8 @@ svn co https://github.com/xiaorouji/openwrt-passwall/trunk/naiveproxy package/na
 git clone https://github.com/jerrykuku/lua-maxminddb.git package/lua-maxminddb
 
 #文件助手
-git clone https://github.com/sxml/luci-app-fileassistant.git package/luci-app-fileassistant
-#报错svn co https://github.com/Lienol/openwrt-package/trunk/luci-app-fileassistant package/luci-app-fileassistant
+#git clone https://github.com/sxml/luci-app-fileassistant.git package/luci-app-fileassistant
+svn co https://github.com/Lienol/openwrt-package/trunk/luci-app-fileassistant package/luci-app-fileassistant
 #svn co https://github.com/kenzok8/openwrt-packages/trunk/luci-app-fileassistant package/luci-app-fileassistant
 
 #添加luci-app-amlogic
