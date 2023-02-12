@@ -11,7 +11,7 @@
 #移除不用软件包
 #rm -rf package/lean/luci-app-dockerman
 rm -rf feeds/luci/applications/luci-app-dockerman
-#rm -rf package/lean/luci-app-wrtbwmon
+rm -rf package/lean/luci-app-wrtbwmon
 rm -rf feeds/packages/net/smartdns
 
 #添加smartdns
@@ -96,6 +96,16 @@ svn co https://github.com/Leo-Jo-My/luci-theme-opentomcat/trunk package/luci-the
 svn co https://github.com/kenzok8/openwrt-packages/trunk/luci-theme-tomato package/luci-theme-tomato
 svn co https://github.com/kenzok8/openwrt-packages/trunk/luci-theme-neobird package/luci-theme-neobird
 
+#依IP地址限速
+svn co https://github.com/kenzok8/openwrt-packages/trunk/luci-app-eqos package/luci-app-eqos
+
+# 流量监控
+svn co https://github.com/brvphoenix/wrtbwmon/trunk/wrtbwmon package/wrtbwmon
+git clone https://github.com/brvphoenix/luci-app-wrtbwmon
+cd luci-app-wrtbwmon
+git reset --hard ff7773abbf71120fc39a276393b29ba47353a7e2 && cp -r luci-app-wrtbwmon ../package/
+cd ..
+
 #修改makefile
 find package/*/ -maxdepth 2 -path "*/Makefile" | xargs -i sed -i 's/include\ \.\.\/\.\.\/luci\.mk/include \$(TOPDIR)\/feeds\/luci\/luci\.mk/g' {}
 find package/*/ -maxdepth 2 -path "*/Makefile" | xargs -i sed -i 's/include\ \.\.\/\.\.\/lang\/golang\/golang\-package\.mk/include \$(TOPDIR)\/feeds\/packages\/lang\/golang\/golang\-package\.mk/g' {}
@@ -103,8 +113,8 @@ find package/*/ -maxdepth 2 -path "*/Makefile" | xargs -i sed -i 's/PKG_SOURCE_U
 find package/*/ -maxdepth 2 -path "*/Makefile" | xargs -i sed -i 's/PKG_SOURCE_URL:=\@GHCODELOAD/PKG_SOURCE_URL:=https:\/\/codeload\.github\.com/g' {}
 
 # GNU sed (流编辑器)
-sed -i 's/PKG_VERSION:=.*/PKG_VERSION:=4.8/g' tools/sed/Makefile
-sed -i 's/PKG_HASH:=.*/PKG_HASH:=f79b0cfea71b37a8eeec8490db6c5f7ae7719c35587f21edb0617f370eeff633/g' tools/sed/Makefile
+#sed -i 's/PKG_VERSION:=.*/PKG_VERSION:=4.8/g' tools/sed/Makefile
+#sed -i 's/PKG_HASH:=.*/PKG_HASH:=f79b0cfea71b37a8eeec8490db6c5f7ae7719c35587f21edb0617f370eeff633/g' tools/sed/Makefile
 
 ./scripts/feeds update -a
 ./scripts/feeds install -a
