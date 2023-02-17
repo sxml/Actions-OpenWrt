@@ -11,7 +11,8 @@
 #移除不用软件包
 #rm -rf package/lean/luci-app-dockerman
 rm -rf feeds/luci/applications/luci-app-dockerman
-rm -rf package/lean/luci-app-wrtbwmon
+rm -rf feeds/luci/applications/luci-app-wrtbwmon
+#rm -rf package/lean/luci-app-wrtbwmon
 rm -rf feeds/packages/net/smartdns
 
 #添加smartdns
@@ -103,7 +104,8 @@ svn co https://github.com/kenzok8/openwrt-packages/trunk/luci-app-eqos package/l
 svn co https://github.com/brvphoenix/wrtbwmon/trunk/wrtbwmon package/wrtbwmon
 git clone https://github.com/brvphoenix/luci-app-wrtbwmon
 cd luci-app-wrtbwmon
-git reset --hard ff7773abbf71120fc39a276393b29ba47353a7e2 && cp -r luci-app-wrtbwmon ../package/
+git reset --hard ff7773abbf71120fc39a276393b29ba47353a7e2
+cp -r luci-app-wrtbwmon ../package/
 cd ..
 
 #修改makefile
