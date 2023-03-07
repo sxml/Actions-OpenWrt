@@ -100,7 +100,8 @@ svn co https://github.com/Leo-Jo-My/luci-theme-opentomcat/trunk package/luci-the
 #svn co https://github.com/kenzok8/openwrt-packages/trunk/luci-theme-tomato package/luci-theme-tomato
 #svn co https://github.com/kenzok8/openwrt-packages/trunk/luci-theme-neobird package/luci-theme-neobird
 git clone https://github.com/thinktip/luci-theme-neobird.git package/luci-theme-neobird 
-git clone https://github.com/gngpp/luci-theme-design.git package/luci-theme-design
+#git clone https://github.com/gngpp/luci-theme-design.git package/luci-theme-design
+svn co https://github.com/kenzok8/openwrt-packages/trunk/luci-theme-design package/luci-theme-design
 git clone https://github.com/gngpp/luci-app-design-config.git package/luci-app-design-config
 
 #修改makefile
