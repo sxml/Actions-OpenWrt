@@ -12,21 +12,15 @@
 #rm -rf package/lean/luci-app-dockerman
 rm -rf feeds/luci/applications/luci-app-dockerman
 #rm -rf package/lean/luci-app-wrtbwmon
-rm -rf feeds/packages/net/smartdns
+#rm -rf feeds/packages/net/smartdns
 rm -rf feeds/packages/net/samba4
 
 # samba4
 svn co https://github.com/openwrt/packages/trunk/net/samba4 feeds/packages/net/samba4
 
 #添加smartdns
+#svn co https://github.com/kenzok8/openwrt-packages/trunk/smartdns package/smartdns
 svn co https://github.com/kenzok8/openwrt-packages/trunk/luci-app-smartdns package/luci-app-smartdns
-svn co https://github.com/kenzok8/openwrt-packages/trunk/smartdns package/smartdns
-
-# smartdns  https://github.com/pymumu/smartdns/releases
-#sed -i 's/PKG_VERSION:=.*/PKG_VERSION:=1.2023.40/g' feeds/packages/net/smartdns/Makefile
-#sed -i 's/PKG_SOURCE_VERSION:=.*/PKG_SOURCE_VERSION:=ee4816da5c66619c4210f7fda6245adf4c1c7ee8/g' feeds/packages/net/smartdns/Makefile
-#sed -i 's/PKG_MIRROR_HASH:=.*/PKG_MIRROR_HASH:=fb4661291e79450f51a70f9b988c7452710acd1599529de48fef42c7dda0b29c/g' feeds/packages/net/smartdns/Makefile
-#sed -i 's/PKG_VERSION:=.*/PKG_VERSION:=1.2023.40/g' package/luci-app-smartdns/Makefile
 
 #SSR-plus
 svn co https://github.com/fw876/helloworld/trunk/luci-app-ssr-plus package/luci-app-ssr-plus
