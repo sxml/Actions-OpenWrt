@@ -1,6 +1,6 @@
 #!/bin/bash
 #============================================================
-# # 20230305
+# # 20230308
 # https://github.com/P3TERX/Actions-OpenWrt
 # File name: diy-part2.sh
 # Description: OpenWrt DIY script part 2 (After Update feeds)
@@ -13,14 +13,15 @@
 rm -rf feeds/luci/applications/luci-app-dockerman
 #rm -rf package/lean/luci-app-wrtbwmon
 #rm -rf feeds/packages/net/smartdns
-rm -rf feeds/packages/net/samba4
+#rm -rf feeds/packages/net/samba4
 
 # samba4
-svn co https://github.com/openwrt/packages/trunk/net/samba4 feeds/packages/net/samba4
+#svn co https://github.com/openwrt/packages/trunk/net/samba4 feeds/packages/net/samba4
 
 #添加smartdns
 #svn co https://github.com/kenzok8/openwrt-packages/trunk/smartdns package/smartdns
-svn co https://github.com/kenzok8/openwrt-packages/trunk/luci-app-smartdns package/luci-app-smartdns
+#svn co https://github.com/kenzok8/openwrt-packages/trunk/luci-app-smartdns package/luci-app-smartdns
+git clone -b lede https://github.com/pymumu/luci-app-smartdns.git package/luci-app-smartdns
 
 #SSR-plus
 svn co https://github.com/fw876/helloworld/trunk/luci-app-ssr-plus package/luci-app-ssr-plus
@@ -34,7 +35,8 @@ popd
 
 #passwall
 #svn co https://github.com/kenzok8/openwrt-packages/trunk/luci-app-passwall package/luci-app-passwall
-svn co https://github.com/xiaorouji/openwrt-passwall/branches/luci/luci-app-passwall package/luci-app-passwall
+#svn co https://github.com/xiaorouji/openwrt-passwall/branches/luci/luci-app-passwall package/luci-app-passwall
+svn co https://github.com/xiaorouji/openwrt-passwall/branches/luci-smartdns-new-version/luci-app-passwall package/luci-app-passwall
 svn co https://github.com/xiaorouji/openwrt-passwall2/trunk/luci-app-passwall2 package/luci-app-passwall2
 
 svn co https://github.com/xiaorouji/openwrt-passwall/trunk/ssocks package/ssocks
