@@ -13,10 +13,10 @@
 rm -rf feeds/luci/applications/luci-app-dockerman
 #rm -rf package/lean/luci-app-wrtbwmon
 #rm -rf feeds/packages/net/smartdns
-#rm -rf feeds/packages/net/samba4
+rm -rf feeds/packages/net/samba4
 
 # samba4
-#svn co https://github.com/openwrt/packages/trunk/net/samba4 feeds/packages/net/samba4
+svn co https://github.com/openwrt/packages/trunk/net/samba4 feeds/packages/net/samba4
 
 #添加smartdns
 #svn co https://github.com/kenzok8/openwrt-packages/trunk/smartdns package/smartdns
@@ -72,6 +72,8 @@ svn co https://github.com/xiaorouji/openwrt-passwall/trunk/dns2socks package/dns
 svn co https://github.com/xiaorouji/openwrt-passwall/trunk/ipt2socks package/ipt2socks
 svn co https://github.com/fw876/helloworld/trunk/lua-neturl package/lua-neturl
 svn co https://github.com/fw876/helloworld/trunk/redsocks2 package/redsocks2
+svn co https://github.com/kenzok8/small-package/trunk/luci-app-alist package/luci-app-alist
+svn co https://github.com/kenzok8/small-package/trunk/alist package/alist
 
 #naiveproxy代理
 #svn co https://github.com/fw876/helloworld/trunk/naiveproxy package/naiveproxy
@@ -101,10 +103,14 @@ sed -i "s|http.*/library|https://github.com/breakings/OpenWrt/tree/main/opt/kern
 svn co https://github.com/Leo-Jo-My/luci-theme-opentomcat/trunk package/luci-theme-opentomcat
 #svn co https://github.com/kenzok8/openwrt-packages/trunk/luci-theme-tomato package/luci-theme-tomato
 #svn co https://github.com/kenzok8/openwrt-packages/trunk/luci-theme-neobird package/luci-theme-neobird
-git clone https://github.com/thinktip/luci-theme-neobird.git package/luci-theme-neobird 
+#git clone https://github.com/thinktip/luci-theme-neobird.git package/luci-theme-neobird
+svn co https://github.com/thinktip/luci-theme-neobird/trunk package/luci-theme-neobird
+
 #git clone https://github.com/gngpp/luci-theme-design.git package/luci-theme-design
-svn co https://github.com/kenzok8/openwrt-packages/trunk/luci-theme-design package/luci-theme-design
-git clone https://github.com/gngpp/luci-app-design-config.git package/luci-app-design-config
+#svn co https://github.com/kenzok8/openwrt-packages/trunk/luci-theme-design package/luci-theme-design
+#git clone https://github.com/gngpp/luci-app-design-config.git package/luci-app-design-config
+svn co https://github.com/gngpp/luci-theme-design/trunk package/luci-theme-design
+svn co https://github.com/gngpp/luci-app-design-config/trunk package/luci-app-design-config
 
 #修改makefile
 find package/*/ -maxdepth 2 -path "*/Makefile" | xargs -i sed -i 's/include\ \.\.\/\.\.\/luci\.mk/include \$(TOPDIR)\/feeds\/luci\/luci\.mk/g' {}
