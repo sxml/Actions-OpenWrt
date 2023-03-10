@@ -13,6 +13,7 @@
 rm -rf feeds/luci/applications/luci-app-dockerman
 #rm -rf package/lean/luci-app-wrtbwmon
 #rm -rf feeds/packages/net/smartdns
+rm -fr feeds/luci/themes/luci-theme-design
 rm -rf feeds/packages/net/samba4
 
 # samba4
@@ -72,8 +73,14 @@ svn co https://github.com/xiaorouji/openwrt-passwall/trunk/dns2socks package/dns
 svn co https://github.com/xiaorouji/openwrt-passwall/trunk/ipt2socks package/ipt2socks
 svn co https://github.com/fw876/helloworld/trunk/lua-neturl package/lua-neturl
 svn co https://github.com/fw876/helloworld/trunk/redsocks2 package/redsocks2
-svn co https://github.com/kenzok8/small-package/trunk/luci-app-alist package/luci-app-alist
-svn co https://github.com/kenzok8/small-package/trunk/alist package/alist
+
+#alist
+#git clone https://github.com/sbwml/openwrt-alist.git package/openwrt-alist
+#git clone https://github.com/sbwml/luci-app-alist package/alist
+svn co https://github.com/kenzok8/openwrt-packages/trunk/luci-app-alist package/luci-app-alist
+svn co https://github.com/kenzok8/openwrt-packages/trunk/alist package/alist
+#svn co https://github.com/sbwml/openwrt-alist/trunk package/luci-app-alist
+#mv package/luci-app-alist/luci-app-alist/po/zh_Hans package/luci-app-alist/luci-app-alist/po/zh-cn
 
 #naiveproxy代理
 #svn co https://github.com/fw876/helloworld/trunk/naiveproxy package/naiveproxy
