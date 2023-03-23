@@ -1,6 +1,6 @@
 #!/bin/bash
 #============================================================
-# # 20230308
+# # 20230323
 # https://github.com/P3TERX/Actions-OpenWrt
 # File name: diy-part2.sh
 # Description: OpenWrt DIY script part 2 (After Update feeds)
@@ -14,10 +14,10 @@ rm -rf feeds/luci/applications/luci-app-dockerman
 #rm -rf package/lean/luci-app-wrtbwmon
 #rm -rf feeds/packages/net/smartdns
 rm -fr feeds/luci/themes/luci-theme-design
-rm -rf feeds/packages/net/samba4
+#rm -rf feeds/packages/net/samba4
 
 # samba4
-svn co https://github.com/openwrt/packages/trunk/net/samba4 feeds/packages/net/samba4
+#svn co https://github.com/openwrt/packages/trunk/net/samba4 feeds/packages/net/samba4
 
 #添加smartdns
 #svn co https://github.com/kenzok8/openwrt-packages/trunk/smartdns package/smartdns
@@ -77,10 +77,9 @@ svn co https://github.com/fw876/helloworld/trunk/redsocks2 package/redsocks2
 #alist
 #git clone https://github.com/sbwml/openwrt-alist.git package/openwrt-alist
 #git clone https://github.com/sbwml/luci-app-alist package/alist
+#svn co https://github.com/sbwml/openwrt-alist/trunk package/luci-app-alist
 svn co https://github.com/kenzok8/openwrt-packages/trunk/luci-app-alist package/luci-app-alist
 svn co https://github.com/kenzok8/openwrt-packages/trunk/alist package/alist
-#svn co https://github.com/sbwml/openwrt-alist/trunk package/luci-app-alist
-#mv package/luci-app-alist/luci-app-alist/po/zh_Hans package/luci-app-alist/luci-app-alist/po/zh-cn
 
 #naiveproxy代理
 #svn co https://github.com/fw876/helloworld/trunk/naiveproxy package/naiveproxy
@@ -108,13 +107,10 @@ sed -i "s|http.*/library|https://github.com/breakings/OpenWrt/tree/main/opt/kern
 
 # themes 主题
 svn co https://github.com/Leo-Jo-My/luci-theme-opentomcat/trunk package/luci-theme-opentomcat
-#svn co https://github.com/kenzok8/openwrt-packages/trunk/luci-theme-tomato package/luci-theme-tomato
-#svn co https://github.com/kenzok8/openwrt-packages/trunk/luci-theme-neobird package/luci-theme-neobird
 #git clone https://github.com/thinktip/luci-theme-neobird.git package/luci-theme-neobird
 svn co https://github.com/thinktip/luci-theme-neobird/trunk package/luci-theme-neobird
 
 #git clone https://github.com/gngpp/luci-theme-design.git package/luci-theme-design
-#svn co https://github.com/kenzok8/openwrt-packages/trunk/luci-theme-design package/luci-theme-design
 #git clone https://github.com/gngpp/luci-app-design-config.git package/luci-app-design-config
 svn co https://github.com/gngpp/luci-theme-design/trunk package/luci-theme-design
 svn co https://github.com/gngpp/luci-app-design-config/trunk package/luci-app-design-config
