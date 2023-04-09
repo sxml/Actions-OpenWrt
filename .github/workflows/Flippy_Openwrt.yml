@@ -6,7 +6,7 @@
 # https://github.com/P3TERX/Actions-OpenWrt
 # Description: Build OpenWrt using GitHub Actions
 #
-# 2022.11.04  Flippy打包
+# 2023.04.10  Flippy打包
 #
 name: Flippy打包
 
@@ -50,6 +50,7 @@ jobs:
         sudo -E apt-get -qq install rename
         sudo -E apt-get -qq install pigz
         sudo -E apt-get -qq install time
+        sudo -E apt-get -qq install gn
         sudo -E apt-get -qq install sshpass
         sudo -E apt-get -qq autoremove --purge
         sudo -E apt-get -qq clean
