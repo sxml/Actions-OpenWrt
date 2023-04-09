@@ -83,7 +83,7 @@ svn co https://github.com/kenzok8/openwrt-packages/trunk/alist package/alist
 
 #naiveproxy代理
 #svn co https://github.com/fw876/helloworld/trunk/naiveproxy package/naiveproxy
-#svn co https://github.com/xiaorouji/openwrt-passwall/trunk/naiveproxy package/naiveproxy
+svn co https://github.com/xiaorouji/openwrt-passwall/trunk/naiveproxy package/naiveproxy
 #解析
 git clone https://github.com/jerrykuku/lua-maxminddb.git package/lua-maxminddb
 
