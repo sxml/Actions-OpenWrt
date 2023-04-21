@@ -1,6 +1,6 @@
 #!/bin/bash
 #============================================================
-# # 20230410
+# # 20230421
 # https://github.com/P3TERX/Actions-OpenWrt
 # File name: diy-part2.sh
 # Description: OpenWrt DIY script part 2 (After Update feeds)
@@ -74,6 +74,8 @@ svn co https://github.com/xiaorouji/openwrt-passwall/trunk/ipt2socks package/ipt
 svn co https://github.com/fw876/helloworld/trunk/lua-neturl package/lua-neturl
 svn co https://github.com/fw876/helloworld/trunk/redsocks2 package/redsocks2
 svn co https://github.com/fw876/helloworld/trunk/gn package/gn
+svn co https://github.com/kenzok8/openwrt-packages/trunk/luci-app-gost package/luci-app-gost
+svn co https://github.com/kenzok8/openwrt-packages/trunk/gost package/gost
 
 #alist
 #git clone https://github.com/sbwml/openwrt-alist.git package/openwrt-alist
