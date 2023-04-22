@@ -73,7 +73,7 @@ svn co https://github.com/xiaorouji/openwrt-passwall/trunk/dns2socks package/dns
 svn co https://github.com/xiaorouji/openwrt-passwall/trunk/ipt2socks package/ipt2socks
 svn co https://github.com/fw876/helloworld/trunk/lua-neturl package/lua-neturl
 svn co https://github.com/fw876/helloworld/trunk/redsocks2 package/redsocks2
-svn co https://github.com/fw876/helloworld/trunk/gn package/gn
+#svn co https://github.com/fw876/helloworld/trunk/gn package/gn
 svn co https://github.com/kenzok8/openwrt-packages/trunk/luci-app-gost package/luci-app-gost
 svn co https://github.com/breakings/OpenWrt/trunk/general/gost package/gost
 #svn co https://github.com/kenzok8/openwrt-packages/trunk/gost package/gost
