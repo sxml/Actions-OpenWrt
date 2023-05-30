@@ -1,6 +1,6 @@
 #!/bin/bash
 #============================================================
-# # 20230422
+# # 20230530
 # https://github.com/P3TERX/Actions-OpenWrt
 # File name: diy-part2.sh
 # Description: OpenWrt DIY script part 2 (After Update feeds)
@@ -28,17 +28,17 @@ git clone -b lede https://github.com/pymumu/luci-app-smartdns.git package/luci-a
 svn co https://github.com/fw876/helloworld/trunk/luci-app-ssr-plus package/luci-app-ssr-plus
 
 #clash小猫
-svn co https://github.com/vernesong/OpenClash/trunk/luci-app-openclash package/luci-app-openclash
+#svn co https://github.com/vernesong/OpenClash/trunk/luci-app-openclash package/luci-app-openclash
 # 编译 po2lmo (如果有po2lmo可跳过)
-pushd package/luci-app-openclash/tools/po2lmo
-make && sudo make install
-popd
+#pushd package/luci-app-openclash/tools/po2lmo
+#make && sudo make install
+#popd
 
 #passwall
 #svn co https://github.com/kenzok8/openwrt-packages/trunk/luci-app-passwall package/luci-app-passwall
 #svn co https://github.com/xiaorouji/openwrt-passwall/branches/luci/luci-app-passwall package/luci-app-passwall
 svn co https://github.com/xiaorouji/openwrt-passwall/branches/luci-smartdns-new-version/luci-app-passwall package/luci-app-passwall
-svn co https://github.com/xiaorouji/openwrt-passwall2/trunk/luci-app-passwall2 package/luci-app-passwall2
+#svn co https://github.com/xiaorouji/openwrt-passwall2/trunk/luci-app-passwall2 package/luci-app-passwall2
 
 svn co https://github.com/xiaorouji/openwrt-passwall/trunk/ssocks package/ssocks
 svn co https://github.com/xiaorouji/openwrt-passwall/trunk/brook package/brook
@@ -74,8 +74,8 @@ svn co https://github.com/xiaorouji/openwrt-passwall/trunk/ipt2socks package/ipt
 svn co https://github.com/fw876/helloworld/trunk/lua-neturl package/lua-neturl
 svn co https://github.com/fw876/helloworld/trunk/redsocks2 package/redsocks2
 
-#svn co https://github.com/kenzok8/openwrt-packages/trunk/luci-app-gost package/luci-app-gost
-#svn co https://github.com/breakings/OpenWrt/trunk/general/gost package/gost
+svn co https://github.com/kenzok8/openwrt-packages/trunk/luci-app-gost package/luci-app-gost
+svn co https://github.com/breakings/OpenWrt/trunk/general/gost package/gost
 #svn co https://github.com/kenzok8/openwrt-packages/trunk/gost package/gost
 
 #naiveproxy
@@ -85,8 +85,8 @@ svn co https://github.com/fw876/helloworld/trunk/gn package/gn
 #git clone https://github.com/sbwml/openwrt-alist.git package/openwrt-alist
 #git clone https://github.com/sbwml/luci-app-alist package/alist
 #svn co https://github.com/sbwml/openwrt-alist/trunk package/luci-app-alist
-svn co https://github.com/kenzok8/openwrt-packages/trunk/luci-app-alist package/luci-app-alist
-svn co https://github.com/kenzok8/openwrt-packages/trunk/alist package/alist
+#svn co https://github.com/kenzok8/openwrt-packages/trunk/luci-app-alist package/luci-app-alist
+#svn co https://github.com/kenzok8/openwrt-packages/trunk/alist package/alist
 
 #naiveproxy代理
 svn co https://github.com/fw876/helloworld/trunk/naiveproxy package/naiveproxy
