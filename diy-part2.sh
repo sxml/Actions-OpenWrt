@@ -28,11 +28,11 @@ git clone -b lede https://github.com/pymumu/luci-app-smartdns.git package/luci-a
 svn co https://github.com/fw876/helloworld/trunk/luci-app-ssr-plus package/luci-app-ssr-plus
 
 #clash小猫
-svn co https://github.com/vernesong/OpenClash/trunk/luci-app-openclash package/luci-app-openclash
+#svn co https://github.com/vernesong/OpenClash/trunk/luci-app-openclash package/luci-app-openclash
 # 编译 po2lmo (如果有po2lmo可跳过)
-pushd package/luci-app-openclash/tools/po2lmo
-make && sudo make install
-popd
+#pushd package/luci-app-openclash/tools/po2lmo
+#make && sudo make install
+#popd
 
 #passwall
 #svn co https://github.com/kenzok8/openwrt-packages/trunk/luci-app-passwall package/luci-app-passwall
