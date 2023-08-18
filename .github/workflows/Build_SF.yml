@@ -1,5 +1,5 @@
 #
-# 2023.08.19-修改  编译op包
+# 2023.08.18-原  编译op包
 #
 
 name: 编译op包SF版
@@ -57,21 +57,18 @@ jobs:
         DEBIAN_FRONTEND: noninteractive
       run: |
         docker rmi `docker images -q`
-        sudo -E rm -rf /usr/share/dotnet /etc/mysql /etc/php /etc/apt/sources.list.d /usr/local/lib/android
-        sudo -E apt -y purge azure-cli* docker* ghc* zulu* llvm* firefox google* dotnet* powershell* openjdk* mysql* php* mongodb* dotnet* moby* snap* aspnetcore*
-        [ -n "$AGENT_TOOLSDIRECTORY" ] && sudo rm -rf "$AGENT_TOOLSDIRECTORY"
-        sudo -E apt update
-        sudo -E apt -y install $(curl -fsSL https://is.gd/depends_ubuntu_2204)
-        sudo -E apt -y rename
-        sudo -E apt -y time
-        sudo -E apt -y gn        
-        sudo -E apt -y autoremove --purge
-        sudo -E systemctl daemon-reload
-        sudo -E apt clean
+        sudo rm -rf /etc/apt/sources.list.d/* /usr/share/dotnet /etc/mysql /etc/php /usr/local/lib/android /opt/ghc
+        sudo -E apt-get -y purge azure-cli ghc* zulu* hhvm llvm* firefox google* dotnet* powershell openjdk* adoptopenjdk* mysql* php* mongodb* dotnet* moby* snapd* || true
+        sudo -E apt-get -qq update
+        sudo -E apt-get -qq install $(curl -fsSL https://is.gd/depends_ubuntu_2204)
+        sudo -E apt-get -qq install -y  rename lib32stdc++6 git-core libpcap0.8-dev grep time sshpass ecj file libz-dev java-propose-classpath aria2 python3-distutils python3-setuptools python3-dev libfuse-dev
+        sudo -E apt-get -qq install gn
+        sudo -E apt-get -qq autoremove --purge
+        sudo -E apt-get -qq clean
         sudo timedatectl set-timezone "$TZ"
         sudo mkdir -p /workdir
         sudo chown $USER:$GROUPS /workdir
-        echo "status=success" >> ${GITHUB_OUTPUT}
+        echo "status=success" >> $GITHUB_OUTPUT
         df -Th
 
     - name: 下载源码
