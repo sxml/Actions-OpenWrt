@@ -1,6 +1,6 @@
 #!/bin/bash
 #============================================================
-# # 2023-08-11-SF
+# # 2023-08-19
 # https://github.com/P3TERX/Actions-OpenWrt
 # File name: diy-part2.sh
 # Description: OpenWrt DIY script part 2 (After Update feeds)
@@ -128,6 +128,9 @@ svn co https://github.com/thinktip/luci-theme-neobird/trunk package/luci-theme-n
 #git clone https://github.com/gngpp/luci-app-design-config.git package/luci-app-design-config
 svn co https://github.com/gngpp/luci-theme-design/trunk package/luci-theme-design
 svn co https://github.com/gngpp/luci-app-design-config/trunk package/luci-app-design-config
+
+#netsupport.mk 20230819
+cp -f $GITHUB_WORKSPACE/general/netsupport.mk package/kernel/linux/modules
 
 #修改makefile
 find package/*/ -maxdepth 2 -path "*/Makefile" | xargs -i sed -i 's/include\ \.\.\/\.\.\/luci\.mk/include \$(TOPDIR)\/feeds\/luci\/luci\.mk/g' {}
