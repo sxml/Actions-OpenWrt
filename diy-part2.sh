@@ -130,7 +130,7 @@ svn co https://github.com/gngpp/luci-theme-design/trunk package/luci-theme-desig
 svn co https://github.com/gngpp/luci-app-design-config/trunk package/luci-app-design-config
 
 #netsupport.mk 20230819
-cp -f $GITHUB_WORKSPACE/general/netsupport.mk package/kernel/linux/modules
+#cp -f $GITHUB_WORKSPACE/general/netsupport.mk package/kernel/linux/modules
 
 #修改makefile
 find package/*/ -maxdepth 2 -path "*/Makefile" | xargs -i sed -i 's/include\ \.\.\/\.\.\/luci\.mk/include \$(TOPDIR)\/feeds\/luci\/luci\.mk/g' {}
