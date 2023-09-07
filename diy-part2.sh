@@ -1,6 +1,6 @@
 #!/bin/bash
 #============================================================
-# # 2023-09-02
+# # 2023-09-07
 # https://github.com/P3TERX/Actions-OpenWrt
 # File name: diy-part2.sh
 # Description: OpenWrt DIY script part 2 (After Update feeds)
@@ -16,9 +16,6 @@ rm -rf feeds/luci/applications/luci-app-dockerman
 rm -fr feeds/luci/themes/luci-theme-design
 #rm -rf feeds/packages/net/samba4
 
-# samba4
-#svn co https://github.com/openwrt/packages/trunk/net/samba4 feeds/packages/net/samba4
-
 #添加smartdns
 #svn co https://github.com/kenzok8/openwrt-packages/trunk/smartdns package/smartdns
 #svn co https://github.com/kenzok8/openwrt-packages/trunk/luci-app-smartdns package/luci-app-smartdns
@@ -27,13 +24,6 @@ git clone -b lede https://github.com/pymumu/luci-app-smartdns.git package/luci-a
 #SSR-plus
 svn co https://github.com/fw876/helloworld/trunk/luci-app-ssr-plus package/luci-app-ssr-plus
 
-#clash小猫
-#svn co https://github.com/vernesong/OpenClash/trunk/luci-app-openclash package/luci-app-openclash
-# 编译 po2lmo (如果有po2lmo可跳过)
-#pushd package/luci-app-openclash/tools/po2lmo
-#make && sudo make install
-#popd
-
 #passwall
 #svn co https://github.com/kenzok8/openwrt-packages/trunk/luci-app-passwall package/luci-app-passwall
 #svn co https://github.com/xiaorouji/openwrt-passwall/branches/luci/luci-app-passwall package/luci-app-passwall
@@ -41,9 +31,8 @@ svn co https://github.com/xiaorouji/openwrt-passwall/branches/luci-smartdns-new-
 svn co https://github.com/xiaorouji/openwrt-passwall2/trunk/luci-app-passwall2 package/luci-app-passwall2
 
 
-#svn co https://github.com/xiaorouji/openwrt-passwall/trunk/brook package/brook
-#svn co https://github.com/immortalwrt/packages/trunk/net/brook package/brook
-cp -rf $GITHUB_WORKSPACE/general/brook package/brook
+svn co https://github.com/xiaorouji/openwrt-passwall/trunk/brook package/brook
+#cp -rf $GITHUB_WORKSPACE/general/brook package/brook
 
 svn co https://github.com/xiaorouji/openwrt-passwall/trunk/ssocks package/ssocks
 svn co https://github.com/xiaorouji/openwrt-passwall/trunk/chinadns-ng package/chinadns-ng
@@ -78,8 +67,8 @@ svn co https://github.com/xiaorouji/openwrt-passwall/trunk/ipt2socks package/ipt
 svn co https://github.com/fw876/helloworld/trunk/lua-neturl package/lua-neturl
 svn co https://github.com/fw876/helloworld/trunk/redsocks2 package/redsocks2
 
-#svn co https://github.com/kenzok8/openwrt-packages/trunk/luci-app-gost package/luci-app-gost
-#svn co https://github.com/breakings/OpenWrt/trunk/general/gost package/gost
+svn co https://github.com/kenzok8/openwrt-packages/trunk/luci-app-gost package/luci-app-gost
+svn co https://github.com/breakings/OpenWrt/trunk/general/gost package/gost
 #svn co https://github.com/kenzok8/openwrt-packages/trunk/gost package/gost
 
 #naiveproxy
@@ -88,12 +77,8 @@ svn co https://github.com/fw876/helloworld/trunk/gn package/gn
 #tuic
 svn co https://github.com/fw876/helloworld/trunk/tuic-client package/tuic-client
 
-#alist
-#git clone https://github.com/sbwml/openwrt-alist.git package/openwrt-alist
-#git clone https://github.com/sbwml/luci-app-alist package/alist
-#svn co https://github.com/sbwml/openwrt-alist/trunk package/luci-app-alist
-svn co https://github.com/kenzok8/openwrt-packages/trunk/luci-app-alist package/luci-app-alist
-svn co https://github.com/kenzok8/openwrt-packages/trunk/alist package/alist
+#sing-box 20230907
+svn co https://github.com/xiaorouji/openwrt-passwall/trunk/sing-box package/sing-box
 
 #naiveproxy代理
 svn co https://github.com/fw876/helloworld/trunk/naiveproxy package/naiveproxy
@@ -121,26 +106,16 @@ sed -i "s|http.*/library|https://github.com/breakings/OpenWrt/tree/main/opt/kern
 
 # themes 主题
 svn co https://github.com/Leo-Jo-My/luci-theme-opentomcat/trunk package/luci-theme-opentomcat
-#git clone https://github.com/thinktip/luci-theme-neobird.git package/luci-theme-neobird
 svn co https://github.com/thinktip/luci-theme-neobird/trunk package/luci-theme-neobird
 
-#git clone https://github.com/gngpp/luci-theme-design.git package/luci-theme-design
-#git clone https://github.com/gngpp/luci-app-design-config.git package/luci-app-design-config
 svn co https://github.com/gngpp/luci-theme-design/trunk package/luci-theme-design
 svn co https://github.com/gngpp/luci-app-design-config/trunk package/luci-app-design-config
-
-#netsupport.mk 20230819
-#cp -f $GITHUB_WORKSPACE/general/netsupport.mk package/kernel/linux/modules
 
 #修改makefile
 find package/*/ -maxdepth 2 -path "*/Makefile" | xargs -i sed -i 's/include\ \.\.\/\.\.\/luci\.mk/include \$(TOPDIR)\/feeds\/luci\/luci\.mk/g' {}
 find package/*/ -maxdepth 2 -path "*/Makefile" | xargs -i sed -i 's/include\ \.\.\/\.\.\/lang\/golang\/golang\-package\.mk/include \$(TOPDIR)\/feeds\/packages\/lang\/golang\/golang\-package\.mk/g' {}
 find package/*/ -maxdepth 2 -path "*/Makefile" | xargs -i sed -i 's/PKG_SOURCE_URL:=\@GHREPO/PKG_SOURCE_URL:=https:\/\/github\.com/g' {}
 find package/*/ -maxdepth 2 -path "*/Makefile" | xargs -i sed -i 's/PKG_SOURCE_URL:=\@GHCODELOAD/PKG_SOURCE_URL:=https:\/\/codeload\.github\.com/g' {}
-
-# GNU sed (流编辑器)
-#sed -i 's/PKG_VERSION:=.*/PKG_VERSION:=4.8/g' tools/sed/Makefile
-#sed -i 's/PKG_HASH:=.*/PKG_HASH:=f79b0cfea71b37a8eeec8490db6c5f7ae7719c35587f21edb0617f370eeff633/g' tools/sed/Makefile
 
 ./scripts/feeds update -a
 ./scripts/feeds install -a
