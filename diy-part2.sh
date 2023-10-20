@@ -1,6 +1,6 @@
 #!/bin/bash
 #============================================================
-# # 2023-10-10
+# # 2023-10-20
 # https://github.com/P3TERX/Actions-OpenWrt
 # File name: diy-part2.sh
 # Description: OpenWrt DIY script part 2 (After Update feeds)
@@ -82,6 +82,9 @@ svn co https://github.com/fw876/helloworld/trunk/tuic-client package/tuic-client
 
 #sing-box 20230907
 svn co https://github.com/xiaorouji/openwrt-passwall-packages/trunk/sing-box package/sing-box
+
+#shadow-tls 20231020
+svn co https://github.com/fw876/helloworld/trunk/shadow-tls package/shadow-tls
 
 #naiveproxy代理
 svn co https://github.com/fw876/helloworld/trunk/naiveproxy package/naiveproxy
