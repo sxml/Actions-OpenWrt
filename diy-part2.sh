@@ -32,14 +32,6 @@ svn co https://github.com/xiaorouji/openwrt-passwall/trunk/luci-app-passwall pac
 #svn co https://github.com/xiaorouji/openwrt-passwall/branches/luci-smartdns-dev/luci-app-passwall package/luci-app-passwall
 #svn co https://github.com/xiaorouji/openwrt-passwall2/trunk/luci-app-passwall2 package/luci-app-passwall2
 
-#clash小猫
-svn co https://github.com/vernesong/OpenClash/trunk/luci-app-openclash package/luci-app-openclash
-# 编译 po2lmo (如果有po2lmo可跳过)
-pushd package/luci-app-openclash/tools/po2lmo
-make && sudo make install
-popd
-
-
 svn co https://github.com/xiaorouji/openwrt-passwall-packages/trunk/brook package/brook
 #cp -rf $GITHUB_WORKSPACE/general/brook package/brook
 
