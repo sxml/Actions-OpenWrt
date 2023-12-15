@@ -73,7 +73,7 @@ svn co https://github.com/breakings/OpenWrt/trunk/general/gost package/gost
 #svn co https://github.com/kenzok8/openwrt-packages/trunk/gost package/gost
 
 #naiveproxy
-#svn co https://github.com/fw876/helloworld/branches/main/gn package/gn
+svn co https://github.com/fw876/helloworld/branches/main/gn package/gn
 
 #Tuic
 svn co https://github.com/fw876/helloworld/branches/main/tuic-client package/tuic-client
