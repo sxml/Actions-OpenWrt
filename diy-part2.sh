@@ -1,6 +1,6 @@
 #!/bin/bash
 #============================================================
-# # 2023-12-02
+# # 2023-12-15
 # https://github.com/P3TERX/Actions-OpenWrt
 # File name: diy-part2.sh
 # Description: OpenWrt DIY script part 2 (After Update feeds)
@@ -19,9 +19,9 @@ rm -fr feeds/luci/themes/luci-theme-design
 #rm -rf feeds/packages/utils/prometheus-node-exporter-lua
 
 #添加smartdns
-#svn co https://github.com/kenzok8/openwrt-packages/trunk/smartdns package/smartdns
-#svn co https://github.com/kenzok8/openwrt-packages/trunk/luci-app-smartdns package/luci-app-smartdns
-git clone -b lede https://github.com/pymumu/luci-app-smartdns.git package/luci-app-smartdns
+svn co https://github.com/kenzok8/openwrt-packages/trunk/smartdns package/smartdns
+svn co https://github.com/kenzok8/openwrt-packages/trunk/luci-app-smartdns package/luci-app-smartdns
+#git clone -b lede https://github.com/pymumu/luci-app-smartdns.git package/luci-app-smartdns
 
 #SSR-plus
 svn co https://github.com/fw876/helloworld/branches/main/luci-app-ssr-plus package/luci-app-ssr-plus
@@ -30,7 +30,7 @@ svn co https://github.com/fw876/helloworld/branches/main/luci-app-ssr-plus packa
 svn co https://github.com/xiaorouji/openwrt-passwall/trunk/luci-app-passwall package/luci-app-passwall
 #svn co https://github.com/kenzok8/openwrt-packages/trunk/luci-app-passwall package/luci-app-passwall
 #svn co https://github.com/xiaorouji/openwrt-passwall/branches/luci-smartdns-dev/luci-app-passwall package/luci-app-passwall
-#svn co https://github.com/xiaorouji/openwrt-passwall2/trunk/luci-app-passwall2 package/luci-app-passwall2
+svn co https://github.com/xiaorouji/openwrt-passwall2/trunk/luci-app-passwall2 package/luci-app-passwall2
 
 svn co https://github.com/xiaorouji/openwrt-passwall-packages/trunk/brook package/brook
 #cp -rf $GITHUB_WORKSPACE/general/brook package/brook
@@ -73,7 +73,7 @@ svn co https://github.com/breakings/OpenWrt/trunk/general/gost package/gost
 #svn co https://github.com/kenzok8/openwrt-packages/trunk/gost package/gost
 
 #naiveproxy
-svn co https://github.com/fw876/helloworld/branches/main/gn package/gn
+#svn co https://github.com/fw876/helloworld/branches/main/gn package/gn
 
 #Tuic
 svn co https://github.com/fw876/helloworld/branches/main/tuic-client package/tuic-client
