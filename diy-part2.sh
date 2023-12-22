@@ -1,6 +1,6 @@
 #!/bin/bash
 #============================================================
-# # 2023-12-15
+# # 2023-12-22
 # https://github.com/P3TERX/Actions-OpenWrt
 # File name: diy-part2.sh
 # Description: OpenWrt DIY script part 2 (After Update feeds)
@@ -120,6 +120,26 @@ find package/*/ -maxdepth 2 -path "*/Makefile" | xargs -i sed -i 's/include\ \.\
 find package/*/ -maxdepth 2 -path "*/Makefile" | xargs -i sed -i 's/include\ \.\.\/\.\.\/lang\/golang\/golang\-package\.mk/include \$(TOPDIR)\/feeds\/packages\/lang\/golang\/golang\-package\.mk/g' {}
 find package/*/ -maxdepth 2 -path "*/Makefile" | xargs -i sed -i 's/PKG_SOURCE_URL:=\@GHREPO/PKG_SOURCE_URL:=https:\/\/github\.com/g' {}
 find package/*/ -maxdepth 2 -path "*/Makefile" | xargs -i sed -i 's/PKG_SOURCE_URL:=\@GHCODELOAD/PKG_SOURCE_URL:=https:\/\/codeload\.github\.com/g' {}
+
+function install-bmx6-bmx6-json() {
+  # 下载 bmx6
+  wget https://github.com/openwrt/packages/raw/master/utils/bmx6/bmx6-1.2.2.tar.gz
+  tar -xf bmx6-1.2.2.tar.gz
+
+  # 编译 bmx6
+  cd bmx6-1.2.2
+  make
+  sudo make install
+
+  # 下载 bmx6-json
+  wget https://github.com/openwrt/packages/raw/master/utils/bmx6/bmx6-json-1.2.2.tar.gz
+  tar -xf bmx6-json-1.2.2.tar.gz
+
+  # 编译 bmx6-json
+  cd bmx6-json-1.2.2
+  make
+  sudo make install
+}
 
 ./scripts/feeds update -a
 ./scripts/feeds install -a
