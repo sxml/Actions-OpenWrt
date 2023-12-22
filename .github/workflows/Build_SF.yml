@@ -74,7 +74,6 @@ jobs:
         make
         sudo make install
 
-
     - name: 部署编译环境
       env:
         DEBIAN_FRONTEND: noninteractive
