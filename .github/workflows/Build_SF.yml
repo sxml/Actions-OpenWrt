@@ -1,5 +1,5 @@
 #
-# 2023.12.22  编译op包
+# 2023.08.20  编译op包
 #
 
 name: 编译op包SF版
@@ -51,11 +51,6 @@ jobs:
         echo -e  "硬盘数量：$(ls /dev/sd* | grep -v [1-9] | wc -l) \n"
         echo "硬盘详情："
         df -Th
-        
-    - name: 安装依赖
-      run: |
-          sudo apt-get update
-          sudo apt-get install -y bmx6 bmx6-json
 
     - name: 部署编译环境
       env:
@@ -155,7 +150,7 @@ jobs:
         tar -zcvf AllPackages.tar.gz ./*
         cp AllPackages.tar.gz $GITHUB_WORKSPACE/openwrt/bin/targets/*/*
         cd $GITHUB_WORKSPACE/openwrt/bin/targets/*/*
-        rm -rf packages sha256sums feeds.buildinfo openwrt-armvirt-64-default.manifest openwrt-armvirt-64-Image openwrt-armvirt-64-rootfs-ext4.img version.buildinfo
+        rm -rf packages sha256sums config.buildinfo feeds.buildinfo openwrt-armvirt-64-default.manifest openwrt-armvirt-64-Image openwrt-armvirt-64-rootfs-ext4.img version.buildinfo
         echo "FIRMWARE=$PWD" >> $GITHUB_ENV
         echo "status=success" >> $GITHUB_OUTPUT
 
