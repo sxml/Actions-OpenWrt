@@ -16,7 +16,7 @@ rm -rf feeds/packages/net/smartdns
 rm -fr feeds/luci/themes/luci-theme-design
 #rm -rf feeds/packages/net/samba4
 #20231010
-#rm -rf feeds/packages/utils/prometheus-node-exporter-lua
+rm -rf feeds/packages/utils/prometheus-node-exporter-lua
 
 #添加smartdns
 svn co https://github.com/kenzok8/openwrt-packages/trunk/smartdns package/smartdns
