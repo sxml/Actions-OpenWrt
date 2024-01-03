@@ -1,6 +1,6 @@
 #!/bin/bash
 #============================================================
-# # 2024-01-02
+# # 2024-01-03
 # https://github.com/P3TERX/Actions-OpenWrt
 # File name: diy-part2.sh
 # Description: OpenWrt DIY script part 2 (After Update feeds)
@@ -30,7 +30,7 @@ svn co https://github.com/fw876/helloworld/branches/main/luci-app-ssr-plus packa
 svn co https://github.com/xiaorouji/openwrt-passwall/trunk/luci-app-passwall package/luci-app-passwall
 #svn co https://github.com/kenzok8/openwrt-packages/trunk/luci-app-passwall package/luci-app-passwall
 #svn co https://github.com/xiaorouji/openwrt-passwall/branches/luci-smartdns-dev/luci-app-passwall package/luci-app-passwall
-#svn co https://github.com/xiaorouji/openwrt-passwall2/trunk/luci-app-passwall2 package/luci-app-passwall2
+svn co https://github.com/xiaorouji/openwrt-passwall2/trunk/luci-app-passwall2 package/luci-app-passwall2
 
 svn co https://github.com/xiaorouji/openwrt-passwall-packages/trunk/brook package/brook
 #cp -rf $GITHUB_WORKSPACE/general/brook package/brook
