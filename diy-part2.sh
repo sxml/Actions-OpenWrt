@@ -20,8 +20,8 @@ rm -rf feeds/packages/utils/prometheus-node-exporter-lua
 
 #添加smartdns
 svn co https://github.com/kenzok8/openwrt-packages/trunk/smartdns package/smartdns
-#svn co https://github.com/kenzok8/openwrt-packages/trunk/luci-app-smartdns package/luci-app-smartdns
-git clone -b lede https://github.com/pymumu/luci-app-smartdns.git package/luci-app-smartdns
+merge_package https://github.com/kenzok8/openwrt-packages/trunk/luci-app-smartdns package/luci-app-smartdns
+#git clone -b lede https://github.com/pymumu/luci-app-smartdns.git package/luci-app-smartdns
 
 #SSR-plus
 svn co https://github.com/fw876/helloworld/branches/main/luci-app-ssr-plus package/luci-app-ssr-plus
