@@ -44,7 +44,6 @@ cp -rf helloworld/tuic-client package/tuic-client
 cp -rf helloworld/naiveproxy package/naiveproxy
 #rm -rf helloworld
 
-
 # 克隆openwrt-passwall仓库
 git clone --depth=1 https://github.com/xiaorouji/openwrt-passwall-packages.git
 cp -rf openwrt-passwall-packages/brook package/brook
