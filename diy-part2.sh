@@ -113,15 +113,6 @@ merge_package https://github.com/thinktip/luci-theme-neobird luci-theme-neobird
 merge_package https://github.com/gngpp/luci-theme-design luci-theme-design
 merge_package https://github.com/gngpp/luci-app-design-config luci-app-design-config
 
-# nfs-kernel-server
-rm -rf feeds/packages/net/nfs-kernel-server
-merge_package https://github.com/openwrt/packages feeds/packages/net/nfs-kernel-server
-
-# btrfs-progs
-#sed -i 's/PKG_VERSION:=.*/PKG_VERSION:=6.6.3/g' feeds/packages/utils/btrfs-progs/Makefile
-#sed -i 's/PKG_HASH:=.*/PKG_HASH:=f41ce53f6673ff551ee4a3fe7dc9601e5a0dde6b6d09177d1fab62718abc6d9a/g' feeds/packages/utils/btrfs-progs/Makefile
-#rm -rf feeds/packages/utils/btrfs-progs/patches
-
 #修改makefile
 find package/*/ -maxdepth 2 -path "*/Makefile" | xargs -i sed -i 's/include\ \.\.\/\.\.\/luci\.mk/include \$(TOPDIR)\/feeds\/luci\/luci\.mk/g' {}
 find package/*/ -maxdepth 2 -path "*/Makefile" | xargs -i sed -i 's/include\ \.\.\/\.\.\/lang\/golang\/golang\-package\.mk/include \$(TOPDIR)\/feeds\/packages\/lang\/golang\/golang\-package\.mk/g' {}
