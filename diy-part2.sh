@@ -1,6 +1,6 @@
 #!/bin/bash
 #============================================================
-# # 2024-01-13
+# # 2024-01-14
 #============================================================
 #移除不用软件包
 rm -rf feeds/luci/applications/luci-app-dockerman
@@ -31,7 +31,6 @@ cp -rf helloworld/shadowsocksr-libev package/shadowsocksr-libev
 cp -rf helloworld/v2ray-plugin package/v2ray-plugin
 cp -rf helloworld/v2ray-core package/v2ray-core
 cp -rf helloworld/v2ray-geodata package/v2ray-geodata
-cp -rf helloworld/simple-obfs package/simple-obfs
 cp -rf helloworld/trojan package/trojan
 cp -rf helloworld/sagernet-core package/sagernet-core
 cp -rf helloworld/microsocks package/microsocks
@@ -49,6 +48,7 @@ cp -rf helloworld/naiveproxy package/naiveproxy
 git clone --depth=1 https://github.com/xiaorouji/openwrt-passwall-packages.git
 cp -rf openwrt-passwall-packages/brook package/brook
 cp -rf openwrt-passwall-packages/ssocks package/ssocks
+cp -rf openwrt-passwall-packages/simple-obfs package/simple-obfs
 cp -rf openwrt-passwall-packages/pdnsd-alt package/pdnsd-alt
 cp -rf openwrt-passwall-packages/chinadns-ng package/chinadns-ng
 cp -rf openwrt-passwall-packages/tcping package/tcping
