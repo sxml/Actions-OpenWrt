@@ -79,7 +79,7 @@ merge_package https://github.com/fw876/helloworld helloworld/redsocks2
 merge_package https://github.com/fw876/helloworld helloworld/gn
 
 merge_package https://github.com/kenzok8/openwrt-packages openwrt-packages/gost
-merge_package https://github.com/breakings/OpenWrt/trunk/general general/luci-app-gost
+merge_package https://github.com/breakings/OpenWrt/tree/main/general general/luci-app-gost
 
 #文件助手
 merge_package https://github.com/Lienol/openwrt-package openwrt-package/luci-app-fileassistant
