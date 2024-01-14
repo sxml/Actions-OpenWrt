@@ -74,7 +74,7 @@ git clone --depth=1 https://github.com/jerrykuku/lua-maxminddb.git package/lua-m
 
 #文件助手
 #git clone --depth=1 https://github.com/Lienol/openwrt-package.git
-#cp -rf fileassistant/luci-app-ssr-plus package/luci-app-fileassistant
+#cp -rf fileassistant/luci-app-fileassistant package/luci-app-fileassistant
 git clone https://github.com/sxml/luci-app-fileassistant.git package/luci-app-fileassistant
 #rm -rf fileassistant
 
