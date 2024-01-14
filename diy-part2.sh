@@ -4,8 +4,9 @@
 #============================================================
 #移除不用软件包
 rm -rf feeds/luci/applications/luci-app-dockerman
-rm -rf package/lean/luci-app-wrtbwmon
+#rm -rf package/lean/luci-app-wrtbwmon
 rm -rf feeds/packages/net/smartdns
+rm -rf feeds/luci/applications/luci-app-smartdns
 rm -fr feeds/luci/themes/luci-theme-design
 #20231010
 rm -rf feeds/packages/utils/prometheus-node-exporter-lua
@@ -72,9 +73,9 @@ cp -rf openwrt-passwall2/luci-app-passwall2 package/luci-app-passwall2
 git clone --depth=1 https://github.com/jerrykuku/lua-maxminddb.git package/lua-maxminddb
 
 #文件助手
-git clone --depth=1 https://github.com/Lienol/openwrt-package.git
-cp -rf fileassistant/luci-app-ssr-plus package/luci-app-fileassistant
-#git clone https://github.com/sxml/luci-app-fileassistant.git package/luci-app-fileassistant
+#git clone --depth=1 https://github.com/Lienol/openwrt-package.git
+#cp -rf fileassistant/luci-app-ssr-plus package/luci-app-fileassistant
+git clone https://github.com/sxml/luci-app-fileassistant.git package/luci-app-fileassistant
 #rm -rf fileassistant
 
 #添加luci-app-amlogic
@@ -94,11 +95,10 @@ sed -i "s|.img.gz|.img.gz|g" package/luci-app-amlogic/root/etc/config/amlogic
 sed -i "s|http.*/library|https://github.com/breakings/OpenWrt/tree/main/opt/kernel|g" package/luci-app-amlogic/root/etc/config/amlogic
 
 # themes 主题
-git clone --depth=1 https://github.com/Leo-Jo-My/luci-theme-opentomcat package/luci-theme-opentomcat
-git clone --depth=1 https://github.com/thinktip/luci-theme-neobird package/luci-theme-neobird
-
-git clone --depth=1 https://github.com/gngpp/luci-theme-design package/luci-theme-design
-git clone --depth=1 https://github.com/gngpp/luci-app-design-config package/luci-app-design-config
+git clone --depth=1 https://github.com/Leo-Jo-My/luci-theme-opentomcat.git package/luci-theme-opentomcat
+git clone --depth=1 https://github.com/thinktip/luci-theme-neobird.git package/luci-theme-neobird
+git clone --depth=1 https://github.com/gngpp/luci-theme-design.git package/luci-theme-design
+git clone --depth=1 https://github.com/gngpp/luci-app-design-config.git package/luci-app-design-config
 
 #修改makefile
 find package/*/ -maxdepth 2 -path "*/Makefile" | xargs -i sed -i 's/include\ \.\.\/\.\.\/luci\.mk/include \$(TOPDIR)\/feeds\/luci\/luci\.mk/g' {}
