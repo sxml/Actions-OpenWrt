@@ -2,7 +2,6 @@
 #============================================================
 # # 2024-01-14
 #============================================================
-
 echo "开始 DIY2 配置……"
 echo "========================="
 
@@ -93,14 +92,14 @@ merge_package https://github.com/jerrykuku/lua-maxminddb lua-maxminddb
 merge_package https://github.com/ophub/luci-app-amlogic luci-app-amlogic
 #修改晶晨宝盒默认配置
 # 1.设置OpenWrt 文件的下载仓库
-sed -i "s|https.*/OpenWrt|https://github.com/sxml/Actions-OpenWrt|g" package/luci-app-amlogic/root/etc/config/amlogic
+sed -i "s|https.*/OpenWrt|https://github.com/sxml/Actions-OpenWrt|g" package/custom/luci-app-amlogic/luci-app-amlogic/root/etc/config/amlogic
 # 2.设置 Releases 里 Tags 的关键字
-sed -i "s|ARMv8|ARMv8|g" package/luci-app-amlogic/root/etc/config/amlogic
+sed -i "s|ARMv8|ARMv8|g" package/custom/luci-app-amlogic/luci-app-amlogic/root/etc/config/amlogic
 # 3.设置 Releases 里 OpenWrt 文件的后缀
-sed -i "s|.img.gz|.img.gz|g" package/luci-app-amlogic/root/etc/config/amlogic
+sed -i "s|.img.gz|.img.gz|g" package/custom/luci-app-amlogic/luci-app-amlogic/root/etc/config/amlogic
 # 4.设置 OpenWrt 内核的下载路径
-#sed -i "s|opt/kernel|BuildARMv8|g" package/luci-app-amlogic/root/etc/config/amlogic
-sed -i "s|http.*/library|https://github.com/breakings/OpenWrt/tree/main/opt/kernel|g" package/luci-app-amlogic/root/etc/config/amlogic
+#sed -i "s|opt/kernel|BuildARMv8|g" package/custom/luci-app-amlogic/luci-app-amlogic/root/etc/config/amlogic
+sed -i "s|http.*/library|https://github.com/breakings/OpenWrt/tree/main/opt/kernel|g" package/custom/luci-app-amlogic/luci-app-amlogic/root/etc/config/amlogic
 
 #小猫
 #merge_package https://github.com/vernesong/OpenClash OpenClash/luci-app-openclash
