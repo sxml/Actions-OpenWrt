@@ -1,6 +1,7 @@
 #!/bin/bash
 #============================================================
 # # 2024-01-14
+#https://github.com/breakings/OpenWrt
 #============================================================
 echo "开始 DIY2 配置……"
 echo "========================="
@@ -111,6 +112,10 @@ merge_package https://github.com/Leo-Jo-My/luci-theme-opentomcat luci-theme-open
 merge_package https://github.com/thinktip/luci-theme-neobird luci-theme-neobird
 merge_package https://github.com/gngpp/luci-theme-design luci-theme-design
 merge_package https://github.com/gngpp/luci-app-design-config luci-app-design-config
+
+# nfs-kernel-server
+rm -rf feeds/packages/net/nfs-kernel-server
+merge_package https://github.com/openwrt/packages feeds/packages/net/nfs-kernel-server
 
 # btrfs-progs
 #sed -i 's/PKG_VERSION:=.*/PKG_VERSION:=6.6.3/g' feeds/packages/utils/btrfs-progs/Makefile
