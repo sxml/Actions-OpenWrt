@@ -2,7 +2,7 @@
 # 2023.08.20  编译op包
 #
 
-name: 编译op包SF版
+name: 编译op包
 on:
   repository_dispatch:
   workflow_dispatch:
@@ -26,7 +26,7 @@ jobs:
     runs-on: ubuntu-22.04
     if: github.event.repository.owner.id == github.event.sender.id || ! github.event.sender.id
 
-    name: 编译op包-SF版
+    name: 编译op包
     strategy:
       fail-fast: false
       
