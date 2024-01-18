@@ -72,7 +72,7 @@ merge_package master https://github.com/fw876/helloworld v2ray-geodata
 merge_package master https://github.com/fw876/helloworld redsocks2
 merge_package master https://github.com/fw876/helloworld gn
 
-merge_package main https://github.com/kenzok8/small-package gost luci-app-gost
+merge_package main https://github.com/kenzok8/small-package sagernet-core gost luci-app-gost 
 #merge_package https://github.com/breakings/OpenWrt OpenWrt/general/luci-app-gost
 
 #文件助手
