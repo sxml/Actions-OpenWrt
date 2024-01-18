@@ -1,109 +1,111 @@
 #!/bin/bash
 #============================================================
-# # 2024-01-18
+# 2024-01-18
+#https://github.com/HoldOnBro/Actions-OpenWrt
 #https://github.com/breakings/OpenWrt
-#https://github.com/binge8/op
 #============================================================
-merge_package(){
-    # 参数1是分支名,参数2是库地址。所有文件下载到openwrt/package/openwrt-packages路径。
-    # 同一个仓库下载多个文件夹直接在后面跟文件名或路径，空格分开。
-    trap 'rm -rf "$tmpdir"' EXIT
-    branch="$1" curl="$2" && shift 2
-    rootdir="$PWD"
-    localdir=package/openwrt-packages
-    [ -d "$localdir" ] || mkdir -p "$localdir"
-    tmpdir="$(mktemp -d)" || exit 1
-    git clone -b "$branch" --depth 1 --filter=blob:none --sparse "$curl" "$tmpdir"
-    cd "$tmpdir"
-    git sparse-checkout init --cone
-    git sparse-checkout set "$@"
-    mv -f "$@" "$rootdir"/"$localdir" && cd "$rootdir"
-}
-
 #移除不用软件包
-#rm -rf package/lean/luci-app-dockerman
 rm -rf feeds/luci/applications/luci-app-dockerman
 #rm -rf package/lean/luci-app-wrtbwmon
 rm -rf feeds/packages/net/smartdns
 rm -rf feeds/luci/applications/luci-app-smartdns
 rm -fr feeds/luci/themes/luci-theme-design
-#rm -rf feeds/packages/net/samba4
 #20231010
 rm -rf feeds/packages/utils/prometheus-node-exporter-lua
 
-#添加smartdns
-merge_package master https://github.com/kenzok8/openwrt-packages openwrt-packages/smartdns
-merge_package master https://github.com/kenzok8/openwrt-packages openwrt-packages/luci-app-smartdns
-#git clone -b lede https://github.com/pymumu/luci-app-smartdns.git package/luci-app-smartdns
-#git clone https://github.com/pymumu/openwrt-smartdns package/smartdns
+# 克隆 kenzok8仓库
+git clone --depth=1 https://github.com/kenzok8/openwrt-packages.git kenzok8-packages
+cp -rf kenzok8-packages/smartdns package/smartdns
+cp -rf kenzok8-packages/luci-app-smartdns package/luci-app-smartdns
+#git clone --depth=1 https://github.com/pymumu/luci-app-smartdns.git package/luci-app-smartdns
+git clone --depth=1 https://github.com/kenzok8/small-package small-package
+cp -rf small-package/gost package/gost
+cp -rf small-package/luci-app-gost package/luci-app-gost
+cp -rf small-package/sagernet-core package/sagernet-core
 
-#添加passwall
-merge_package main https://github.com/xiaorouji/openwrt-passwall luci-app-passwall
-merge_package main https://github.com/xiaorouji/openwrt-passwall2 luci-app-passwall2
+# 克隆 fw876 仓库
+git clone --depth=1 -b main https://github.com/fw876/helloworld.git
+cp -rf helloworld/luci-app-ssr-plus package/luci-app-ssr-plus
+cp -rf helloworld/xray-core package/xray-core
+cp -rf helloworld/xray-plugin package/xray-plugin
+cp -rf helloworld/shadowsocks-rust package/shadowsocks-rust
+cp -rf helloworld/shadowsocksr-libev package/shadowsocksr-libev
+cp -rf helloworld/v2ray-plugin package/v2ray-plugin
+cp -rf helloworld/v2ray-core package/v2ray-core
+cp -rf helloworld/v2ray-geodata package/v2ray-geodata
+cp -rf helloworld/trojan package/trojan
+#cp -rf helloworld/sagernet-core package/sagernet-core
+cp -rf helloworld/microsocks package/microsocks
+cp -rf helloworld/redsocks2 package/redsocks2
+cp -rf helloworld/ipt2socks package/ipt2socks
+cp -rf helloworld/dns2socks package/dns2socks
+cp -rf helloworld/lua-neturl package/lua-neturl
+cp -rf helloworld/gn package/gn
+cp -rf helloworld/shadow-tls package/shadow-tls
+cp -rf helloworld/tuic-client package/tuic-client
+cp -rf helloworld/naiveproxy package/naiveproxy
+#rm -rf helloworld
 
-merge_package main https://github.com/xiaorouji/openwrt-passwall-packages brook
-merge_package main https://github.com/xiaorouji/openwrt-passwall-packages chinadns-ng
-merge_package main https://github.com/xiaorouji/openwrt-passwall-packages tcping
-merge_package main https://github.com/xiaorouji/openwrt-passwall-packages trojan-go
-merge_package main https://github.com/xiaorouji/openwrt-passwall-packages trojan-plus
-merge_package main https://github.com/xiaorouji/openwrt-passwall-packages shadowsocks-rust
-merge_package main https://github.com/xiaorouji/openwrt-passwall-packages ssocks
-merge_package main https://github.com/xiaorouji/openwrt-passwall-packages dns2socks
-merge_package main https://github.com/xiaorouji/openwrt-passwall-packages ipt2socks
-merge_package main https://github.com/xiaorouji/openwrt-passwall-packages microsocks 
-merge_package main https://github.com/xiaorouji/openwrt-passwall-packages pdnsd-alt
-merge_package main https://github.com/xiaorouji/openwrt-passwall-packages v2ray-core
-merge_package main https://github.com/xiaorouji/openwrt-passwall-packages v2ray-plugin
-merge_package main https://github.com/xiaorouji/openwrt-passwall-packages simple-obfs
-merge_package main https://github.com/xiaorouji/openwrt-passwall-packages trojan
-merge_package main https://github.com/xiaorouji/openwrt-passwall-packages hysteria
-merge_package main https://github.com/xiaorouji/openwrt-passwall-packages sing-box
-merge_package main https://github.com/xiaorouji/openwrt-passwall-packages naiveproxy
+# 克隆openwrt-passwall仓库
+git clone --depth=1 https://github.com/xiaorouji/openwrt-passwall-packages.git
+cp -rf openwrt-passwall-packages/brook package/brook
+cp -rf openwrt-passwall-packages/ssocks package/ssocks
+cp -rf openwrt-passwall-packages/simple-obfs package/simple-obfs
+cp -rf openwrt-passwall-packages/pdnsd-alt package/pdnsd-alt
+cp -rf openwrt-passwall-packages/chinadns-ng package/chinadns-ng
+cp -rf openwrt-passwall-packages/tcping package/tcping
+cp -rf openwrt-passwall-packages/trojan-go package/trojan-go
+cp -rf openwrt-passwall-packages/trojan-plus package/trojan-plus
+cp -rf openwrt-passwall-packages/hysteria package/hysteria
+cp -rf openwrt-passwall-packages/dns2tcp package/dns2tcp
+cp -rf openwrt-passwall-packages/sing-box package/sing-box
+#rm -rf openwrt-passwall-packages
 
-merge_package master https://github.com/fw876/helloworld luci-app-ssr-plus
-merge_package master https://github.com/fw876/helloworld xray-core
-merge_package master https://github.com/fw876/helloworld xray-plugin
-merge_package master https://github.com/fw876/helloworld shadowsocksr-libev
-merge_package master https://github.com/fw876/helloworld lua-neturl
-merge_package master https://github.com/fw876/helloworld shadow-tls
-merge_package master https://github.com/fw876/helloworld tuic-client
-merge_package master https://github.com/fw876/helloworld dns2tcp
-merge_package master https://github.com/fw876/helloworld v2ray-geodata
-merge_package master https://github.com/fw876/helloworld redsocks2
-merge_package master https://github.com/fw876/helloworld gn
+#passwall
+git clone --depth=1 https://github.com/xiaorouji/openwrt-passwall.git
+cp -rf openwrt-passwall/luci-app-passwall package/luci-app-passwall
+#rm -rf openwrt-passwall
 
-merge_package main https://github.com/kenzok8/small-package sagernet-core gost luci-app-gost 
-#merge_package https://github.com/breakings/OpenWrt OpenWrt/general/luci-app-gost
-
-#文件助手
-merge_package main https://github.com/Lienol/openwrt-package openwrt-package/luci-app-fileassistant
-#git clone https://github.com/sxml/luci-app-fileassistant.git package/luci-app-fileassistant
+#passwall2
+git clone --depth=1 https://github.com/xiaorouji/openwrt-passwall2.git
+cp -rf openwrt-passwall2/luci-app-passwall2 package/luci-app-passwall2
+#rm -rf openwrt-passwall2
 
 #解析
-#merge_package main https://github.com/kenzok8/small-package luci-app-socat lua-maxminddb
-merge_package master https://github.com/jerrykuku/lua-maxminddb lua-maxminddb
+git clone --depth=1 https://github.com/jerrykuku/lua-maxminddb.git package/lua-maxminddb
+
+#文件助手
+#git clone --depth=1 https://github.com/Lienol/openwrt-package.git
+#cp -rf fileassistant/luci-app-fileassistant package/luci-app-fileassistant
+git clone https://github.com/sxml/luci-app-fileassistant.git package/luci-app-fileassistant
+#rm -rf fileassistant
 
 #添加luci-app-amlogic
-merge_package main https://github.com/ophub/luci-app-amlogic luci-app-amlogic
+git clone --depth=1 https://github.com/ophub/luci-app-amlogic.git
+cp -rf luci-app-amlogic/luci-app-amlogic package/luci-app-amlogic
+#rm -rf luci-app-amlogic
+
 #修改晶晨宝盒默认配置
 # 1.设置OpenWrt 文件的下载仓库
-sed -i "s|https.*/OpenWrt|https://github.com/sxml/Actions-OpenWrt|g" package/openwrt-packages/luci-app-amlogic/root/etc/config/amlogic
+sed -i "s|https.*/OpenWrt|https://github.com/sxml/Actions-OpenWrt|g" package/luci-app-amlogic/root/etc/config/amlogic
 # 2.设置 Releases 里 Tags 的关键字
-sed -i "s|ARMv8|ARMv8|g" package/openwrt-packages/luci-app-amlogic/root/etc/config/amlogic
+sed -i "s|ARMv8|ARMv8|g" package/luci-app-amlogic/root/etc/config/amlogic
 # 3.设置 Releases 里 OpenWrt 文件的后缀
-sed -i "s|.img.gz|.img.gz|g" package/openwrt-packages/luci-app-amlogic/root/etc/config/amlogic
+sed -i "s|.img.gz|.img.gz|g" package/luci-app-amlogic/root/etc/config/amlogic
 # 4.设置 OpenWrt 内核的下载路径
-#sed -i "s|opt/kernel|BuildARMv8|g" package/openwrt-packages/luci-app-amlogic/root/etc/config/amlogic
-sed -i "s|http.*/library|https://github.com/breakings/OpenWrt/tree/main/opt/kernel|g" package/openwrt-packages/luci-app-amlogic/root/etc/config/amlogic
+#sed -i "s|opt/kernel|BuildARMv8|g" package/luci-app-amlogic/root/etc/config/amlogic
+sed -i "s|http.*/library|https://github.com/breakings/OpenWrt/tree/main/opt/kernel|g" package/luci-app-amlogic/root/etc/config/amlogic
 
 # themes 主题
-merge_package master https://github.com/Leo-Jo-My/luci-theme-opentomcat luci-theme-opentomcat
-merge_package main https://github.com/thinktip/luci-theme-neobird luci-theme-neobird
-merge_package main https://github.com/gngpp/luci-theme-design luci-theme-design
-merge_package master https://github.com/gngpp/luci-app-design-config luci-app-design-config
-#参考
-#git clone --depth=1 -b master https://github.com/Leo-Jo-My/luci-theme-opentomcat package/openwrt-packages/luci-theme-opentomcat
+git clone --depth=1 https://github.com/Leo-Jo-My/luci-theme-opentomcat.git package/luci-theme-opentomcat
+git clone --depth=1 https://github.com/thinktip/luci-theme-neobird.git package/luci-theme-neobird
+git clone --depth=1 https://github.com/gngpp/luci-theme-design.git package/luci-theme-design
+git clone --depth=1 https://github.com/gngpp/luci-app-design-config.git package/luci-app-design-config
 
+# btrfs-progs
+#sed -i 's/PKG_VERSION:=.*/PKG_VERSION:=6.6.3/g' feeds/packages/utils/btrfs-progs/Makefile
+#sed -i 's/PKG_HASH:=.*/PKG_HASH:=f41ce53f6673ff551ee4a3fe7dc9601e5a0dde6b6d09177d1fab62718abc6d9a/g' feeds/packages/utils/btrfs-progs/Makefile
+#rm -rf feeds/packages/utils/btrfs-progs/patches
 
 #修改makefile
 find package/*/ -maxdepth 2 -path "*/Makefile" | xargs -i sed -i 's/include\ \.\.\/\.\.\/luci\.mk/include \$(TOPDIR)\/feeds\/luci\/luci\.mk/g' {}
@@ -113,3 +115,7 @@ find package/*/ -maxdepth 2 -path "*/Makefile" | xargs -i sed -i 's/PKG_SOURCE_U
 
 ./scripts/feeds update -a
 ./scripts/feeds install -a
+
+# 临时修复acpid,xfsprogs
+#sed -i 's#flto#flto -D_LARGEFILE64_SOURCE#g' feeds/packages/utils/acpid/Makefile
+#sed -i 's#SYNC#SYNC -D_LARGEFILE64_SOURCE#g' feeds/packages/utils/xfsprogs/Makefile
