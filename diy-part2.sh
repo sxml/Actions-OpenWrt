@@ -76,7 +76,7 @@ cp -rf openwrt-passwall2/luci-app-passwall2 package/luci-app-passwall2
 git clone --depth=1 https://github.com/jerrykuku/lua-maxminddb.git package/lua-maxminddb
 
 #文件助手
-git clone --depth=1 https://github.com/Lienol/openwrt-package.git
+git clone --depth=1 https://github.com/Lienol/openwrt-package.git fileassistant
 cp -rf fileassistant/luci-app-fileassistant package/luci-app-fileassistant
 #git clone https://github.com/sxml/luci-app-fileassistant.git package/luci-app-fileassistant
 #rm -rf fileassistant
