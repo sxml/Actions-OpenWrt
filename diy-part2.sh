@@ -1,6 +1,6 @@
 #!/bin/bash
 #============================================================
-# 2024-01-18
+# 2024-01-19
 #https://github.com/HoldOnBro/Actions-OpenWrt
 #https://github.com/breakings/OpenWrt
 #============================================================
@@ -11,17 +11,18 @@ rm -rf feeds/packages/net/smartdns
 rm -rf feeds/luci/applications/luci-app-smartdns
 rm -fr feeds/luci/themes/luci-theme-design
 #20231010
-rm -rf feeds/packages/utils/prometheus-node-exporter-lua
+#rm -rf feeds/packages/utils/prometheus-node-exporter-lua
 
 # 克隆 kenzok8仓库
 git clone --depth=1 https://github.com/kenzok8/openwrt-packages.git kenzok8-packages
 cp -rf kenzok8-packages/smartdns package/smartdns
 cp -rf kenzok8-packages/luci-app-smartdns package/luci-app-smartdns
+cp -rf kenzok8-packages/gost package/gost
 #git clone --depth=1 https://github.com/pymumu/luci-app-smartdns.git package/luci-app-smartdns
-git clone --depth=1 https://github.com/kenzok8/small-package small-package
-cp -rf small-package/gost package/gost
-cp -rf small-package/luci-app-gost package/luci-app-gost
-cp -rf small-package/sagernet-core package/sagernet-core
+#git clone --depth=1 https://github.com/kenzok8/small-package.git small-package
+#cp -rf small-package/gost package/gost
+#cp -rf small-package/luci-app-gost package/luci-app-gost
+#cp -rf small-package/sagernet-core package/sagernet-core
 
 # 克隆 fw876 仓库
 git clone --depth=1 -b main https://github.com/fw876/helloworld.git
@@ -75,9 +76,9 @@ cp -rf openwrt-passwall2/luci-app-passwall2 package/luci-app-passwall2
 git clone --depth=1 https://github.com/jerrykuku/lua-maxminddb.git package/lua-maxminddb
 
 #文件助手
-#git clone --depth=1 https://github.com/Lienol/openwrt-package.git
-#cp -rf fileassistant/luci-app-fileassistant package/luci-app-fileassistant
-git clone https://github.com/sxml/luci-app-fileassistant.git package/luci-app-fileassistant
+git clone --depth=1 https://github.com/Lienol/openwrt-package.git
+cp -rf fileassistant/luci-app-fileassistant package/luci-app-fileassistant
+#git clone https://github.com/sxml/luci-app-fileassistant.git package/luci-app-fileassistant
 #rm -rf fileassistant
 
 #添加luci-app-amlogic
@@ -102,11 +103,6 @@ git clone --depth=1 https://github.com/thinktip/luci-theme-neobird.git package/l
 git clone --depth=1 https://github.com/gngpp/luci-theme-design.git package/luci-theme-design
 git clone --depth=1 https://github.com/gngpp/luci-app-design-config.git package/luci-app-design-config
 
-# btrfs-progs
-#sed -i 's/PKG_VERSION:=.*/PKG_VERSION:=6.6.3/g' feeds/packages/utils/btrfs-progs/Makefile
-#sed -i 's/PKG_HASH:=.*/PKG_HASH:=f41ce53f6673ff551ee4a3fe7dc9601e5a0dde6b6d09177d1fab62718abc6d9a/g' feeds/packages/utils/btrfs-progs/Makefile
-#rm -rf feeds/packages/utils/btrfs-progs/patches
-
 #修改makefile
 find package/*/ -maxdepth 2 -path "*/Makefile" | xargs -i sed -i 's/include\ \.\.\/\.\.\/luci\.mk/include \$(TOPDIR)\/feeds\/luci\/luci\.mk/g' {}
 find package/*/ -maxdepth 2 -path "*/Makefile" | xargs -i sed -i 's/include\ \.\.\/\.\.\/lang\/golang\/golang\-package\.mk/include \$(TOPDIR)\/feeds\/packages\/lang\/golang\/golang\-package\.mk/g' {}
@@ -115,7 +111,3 @@ find package/*/ -maxdepth 2 -path "*/Makefile" | xargs -i sed -i 's/PKG_SOURCE_U
 
 ./scripts/feeds update -a
 ./scripts/feeds install -a
-
-# 临时修复acpid,xfsprogs
-#sed -i 's#flto#flto -D_LARGEFILE64_SOURCE#g' feeds/packages/utils/acpid/Makefile
-#sed -i 's#SYNC#SYNC -D_LARGEFILE64_SOURCE#g' feeds/packages/utils/xfsprogs/Makefile
