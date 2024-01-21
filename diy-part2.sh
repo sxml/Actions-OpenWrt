@@ -110,10 +110,10 @@ find package/*/ -maxdepth 2 -path "*/Makefile" | xargs -i sed -i 's/PKG_SOURCE_U
 find package/*/ -maxdepth 2 -path "*/Makefile" | xargs -i sed -i 's/PKG_SOURCE_URL:=\@GHCODELOAD/PKG_SOURCE_URL:=https:\/\/codeload\.github\.com/g' {}
 
 # uqmi
-sed -i 's/PKG_RELEASE:=.*/PKG_RELEASE:=$(AUTORELEASE)/g' feeds/package/network/utils/uqmi/Makefile
-sed -i 's/PKG_SOURCE_DATE:=.*/PKG_SOURCE_DATE:=2022-05-04/g' feeds/package/network/utils/uqmi/Makefile
-sed -i 's/PKG_SOURCE_VERSION:=.*/PKG_SOURCE_VERSION:=56cb2d4056fef132ccf78dfb6f3074ae5d109992/g' feeds/package/network/utils/uqmi/Makefile
-sed -i 's/PKG_MIRROR_HASH:=.*/PKG_MIRROR_HASH:=cc832b5318805df8c8387a3650f250dee72d5f1dbda4e4866b5503e186b2210c/g' feeds/package/network/utils/uqmi/Makefile
-
+sed -i 's/PKG_RELEASE:=.*/PKG_RELEASE:=$(AUTORELEASE)/g' package/network/utils/uqmi/Makefile
+sed -i 's/PKG_SOURCE_DATE:=.*/PKG_SOURCE_DATE:=2022-05-04/g' package/network/utils/uqmi/Makefile
+sed -i 's/PKG_SOURCE_VERSION:=.*/PKG_SOURCE_VERSION:=56cb2d4056fef132ccf78dfb6f3074ae5d109992/g' package/network/utils/uqmi/Makefile
+sed -i 's/PKG_MIRROR_HASH:=.*/PKG_MIRROR_HASH:=cc832b5318805df8c8387a3650f250dee72d5f1dbda4e4866b5503e186b2210c/g' package/network/utils/uqmi/Makefile
+        
 ./scripts/feeds update -a
 ./scripts/feeds install -a -f
