@@ -17,12 +17,12 @@ rm -fr feeds/luci/themes/luci-theme-design
 git clone --depth=1 https://github.com/kenzok8/openwrt-packages.git kenzok8-packages
 cp -rf kenzok8-packages/smartdns package/smartdns
 cp -rf kenzok8-packages/luci-app-smartdns package/luci-app-smartdns
-cp -rf kenzok8-packages/gost package/gost
+#cp -rf kenzok8-packages/gost package/gost
 #git clone --depth=1 https://github.com/pymumu/luci-app-smartdns.git package/luci-app-smartdns
-#git clone --depth=1 https://github.com/kenzok8/small-package.git small-package
-#cp -rf small-package/gost package/gost
-#cp -rf small-package/luci-app-gost package/luci-app-gost
-#cp -rf small-package/sagernet-core package/sagernet-core
+git clone --depth=1 https://github.com/kenzok8/small-package.git small-package
+cp -rf small-package/gost package/gost
+cp -rf small-package/luci-app-gost package/luci-app-gost
+cp -rf small-package/sagernet-core package/sagernet-core
 
 # 克隆 fw876 仓库
 git clone --depth=1 -b main https://github.com/fw876/helloworld.git
