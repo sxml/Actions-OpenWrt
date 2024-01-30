@@ -115,7 +115,7 @@ sed -i 's/TARGET_CFLAGS += -DHAVE_MAP_SYNC/TARGET_CFLAGS += -DHAVE_MAP_SYNC -D_L
 # perl 报错perl-xml-parser尝试
 rm -rf feeds/packages/lang/perl
 git clone --depth=1 https://github.com/breakings/OpenWrt.git general/perl
-cp -rf general/perl feeds/packages/lang
+cp -rf general/perl feeds/packages/lang/perl
 #cp -rf $GITHUB_WORKSPACE/general/perl feeds/packages/lang
 
 ./scripts/feeds update -a
