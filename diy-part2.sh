@@ -41,7 +41,7 @@ cp -rf helloworld/redsocks2 package/redsocks2
 cp -rf helloworld/ipt2socks package/ipt2socks
 cp -rf helloworld/dns2socks package/dns2socks
 cp -rf helloworld/lua-neturl package/lua-neturl
-#cp -rf helloworld/gn package/gn
+cp -rf helloworld/gn package/gn
 cp -rf helloworld/shadow-tls package/shadow-tls
 cp -rf helloworld/tuic-client package/tuic-client
 cp -rf helloworld/naiveproxy package/naiveproxy
