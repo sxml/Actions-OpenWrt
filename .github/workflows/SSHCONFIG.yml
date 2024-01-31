@@ -44,7 +44,6 @@ jobs:
         sudo -E apt-get -qq install $(curl -fsSL git.io/depends-ubuntu-2004)
         sudo -E apt-get -qq install rename
         sudo -E apt-get -qq install time
-        sudo -E apt-get -qq install -y bmx6 bmx6-json
         sudo -E apt-get -qq autoremove --purge
         sudo -E apt-get -qq clean
         sudo timedatectl set-timezone "$TZ"
