@@ -1,6 +1,6 @@
 #!/bin/bash
 #============================================================
-# 2024-01-31
+# 2024-01-3102
 #https://github.com/HoldOnBro/Actions-OpenWrt
 #https://github.com/breakings/OpenWrt
 #============================================================
@@ -22,7 +22,7 @@ cp -rf kenzok8-packages/luci-app-smartdns package/luci-app-smartdns
 git clone --depth=1 https://github.com/kenzok8/small-package.git small-package
 cp -rf small-package/gost package/gost
 cp -rf small-package/luci-app-gost package/luci-app-gost
-cp -rf small-package/sagernet-core package/sagernet-core
+#cp -rf small-package/sagernet-core package/sagernet-core
 
 # 克隆 fw876 仓库
 git clone --depth=1 -b main https://github.com/fw876/helloworld.git
@@ -49,7 +49,7 @@ cp -rf helloworld/naiveproxy package/naiveproxy
 
 # 克隆openwrt-passwall仓库
 git clone --depth=1 https://github.com/xiaorouji/openwrt-passwall-packages.git
-cp -rf openwrt-passwall-packages/brook package/brook
+#cp -rf openwrt-passwall-packages/brook package/brook
 cp -rf openwrt-passwall-packages/ssocks package/ssocks
 cp -rf openwrt-passwall-packages/simple-obfs package/simple-obfs
 cp -rf openwrt-passwall-packages/pdnsd-alt package/pdnsd-alt
