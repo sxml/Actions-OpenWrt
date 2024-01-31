@@ -15,7 +15,7 @@ env:
   CONFIG_FILE: aarch64/SSHCONFIG.config
   #CONFIG_FILE: aarch64/ARMv8_SF.config   
   DIY_P2_SH: diy-part2.sh
-  SSH_ACTIONS: false
+  SSH_ACTIONS: true
   UPLOAD_CONFIG: true
   DELETE_ARTIFACTS: true   # 删除旧的工作流程运行和工件
   TZ: Asia/Shanghai
@@ -44,6 +44,7 @@ jobs:
         sudo -E apt-get -qq install $(curl -fsSL git.io/depends-ubuntu-2004)
         sudo -E apt-get -qq install rename
         sudo -E apt-get -qq install time
+        sudo -E apt-get -qq install -y bmx6 bmx6-json
         sudo -E apt-get -qq autoremove --purge
         sudo -E apt-get -qq clean
         sudo timedatectl set-timezone "$TZ"
@@ -79,7 +80,7 @@ jobs:
         sed -i 's/OpenWrt/MRG AutoBuild ${{ env.DATE1 }} @ OpenWrt/g' package/lean/default-settings/files/zzz-default-settings
         
     - name: SSH远程连接（配置固件）
-      uses: P3TERX/ssh2actions@v1.0.0
+      uses: P3TERX/ssh2actions@main
       if: (github.event.inputs.ssh == 'true' && github.event.inputs.ssh  != 'false') || contains(github.event.action, 'ssh')
       env:
         TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
@@ -92,7 +93,7 @@ jobs:
         ./scripts/diffconfig.sh > ${GITHUB_WORKSPACE}/config.txt
     
     - name: 上传.config配置文件
-      uses: actions/upload-artifact@master
+      uses: actions/upload-artifact@v4
       if: env.UPLOAD_CONFIG == 'true'
       with:
         name: ${{ env.FILE_NAME }}-${{ env.DATE1 }}-
@@ -111,9 +112,9 @@ jobs:
         retain_days: 1                          # 工作流的保留天数进行比较的天数       
         keep_minimum_runs: 0                    # 工作流程保留的最少运行次数
         
-    - name: 取消编译
-      uses: potiuk/cancel-workflow-runs@master
-      with:
-        cancelMode: self
-        notifyPRCancel: true
-        token: ${{ secrets.RELEASES_TOKEN }}
+#    - name: 取消编译
+#      uses: potiuk/cancel-workflow-runs@master
+#      with:
+#        cancelMode: self
+#        notifyPRCancel: true
+#        token: ${{ secrets.RELEASES_TOKEN }}
