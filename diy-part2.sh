@@ -1,6 +1,6 @@
 #!/bin/bash
 #============================================================
-# 2024-01-3102
+# 2024-01-31
 #https://github.com/HoldOnBro/Actions-OpenWrt
 #https://github.com/breakings/OpenWrt
 #============================================================
@@ -49,7 +49,7 @@ cp -rf helloworld/naiveproxy package/naiveproxy
 
 # 克隆openwrt-passwall仓库
 git clone --depth=1 https://github.com/xiaorouji/openwrt-passwall-packages.git
-#cp -rf openwrt-passwall-packages/brook package/brook
+cp -rf openwrt-passwall-packages/brook package/brook
 cp -rf openwrt-passwall-packages/ssocks package/ssocks
 cp -rf openwrt-passwall-packages/simple-obfs package/simple-obfs
 cp -rf openwrt-passwall-packages/pdnsd-alt package/pdnsd-alt
