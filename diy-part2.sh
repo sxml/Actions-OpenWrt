@@ -1,6 +1,6 @@
 #!/bin/bash
 #============================================================
-# 2024-01-19
+# 2024-01-31
 #https://github.com/HoldOnBro/Actions-OpenWrt
 #https://github.com/breakings/OpenWrt
 #============================================================
@@ -112,11 +112,10 @@ find package/*/ -maxdepth 2 -path "*/Makefile" | xargs -i sed -i 's/PKG_SOURCE_U
 # 临时修复xfsprogs
 sed -i 's/TARGET_CFLAGS += -DHAVE_MAP_SYNC/TARGET_CFLAGS += -DHAVE_MAP_SYNC -D_LARGEFILE64_SOURCE/' feeds/packages/utils/xfsprogs/Makefile
 
-# perl 报错perl-xml-parser尝试
-rm -rf feeds/packages/lang/perl
-git clone --depth=1 https://github.com/breakings/OpenWrt.git general/perl
-cp -rf general/perl feeds/packages/lang/perl
-#cp -rf $GITHUB_WORKSPACE/general/perl feeds/packages/lang
+#修改perl
+sed -i 's/PKG_VERSION:=.*/PKG_VERSION:=$(PERL_VERSION)/g' package/lang/perl/Makefile
+sed -i 's/PKG_RELEASE:=.*/PKG_RELEASE:=1/g' package/lang/perl/Makefile
+sed -i 's/PKG_HASH:=.*/PKG_HASH:=d91115e90b896520e83d4de6b52f8254ef2b70a8d545ffab33200ea9f1cf29e8/g' package/lang/perl/Makefile
 
 ./scripts/feeds update -a
 ./scripts/feeds install -a
