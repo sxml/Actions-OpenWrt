@@ -84,12 +84,15 @@ merge_package https://github.com/fw876/helloworld helloworld/lua-neturl
 merge_package https://github.com/fw876/helloworld helloworld/shadow-tls
 merge_package https://github.com/fw876/helloworld helloworld/tuic-client
 merge_package https://github.com/fw876/helloworld helloworld/dns2tcp
-merge_package https://github.com/fw876/helloworld helloworld/v2ray-geodata
+#merge_package https://github.com/fw876/helloworld helloworld/v2ray-geodata
 merge_package https://github.com/fw876/helloworld helloworld/redsocks2
 merge_package https://github.com/fw876/helloworld helloworld/gn
 
 merge_package https://github.com/kenzok8/openwrt-packages openwrt-packages/gost
 merge_package https://github.com/breakings/OpenWrt OpenWrt/general/luci-app-gost
+
+merge_package https://github.com/kenzok8/small-package small-package/v2ray-geodata
+merge_package https://github.com/kenzok8/small-package small-package/sagernet-core
 
 #文件助手
 #merge_package https://github.com/Lienol/openwrt-package openwrt-package/luci-app-fileassistant
@@ -111,11 +114,6 @@ sed -i "s|.img.gz|.img.gz|g" package/custom/luci-app-amlogic/luci-app-amlogic/ro
 #sed -i "s|opt/kernel|BuildARMv8|g" package/custom/luci-app-amlogic/luci-app-amlogic/root/etc/config/amlogic
 sed -i "s|http.*/library|https://github.com/breakings/OpenWrt/tree/main/opt/kernel|g" package/custom/luci-app-amlogic/luci-app-amlogic/root/etc/config/amlogic
 
-#小猫
-#merge_package https://github.com/vernesong/OpenClash OpenClash/luci-app-openclash
-#参考
-#git clone https://github.com/tty228/luci-app-serverchan.git package/luci-app-serverchan
-
 # themes 主题
 merge_package https://github.com/Leo-Jo-My/luci-theme-opentomcat luci-theme-opentomcat
 merge_package https://github.com/thinktip/luci-theme-neobird luci-theme-neobird
@@ -136,6 +134,9 @@ merge_package https://github.com/breakings/OpenWrt OpenWrt/general/shadowsocks-r
 
 ./scripts/feeds update -a
 ./scripts/feeds install -a
+
+#参考
+#git clone https://github.com/tty228/luci-app-serverchan.git package/luci-app-serverchan
 
 echo "========================="
 echo " DIY2 配置完成……"
