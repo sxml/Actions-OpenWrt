@@ -29,7 +29,7 @@ git clone --depth=1 -b main https://github.com/fw876/helloworld.git
 cp -rf helloworld/luci-app-ssr-plus package/luci-app-ssr-plus
 cp -rf helloworld/xray-core package/xray-core
 cp -rf helloworld/xray-plugin package/xray-plugin
-cp -rf helloworld/shadowsocks-rust package/shadowsocks-rust
+#cp -rf helloworld/shadowsocks-rust package/shadowsocks-rust
 cp -rf helloworld/shadowsocksr-libev package/shadowsocksr-libev
 cp -rf helloworld/v2ray-plugin package/v2ray-plugin
 cp -rf helloworld/v2ray-core package/v2ray-core
@@ -76,9 +76,9 @@ cp -rf openwrt-passwall2/luci-app-passwall2 package/luci-app-passwall2
 git clone --depth=1 https://github.com/jerrykuku/lua-maxminddb.git package/lua-maxminddb
 
 #文件助手
-git clone --depth=1 https://github.com/Lienol/openwrt-package.git fileassistant
-cp -rf fileassistant/luci-app-fileassistant package/luci-app-fileassistant
-#git clone https://github.com/sxml/luci-app-fileassistant.git package/luci-app-fileassistant
+#git clone --depth=1 https://github.com/Lienol/openwrt-package.git fileassistant
+#cp -rf fileassistant/luci-app-fileassistant package/luci-app-fileassistant
+git clone https://github.com/sxml/luci-app-fileassistant.git package/luci-app-fileassistant
 #rm -rf fileassistant
 
 #添加luci-app-amlogic
@@ -112,5 +112,14 @@ find package/*/ -maxdepth 2 -path "*/Makefile" | xargs -i sed -i 's/PKG_SOURCE_U
 # 临时修复xfsprogs
 sed -i 's/TARGET_CFLAGS += -DHAVE_MAP_SYNC/TARGET_CFLAGS += -DHAVE_MAP_SYNC -D_LARGEFILE64_SOURCE/' feeds/packages/utils/xfsprogs/Makefile
 
+#修改perl
+sed -i 's/PKG_VERSION:=.*/PKG_VERSION:=$(PERL_VERSION)/g' package/lang/perl/Makefile
+sed -i 's/PKG_RELEASE:=.*/PKG_RELEASE:=1/g' package/lang/perl/Makefile
+sed -i 's/PKG_HASH:=.*/PKG_HASH:=d91115e90b896520e83d4de6b52f8254ef2b70a8d545ffab33200ea9f1cf29e8/g' package/lang/perl/Makefile
+
+#shadowsocks-rust
+git clone --depth=1 https://github.com/breakings/OpenWrt.git OpenWrt/general/shadowsocks-rust
+cp -rf OpenWrt/general/shadowsocks-rust package/shadowsocks-rust
+
 ./scripts/feeds update -a
-./scripts/feeds install -a -f
+./scripts/feeds install -a
