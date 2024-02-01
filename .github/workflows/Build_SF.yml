@@ -32,7 +32,7 @@ jobs:
       
     steps:
     - name: 准备
-      uses: actions/checkout@master
+      uses: actions/checkout@v4
 
     - name: 检查服务器性能
       run: |
