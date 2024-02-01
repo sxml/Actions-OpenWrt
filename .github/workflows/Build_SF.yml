@@ -1,5 +1,5 @@
 #
-# 2023.01.31  编译op包
+# 2023.08.20  编译op包
 #
 
 name: 编译op包
@@ -32,7 +32,7 @@ jobs:
       
     steps:
     - name: 准备
-      uses: actions/checkout@v4
+      uses: actions/checkout@master
 
     - name: 检查服务器性能
       run: |
@@ -57,19 +57,18 @@ jobs:
         DEBIAN_FRONTEND: noninteractive
       run: |
         docker rmi `docker images -q`
-        sudo -E rm -rf /usr/share/dotnet /etc/mysql /etc/php /etc/apt/sources.list.d /usr/local/lib/android
-        sudo -E apt -y purge azure-cli* docker* ghc* zulu* llvm* firefox google* dotnet* powershell* openjdk* mysql* php* mongodb* dotnet* snap* aspnetcore*
-        [ -n "$AGENT_TOOLSDIRECTORY" ] && sudo rm -rf "$AGENT_TOOLSDIRECTORY"
-        sudo -E apt update
-        sudo -E apt -y install $(curl -fsSL https://is.gd/depends_ubuntu_2204)
-        sudo -E apt -y install rename libxml2-dev libxslt-dev
-        sudo -E apt -y autoremove --purge
-        sudo -E systemctl daemon-reload
-        sudo -E apt clean
+        sudo rm -rf /etc/apt/sources.list.d/* /usr/share/dotnet /etc/mysql /etc/php /usr/local/lib/android /opt/ghc
+        sudo -E apt-get -y purge azure-cli ghc* zulu* hhvm llvm* firefox google* dotnet* powershell openjdk* adoptopenjdk* mysql* php* mongodb* dotnet* moby* snapd* || true
+        sudo -E apt-get -qq update
+        sudo -E apt-get -qq install $(curl -fsSL https://is.gd/depends_ubuntu_2204)
+        sudo -E apt-get -qq install -y  rename lib32stdc++6 git-core libpcap0.8-dev grep time sshpass ecj file libz-dev java-propose-classpath aria2 python3-distutils python3-setuptools python3-dev libfuse-dev
+        sudo -E apt-get -qq install gn
+        sudo -E apt-get -qq autoremove --purge
+        sudo -E apt-get -qq clean
         sudo timedatectl set-timezone "$TZ"
         sudo mkdir -p /workdir
         sudo chown $USER:$GROUPS /workdir
-        echo "status=success" >> ${GITHUB_OUTPUT}
+        echo "status=success" >> $GITHUB_OUTPUT
         df -Th
 
     - name: 下载源码
@@ -122,9 +121,6 @@ jobs:
         make download -j8
         find dl -size -1024c -exec ls -l {} \;
         find dl -size -1024c -exec rm -f {} \;
-        rm -rf $GITHUB_WORKSPACE/.git
-        rm -rf $GITHUB_WORKSPACE/opt
-        df -Th
 
     - name: 编译固件
       id: compile
@@ -132,11 +128,12 @@ jobs:
         cd openwrt
         echo -e "$(nproc) thread compile"
         make -j$(nproc) || make -j1 || make -j1 V=s
-        echo "status=success" >> ${GITHUB_OUTPUT}
+        echo "status=success" >> $GITHUB_OUTPUT
         grep '^CONFIG_TARGET.*DEVICE.*=y' .config | sed -r 's/.*DEVICE_(.*)=y/\1/' > DEVICE_NAME
         [ -s DEVICE_NAME ] && echo "DEVICE_NAME=_$(cat DEVICE_NAME)" >> $GITHUB_ENV
         echo "FILE_DATE=_$(date +"%Y%m%d%H%M")" >> $GITHUB_ENV
         echo "DATE_YMD=_$(date +"%Y%m%d")" >> $GITHUB_ENV
+        echo "status=success" >> $GITHUB_OUTPUT
 
     - name: 清理服务器空间
       if: steps.compile.outputs.status == 'success' && !cancelled()
@@ -155,7 +152,7 @@ jobs:
         cd $GITHUB_WORKSPACE/openwrt/bin/targets/*/*
         rm -rf packages sha256sums feeds.buildinfo openwrt-armvirt-64-default.manifest openwrt-armvirt-64-Image openwrt-armvirt-64-rootfs-ext4.img version.buildinfo
         echo "FIRMWARE=$PWD" >> $GITHUB_ENV
-        echo "status=success" >> ${GITHUB_OUTPUT}
+        echo "status=success" >> $GITHUB_OUTPUT
 
     - name: 固件发布信息
       id: release
