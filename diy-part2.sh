@@ -130,7 +130,7 @@ find package/*/ -maxdepth 2 -path "*/Makefile" | xargs -i sed -i 's/PKG_SOURCE_U
 sed -i 's/TARGET_CFLAGS += -DHAVE_MAP_SYNC/TARGET_CFLAGS += -DHAVE_MAP_SYNC -D_LARGEFILE64_SOURCE/' feeds/packages/utils/xfsprogs/Makefile
 
 #shadowsocks-rust
-#merge_package https://github.com/breakings/OpenWrt OpenWrt/general/shadowsocks-rust
+merge_package https://github.com/breakings/OpenWrt OpenWrt/general/shadowsocks-rust
 
 ./scripts/feeds update -a
 ./scripts/feeds install -a
