@@ -92,7 +92,7 @@ merge_package https://github.com/kenzok8/openwrt-packages openwrt-packages/gost
 merge_package https://github.com/breakings/OpenWrt OpenWrt/general/luci-app-gost
 
 merge_package https://github.com/kenzok8/small-package small-package/v2ray-geodata
-merge_package https://github.com/kenzok8/small-package small-package/sagernet-core
+#merge_package https://github.com/kenzok8/small-package small-package/sagernet-core
 
 #文件助手
 #merge_package https://github.com/Lienol/openwrt-package openwrt-package/luci-app-fileassistant
