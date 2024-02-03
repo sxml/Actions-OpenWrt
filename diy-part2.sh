@@ -142,8 +142,8 @@ find package/*/ -maxdepth 2 -path "*/Makefile" | xargs -i sed -i 's/PKG_SOURCE_U
 sed -i 's/PKG_VERSION:=.*/PKG_VERSION:=1.1.37/g' feeds/packages/libs/libxslt/Makefile
 sed -i 's/PKG_RELEASE:=.*/PKG_RELEASE:=1/g' feeds/packages/libs/libxslt/Makefile
 sed -i 's/PKG_HASH:=.*/PKG_HASH:=3a4b27dc8027ccd6146725950336f1ec520928f320f144eb5fa7990ae6123ab4/g' feeds/packages/libs/libxslt/Makefile
-#sed -i 's/PKG_SOURCE:=.*/PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.xz/g' feeds/packages/libs/libxslt/Makefile
-#sed -i 's/PKG_SOURCE_URL:=.*/PKG_SOURCE_URL:=@GNOME/libxslt/$(basename $(PKG_VERSION))/g' feeds/packages/libs/libxslt/Makefile
+sed -i 's/PKG_SOURCE:=.*/PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.xz/g' feeds/packages/libs/libxslt/Makefile
+sed -i 's/PKG_SOURCE_URL:=.*/PKG_SOURCE_URL:=@GNOME/libxslt/$(basename $(PKG_VERSION))/g' feeds/packages/libs/libxslt/Makefile
 
 #修改perl
 #sed -i 's/PKG_VERSION:=.*/PKG_VERSION:=$(PERL_VERSION)/g' feeds/packages/lang/perl/Makefile
