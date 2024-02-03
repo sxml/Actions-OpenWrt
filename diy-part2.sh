@@ -132,9 +132,9 @@ find package/*/ -maxdepth 2 -path "*/Makefile" | xargs -i sed -i 's/PKG_SOURCE_U
 #sed -i 's/TARGET_CFLAGS += -DHAVE_MAP_SYNC/TARGET_CFLAGS += -DHAVE_MAP_SYNC -D_LARGEFILE64_SOURCE/' feeds/packages/utils/xfsprogs/Makefile
 
 #试修改shadowsocks-rust
-#sed -i 's/PKG_VERSION:=.*/PKG_VERSION:=1.17.1/g' package/custom/shadowsocks-rust/Makefile
-#sed -i 's/PKG_RELEASE:=.*/PKG_RELEASE:=1/g' package/custom/shadowsocks-rust/Makefile
-#sed -i 's/PKG_HASH:=.*/PKG_HASH:=ac172822b579ac0fe59e4cc519e9f4ffee32ed069b10ffdc7421fb1bfdb8c03e/g' package/custom/shadowsocks-rust/Makefile
+sed -i 's/PKG_VERSION:=.*/PKG_VERSION:=1.17.1/g' package/custom/shadowsocks-rust/Makefile
+sed -i 's/PKG_RELEASE:=.*/PKG_RELEASE:=1/g' package/custom/shadowsocks-rust/Makefile
+sed -i 's/PKG_HASH:=.*/PKG_HASH:=ac172822b579ac0fe59e4cc519e9f4ffee32ed069b10ffdc7421fb1bfdb8c03e/g' package/custom/shadowsocks-rust/Makefile
 #shadowsocks-rust
 #merge_package https://github.com/breakings/OpenWrt OpenWrt/general/shadowsocks-rust
 
