@@ -43,6 +43,8 @@ rm -rf feeds/luci/applications/luci-app-dockerman
 rm -rf feeds/packages/net/smartdns
 rm -rf feeds/luci/applications/luci-app-smartdns
 rm -fr feeds/luci/themes/luci-theme-design
+rm -fr feeds/packages/libs/libxslt
+#rm -fr feeds/packages/lang/perl
 #rm -rf feeds/packages/net/samba4
 #20231010
 #rm -rf feeds/packages/utils/prometheus-node-exporter-lua
