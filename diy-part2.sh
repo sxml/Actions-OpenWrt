@@ -43,7 +43,7 @@ rm -rf feeds/luci/applications/luci-app-dockerman
 rm -rf feeds/packages/net/smartdns
 rm -rf feeds/luci/applications/luci-app-smartdns
 rm -fr feeds/luci/themes/luci-theme-design
-#rm -fr feeds/packages/libs/libxslt
+rm -fr feeds/packages/libs/libxslt
 #rm -fr feeds/packages/lang/perl
 #rm -rf feeds/packages/net/samba4
 #20231010
@@ -139,16 +139,16 @@ find package/*/ -maxdepth 2 -path "*/Makefile" | xargs -i sed -i 's/PKG_SOURCE_U
 #merge_package https://github.com/breakings/OpenWrt OpenWrt/general/shadowsocks-rust
 
 #试修改libxslt
-sed -i 's/PKG_VERSION:=.*/PKG_VERSION:=1.1.37/g' feeds/package/libs/libxslt/Makefile
-sed -i 's/PKG_RELEASE:=.*/PKG_RELEASE:=1/g' feeds/package/libs/libxslt/Makefile
-sed -i 's/PKG_HASH:=.*/PKG_HASH:=3a4b27dc8027ccd6146725950336f1ec520928f320f144eb5fa7990ae6123ab4/g' feeds/package/libs/libxslt/Makefile
-#sed -i 's/PKG_SOURCE:=.*/PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.xz/g' feeds/package/libs/libxslt/Makefile
-#sed -i 's/PKG_SOURCE_URL:=.*/PKG_SOURCE_URL:=@GNOME/libxslt/$(basename $(PKG_VERSION))/g' feeds/package/libs/libxslt/Makefile
+sed -i 's/PKG_VERSION:=.*/PKG_VERSION:=1.1.37/g' feeds/packages/libs/libxslt/Makefile
+sed -i 's/PKG_RELEASE:=.*/PKG_RELEASE:=1/g' feeds/packages/libs/libxslt/Makefile
+sed -i 's/PKG_HASH:=.*/PKG_HASH:=3a4b27dc8027ccd6146725950336f1ec520928f320f144eb5fa7990ae6123ab4/g' feeds/packages/libs/libxslt/Makefile
+#sed -i 's/PKG_SOURCE:=.*/PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.xz/g' feeds/packages/libs/libxslt/Makefile
+#sed -i 's/PKG_SOURCE_URL:=.*/PKG_SOURCE_URL:=@GNOME/libxslt/$(basename $(PKG_VERSION))/g' feeds/packages/libs/libxslt/Makefile
 
 #修改perl
-#sed -i 's/PKG_VERSION:=.*/PKG_VERSION:=$(PERL_VERSION)/g' package/lang/perl/Makefile
-#sed -i 's/PKG_RELEASE:=.*/PKG_RELEASE:=1/g' package/lang/perl/Makefile
-#sed -i 's/PKG_HASH:=.*/PKG_HASH:=d91115e90b896520e83d4de6b52f8254ef2b70a8d545ffab33200ea9f1cf29e8/g' package/lang/perl/Makefile
+#sed -i 's/PKG_VERSION:=.*/PKG_VERSION:=$(PERL_VERSION)/g' feeds/packages/lang/perl/Makefile
+#sed -i 's/PKG_RELEASE:=.*/PKG_RELEASE:=1/g' feeds/packages/lang/perl/Makefile
+#sed -i 's/PKG_HASH:=.*/PKG_HASH:=d91115e90b896520e83d4de6b52f8254ef2b70a8d545ffab33200ea9f1cf29e8/g' feeds/packages/lang/perl/Makefile
 
 ./scripts/feeds update -a
 ./scripts/feeds install -a
