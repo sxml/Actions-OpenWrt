@@ -21,3 +21,7 @@ jobs:
       with:
         retain_days: 1
         keep_minimum_runs: 0
+
+    - name: 检查空间使用情况
+      if: (!cancelled())
+      run: df -hT
