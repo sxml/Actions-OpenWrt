@@ -80,7 +80,7 @@ merge_package https://github.com/xiaorouji/openwrt-passwall-packages openwrt-pas
 merge_package https://github.com/fw876/helloworld helloworld/luci-app-ssr-plus
 merge_package https://github.com/fw876/helloworld helloworld/xray-core
 merge_package https://github.com/fw876/helloworld helloworld/xray-plugin
-#merge_package https://github.com/fw876/helloworld helloworld/shadowsocks-rust
+merge_package https://github.com/fw876/helloworld helloworld/shadowsocks-rust
 merge_package https://github.com/fw876/helloworld helloworld/shadowsocksr-libev
 merge_package https://github.com/fw876/helloworld helloworld/lua-neturl
 merge_package https://github.com/fw876/helloworld helloworld/shadow-tls
@@ -136,14 +136,14 @@ find package/*/ -maxdepth 2 -path "*/Makefile" | xargs -i sed -i 's/PKG_SOURCE_U
 #sed -i 's/PKG_RELEASE:=.*/PKG_RELEASE:=1/g' package/custom/shadowsocks-rust/Makefile
 #sed -i 's/PKG_HASH:=.*/PKG_HASH:=ac172822b579ac0fe59e4cc519e9f4ffee32ed069b10ffdc7421fb1bfdb8c03e/g' package/custom/shadowsocks-rust/Makefile
 #shadowsocks-rust
-merge_package https://github.com/breakings/OpenWrt OpenWrt/general/shadowsocks-rust
+#merge_package https://github.com/breakings/OpenWrt OpenWrt/general/shadowsocks-rust
 
 #试修改libxslt
-sed -i 's/PKG_VERSION:=.*/PKG_VERSION:=1.1.37/g' feeds/packages/libs/libxslt/Makefile
-sed -i 's/PKG_RELEASE:=.*/PKG_RELEASE:=1/g' feeds/packages/libs/libxslt/Makefile
-sed -i 's/PKG_HASH:=.*/PKG_HASH:=3a4b27dc8027ccd6146725950336f1ec520928f320f144eb5fa7990ae6123ab4/g' feeds/packages/libs/libxslt/Makefile
-sed -i 's/PKG_SOURCE:=.*/PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.xz/g' feeds/packages/libs/libxslt/Makefile
-sed -i 's/PKG_SOURCE_URL:=.*/PKG_SOURCE_URL:=@GNOME/libxslt/$(basename $(PKG_VERSION))/g' feeds/packages/libs/libxslt/Makefile
+#sed -i 's/PKG_VERSION:=.*/PKG_VERSION:=1.1.37/g' feeds/packages/libs/libxslt/Makefile
+#sed -i 's/PKG_RELEASE:=.*/PKG_RELEASE:=1/g' feeds/packages/libs/libxslt/Makefile
+#sed -i 's/PKG_HASH:=.*/PKG_HASH:=3a4b27dc8027ccd6146725950336f1ec520928f320f144eb5fa7990ae6123ab4/g' feeds/packages/libs/libxslt/Makefile
+#sed -i 's/PKG_SOURCE:=.*/PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.xz/g' feeds/packages/libs/libxslt/Makefile
+#sed -i 's/PKG_SOURCE_URL:=.*/PKG_SOURCE_URL:=@GNOME/libxslt/$(basename $(PKG_VERSION))/g' feeds/packages/libs/libxslt/Makefile
 
 #修改perl
 #sed -i 's/PKG_VERSION:=.*/PKG_VERSION:=$(PERL_VERSION)/g' feeds/packages/lang/perl/Makefile
