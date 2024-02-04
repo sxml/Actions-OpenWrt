@@ -1,8 +1,7 @@
 #
-# 2023.02.04  编译op包
+# 2023.02.04  编译op
 #
-
-name: 编译op包
+name: 编译op
 on:
   repository_dispatch:
   workflow_dispatch:
@@ -26,9 +25,9 @@ jobs:
     runs-on: ubuntu-22.04
     #if: github.event.repository.owner.id == github.event.sender.id || ! github.event.sender.id
 
-    #name: 编译op包
-    #strategy:
-      #fail-fast: false
+    name: 编译op
+    strategy:
+      fail-fast: false
       
     steps:
     - name: 准备
