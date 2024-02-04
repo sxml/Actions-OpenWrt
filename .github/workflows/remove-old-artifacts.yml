@@ -11,6 +11,10 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 3600
 
+    name: 删除旧工件
+    strategy:
+      fail-fast: false
+
     steps:
     - name: 删除工作流程运行
       uses: GitRML/delete-workflow-runs@main
