@@ -1,11 +1,10 @@
 name: 删除旧工件
 
 on:
-  schedule:
-    # Every day at 1am
-    - cron: '0 2 * * *'
-  watch:
-    types: started
+  repository_dispatch:
+  workflow_dispatch:
+#  schedule:
+#    - cron: 0 22 * 11 *
 
 jobs:
   remove-old-artifacts:
@@ -13,14 +12,7 @@ jobs:
     timeout-minutes: 3600
 
     steps:
-    #- name: 删除旧工件
-    #  uses: c-hive/gha-remove-artifacts@v1
-    #  with:
-    #     age: '1 month'
-         #Optional inputs
-         #skip-tags: true
-         #skip-recent: 5
-    - name: Delete workflow runs
+    - name: 删除工作流程运行
       uses: GitRML/delete-workflow-runs@main
       with:
         retain_days: 1
