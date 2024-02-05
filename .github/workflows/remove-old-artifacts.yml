@@ -6,6 +6,9 @@ on:
 #  schedule:
 #    - cron: 0 22 * 11 *
 
+env: 
+  DELETE_ARTIFACTS: true  # 删除旧的工作流程运行和工件
+
 jobs:
   remove-old-artifacts:
     runs-on: ubuntu-latest
@@ -16,12 +19,11 @@ jobs:
       fail-fast: false
 
     steps:
-    - name: 删除工作流程运行
-      uses: GitRML/delete-workflow-runs@main
+    - name: 删除旧的工作流程运行和工件
+      uses: Mattraks/delete-workflow-runs@main
+      if: env.DELETE_ARTIFACTS == 'true'
       with:
-        retain_days: 1
-        keep_minimum_runs: 0
-
-    - name: 检查空间使用情况
-      if: (!cancelled())
-      run: df -hT
+        token: ${{ secrets.RELEASES_TOKEN }}    # 令牌
+        repository: ${{ github.repository }}    # 运行工作流的存储库的名称。
+        retain_days: 1                          # 工作流的保留天数进行比较的天数       
+        keep_minimum_runs: 0                    # 工作流程保留的最少运行次数
