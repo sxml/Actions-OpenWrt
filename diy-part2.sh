@@ -88,12 +88,13 @@ merge_package https://github.com/fw876/helloworld helloworld/tuic-client
 merge_package https://github.com/fw876/helloworld helloworld/dns2tcp
 #merge_package https://github.com/fw876/helloworld helloworld/v2ray-geodata
 merge_package https://github.com/fw876/helloworld helloworld/redsocks2
-merge_package https://github.com/fw876/helloworld helloworld/gn
+#merge_package https://github.com/fw876/helloworld helloworld/gn
 
 merge_package https://github.com/kenzok8/openwrt-packages openwrt-packages/gost
 merge_package https://github.com/breakings/OpenWrt OpenWrt/general/luci-app-gost
 
 merge_package https://github.com/kenzok8/small-package small-package/v2ray-geodata
+merge_package https://github.com/kenzok8/small-package small-package/gn
 #merge_package https://github.com/kenzok8/small-package small-package/sagernet-core
 
 #文件助手
