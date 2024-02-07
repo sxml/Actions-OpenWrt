@@ -128,6 +128,9 @@ merge_package https://github.com/gngpp/luci-app-design-config luci-app-design-co
 # Fix xfsprogs build error
 sed -i 's|TARGET_CFLAGS += -DHAVE_MAP_SYNC.*|TARGET_CFLAGS += -DHAVE_MAP_SYNC $(if $(CONFIG_USE_MUSL),-D_LARGEFILE64_SOURCE)|' feeds/packages/utils/xfsprogs/Makefile
 
+# Add autocore support for armvirt
+sed -i 's/TARGET_rockchip/TARGET_rockchip\|\|TARGET_armvirt/g' package/lean/autocore/Makefile
+
 #修改makefile
 find package/*/ -maxdepth 2 -path "*/Makefile" | xargs -i sed -i 's/include\ \.\.\/\.\.\/luci\.mk/include \$(TOPDIR)\/feeds\/luci\/luci\.mk/g' {}
 find package/*/ -maxdepth 2 -path "*/Makefile" | xargs -i sed -i 's/include\ \.\.\/\.\.\/lang\/golang\/golang\-package\.mk/include \$(TOPDIR)\/feeds\/packages\/lang\/golang\/golang\-package\.mk/g' {}
@@ -140,18 +143,6 @@ find package/*/ -maxdepth 2 -path "*/Makefile" | xargs -i sed -i 's/PKG_SOURCE_U
 #sed -i 's/PKG_HASH:=.*/PKG_HASH:=ac172822b579ac0fe59e4cc519e9f4ffee32ed069b10ffdc7421fb1bfdb8c03e/g' package/custom/shadowsocks-rust/Makefile
 #shadowsocks-rust
 #merge_package https://github.com/breakings/OpenWrt OpenWrt/general/shadowsocks-rust
-
-#试修改libxslt
-#sed -i 's/PKG_VERSION:=.*/PKG_VERSION:=1.1.37/g' feeds/packages/libs/libxslt/Makefile
-#sed -i 's/PKG_RELEASE:=.*/PKG_RELEASE:=1/g' feeds/packages/libs/libxslt/Makefile
-#sed -i 's/PKG_HASH:=.*/PKG_HASH:=3a4b27dc8027ccd6146725950336f1ec520928f320f144eb5fa7990ae6123ab4/g' feeds/packages/libs/libxslt/Makefile
-#sed -i 's/PKG_SOURCE:=.*/PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.xz/g' feeds/packages/libs/libxslt/Makefile
-#sed -i 's/PKG_SOURCE_URL:=.*/PKG_SOURCE_URL:=@GNOME/libxslt/$(basename $(PKG_VERSION))/g' feeds/packages/libs/libxslt/Makefile
-
-#修改perl
-#sed -i 's/PKG_VERSION:=.*/PKG_VERSION:=$(PERL_VERSION)/g' feeds/packages/lang/perl/Makefile
-#sed -i 's/PKG_RELEASE:=.*/PKG_RELEASE:=1/g' feeds/packages/lang/perl/Makefile
-#sed -i 's/PKG_HASH:=.*/PKG_HASH:=d91115e90b896520e83d4de6b52f8254ef2b70a8d545ffab33200ea9f1cf29e8/g' feeds/packages/lang/perl/Makefile
 
 ./scripts/feeds update -a
 ./scripts/feeds install -a
