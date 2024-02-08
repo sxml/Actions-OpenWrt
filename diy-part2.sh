@@ -96,9 +96,18 @@ sed -i 's/PKG_VERSION:=.*/PKG_VERSION:=2.6.1/g' feeds/packages/utils/cryptsetup/
 sed -i 's/PKG_HASH:=.*/PKG_HASH:=410ded65a1072ab9c8e41added37b9729c087fef4d2db02bb4ef529ad6da4693/g' feeds/packages/utils/cryptsetup/Makefile
 sed -i '78i\TARGET_CFLAGS += -D_LARGEFILE64_SOURCE\' feeds/packages/utils/cryptsetup/Makefile
 
+# 克隆仓库但不检出文件
+git clone --no-checkout https://github.com/breakings/OpenWrt
+cd OpenWrt
+# 开启sparse-checkout
+git sparse-checkout init
+# 设置你感兴趣的目录
+git sparse-checkout set general/perl
+cp -rf OpenWrt/general/perl feeds/packages/lang
+
 #perl
-git clone --depth=1 https://github.com/breakings/OpenWrt OpenWrt/general/perl
-cp -rf OpenWrt/general/perl feeds/packages/lang/perl
+#git clone --depth=1 https://github.com/breakings/OpenWrt OpenWrt/general/perl
+#cp -rf OpenWrt/general/perl feeds/packages/lang/perl
 
 #shadowsocks-rust
 #git clone --depth=1 https://github.com/breakings/OpenWrt OpenWrt/general/shadowsocks-rust
