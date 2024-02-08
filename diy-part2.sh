@@ -10,6 +10,7 @@ rm -rf feeds/luci/applications/luci-app-dockerman
 rm -rf feeds/packages/net/smartdns
 rm -rf feeds/luci/applications/luci-app-smartdns
 rm -fr feeds/luci/themes/luci-theme-design
+rm -rf feeds/packages/lang/perl
 #20231010
 #rm -rf feeds/packages/utils/prometheus-node-exporter-lua
 
@@ -95,6 +96,9 @@ sed -i 's/PKG_VERSION:=.*/PKG_VERSION:=2.6.1/g' feeds/packages/utils/cryptsetup/
 sed -i 's/PKG_HASH:=.*/PKG_HASH:=410ded65a1072ab9c8e41added37b9729c087fef4d2db02bb4ef529ad6da4693/g' feeds/packages/utils/cryptsetup/Makefile
 sed -i '78i\TARGET_CFLAGS += -D_LARGEFILE64_SOURCE\' feeds/packages/utils/cryptsetup/Makefile
 
+#perl
+git clone --depth=1 https://github.com/breakings/OpenWrt OpenWrt/general/perl
+cp -rf OpenWrt/general/perl feeds/packages/lang
 #shadowsocks-rust
 #git clone --depth=1 https://github.com/breakings/OpenWrt OpenWrt/general/shadowsocks-rust
 #cp -rf OpenWrt/general/shadowsocks-rust package/shadowsocks-rust
