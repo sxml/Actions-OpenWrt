@@ -1,6 +1,7 @@
 #!/bin/bash
 #============================================================
-# 2024-01-31
+# sxml
+# 2024-02-08
 #https://github.com/HoldOnBro/Actions-OpenWrt
 #https://github.com/breakings/OpenWrt
 #============================================================
@@ -30,7 +31,7 @@ git clone --depth=1 -b main https://github.com/fw876/helloworld.git
 cp -rf helloworld/luci-app-ssr-plus package/luci-app-ssr-plus
 cp -rf helloworld/xray-core package/xray-core
 cp -rf helloworld/xray-plugin package/xray-plugin
-cp -rf helloworld/shadowsocks-rust package/shadowsocks-rust
+#cp -rf helloworld/shadowsocks-rust package/shadowsocks-rust
 cp -rf helloworld/shadowsocksr-libev package/shadowsocksr-libev
 cp -rf helloworld/v2ray-plugin package/v2ray-plugin
 cp -rf helloworld/v2ray-core package/v2ray-core
@@ -82,18 +83,6 @@ git clone --depth=1 https://github.com/jerrykuku/lua-maxminddb.git package/lua-m
 git clone https://github.com/sxml/luci-app-fileassistant.git package/luci-app-fileassistant
 #rm -rf fileassistant
 
-# 临时修复xfsprogs
-#sed -i 's/TARGET_CFLAGS += -DHAVE_MAP_SYNC/TARGET_CFLAGS += -DHAVE_MAP_SYNC -D_LARGEFILE64_SOURCE/' feeds/packages/utils/xfsprogs/Makefile
-# Fix xfsprogs build error
-sed -i 's|TARGET_CFLAGS += -DHAVE_MAP_SYNC.*|TARGET_CFLAGS += -DHAVE_MAP_SYNC $(if $(CONFIG_USE_MUSL),-D_LARGEFILE64_SOURCE)|' feeds/packages/utils/xfsprogs/Makefile
-
-# Add autocore support for armvirt
-sed -i 's/TARGET_rockchip/TARGET_rockchip\|\|TARGET_armvirt/g' package/lean/autocore/Makefile
-
-#shadowsocks-rust
-#git clone --depth=1 https://github.com/breakings/OpenWrt OpenWrt/general/shadowsocks-rust
-#cp -rf OpenWrt/general/shadowsocks-rust package/shadowsocks-rust
-
 #添加luci-app-amlogic
 git clone --depth=1 https://github.com/ophub/luci-app-amlogic.git
 cp -rf luci-app-amlogic/luci-app-amlogic package/luci-app-amlogic
@@ -115,16 +104,29 @@ git clone --depth=1 https://github.com/thinktip/luci-theme-neobird.git package/l
 git clone --depth=1 https://github.com/gngpp/luci-theme-design.git package/luci-theme-design
 git clone --depth=1 https://github.com/gngpp/luci-app-design-config.git package/luci-app-design-config
 
+# Add autocore support for armvirt
+#sed -i 's/TARGET_rockchip/TARGET_rockchip\|\|TARGET_armvirt/g' package/lean/autocore/Makefile
+
+# 临时修复xfsprogs
+sed -i 's|TARGET_CFLAGS += -DHAVE_MAP_SYNC.*|TARGET_CFLAGS += -DHAVE_MAP_SYNC $(if $(CONFIG_USE_MUSL),-D_LARGEFILE64_SOURCE)|' feeds/packages/utils/xfsprogs/Makefile
+
+# cryptsetup
+sed -i 's/PKG_VERSION:=.*/PKG_VERSION:=2.6.1/g' feeds/packages/utils/cryptsetup/Makefile
+sed -i 's/PKG_HASH:=.*/PKG_HASH:=410ded65a1072ab9c8e41added37b9729c087fef4d2db02bb4ef529ad6da4693/g' feeds/packages/utils/cryptsetup/Makefile
+sed -i '78i\TARGET_CFLAGS += -D_LARGEFILE64_SOURCE\' feeds/packages/utils/cryptsetup/Makefile
+
+# perl
+rm -rf feeds/packages/lang/perl
+cp -rf $GITHUB_WORKSPACE/general/perl feeds/packages/lang
+
+# shadowsocks-rust
+cp -rf $GITHUB_WORKSPACE/general/shadowsocks-rust package/shadowsocks-rust
+
 #修改makefile
 find package/*/ -maxdepth 2 -path "*/Makefile" | xargs -i sed -i 's/include\ \.\.\/\.\.\/luci\.mk/include \$(TOPDIR)\/feeds\/luci\/luci\.mk/g' {}
 find package/*/ -maxdepth 2 -path "*/Makefile" | xargs -i sed -i 's/include\ \.\.\/\.\.\/lang\/golang\/golang\-package\.mk/include \$(TOPDIR)\/feeds\/packages\/lang\/golang\/golang\-package\.mk/g' {}
 find package/*/ -maxdepth 2 -path "*/Makefile" | xargs -i sed -i 's/PKG_SOURCE_URL:=\@GHREPO/PKG_SOURCE_URL:=https:\/\/github\.com/g' {}
 find package/*/ -maxdepth 2 -path "*/Makefile" | xargs -i sed -i 's/PKG_SOURCE_URL:=\@GHCODELOAD/PKG_SOURCE_URL:=https:\/\/codeload\.github\.com/g' {}
-
-#修改perl
-#sed -i 's/PKG_VERSION:=.*/PKG_VERSION:=$(PERL_VERSION)/g' package/lang/perl/Makefile
-#sed -i 's/PKG_RELEASE:=.*/PKG_RELEASE:=1/g' package/lang/perl/Makefile
-#sed -i 's/PKG_HASH:=.*/PKG_HASH:=d91115e90b896520e83d4de6b52f8254ef2b70a8d545ffab33200ea9f1cf29e8/g' package/lang/perl/Makefile
 
 ./scripts/feeds update -a
 ./scripts/feeds install -a
