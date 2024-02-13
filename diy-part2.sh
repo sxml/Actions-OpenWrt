@@ -1,7 +1,7 @@
 #!/bin/bash
 #============================================================
 # sxml
-# 2024-02-09
+# 2024-02-13
 #https://github.com/HoldOnBro/Actions-OpenWrt
 #https://github.com/breakings/OpenWrt
 #============================================================
@@ -77,12 +77,6 @@ cp -rf openwrt-passwall2/luci-app-passwall2 package/luci-app-passwall2
 #解析
 git clone --depth=1 https://github.com/jerrykuku/lua-maxminddb.git package/lua-maxminddb
 
-#文件助手
-#git clone --depth=1 https://github.com/Lienol/openwrt-package.git fileassistant
-#cp -rf fileassistant/luci-app-fileassistant package/luci-app-fileassistant
-git clone https://github.com/sxml/luci-app-fileassistant.git package/luci-app-fileassistant
-#rm -rf fileassistant
-
 #添加luci-app-amlogic
 git clone --depth=1 https://github.com/ophub/luci-app-amlogic.git
 cp -rf luci-app-amlogic/luci-app-amlogic package/luci-app-amlogic
@@ -104,9 +98,6 @@ git clone --depth=1 https://github.com/thinktip/luci-theme-neobird.git package/l
 git clone --depth=1 https://github.com/gngpp/luci-theme-design.git package/luci-theme-design
 git clone --depth=1 https://github.com/gngpp/luci-app-design-config.git package/luci-app-design-config
 
-# Add autocore support for armvirt
-#sed -i 's/TARGET_rockchip/TARGET_rockchip\|\|TARGET_armvirt/g' package/lean/autocore/Makefile
-
 # 临时修复xfsprogs
 sed -i 's|TARGET_CFLAGS += -DHAVE_MAP_SYNC.*|TARGET_CFLAGS += -DHAVE_MAP_SYNC $(if $(CONFIG_USE_MUSL),-D_LARGEFILE64_SOURCE)|' feeds/packages/utils/xfsprogs/Makefile
 
@@ -121,6 +112,12 @@ cp -rf $GITHUB_WORKSPACE/general/perl feeds/packages/lang
 
 # shadowsocks-rust
 cp -rf $GITHUB_WORKSPACE/general/shadowsocks-rust package/shadowsocks-rust
+
+# curl
+sed -i 's/PKG_VERSION:=.*/PKG_VERSION:=8.5.0/g' feeds/packages/net/curl/Makefile
+sed -i 's/PKG_HASH:=.*/PKG_HASH:=ce4b6a6655431147624aaf582632a36fe1ade262d5fab385c60f78942dd8d87b/g' feeds/packages/net/curl/Makefile
+sed -i 's/PKG_RELEASE:=.*/PKG_RELEASE:=1/g' feeds/packages/net/curl/Makefile
+#rm -rf feeds/packages/net/curl
 
 #修改makefile
 find package/*/ -maxdepth 2 -path "*/Makefile" | xargs -i sed -i 's/include\ \.\.\/\.\.\/luci\.mk/include \$(TOPDIR)\/feeds\/luci\/luci\.mk/g' {}
