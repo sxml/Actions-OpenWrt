@@ -125,7 +125,7 @@ sed -i '/HOST_CONFIGURE_ARGS/ s/--disable-shared/--enable-shared/' feeds/package
 sed -i '/HOST_CONFIGURE_ARGS/ a\--with-libxml-libs-prefix=$(STAGING_DIR_HOSTPKG)/lib' feeds/packages/libs/libxslt/Makefile
 sed -i '/HOST_CONFIGURE_ARGS/ a\--with-libxml-include-prefix=$(STAGING_DIR_HOSTPKG)/include/libxml2/' feeds/packages/libs/libxslt/Makefile
 # 修改xsltproc的Makefile，链接libxml2库
-sed -i 's|LIBXML_LIBS =|LIBXML_LIBS = -lxml2 -L$(STAGING_DIR_HOSTPKG)/lib|' build_dir/hostpkg/libxslt-1.1.34/xsltproc/Makefile
+#sed -i 's|LIBXML_LIBS =|LIBXML_LIBS = -lxml2 -L$(STAGING_DIR_HOSTPKG)/lib|' build_dir/hostpkg/libxslt-1.1.34/xsltproc/Makefile
 
 #修改makefile
 find package/*/ -maxdepth 2 -path "*/Makefile" | xargs -i sed -i 's/include\ \.\.\/\.\.\/luci\.mk/include \$(TOPDIR)\/feeds\/luci\/luci\.mk/g' {}
