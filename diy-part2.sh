@@ -102,8 +102,8 @@ git clone --depth=1 https://github.com/gngpp/luci-app-design-config.git package/
 sed -i 's|TARGET_CFLAGS += -DHAVE_MAP_SYNC.*|TARGET_CFLAGS += -DHAVE_MAP_SYNC $(if $(CONFIG_USE_MUSL),-D_LARGEFILE64_SOURCE)|' feeds/packages/utils/xfsprogs/Makefile
 
 # perl
-#rm -rf feeds/packages/lang/perl
-#cp -rf $GITHUB_WORKSPACE/general/perl feeds/packages/lang
+rm -rf feeds/packages/lang/perl
+cp -rf $GITHUB_WORKSPACE/general/perl feeds/packages/lang
 
 # curl
 sed -i 's/PKG_VERSION:=.*/PKG_VERSION:=8.5.0/g' feeds/packages/net/curl/Makefile
