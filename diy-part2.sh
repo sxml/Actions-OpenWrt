@@ -1,7 +1,7 @@
 #!/bin/bash
 #============================================================
 # sxml
-# 2024-08-28
+# 2024-08-30
 #https://github.com/HoldOnBro/Actions-OpenWrt
 #https://github.com/breakings/OpenWrt
 #============================================================
@@ -25,6 +25,9 @@ cp -rf small-package/gost package/gost
 #cp -rf small-package/luci-app-gost package/luci-app-gost
 #cp -rf small-package/sagernet-core package/sagernet-core
 cp -rf small-package/v2ray-geodata package/v2ray-geodata
+#文件助手
+#git clone --depth=1 https://github.com/sxml/luci-app-fileassistant.git package/luci-app-fileassistant
+cp -rf kenzok8-packages/luci-app-fileassistant package/luci-app-fileassistant
 
 # 克隆 fw876 仓库
 git clone --depth=1 -b main https://github.com/fw876/helloworld.git
@@ -103,16 +106,9 @@ git clone --depth=1 https://github.com/sxml/luci-app-design-config.git package/l
 # 临时修复xfsprogs
 sed -i 's|TARGET_CFLAGS += -DHAVE_MAP_SYNC.*|TARGET_CFLAGS += -DHAVE_MAP_SYNC $(if $(CONFIG_USE_MUSL),-D_LARGEFILE64_SOURCE)|' feeds/packages/utils/xfsprogs/Makefile
 
-
 # perl
 rm -rf feeds/packages/lang/perl
 cp -rf $GITHUB_WORKSPACE/general/perl feeds/packages/lang
-
-
-#文件助手
-#git clone --depth=1 https://github.com/sxml/luci-app-fileassistant.git package/luci-app-fileassistant
-#svn co https://github.com/Lienol/openwrt-package/trunk/luci-app-fileassistant package/luci-app-fileassistant
-#svn co https://github.com/kenzok8/openwrt-packages/trunk/luci-app-fileassistant package/luci-app-fileassistant
 
 #mosdns
 rm -rf feeds/packages/net/mosdns
