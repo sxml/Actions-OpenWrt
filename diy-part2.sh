@@ -104,11 +104,11 @@ git clone --depth=1 https://github.com/sxml/luci-theme-design.git package/luci-t
 git clone --depth=1 https://github.com/sxml/luci-app-design-config.git package/luci-app-design-config
 
 # 临时修复xfsprogs
-sed -i 's|TARGET_CFLAGS += -DHAVE_MAP_SYNC.*|TARGET_CFLAGS += -DHAVE_MAP_SYNC $(if $(CONFIG_USE_MUSL),-D_LARGEFILE64_SOURCE)|' feeds/packages/utils/xfsprogs/Makefile
+#sed -i 's|TARGET_CFLAGS += -DHAVE_MAP_SYNC.*|TARGET_CFLAGS += -DHAVE_MAP_SYNC $(if $(CONFIG_USE_MUSL),-D_LARGEFILE64_SOURCE)|' feeds/packages/utils/xfsprogs/Makefile
 
 # perl
-rm -rf feeds/packages/lang/perl
-cp -rf $GITHUB_WORKSPACE/general/perl feeds/packages/lang
+#rm -rf feeds/packages/lang/perl
+#cp -rf $GITHUB_WORKSPACE/general/perl feeds/packages/lang
 
 #mosdns
 rm -rf feeds/packages/net/mosdns
