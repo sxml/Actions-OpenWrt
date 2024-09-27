@@ -128,6 +128,9 @@ git clone --depth=1 https://github.com/sirpdboy/luci-app-ddns-go.git package/ddn
 rm -rf feeds/packages/utils/lrzsz
 cp -rf $GITHUB_WORKSPACE/general/lrzsz feeds/packages/utils
 
+#文件浏览器
+git clone --depth=1 https://github.com/sxml/luci-app-filebrowser.git package/luci-app-filebrowser
+
 #修改makefile
 find package/*/ -maxdepth 2 -path "*/Makefile" | xargs -i sed -i 's/include\ \.\.\/\.\.\/luci\.mk/include \$(TOPDIR)\/feeds\/luci\/luci\.mk/g' {}
 find package/*/ -maxdepth 2 -path "*/Makefile" | xargs -i sed -i 's/include\ \.\.\/\.\.\/lang\/golang\/golang\-package\.mk/include \$(TOPDIR)\/feeds\/packages\/lang\/golang\/golang\-package\.mk/g' {}
