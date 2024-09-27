@@ -1,7 +1,7 @@
 #!/bin/bash
 #============================================================
 # sxml
-# 2024-09-23
+# 2024-09-26
 #https://github.com/HoldOnBro/Actions-OpenWrt
 #https://github.com/breakings/OpenWrt
 #============================================================
@@ -27,7 +27,7 @@ cp -rf small-package/gost package/gost
 cp -rf small-package/v2ray-geodata package/v2ray-geodata
 #文件助手
 #git clone --depth=1 https://github.com/sxml/luci-app-fileassistant.git package/luci-app-fileassistant
-cp -rf kenzok8-packages/luci-app-fileassistant package/luci-app-fileassistant
+#cp -rf kenzok8-packages/luci-app-fileassistant package/luci-app-fileassistant
 
 # 克隆 fw876 仓库
 git clone --depth=1 -b main https://github.com/fw876/helloworld.git
@@ -96,8 +96,8 @@ sed -i "s|.img.gz|.img.gz|g" package/luci-app-amlogic/root/etc/config/amlogic
 sed -i "s|http.*/library|https://github.com/breakings/OpenWrt/tree/main/opt/kernel|g" package/luci-app-amlogic/root/etc/config/amlogic
 
 # themes 主题
-git clone --depth=1 https://github.com/Leo-Jo-My/luci-theme-opentomcat.git package/luci-theme-opentomcat
-git clone --depth=1 https://github.com/thinktip/luci-theme-neobird.git package/luci-theme-neobird
+#git clone --depth=1 https://github.com/Leo-Jo-My/luci-theme-opentomcat.git package/luci-theme-opentomcat
+#git clone --depth=1 https://github.com/thinktip/luci-theme-neobird.git package/luci-theme-neobird
 #git clone --depth=1 https://github.com/gngpp/luci-theme-design.git package/luci-theme-design
 #git clone --depth=1 https://github.com/gngpp/luci-app-design-config.git package/luci-app-design-config
 git clone --depth=1 https://github.com/sxml/luci-theme-design.git package/luci-theme-design
