@@ -1,7 +1,7 @@
 #!/bin/bash
 #============================================================
 # sxml
-# 2024-09-27
+# 2024-09-28
 #https://github.com/HoldOnBro/Actions-OpenWrt
 #https://github.com/breakings/OpenWrt
 #============================================================
@@ -27,7 +27,7 @@ cp -rf small-package/gost package/gost
 cp -rf small-package/v2ray-geodata package/v2ray-geodata
 #文件助手
 #git clone --depth=1 https://github.com/sxml/luci-app-fileassistant.git package/luci-app-fileassistant
-cp -rf kenzok8-packages/luci-app-fileassistant package/luci-app-fileassistant
+#cp -rf kenzok8-packages/luci-app-fileassistant package/luci-app-fileassistant
 
 # 克隆 fw876 仓库
 git clone --depth=1 -b main https://github.com/fw876/helloworld.git
@@ -117,12 +117,12 @@ sed -i 's/PKG_HASH:=.*/PKG_HASH:=60a420ad7085eb616cb6e2bdf0a7206d68ff3d37fb5a956
 #添加ddns-go 动态域名解析
 git clone --depth=1 https://github.com/sirpdboy/luci-app-ddns-go.git package/ddns-go
 
+#文件浏览器
+git clone --depth=1 https://github.com/sxml/luci-app-filebrowser.git package/luci-app-filebrowser
+
 #lrzsz
 rm -rf feeds/packages/utils/lrzsz
 cp -rf $GITHUB_WORKSPACE/general/lrzsz feeds/packages/utils
-
-#文件浏览器
-#git clone --depth=1 https://github.com/sxml/luci-app-filebrowser.git package/luci-app-filebrowser
 
 #修改makefile
 find package/*/ -maxdepth 2 -path "*/Makefile" | xargs -i sed -i 's/include\ \.\.\/\.\.\/luci\.mk/include \$(TOPDIR)\/feeds\/luci\/luci\.mk/g' {}
