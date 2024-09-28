@@ -1,7 +1,7 @@
 #!/bin/bash
 #============================================================
 # sxml
-# 2024-09-26
+# 2024-09-27
 #https://github.com/HoldOnBro/Actions-OpenWrt
 #https://github.com/breakings/OpenWrt
 #============================================================
@@ -27,7 +27,7 @@ cp -rf small-package/gost package/gost
 cp -rf small-package/v2ray-geodata package/v2ray-geodata
 #文件助手
 #git clone --depth=1 https://github.com/sxml/luci-app-fileassistant.git package/luci-app-fileassistant
-#cp -rf kenzok8-packages/luci-app-fileassistant package/luci-app-fileassistant
+cp -rf kenzok8-packages/luci-app-fileassistant package/luci-app-fileassistant
 
 # 克隆 fw876 仓库
 git clone --depth=1 -b main https://github.com/fw876/helloworld.git
@@ -103,13 +103,6 @@ sed -i "s|http.*/library|https://github.com/breakings/OpenWrt/tree/main/opt/kern
 git clone --depth=1 https://github.com/sxml/luci-theme-design.git package/luci-theme-design
 git clone --depth=1 https://github.com/sxml/luci-app-design-config.git package/luci-app-design-config
 
-# 临时修复xfsprogs
-#sed -i 's|TARGET_CFLAGS += -DHAVE_MAP_SYNC.*|TARGET_CFLAGS += -DHAVE_MAP_SYNC $(if $(CONFIG_USE_MUSL),-D_LARGEFILE64_SOURCE)|' feeds/packages/utils/xfsprogs/Makefile
-
-# perl
-#rm -rf feeds/packages/lang/perl
-#cp -rf $GITHUB_WORKSPACE/general/perl feeds/packages/lang
-
 #mosdns
 rm -rf feeds/packages/net/mosdns
 rm -rf feeds/luci/applications/luci-app-mosdns
@@ -129,7 +122,7 @@ rm -rf feeds/packages/utils/lrzsz
 cp -rf $GITHUB_WORKSPACE/general/lrzsz feeds/packages/utils
 
 #文件浏览器
-git clone --depth=1 https://github.com/sxml/luci-app-filebrowser.git package/luci-app-filebrowser
+#git clone --depth=1 https://github.com/sxml/luci-app-filebrowser.git package/luci-app-filebrowser
 
 #修改makefile
 find package/*/ -maxdepth 2 -path "*/Makefile" | xargs -i sed -i 's/include\ \.\.\/\.\.\/luci\.mk/include \$(TOPDIR)\/feeds\/luci\/luci\.mk/g' {}
