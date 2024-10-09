@@ -1,7 +1,7 @@
 #!/bin/bash
 #============================================================
 # sxml
-# 2024-09-28
+# 2024-10-09
 #https://github.com/HoldOnBro/Actions-OpenWrt
 #https://github.com/breakings/OpenWrt
 #============================================================
@@ -11,6 +11,8 @@ rm -rf feeds/luci/applications/luci-app-dockerman
 rm -rf feeds/packages/net/smartdns
 rm -rf feeds/luci/applications/luci-app-smartdns
 rm -fr feeds/luci/themes/luci-theme-design
+# 删除老版本watchcat
+rm -rf feeds/packages/utils/watchcat
 #20231010
 #rm -rf feeds/packages/utils/prometheus-node-exporter-lua
 
@@ -119,6 +121,10 @@ git clone --depth=1 https://github.com/sirpdboy/luci-app-ddns-go.git package/ddn
 
 #文件浏览器
 git clone --depth=1 https://github.com/sxml/luci-app-filebrowser.git package/luci-app-filebrowser
+
+#编译luci-app-watchcat-plus
+git clone --depth=1 https://github.com/openwrt/packages/trunk/utils/watchcat feeds/packages/utils/watchcat
+git clone https://github.com/sxml/luci-app-watchcat-plus.git package/luci-app-watchcat-plus
 
 #lrzsz
 #rm -rf feeds/packages/utils/lrzsz
