@@ -124,7 +124,7 @@ git clone --depth=1 https://github.com/sxml/luci-app-filebrowser.git package/luc
 
 #编译luci-app-watchcat-plus
 #git clone --depth=1 https://github.com/openwrt/packages/trunk/utils/watchcat feeds/packages/utils/watchcat
-#git clone https://github.com/sxml/luci-app-watchcat-plus.git package/luci-app-watchcat-plus
+git clone https://github.com/sxml/luci-app-watchcat-plus.git package/luci-app-watchcat-plus
 
 #lrzsz
 #rm -rf feeds/packages/utils/lrzsz
