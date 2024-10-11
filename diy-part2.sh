@@ -125,7 +125,9 @@ git clone --depth=1 https://github.com/sxml/luci-app-filebrowser.git package/luc
 # 克隆 sirpdboy 仓库
 git clone --depth=1 https://github.com/sirpdboy/sirpdboy-package.git sirpdboy-package
 cp -rf sirpdboy-package/watchcat package/watchcat
-cp -rf sirpdboy-package/luci-app-watchcat-plus package/luci-app-watchcat-plus
+#cp -rf sirpdboy-package/luci-app-watchcat-plus package/luci-app-watchcat-plus
+#编译luci-app-watchcat-plus
+git clone https://github.com/sxml/luci-app-watchcat-plus.git package/luci-app-watchcat-plus
 
 #lrzsz
 #rm -rf feeds/packages/utils/lrzsz
