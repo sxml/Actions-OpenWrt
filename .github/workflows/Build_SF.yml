@@ -1,7 +1,7 @@
 #
 # 2023.02.04  编译op
 #
-name: 编译op
+name: 编译op_SF
 on:
   repository_dispatch:
   workflow_dispatch:
