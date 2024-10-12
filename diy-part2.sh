@@ -122,7 +122,6 @@ git clone --depth=1 https://github.com/sirpdboy/luci-app-ddns-go.git package/ddn
 #文件浏览器
 git clone --depth=1 https://github.com/sxml/luci-app-filebrowser.git package/luci-app-filebrowser
 
-
 #编译luci-app-watchcat-plus 
 #克隆最新的 watchcat
 #git clone --depth=1 https://github.com/openwrt/packages/trunk/utils/watchcat feeds/packages/utils/watchcat
@@ -131,7 +130,6 @@ git clone --depth=1 https://github.com/sirpdboy/sirpdboy-package.git
 cp -rf sirpdboy-package/watchcat package/watchcat
 # 克隆 luci-app-watchcat-plus 插件
 git clone --depth=1 https://github.com/sxml/luci-app-watchcat-plus.git package/luci-app-watchcat-plus
-
 
 #lrzsz
 #rm -rf feeds/packages/utils/lrzsz
