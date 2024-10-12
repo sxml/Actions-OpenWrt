@@ -122,12 +122,16 @@ git clone --depth=1 https://github.com/sirpdboy/luci-app-ddns-go.git package/ddn
 #文件浏览器
 git clone --depth=1 https://github.com/sxml/luci-app-filebrowser.git package/luci-app-filebrowser
 
-# 克隆 sirpdboy 仓库
-git clone --depth=1 https://github.com/sirpdboy/sirpdboy-package.git sirpdboy-package
+
+#编译luci-app-watchcat-plus 
+#克隆最新的 watchcat
+#git clone --depth=1 https://github.com/openwrt/packages/trunk/utils/watchcat feeds/packages/utils/watchcat
+# 克隆 sirpdboy 仓库 watchcat
+git clone --depth=1 https://github.com/sirpdboy/sirpdboy-package.git
 cp -rf sirpdboy-package/watchcat package/watchcat
-#cp -rf sirpdboy-package/luci-app-watchcat-plus package/luci-app-watchcat-plus
-#编译luci-app-watchcat-plus
-git clone https://github.com/sxml/luci-app-watchcat-plus.git package/luci-app-watchcat-plus
+# 克隆 luci-app-watchcat-plus 插件
+git clone --depth=1 https://github.com/sxml/luci-app-watchcat-plus.git package/luci-app-watchcat-plus
+
 
 #lrzsz
 #rm -rf feeds/packages/utils/lrzsz
