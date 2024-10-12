@@ -12,7 +12,7 @@ rm -rf feeds/packages/net/smartdns
 rm -rf feeds/luci/applications/luci-app-smartdns
 rm -fr feeds/luci/themes/luci-theme-design
 # 删除老版本watchcat
-rm -rf feeds/packages/utils/watchcat
+#rm -rf feeds/packages/utils/watchcat
 #20231010
 #rm -rf feeds/packages/utils/prometheus-node-exporter-lua
 
@@ -126,8 +126,8 @@ git clone --depth=1 https://github.com/sxml/luci-app-filebrowser.git package/luc
 #克隆最新的 watchcat
 #git clone --depth=1 https://github.com/openwrt/packages/trunk/utils/watchcat feeds/packages/utils/watchcat
 # 克隆 sirpdboy 仓库 watchcat
-git clone --depth=1 https://github.com/sirpdboy/sirpdboy-package.git
-cp -rf sirpdboy-package/watchcat package/watchcat
+#git clone --depth=1 https://github.com/sirpdboy/sirpdboy-package.git
+#cp -rf sirpdboy-package/watchcat package/watchcat
 # 克隆 luci-app-watchcat-plus 插件
 git clone --depth=1 https://github.com/sxml/luci-app-watchcat-plus.git package/luci-app-watchcat-plus
 
