@@ -1,7 +1,7 @@
 #
 # 2024.10.12  编译 ARMv8_FOL
 #
-name: 编译op ARMv8_FOL
+name: 编译op_FOL
 on:
   repository_dispatch:
   workflow_dispatch:
