@@ -22,8 +22,8 @@ cp -rf kenzok8-packages/smartdns package/smartdns
 cp -rf kenzok8-packages/luci-app-smartdns package/luci-app-smartdns
 #cp -rf kenzok8-packages/gost package/gost
 #git clone --depth=1 https://github.com/pymumu/luci-app-smartdns.git package/luci-app-smartdns
-git clone --depth=1 https://github.com/kenzok8/small-package.git small-package
-cp -rf small-package/gost package/gost
+#git clone --depth=1 https://github.com/kenzok8/small-package.git small-package
+#cp -rf small-package/gost package/gost
 #cp -rf small-package/luci-app-gost package/luci-app-gost
 #cp -rf small-package/sagernet-core package/sagernet-core
 cp -rf small-package/v2ray-geodata package/v2ray-geodata
@@ -132,10 +132,8 @@ cp -rf sirpdboy-package/watchcat package/watchcat
 git clone --depth=1 https://github.com/sxml/luci-app-watchcat-plus.git package/luci-app-watchcat-plus
 
 #gost
-# 修改 PKG_VERSION 到旧版本 2.11.5
-sed -i 's/PKG_VERSION:=2.12.0/PKG_VERSION:=2.11.5/g' packages/gost/Makefile
-# 修改 PKG_HASH 对应 2.11.5 版本的哈希值
-sed -i 's/PKG_HASH:=ed575807b0490411670556d4471338f418c326bb1ffe25f52977735012851765/PKG_HASH:=dab48b785f4d2df6c2f5619a4b9a2ac6e8b708f667a4d89c7d08df67ad7c5ca7/g' packages/gost/Makefile
+#cp -rf $GITHUB_WORKSPACE/general/luci-app-gost package/luci-app-gost
+cp -rf $GITHUB_WORKSPACE/general/gost package/gost
 
 #lrzsz
 #rm -rf feeds/packages/utils/lrzsz
