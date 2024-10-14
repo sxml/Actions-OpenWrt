@@ -1,7 +1,7 @@
 #!/bin/bash
 #============================================================
 # sxml
-# 2024-10-09
+# 2024-10-14
 #https://github.com/HoldOnBro/Actions-OpenWrt
 #https://github.com/breakings/OpenWrt
 #============================================================
@@ -124,10 +124,10 @@ git clone --depth=1 https://github.com/sxml/luci-app-filebrowser.git package/luc
 
 #编译luci-app-watchcat-plus 
 #克隆最新的 watchcat
-git clone --depth=1 https://github.com/openwrt/packages/trunk/utils/watchcat feeds/packages/utils/watchcat
+#git clone --depth=1 https://github.com/openwrt/packages/trunk/utils/watchcat feeds/packages/utils/watchcat
 # 克隆 sirpdboy 仓库 watchcat
-#git clone --depth=1 https://github.com/sirpdboy/sirpdboy-package.git
-#cp -rf sirpdboy-package/watchcat package/watchcat
+git clone --depth=1 https://github.com/sirpdboy/sirpdboy-package.git
+cp -rf sirpdboy-package/watchcat package/watchcat
 # 克隆 luci-app-watchcat-plus 插件
 git clone --depth=1 https://github.com/sxml/luci-app-watchcat-plus.git package/luci-app-watchcat-plus
 
