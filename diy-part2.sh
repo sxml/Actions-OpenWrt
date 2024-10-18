@@ -136,10 +136,6 @@ git clone --depth=1 https://github.com/sxml/luci-app-watchcat-plus.git package/l
 #cp -rf $GITHUB_WORKSPACE/general/luci-app-gost package/luci-app-gost
 #cp -rf $GITHUB_WORKSPACE/general/gost package/gost
 
-#lrzsz
-#rm -rf feeds/packages/utils/lrzsz
-#cp -rf $GITHUB_WORKSPACE/general/lrzsz feeds/packages/utils
-
 #修改makefile
 find package/*/ -maxdepth 2 -path "*/Makefile" | xargs -i sed -i 's/include\ \.\.\/\.\.\/luci\.mk/include \$(TOPDIR)\/feeds\/luci\/luci\.mk/g' {}
 find package/*/ -maxdepth 2 -path "*/Makefile" | xargs -i sed -i 's/include\ \.\.\/\.\.\/lang\/golang\/golang\-package\.mk/include \$(TOPDIR)\/feeds\/packages\/lang\/golang\/golang\-package\.mk/g' {}
