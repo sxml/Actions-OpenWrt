@@ -108,8 +108,9 @@ git clone --depth=1 https://github.com/sxml/luci-app-design-config.git package/l
 #mosdns
 rm -rf feeds/packages/net/mosdns
 rm -rf feeds/luci/applications/luci-app-mosdns
+#命令中的 -b v5-lua 的意思是指定要克隆的分支（branch）为 v5-lua
 git clone -b v5-lua https://github.com/sbwml/luci-app-mosdns package/luci-app-mosdns
-merge_package https://github.com/sbwml/luci-app-mosdns luci-app-mosdns/mosdns
+git clone -b v5-lua https://github.com/sbwml/luci-app-mosdns package/mosdns
 
 # aria2
 sed -i 's/PKG_VERSION:=.*/PKG_VERSION:=1.37.0/g' feeds/packages/net/aria2/Makefile
