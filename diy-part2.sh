@@ -1,7 +1,7 @@
 #!/bin/bash
 #============================================================
 # sxml
-# 2024-10-14
+# 2024-10-18
 #https://github.com/HoldOnBro/Actions-OpenWrt
 #https://github.com/breakings/OpenWrt
 #============================================================
@@ -99,7 +99,7 @@ sed -i "s|http.*/library|https://github.com/breakings/OpenWrt/tree/main/opt/kern
 
 # themes 主题
 #git clone --depth=1 https://github.com/Leo-Jo-My/luci-theme-opentomcat.git package/luci-theme-opentomcat
-#git clone --depth=1 https://github.com/thinktip/luci-theme-neobird.git package/luci-theme-neobird
+git clone --depth=1 https://github.com/thinktip/luci-theme-neobird.git package/luci-theme-neobird
 #git clone --depth=1 https://github.com/gngpp/luci-theme-design.git package/luci-theme-design
 #git clone --depth=1 https://github.com/gngpp/luci-app-design-config.git package/luci-app-design-config
 git clone --depth=1 https://github.com/sxml/luci-theme-design.git package/luci-theme-design
