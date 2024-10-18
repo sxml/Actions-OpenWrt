@@ -134,7 +134,7 @@ git clone --depth=1 https://github.com/sxml/luci-app-watchcat-plus.git package/l
 
 #gost
 #cp -rf $GITHUB_WORKSPACE/general/luci-app-gost package/luci-app-gost
-cp -rf $GITHUB_WORKSPACE/general/gost package/gost
+#cp -rf $GITHUB_WORKSPACE/general/gost package/gost
 
 #lrzsz
 #rm -rf feeds/packages/utils/lrzsz
