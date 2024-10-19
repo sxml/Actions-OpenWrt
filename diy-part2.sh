@@ -20,13 +20,14 @@ rm -rf feeds/packages/utils/watchcat
 git clone --depth=1 https://github.com/kenzok8/openwrt-packages.git kenzok8-packages
 cp -rf kenzok8-packages/smartdns package/smartdns
 cp -rf kenzok8-packages/luci-app-smartdns package/luci-app-smartdns
+cp -rf kenzok8-packages/luci-theme-argon package/luci-theme-argon
 #cp -rf kenzok8-packages/gost package/gost
 #git clone --depth=1 https://github.com/pymumu/luci-app-smartdns.git package/luci-app-smartdns
 #git clone --depth=1 https://github.com/kenzok8/small-package.git small-package
 #cp -rf small-package/gost package/gost
 #cp -rf small-package/luci-app-gost package/luci-app-gost
 #cp -rf small-package/sagernet-core package/sagernet-core
-cp -rf small-package/v2ray-geodata package/v2ray-geodata
+#cp -rf small-package/v2ray-geodata package/v2ray-geodata
 #文件助手
 #git clone --depth=1 https://github.com/sxml/luci-app-fileassistant.git package/luci-app-fileassistant
 #cp -rf kenzok8-packages/luci-app-fileassistant package/luci-app-fileassistant
@@ -67,6 +68,7 @@ cp -rf openwrt-passwall-packages/trojan-plus package/trojan-plus
 cp -rf openwrt-passwall-packages/hysteria package/hysteria
 cp -rf openwrt-passwall-packages/dns2tcp package/dns2tcp
 cp -rf openwrt-passwall-packages/sing-box package/sing-box
+cp -rf openwrt-passwall-packages/v2ray-geodata package/v2ray-geodata
 #rm -rf openwrt-passwall-packages
 
 #passwall
