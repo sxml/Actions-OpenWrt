@@ -111,7 +111,7 @@ git clone -b v5-lua https://github.com/sbwml/luci-app-mosdns package/mosdns
 
 #添加ddns-go 动态域名解析
 git clone --depth=1 https://github.com/sirpdboy/luci-app-ddns-go.git package/ddns-go
-#git clone --depth=1 https://github.com/sxml/luci-app-ddns-go.git package/ddns-go
+git clone --depth=1 https://github.com/sxml/luci-app-ddns-go.git package/ddns-go
 
 #文件浏览器
 git clone --depth=1 https://github.com/sxml/luci-app-filebrowser.git package/luci-app-filebrowser
