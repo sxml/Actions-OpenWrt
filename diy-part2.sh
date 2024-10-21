@@ -135,6 +135,10 @@ cp -rf sirpdboy-package/watchcat package/watchcat
 # 克隆 luci-app-watchcat-plus 插件
 git clone --depth=1 https://github.com/sxml/luci-app-watchcat-plus.git package/luci-app-watchcat-plus
 
+#lrzsz
+rm -rf feeds/packages/utils/lrzsz
+cp -rf $GITHUB_WORKSPACE/general/lrzsz feeds/packages/utils
+
 #gost
 #cp -rf $GITHUB_WORKSPACE/general/luci-app-gost package/luci-app-gost
 #cp -rf $GITHUB_WORKSPACE/general/gost package/gost
