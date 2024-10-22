@@ -97,8 +97,8 @@ sed -i "s|http.*/library|https://github.com/breakings/OpenWrt/tree/main/opt/kern
 #git clone --depth=1 https://github.com/thinktip/luci-theme-neobird.git package/luci-theme-neobird
 #git clone --depth=1 https://github.com/gngpp/luci-theme-design.git package/luci-theme-design
 #git clone --depth=1 https://github.com/gngpp/luci-app-design-config.git package/luci-app-design-config
-git clone --depth=1 https://github.com/sxml/luci-theme-design.git package/luci-theme-design
-git clone --depth=1 https://github.com/sxml/luci-app-design-config.git package/luci-app-design-config
+#git clone --depth=1 https://github.com/sxml/luci-theme-design.git package/luci-theme-design
+#git clone --depth=1 https://github.com/sxml/luci-app-design-config.git package/luci-app-design-config
 
 #mosdns
 rm -rf feeds/packages/net/mosdns
