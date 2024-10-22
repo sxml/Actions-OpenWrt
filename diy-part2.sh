@@ -114,7 +114,6 @@ git clone --depth=1 https://github.com/sirpdboy/luci-app-ddns-go.git
 cp -rf luci-app-ddns-go/ddns-go package/ddns-go
 cp -rf luci-app-ddns-go/luci-app-ddns-go package/luci-app-ddns-go
 
-
 #文件浏览器
 git clone --depth=1 https://github.com/sxml/luci-app-filebrowser.git package/luci-app-filebrowser
 
