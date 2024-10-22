@@ -1,7 +1,7 @@
 #!/bin/bash
 #============================================================
 # sxml
-# 2024-10-21
+# 2024-10-22
 #https://github.com/HoldOnBro/Actions-OpenWrt
 #https://github.com/breakings/OpenWrt
 #============================================================
@@ -16,7 +16,7 @@ rm -fr feeds/luci/themes/luci-theme-design
 git clone --depth=1 https://github.com/kenzok8/openwrt-packages.git kenzok8-packages
 cp -rf kenzok8-packages/smartdns package/smartdns
 cp -rf kenzok8-packages/luci-app-smartdns package/luci-app-smartdns
-cp -rf kenzok8-packages/luci-theme-argon package/luci-theme-argon
+#cp -rf kenzok8-packages/luci-theme-argon package/luci-theme-argon
 #cp -rf kenzok8-packages/gost package/gost
 #git clone --depth=1 https://github.com/pymumu/luci-app-smartdns.git package/luci-app-smartdns
 #git clone --depth=1 https://github.com/kenzok8/small-package.git small-package
@@ -108,8 +108,11 @@ git clone -b v5-lua https://github.com/sbwml/luci-app-mosdns package/luci-app-mo
 git clone -b v5-lua https://github.com/sbwml/luci-app-mosdns package/mosdns
 
 #添加ddns-go 动态域名解析
-git clone --depth=1 https://github.com/sirpdboy/luci-app-ddns-go.git package/ddns-go
+#git clone --depth=1 https://github.com/sirpdboy/luci-app-ddns-go.git package/ddns-go
 #git clone --depth=1 https://github.com/sxml/luci-app-ddns-go.git package/ddns-go
+git clone --depth=1 https://github.com/sirpdboy/luci-app-ddns-go.git
+cp -rf luci-app-ddns-go/ddns-go package/ddns-go
+cp -rf luci-app-ddns-go/luci-app-ddns-go package/luci-app-ddns-go
 
 #文件浏览器
 git clone --depth=1 https://github.com/sxml/luci-app-filebrowser.git package/luci-app-filebrowser
