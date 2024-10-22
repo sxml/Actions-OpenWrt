@@ -11,6 +11,8 @@ rm -rf feeds/luci/applications/luci-app-dockerman
 rm -rf feeds/packages/net/smartdns
 rm -rf feeds/luci/applications/luci-app-smartdns
 rm -fr feeds/luci/themes/luci-theme-design
+#20231010
+#rm -rf feeds/packages/utils/prometheus-node-exporter-lua
 
 # 克隆 kenzok8仓库
 git clone --depth=1 https://github.com/kenzok8/openwrt-packages.git kenzok8-packages
@@ -97,8 +99,8 @@ sed -i "s|http.*/library|https://github.com/breakings/OpenWrt/tree/main/opt/kern
 #git clone --depth=1 https://github.com/thinktip/luci-theme-neobird.git package/luci-theme-neobird
 #git clone --depth=1 https://github.com/gngpp/luci-theme-design.git package/luci-theme-design
 #git clone --depth=1 https://github.com/gngpp/luci-app-design-config.git package/luci-app-design-config
-#git clone --depth=1 https://github.com/sxml/luci-theme-design.git package/luci-theme-design
-#git clone --depth=1 https://github.com/sxml/luci-app-design-config.git package/luci-app-design-config
+git clone --depth=1 https://github.com/sxml/luci-theme-design.git package/luci-theme-design
+git clone --depth=1 https://github.com/sxml/luci-app-design-config.git package/luci-app-design-config
 
 #mosdns
 rm -rf feeds/packages/net/mosdns
@@ -113,6 +115,7 @@ git clone -b v5-lua https://github.com/sbwml/luci-app-mosdns package/mosdns
 git clone --depth=1 https://github.com/sirpdboy/luci-app-ddns-go.git
 cp -rf luci-app-ddns-go/ddns-go package/ddns-go
 cp -rf luci-app-ddns-go/luci-app-ddns-go package/luci-app-ddns-go
+
 
 #文件浏览器
 git clone --depth=1 https://github.com/sxml/luci-app-filebrowser.git package/luci-app-filebrowser
