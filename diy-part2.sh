@@ -16,7 +16,7 @@ rm -fr feeds/luci/themes/luci-theme-design
 git clone --depth=1 https://github.com/kenzok8/openwrt-packages.git kenzok8-packages
 cp -rf kenzok8-packages/smartdns package/smartdns
 cp -rf kenzok8-packages/luci-app-smartdns package/luci-app-smartdns
-#cp -rf kenzok8-packages/luci-theme-argon package/luci-theme-argon
+cp -rf kenzok8-packages/luci-theme-argon package/luci-theme-argon
 #cp -rf kenzok8-packages/gost package/gost
 #git clone --depth=1 https://github.com/pymumu/luci-app-smartdns.git package/luci-app-smartdns
 #git clone --depth=1 https://github.com/kenzok8/small-package.git small-package
@@ -118,8 +118,8 @@ cp -rf luci-app-ddns-go/luci-app-ddns-go package/luci-app-ddns-go
 git clone --depth=1 https://github.com/sxml/luci-app-filebrowser.git package/luci-app-filebrowser
 
 #lrzsz
-rm -rf feeds/packages/utils/lrzsz
-cp -rf $GITHUB_WORKSPACE/general/lrzsz feeds/packages/utils
+#rm -rf feeds/packages/utils/lrzsz
+#cp -rf $GITHUB_WORKSPACE/general/lrzsz feeds/packages/utils
 
 #修改makefile
 find package/*/ -maxdepth 2 -path "*/Makefile" | xargs -i sed -i 's/include\ \.\.\/\.\.\/luci\.mk/include \$(TOPDIR)\/feeds\/luci\/luci\.mk/g' {}
