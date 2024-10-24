@@ -119,8 +119,8 @@ git clone -b v5-lua https://github.com/sbwml/luci-app-mosdns package/mosdns
 #git clone --depth=1 https://github.com/sxml/luci-app-filebrowser.git package/luci-app-filebrowser
 
 #lrzsz
-#rm -rf feeds/packages/utils/lrzsz
-#cp -rf $GITHUB_WORKSPACE/general/lrzsz feeds/packages/utils
+rm -rf feeds/packages/utils/lrzsz
+cp -rf $GITHUB_WORKSPACE/general/lrzsz feeds/packages/utils
 
 #修改makefile
 find package/*/ -maxdepth 2 -path "*/Makefile" | xargs -i sed -i 's/include\ \.\.\/\.\.\/luci\.mk/include \$(TOPDIR)\/feeds\/luci\/luci\.mk/g' {}
