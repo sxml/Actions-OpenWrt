@@ -1,22 +1,23 @@
 #!/bin/bash
 #============================================================
 # sxml
-# 2024-10-22
+# 2024-10-24  23.05
 #https://github.com/HoldOnBro/Actions-OpenWrt
 #https://github.com/breakings/OpenWrt
 #============================================================
 #移除不用软件包
-rm -rf feeds/luci/applications/luci-app-dockerman
+#rm -rf feeds/luci/applications/luci-app-dockerman
 #rm -rf package/lean/luci-app-wrtbwmon
 rm -rf feeds/packages/net/smartdns
-rm -rf feeds/luci/applications/luci-app-smartdns
-rm -fr feeds/luci/themes/luci-theme-design
+#rm -rf feeds/luci/applications/luci-app-smartdns
+#rm -fr feeds/luci/themes/luci-theme-design
 
 # 克隆 kenzok8仓库
 git clone --depth=1 https://github.com/kenzok8/openwrt-packages.git kenzok8-packages
+cp -rf kenzok8-packages/ddns-go package/ddns-go
 cp -rf kenzok8-packages/smartdns package/smartdns
-cp -rf kenzok8-packages/luci-app-smartdns package/luci-app-smartdns
-cp -rf kenzok8-packages/luci-theme-argon package/luci-theme-argon
+#cp -rf kenzok8-packages/luci-app-smartdns package/luci-app-smartdns
+#cp -rf kenzok8-packages/luci-theme-argon package/luci-theme-argon
 #cp -rf kenzok8-packages/gost package/gost
 #git clone --depth=1 https://github.com/pymumu/luci-app-smartdns.git package/luci-app-smartdns
 #git clone --depth=1 https://github.com/kenzok8/small-package.git small-package
@@ -65,13 +66,13 @@ cp -rf openwrt-passwall-packages/v2ray-geodata package/v2ray-geodata
 #rm -rf openwrt-passwall-packages
 
 #passwall
-git clone --depth=1 https://github.com/xiaorouji/openwrt-passwall.git
-cp -rf openwrt-passwall/luci-app-passwall package/luci-app-passwall
+#git clone --depth=1 https://github.com/xiaorouji/openwrt-passwall.git
+#cp -rf openwrt-passwall/luci-app-passwall package/luci-app-passwall
 #rm -rf openwrt-passwall
 
 #passwall2
-git clone --depth=1 https://github.com/xiaorouji/openwrt-passwall2.git
-cp -rf openwrt-passwall2/luci-app-passwall2 package/luci-app-passwall2
+#git clone --depth=1 https://github.com/xiaorouji/openwrt-passwall2.git
+#cp -rf openwrt-passwall2/luci-app-passwall2 package/luci-app-passwall2
 #rm -rf openwrt-passwall2
 
 #解析
@@ -102,20 +103,20 @@ sed -i "s|http.*/library|https://github.com/breakings/OpenWrt/tree/main/opt/kern
 
 #mosdns
 rm -rf feeds/packages/net/mosdns
-rm -rf feeds/luci/applications/luci-app-mosdns
+#rm -rf feeds/luci/applications/luci-app-mosdns
 #命令中的 -b v5-lua 的意思是指定要克隆的分支（branch）为 v5-lua
-git clone -b v5-lua https://github.com/sbwml/luci-app-mosdns package/luci-app-mosdns
+#git clone -b v5-lua https://github.com/sbwml/luci-app-mosdns package/luci-app-mosdns
 git clone -b v5-lua https://github.com/sbwml/luci-app-mosdns package/mosdns
 
 #添加ddns-go 动态域名解析
 #git clone --depth=1 https://github.com/sirpdboy/luci-app-ddns-go.git package/ddns-go
 #git clone --depth=1 https://github.com/sxml/luci-app-ddns-go.git package/ddns-go
-git clone --depth=1 https://github.com/sirpdboy/luci-app-ddns-go.git
-cp -rf luci-app-ddns-go/ddns-go package/ddns-go
-cp -rf luci-app-ddns-go/luci-app-ddns-go package/luci-app-ddns-go
+#git clone --depth=1 https://github.com/sirpdboy/luci-app-ddns-go.git
+#cp -rf luci-app-ddns-go/ddns-go package/ddns-go
+#cp -rf luci-app-ddns-go/luci-app-ddns-go package/luci-app-ddns-go
 
 #文件浏览器
-git clone --depth=1 https://github.com/sxml/luci-app-filebrowser.git package/luci-app-filebrowser
+#git clone --depth=1 https://github.com/sxml/luci-app-filebrowser.git package/luci-app-filebrowser
 
 #lrzsz
 #rm -rf feeds/packages/utils/lrzsz
