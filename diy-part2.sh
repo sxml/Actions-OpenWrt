@@ -1,7 +1,7 @@
 #!/bin/bash
 #============================================================
 # sxml
-# 2024-10-22
+# 2024-10-25
 #https://github.com/HoldOnBro/Actions-OpenWrt
 #https://github.com/breakings/OpenWrt
 #============================================================
@@ -117,7 +117,7 @@ git clone --depth=1 https://github.com/sirpdboy/luci-app-ddns-go.git package/ddn
 #git clone --depth=1 https://github.com/sxml/luci-app-filebrowser.git package/luci-app-filebrowser
 
 #文件助手
-#git clone --depth=1 https://github.com/sxml/luci-app-fileassistant.git package/luci-app-fileassistant
+git clone --depth=1 https://github.com/sxml/luci-app-fileassistant.git package/luci-app-fileassistant
 
 #lrzsz
 #rm -rf feeds/packages/utils/lrzsz
