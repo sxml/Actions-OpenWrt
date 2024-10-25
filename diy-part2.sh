@@ -1,7 +1,7 @@
 #!/bin/bash
 #============================================================
 # sxml
-# 2024-10-25
+# 2024-10-25 18.06
 #https://github.com/HoldOnBro/Actions-OpenWrt
 #https://github.com/breakings/OpenWrt
 #============================================================
@@ -16,7 +16,8 @@ rm -fr feeds/luci/themes/luci-theme-design
 git clone --depth=1 https://github.com/kenzok8/openwrt-packages.git kenzok8-packages
 cp -rf kenzok8-packages/smartdns package/smartdns
 cp -rf kenzok8-packages/luci-app-smartdns package/luci-app-smartdns
-cp -rf kenzok8-packages/luci-theme-argon package/luci-theme-argon
+#cp -rf kenzok8-packages/luci-theme-argon package/luci-theme-argon
+#cp -rf kenzok8-packages/ddns-go package/ddns-go
 #cp -rf kenzok8-packages/gost package/gost
 #git clone --depth=1 https://github.com/pymumu/luci-app-smartdns.git package/luci-app-smartdns
 #git clone --depth=1 https://github.com/kenzok8/small-package.git small-package
@@ -24,6 +25,10 @@ cp -rf kenzok8-packages/luci-theme-argon package/luci-theme-argon
 #cp -rf small-package/luci-app-gost package/luci-app-gost
 #cp -rf small-package/sagernet-core package/sagernet-core
 #cp -rf small-package/v2ray-geodata package/v2ray-geodata
+
+#文件助手
+#git clone --depth=1 https://github.com/sxml/luci-app-fileassistant.git package/luci-app-fileassistant
+#cp -rf kenzok8-packages/luci-app-fileassistant package/luci-app-fileassistant
 
 # 克隆 fw876 仓库
 git clone --depth=1 -b main https://github.com/fw876/helloworld.git
@@ -97,8 +102,8 @@ sed -i "s|http.*/library|https://github.com/breakings/OpenWrt/tree/main/opt/kern
 #git clone --depth=1 https://github.com/thinktip/luci-theme-neobird.git package/luci-theme-neobird
 #git clone --depth=1 https://github.com/gngpp/luci-theme-design.git package/luci-theme-design
 #git clone --depth=1 https://github.com/gngpp/luci-app-design-config.git package/luci-app-design-config
-#git clone --depth=1 https://github.com/sxml/luci-theme-design.git package/luci-theme-design
-#git clone --depth=1 https://github.com/sxml/luci-app-design-config.git package/luci-app-design-config
+git clone --depth=1 https://github.com/sxml/luci-theme-design.git package/luci-theme-design
+git clone --depth=1 https://github.com/sxml/luci-app-design-config.git package/luci-app-design-config
 
 #mosdns
 rm -rf feeds/packages/net/mosdns
@@ -107,17 +112,19 @@ rm -rf feeds/luci/applications/luci-app-mosdns
 git clone -b v5-lua https://github.com/sbwml/luci-app-mosdns package/luci-app-mosdns
 git clone -b v5-lua https://github.com/sbwml/luci-app-mosdns package/mosdns
 
+# aria2
+sed -i 's/PKG_VERSION:=.*/PKG_VERSION:=1.37.0/g' feeds/packages/net/aria2/Makefile
+sed -i 's/PKG_RELEASE:=.*/PKG_RELEASE:=1/g' feeds/packages/net/aria2/Makefile
+sed -i 's/PKG_HASH:=.*/PKG_HASH:=60a420ad7085eb616cb6e2bdf0a7206d68ff3d37fb5a956dc44242eb2f79b66b/g' feeds/packages/net/aria2/Makefile
+
 #添加ddns-go 动态域名解析
-git clone --depth=1 https://github.com/sirpdboy/luci-app-ddns-go.git package/ddns-go
-#git clone --depth=1 https://github.com/sxml/luci-app-ddns-go.git package/ddns-go
-#cp -rf luci-app-ddns-go/ddns-go package/ddns-go
-#cp -rf luci-app-ddns-go/luci-app-ddns-go package/luci-app-ddns-go
+#git clone --depth=1 https://github.com/sirpdboy/luci-app-ddns-go.git package/ddns-go
+git clone --depth=1 https://github.com/sirpdboy/luci-app-ddns-go.git
+cp -rf luci-app-ddns-go/ddns-go package/ddns-go
+cp -rf luci-app-ddns-go/luci-app-ddns-go package/luci-app-ddns-go
 
 #文件浏览器
-#git clone --depth=1 https://github.com/sxml/luci-app-filebrowser.git package/luci-app-filebrowser
-
-#文件助手
-git clone --depth=1 https://github.com/sxml/luci-app-fileassistant.git package/luci-app-fileassistant
+git clone --depth=1 https://github.com/sxml/luci-app-filebrowser.git package/luci-app-filebrowser
 
 #lrzsz
 #rm -rf feeds/packages/utils/lrzsz
