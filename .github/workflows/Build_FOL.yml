@@ -1,5 +1,5 @@
 #
-# 2024.10.12  编译 ARMv8_FOL
+# 2024.10.25  编译 ARMv8_FOL
 #
 name: 编译op_FOL
 on:
@@ -90,12 +90,12 @@ jobs:
 #        clean: 'false'
 #        prefix: ${{ github.workspace }}/openwrt
 
-#    - name: 加载自定义配置
-#      run: |
-#        [ -e $FEEDS_CONF ] && mv $FEEDS_CONF openwrt/feeds.conf.default
-#        chmod +x $DIY_P1_SH
-#        cd openwrt
-#        $GITHUB_WORKSPACE/$DIY_P1_SH
+    - name: 加载自定义配置
+      run: |
+        [ -e $FEEDS_CONF ] && mv $FEEDS_CONF openwrt/feeds.conf.default
+        chmod +x $DIY_P1_SH
+        cd openwrt
+        $GITHUB_WORKSPACE/$DIY_P1_SH
 
     - name: 更新软件包
       run: cd openwrt && ./scripts/feeds update -a
