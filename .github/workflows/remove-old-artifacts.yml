@@ -3,12 +3,11 @@ name: 删除旧工件和缓存
 on:
   repository_dispatch:
   workflow_dispatch:
-#  schedule:
-#    - cron: 0 22 * 11 *
 
 env: 
   DELETE_ARTIFACTS: true  # 删除旧的工作流程运行和工件
   DELETE_CACHE: true      # 删除缓存
+  GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
 jobs:
   remove-old-artifacts:
@@ -29,7 +28,16 @@ jobs:
         retain_days: 1                          # 工作流的保留天数
         keep_minimum_runs: 0                    # 工作流程保留的最少运行次数
 
-    - name: 删除缓存
+    - name: 列出缓存并删除
       if: env.DELETE_CACHE == 'true'
+      env:
+        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
-        gh api -X DELETE /repos/${{ github.repository }}/actions/caches
+        # 列出所有缓存 ID
+        cache_ids=$(gh api /repos/${{ github.repository }}/actions/caches --jq '.actions_caches[].id')
+        
+        # 循环删除每个缓存
+        for cache_id in $cache_ids; do
+          echo "Deleting cache with ID: $cache_id"
+          gh api -X DELETE /repos/${{ github.repository }}/actions/caches/$cache_id
+        done
