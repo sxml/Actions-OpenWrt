@@ -11,6 +11,8 @@ rm -rf feeds/luci/applications/luci-app-dockerman
 rm -rf feeds/packages/net/smartdns
 rm -rf feeds/luci/applications/luci-app-smartdns
 rm -fr feeds/luci/themes/luci-theme-design
+rm -rf feeds/luci/applications/luci-app-ddns-go
+rm -rf feeds/packages/net/ddns-go
 
 # 克隆 kenzok8仓库
 git clone --depth=1 https://github.com/kenzok8/openwrt-packages.git kenzok8-packages
