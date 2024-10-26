@@ -1,7 +1,7 @@
 #!/bin/bash
 #============================================================
 # sxml
-# 2024-10-25 18.06
+# 2024-10-26 18.06
 #https://github.com/HoldOnBro/Actions-OpenWrt
 #https://github.com/breakings/OpenWrt
 #============================================================
@@ -118,13 +118,22 @@ sed -i 's/PKG_RELEASE:=.*/PKG_RELEASE:=1/g' feeds/packages/net/aria2/Makefile
 sed -i 's/PKG_HASH:=.*/PKG_HASH:=60a420ad7085eb616cb6e2bdf0a7206d68ff3d37fb5a956dc44242eb2f79b66b/g' feeds/packages/net/aria2/Makefile
 
 #添加ddns-go 动态域名解析
-git clone --depth=1 https://github.com/sirpdboy/luci-app-ddns-go.git package/ddns-go
-#git clone --depth=1 https://github.com/sirpdboy/luci-app-ddns-go.git
-#cp -rf luci-app-ddns-go/ddns-go package/ddns-go
-#cp -rf luci-app-ddns-go/luci-app-ddns-go package/luci-app-ddns-go
+#git clone --depth=1 https://github.com/sirpdboy/luci-app-ddns-go.git package/ddns-go
+git clone --depth=1 https://github.com/sirpdboy/luci-app-ddns-go.git
+cp -rf luci-app-ddns-go/ddns-go package/ddns-go
+cp -rf luci-app-ddns-go/luci-app-ddns-go package/luci-app-ddns-go
 
 #文件浏览器
 git clone --depth=1 https://github.com/sxml/luci-app-filebrowser.git package/luci-app-filebrowser
+
+#小猫
+git clone --depth=1 https://github.com/vernesong/OpenClash.git
+cp -rf OpenClash/luci-app-openclash package/luci-app-openclash
+# 编译 po2lmo (如果有po2lmo可跳过)
+pushd package/luci-app-openclash/tools/po2lmo
+make && sudo make install
+popd
+#rm -rf OpenClash
 
 #lrzsz
 #rm -rf feeds/packages/utils/lrzsz
