@@ -1,4 +1,4 @@
-name: 删除旧工件
+name: 删除旧工件和缓存
 
 on:
   repository_dispatch:
@@ -8,13 +8,14 @@ on:
 
 env: 
   DELETE_ARTIFACTS: true  # 删除旧的工作流程运行和工件
+  DELETE_CACHE: true      # 删除缓存
 
 jobs:
   remove-old-artifacts:
     runs-on: ubuntu-latest
     timeout-minutes: 3600
 
-    name: 删除旧工件
+    name: 删除旧工件和缓存
     strategy:
       fail-fast: false
 
@@ -24,6 +25,11 @@ jobs:
       if: env.DELETE_ARTIFACTS == 'true'
       with:
         token: ${{ secrets.RELEASES_TOKEN }}    # 令牌
-        repository: ${{ github.repository }}    # 运行工作流的存储库的名称。
-        retain_days: 1                          # 工作流的保留天数进行比较的天数       
+        repository: ${{ github.repository }}    # 运行工作流的存储库的名称
+        retain_days: 1                          # 工作流的保留天数
         keep_minimum_runs: 0                    # 工作流程保留的最少运行次数
+
+    - name: 删除缓存
+      if: env.DELETE_CACHE == 'true'
+      run: |
+        gh api -X DELETE /repos/${{ github.repository }}/actions/caches
