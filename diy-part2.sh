@@ -123,6 +123,10 @@ cp -rf luci-app-ddns-go/luci-app-ddns-go package/luci-app-ddns-go
 #文件浏览器
 git clone --depth=1 https://github.com/sxml/luci-app-filebrowser.git package/luci-app-filebrowser
 
+# gnutls
+rm -rf feeds/packages/libs/gnutls
+cp -rf $GITHUB_WORKSPACE/general/gnutls feeds/packages/libs/gnutls
+
 #lrzsz
 #rm -rf feeds/packages/utils/lrzsz
 #cp -rf $GITHUB_WORKSPACE/general/lrzsz feeds/packages/utils
