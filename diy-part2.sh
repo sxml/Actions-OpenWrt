@@ -123,6 +123,15 @@ cp -rf luci-app-ddns-go/luci-app-ddns-go package/luci-app-ddns-go
 #文件浏览器
 git clone --depth=1 https://github.com/sxml/luci-app-filebrowser.git package/luci-app-filebrowser
 
+#小猫
+git clone --depth=1 https://github.com/vernesong/OpenClash.git
+cp -rf OpenClash/luci-app-openclash package/luci-app-openclash
+# 编译 po2lmo (如果有po2lmo可跳过)
+pushd package/luci-app-openclash/tools/po2lmo
+make && sudo make install
+popd
+#rm -rf OpenClash
+
 # gnutls
 rm -rf feeds/packages/libs/gnutls
 cp -rf $GITHUB_WORKSPACE/general/gnutls feeds/packages/libs/gnutls
