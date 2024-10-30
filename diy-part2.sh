@@ -133,8 +133,26 @@ popd
 #rm -rf OpenClash
 
 # gnutls
-rm -rf feeds/packages/libs/gnutls
-cp -rf $GITHUB_WORKSPACE/general/gnutls feeds/packages/libs/gnutls
+#rm -rf feeds/packages/libs/gnutls
+#cp -rf $GITHUB_WORKSPACE/general/gnutls feeds/packages/libs/gnutls
+
+# 拉取多级子目录 gnutls
+# Step 1: 创建临时目录用于 sparse-checkout
+mkdir -p openwrt-packages
+cd openwrt-packages
+# Step 2: 初始化 git 仓库
+git init
+git remote add origin https://github.com/openwrt/packages.git
+# Step 3: 启用 sparse-checkout 并指定需要的子目录
+git config core.sparseCheckout true
+echo "libs/gnutls" >> .git/info/sparse-checkout
+# Step 4: 拉取指定目录
+git pull --depth=1 origin master
+# Step 5: 将 gnutls 复制到目标目录
+cp -rf libs/gnutls ../feeds/packages/libs/gnutls
+# Step 6: 清理临时目录
+cd ..
+rm -rf openwrt-packages
 
 #lrzsz
 #rm -rf feeds/packages/utils/lrzsz
