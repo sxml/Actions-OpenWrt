@@ -1,7 +1,7 @@
 #!/bin/bash
 #============================================================
 # sxml
-# 2024-10-31  23.05
+# 2024-10-31 18.06
 #https://github.com/HoldOnBro/Actions-OpenWrt
 #https://github.com/breakings/OpenWrt
 #============================================================
@@ -14,56 +14,11 @@ rm -fr feeds/luci/themes/luci-theme-design
 rm -rf feeds/luci/applications/luci-app-ddns-go
 rm -rf feeds/packages/net/ddns-go
 
-#!/bin/bash
-
-# 定义拉取多级子目录的函数
-fetch_subdirectory() {
-    repo_url=$1          # 远程仓库URL
-    subdirectory=$2      # 需要拉取的子目录
-    target_path=$3       # 目标路径
-    branch=${4:-master}  # 分支名称，默认为 master
-
-    # 创建临时目录并进行 sparse-checkout
-    mkdir -p temp_repo
-    cd temp_repo || exit
-
-    git init
-    git remote add origin "$repo_url"
-    git config core.sparseCheckout true
-    echo "$subdirectory" > .git/info/sparse-checkout
-
-    # 拉取指定子目录内容
-    git pull --depth=1 origin "$branch"
-
-    # 将拉取的内容直接复制到目标目录，避免多余的嵌套
-    mkdir -p "../$target_path"
-    cp -rf ./"$subdirectory"/* "../$target_path"
-
-    # 清理临时目录
-    cd ..
-    rm -rf temp_repo
-}
-
-# 使用函数拉取指定的子目录
-# 拉取 gnutls (使用 master 分支)
-#rm -rf feeds/packages/libs/gnutls
-#fetch_subdirectory "https://github.com/openwrt/packages.git" "libs/gnutls" "feeds/packages/libs/gnutls"
-
-# 拉取 luci-app-nfs 
-rm -rf feeds/luci/applications/luci-app-nfs
-fetch_subdirectory "https://github.com/coolsnowwolf/luci.git" "applications/luci-app-nfs" "feeds/luci/applications/luci-app-nfs"
-
-# 拉取 luci-app-cifs-mount
-rm -rf feeds/luci/applications/luci-app-cifs-mount
-fetch_subdirectory "https://github.com/coolsnowwolf/luci.git" "applications/luci-app-cifs-mount" "feeds/luci/applications/luci-app-cifs-mount"
-#(使用openwrt-23.05分支)
-#fetch_subdirectory "https://github.com/coolsnowwolf/luci.git" "applications/luci-app-cifs-mount" "feeds/luci/applications/luci-app-cifs-mount" "openwrt-23.05"
-
 # 克隆 kenzok8仓库
 git clone --depth=1 https://github.com/kenzok8/openwrt-packages.git kenzok8-packages
 cp -rf kenzok8-packages/smartdns package/smartdns
 cp -rf kenzok8-packages/luci-app-smartdns package/luci-app-smartdns
-cp -rf kenzok8-packages/luci-theme-argon package/luci-theme-argon
+#cp -rf kenzok8-packages/luci-theme-argon package/luci-theme-argon
 #cp -rf kenzok8-packages/ddns-go package/ddns-go
 #cp -rf kenzok8-packages/gost package/gost
 #git clone --depth=1 https://github.com/pymumu/luci-app-smartdns.git package/luci-app-smartdns
@@ -72,13 +27,6 @@ cp -rf kenzok8-packages/luci-theme-argon package/luci-theme-argon
 #cp -rf small-package/luci-app-gost package/luci-app-gost
 #cp -rf small-package/sagernet-core package/sagernet-core
 #cp -rf small-package/v2ray-geodata package/v2ray-geodata
-
-# 修改默认IP
-sed -i 's/192.168.1.1/192.168.2.1/g' package/base-files/files/bin/config_generate
-
-#文件助手
-#git clone --depth=1 https://github.com/sxml/luci-app-fileassistant.git package/luci-app-fileassistant
-#cp -rf kenzok8-packages/luci-app-fileassistant package/luci-app-fileassistant	
 
 # 克隆 fw876 仓库
 git clone --depth=1 -b main https://github.com/fw876/helloworld.git
@@ -147,6 +95,12 @@ sed -i "s|.img.gz|.img.gz|g" package/luci-app-amlogic/root/etc/config/amlogic
 #sed -i "s|opt/kernel|BuildARMv8|g" package/luci-app-amlogic/root/etc/config/amlogic
 sed -i "s|http.*/library|https://github.com/breakings/OpenWrt/tree/main/opt/kernel|g" package/luci-app-amlogic/root/etc/config/amlogic
 
+# themes 主题
+#git clone --depth=1 https://github.com/Leo-Jo-My/luci-theme-opentomcat.git package/luci-theme-opentomcat
+#git clone --depth=1 https://github.com/thinktip/luci-theme-neobird.git package/luci-theme-neobird
+git clone --depth=1 https://github.com/sxml/luci-theme-design.git package/luci-theme-design
+git clone --depth=1 https://github.com/sxml/luci-app-design-config.git package/luci-app-design-config
+
 #mosdns
 rm -rf feeds/packages/net/mosdns
 rm -rf feeds/luci/applications/luci-app-mosdns
@@ -161,7 +115,7 @@ cp -rf luci-app-ddns-go/ddns-go package/ddns-go
 cp -rf luci-app-ddns-go/luci-app-ddns-go package/luci-app-ddns-go
 
 #文件浏览器
-#git clone --depth=1 https://github.com/sxml/luci-app-filebrowser.git package/luci-app-filebrowser
+git clone --depth=1 https://github.com/sxml/luci-app-filebrowser.git package/luci-app-filebrowser
 
 #小猫
 git clone --depth=1 https://github.com/vernesong/OpenClash.git
@@ -171,22 +125,6 @@ pushd package/luci-app-openclash/tools/po2lmo
 make && sudo make install
 popd
 #rm -rf OpenClash
-	
-# 修改 luci-app-nlbwmon 带宽监视器位置到网络组
-sed -i 's|{"admin", "services", "nlbw"}|{"admin", "network", "nlbw"}|' \
-    feeds/luci/applications/luci-app-nlbwmon/luasrc/controller/nlbw.lua
-
-# 修改 luci-app-filebrowser 插件的菜单位置到 NAS 组
-sed -i 's|{"admin", "services", "filebrowser"}|{"admin", "nas", "filebrowser"}|' \
-    package/luci-app-filebrowser/luasrc/controller/filebrowser.lua
-
-# gnutls
-#rm -rf feeds/packages/libs/gnutls
-#cp -rf $GITHUB_WORKSPACE/general/gnutls feeds/packages/libs/gnutls
-
-#lrzsz
-#rm -rf feeds/packages/utils/lrzsz
-#cp -rf $GITHUB_WORKSPACE/general/lrzsz feeds/packages/utils
 
 ./scripts/feeds update -a
 ./scripts/feeds install -a
