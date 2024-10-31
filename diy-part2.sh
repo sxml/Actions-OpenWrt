@@ -140,6 +140,7 @@ sed -i 's|{"admin", "services", "filebrowser"}|{"admin", "nas", "filebrowser"}|'
 #cp -rf $GITHUB_WORKSPACE/general/gnutls feeds/packages/libs/gnutls
 
 # 拉取多级子目录 gnutls
+rm -rf feeds/packages/libs/gnutls
 # Step 1: 创建临时目录用于 sparse-checkout
 mkdir -p openwrt-packages
 cd openwrt-packages
