@@ -37,7 +37,7 @@ fetch_subdirectory() {
 
     # 将拉取的内容复制到目标目录
     mkdir -p "../$target_path"
-    cp -rf "$subdirectory" "../$target_path"
+    cp -r "$subdirectory" "../$target_path"
 
     # 清理临时目录
     cd ..
@@ -51,12 +51,13 @@ fetch_subdirectory() {
 
 # 拉取 luci-app-nfs 
 rm -rf feeds/luci/applications/luci-app-nfs
-fetch_subdirectory "https://github.com/immortalwrt/luci.git" "applications/luci-app-nfs" "feeds/luci/applications/luci-app-nfs" "openwrt-23.05"
+fetch_subdirectory "https://github.com/coolsnowwolf/luci.git" "applications/luci-app-nfs" "feeds/luci/applications/luci-app-nfs"
 
 # 拉取 luci-app-cifs-mount
 rm -rf feeds/luci/applications/luci-app-cifs-mount
+fetch_subdirectory "https://github.com/coolsnowwolf/luci.git" "applications/luci-app-cifs-mount" "feeds/luci/applications/luci-app-cifs-mount"
 (使用openwrt-23.05分支)
-fetch_subdirectory "https://github.com/immortalwrt/luci.git" "applications/luci-app-cifs-mount" "feeds/luci/applications/luci-app-cifs-mount" "openwrt-23.05"
+#fetch_subdirectory "https://github.com/coolsnowwolf/luci.git" "applications/luci-app-cifs-mount" "feeds/luci/applications/luci-app-cifs-mount" "openwrt-23.05"
 
 # 克隆 kenzok8仓库
 git clone --depth=1 https://github.com/kenzok8/openwrt-packages.git kenzok8-packages
