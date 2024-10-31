@@ -46,18 +46,17 @@ fetch_subdirectory() {
 
 # 使用函数拉取指定的子目录
 # 拉取 gnutls (使用 master 分支)
-rm -rf feeds/packages/libs/gnutls
-fetch_subdirectory "https://github.com/openwrt/packages.git" "libs/gnutls" "feeds/packages/libs/gnutls"
+#rm -rf feeds/packages/libs/gnutls
+#fetch_subdirectory "https://github.com/openwrt/packages.git" "libs/gnutls" "feeds/packages/libs/gnutls"
 
 # 拉取 luci-app-nfs 
 rm -rf feeds/luci/applications/luci-app-nfs
-fetch_subdirectory "https://github.com/coolsnowwolf/luci.git" "applications/luci-app-nfs" "feeds/luci/applications/luci-app-nfs"
+fetch_subdirectory "https://github.com/immortalwrt/luci.git" "applications/luci-app-nfs" "feeds/luci/applications/luci-app-nfs" "openwrt-23.05"
 
 # 拉取 luci-app-cifs-mount
 rm -rf feeds/luci/applications/luci-app-cifs-mount
-fetch_subdirectory "https://github.com/coolsnowwolf/luci.git" "applications/luci-app-cifs-mount" "feeds/luci/applications/luci-app-cifs-mount"
 (使用openwrt-23.05分支)
-#fetch_subdirectory "https://github.com/coolsnowwolf/luci.git" "applications/luci-app-cifs-mount" "feeds/luci/applications/luci-app-cifs-mount" "openwrt-23.05"
+fetch_subdirectory "https://github.com/immortalwrt/luci.git" "applications/luci-app-cifs-mount" "feeds/luci/applications/luci-app-cifs-mount" "openwrt-23.05"
 
 # 克隆 kenzok8仓库
 git clone --depth=1 https://github.com/kenzok8/openwrt-packages.git kenzok8-packages
