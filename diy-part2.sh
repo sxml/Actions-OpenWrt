@@ -14,6 +14,51 @@ rm -fr feeds/luci/themes/luci-theme-design
 rm -rf feeds/luci/applications/luci-app-ddns-go
 rm -rf feeds/packages/net/ddns-go
 
+#!/bin/bash
+
+# 定义拉取多级子目录的函数
+fetch_subdirectory() {
+    repo_url=$1          # 远程仓库URL
+    subdirectory=$2      # 需要拉取的子目录
+    target_path=$3       # 目标路径
+    branch=${4:-master}  # 分支名称，如果没有传入第四个参数默认为 master
+
+    # 创建临时目录并进行 sparse-checkout
+    mkdir -p temp_repo
+    cd temp_repo || exit
+
+    git init
+    git remote add origin "$repo_url"
+    git config core.sparseCheckout true
+    echo "$subdirectory" > .git/info/sparse-checkout
+
+    # 拉取指定子目录内容
+    git pull --depth=1 origin "$branch"
+
+    # 将拉取的内容复制到目标目录
+    mkdir -p "../$target_path"
+    cp -rf "$subdirectory" "../$target_path"
+
+    # 清理临时目录
+    cd ..
+    rm -rf temp_repo
+}
+
+# 使用函数拉取指定的子目录
+# 拉取 gnutls (使用 master 分支)
+rm -rf feeds/packages/libs/gnutls
+fetch_subdirectory "https://github.com/openwrt/packages.git" "libs/gnutls" "feeds/packages/libs/gnutls"
+
+# 拉取 luci-app-nfs 
+rm -rf feeds/luci/applications/luci-app-nfs
+fetch_subdirectory "https://github.com/coolsnowwolf/luci.git" "applications/luci-app-nfs" "feeds/luci/applications/luci-app-nfs"
+
+# 拉取 luci-app-cifs-mount
+rm -rf feeds/luci/applications/luci-app-cifs-mount
+fetch_subdirectory "https://github.com/coolsnowwolf/luci.git" "applications/luci-app-cifs-mount" "feeds/luci/applications/luci-app-cifs-mount"
+(使用openwrt-23.05分支)
+#fetch_subdirectory "https://github.com/coolsnowwolf/luci.git" "applications/luci-app-cifs-mount" "feeds/luci/applications/luci-app-cifs-mount" "openwrt-23.05"
+
 # 克隆 kenzok8仓库
 git clone --depth=1 https://github.com/kenzok8/openwrt-packages.git kenzok8-packages
 cp -rf kenzok8-packages/smartdns package/smartdns
@@ -138,25 +183,6 @@ sed -i 's|{"admin", "services", "filebrowser"}|{"admin", "nas", "filebrowser"}|'
 # gnutls
 #rm -rf feeds/packages/libs/gnutls
 #cp -rf $GITHUB_WORKSPACE/general/gnutls feeds/packages/libs/gnutls
-
-# 拉取多级子目录 gnutls
-rm -rf feeds/packages/libs/gnutls
-# Step 1: 创建临时目录用于 sparse-checkout
-mkdir -p openwrt-packages
-cd openwrt-packages
-# Step 2: 初始化 git 仓库
-git init
-git remote add origin https://github.com/openwrt/packages.git
-# Step 3: 启用 sparse-checkout 并指定需要的子目录
-git config core.sparseCheckout true
-echo "libs/gnutls" >> .git/info/sparse-checkout
-# Step 4: 拉取指定目录
-git pull --depth=1 origin master
-# Step 5: 将 gnutls 复制到目标目录
-cp -rf libs/gnutls ../feeds/packages/libs/gnutls
-# Step 6: 清理临时目录
-cd ..
-rm -rf openwrt-packages	
 
 #lrzsz
 #rm -rf feeds/packages/utils/lrzsz
