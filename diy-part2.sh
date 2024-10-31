@@ -21,7 +21,7 @@ fetch_subdirectory() {
     repo_url=$1          # 远程仓库URL
     subdirectory=$2      # 需要拉取的子目录
     target_path=$3       # 目标路径
-    branch=${4:-master}  # 分支名称，如果没有传入第四个参数默认为 master
+    branch=${4:-master}  # 分支名称，默认为 master
 
     # 创建临时目录并进行 sparse-checkout
     mkdir -p temp_repo
@@ -35,9 +35,9 @@ fetch_subdirectory() {
     # 拉取指定子目录内容
     git pull --depth=1 origin "$branch"
 
-    # 将拉取的内容复制到目标目录
+    # 将拉取的内容直接复制到目标目录，避免多余的嵌套
     mkdir -p "../$target_path"
-    cp -r "$subdirectory" "../$target_path"
+    cp -rf ./"$subdirectory"/* "../$target_path"
 
     # 清理临时目录
     cd ..
@@ -56,7 +56,7 @@ fetch_subdirectory "https://github.com/coolsnowwolf/luci.git" "applications/luci
 # 拉取 luci-app-cifs-mount
 rm -rf feeds/luci/applications/luci-app-cifs-mount
 fetch_subdirectory "https://github.com/coolsnowwolf/luci.git" "applications/luci-app-cifs-mount" "feeds/luci/applications/luci-app-cifs-mount"
-(使用openwrt-23.05分支)
+#(使用openwrt-23.05分支)
 #fetch_subdirectory "https://github.com/coolsnowwolf/luci.git" "applications/luci-app-cifs-mount" "feeds/luci/applications/luci-app-cifs-mount" "openwrt-23.05"
 
 # 克隆 kenzok8仓库
