@@ -1,7 +1,7 @@
 #!/bin/bash
 #============================================================
 # sxml
-# 2024-10-30  23.05
+# 2024-10-31  23.05
 #https://github.com/HoldOnBro/Actions-OpenWrt
 #https://github.com/breakings/OpenWrt
 #============================================================
@@ -18,7 +18,7 @@ rm -rf feeds/packages/net/ddns-go
 git clone --depth=1 https://github.com/kenzok8/openwrt-packages.git kenzok8-packages
 cp -rf kenzok8-packages/smartdns package/smartdns
 cp -rf kenzok8-packages/luci-app-smartdns package/luci-app-smartdns
-#cp -rf kenzok8-packages/luci-theme-argon package/luci-theme-argon
+cp -rf kenzok8-packages/luci-theme-argon package/luci-theme-argon
 #cp -rf kenzok8-packages/ddns-go package/ddns-go
 #cp -rf kenzok8-packages/gost package/gost
 #git clone --depth=1 https://github.com/pymumu/luci-app-smartdns.git package/luci-app-smartdns
@@ -28,9 +28,12 @@ cp -rf kenzok8-packages/luci-app-smartdns package/luci-app-smartdns
 #cp -rf small-package/sagernet-core package/sagernet-core
 #cp -rf small-package/v2ray-geodata package/v2ray-geodata
 
+# 修改默认IP
+sed -i 's/192.168.1.1/192.168.2.1/g' package/base-files/files/bin/config_generate
+
 #文件助手
 #git clone --depth=1 https://github.com/sxml/luci-app-fileassistant.git package/luci-app-fileassistant
-#cp -rf kenzok8-packages/luci-app-fileassistant package/luci-app-fileassistant
+#cp -rf kenzok8-packages/luci-app-fileassistant package/luci-app-fileassistant	
 
 # 克隆 fw876 仓库
 git clone --depth=1 -b main https://github.com/fw876/helloworld.git
@@ -99,14 +102,6 @@ sed -i "s|.img.gz|.img.gz|g" package/luci-app-amlogic/root/etc/config/amlogic
 #sed -i "s|opt/kernel|BuildARMv8|g" package/luci-app-amlogic/root/etc/config/amlogic
 sed -i "s|http.*/library|https://github.com/breakings/OpenWrt/tree/main/opt/kernel|g" package/luci-app-amlogic/root/etc/config/amlogic
 
-# themes 主题
-#git clone --depth=1 https://github.com/Leo-Jo-My/luci-theme-opentomcat.git package/luci-theme-opentomcat
-#git clone --depth=1 https://github.com/thinktip/luci-theme-neobird.git package/luci-theme-neobird
-#git clone --depth=1 https://github.com/gngpp/luci-theme-design.git package/luci-theme-design
-#git clone --depth=1 https://github.com/gngpp/luci-app-design-config.git package/luci-app-design-config
-#git clone --depth=1 https://github.com/sxml/luci-theme-design.git package/luci-theme-design
-#git clone --depth=1 https://github.com/sxml/luci-app-design-config.git package/luci-app-design-config
-
 #mosdns
 rm -rf feeds/packages/net/mosdns
 rm -rf feeds/luci/applications/luci-app-mosdns
@@ -121,7 +116,7 @@ cp -rf luci-app-ddns-go/ddns-go package/ddns-go
 cp -rf luci-app-ddns-go/luci-app-ddns-go package/luci-app-ddns-go
 
 #文件浏览器
-git clone --depth=1 https://github.com/sxml/luci-app-filebrowser.git package/luci-app-filebrowser
+#git clone --depth=1 https://github.com/sxml/luci-app-filebrowser.git package/luci-app-filebrowser
 
 #小猫
 git clone --depth=1 https://github.com/vernesong/OpenClash.git
@@ -131,6 +126,14 @@ pushd package/luci-app-openclash/tools/po2lmo
 make && sudo make install
 popd
 #rm -rf OpenClash
+	
+# 修改 luci-app-nlbwmon 带宽监视器位置到网络组
+sed -i 's|{"admin", "services", "nlbw"}|{"admin", "network", "nlbw"}|' \
+    feeds/luci/applications/luci-app-nlbwmon/luasrc/controller/nlbw.lua
+
+# 修改 luci-app-filebrowser 插件的菜单位置到 NAS 组
+sed -i 's|{"admin", "services", "filebrowser"}|{"admin", "nas", "filebrowser"}|' \
+    package/luci-app-filebrowser/luasrc/controller/filebrowser.lua
 
 # gnutls
 #rm -rf feeds/packages/libs/gnutls
@@ -152,17 +155,11 @@ git pull --depth=1 origin master
 cp -rf libs/gnutls ../feeds/packages/libs/gnutls
 # Step 6: 清理临时目录
 cd ..
-rm -rf openwrt-packages
+rm -rf openwrt-packages	
 
 #lrzsz
 #rm -rf feeds/packages/utils/lrzsz
 #cp -rf $GITHUB_WORKSPACE/general/lrzsz feeds/packages/utils
-
-#修改makefile
-#find package/*/ -maxdepth 2 -path "*/Makefile" | xargs -i sed -i 's/include\ \.\.\/\.\.\/luci\.mk/include \$(TOPDIR)\/feeds\/luci\/luci\.mk/g' {}
-#find package/*/ -maxdepth 2 -path "*/Makefile" | xargs -i sed -i 's/include\ \.\.\/\.\.\/lang\/golang\/golang\-package\.mk/include \$(TOPDIR)\/feeds\/packages\/lang\/golang\/golang\-package\.mk/g' {}
-#find package/*/ -maxdepth 2 -path "*/Makefile" | xargs -i sed -i 's/PKG_SOURCE_URL:=\@GHREPO/PKG_SOURCE_URL:=https:\/\/github\.com/g' {}
-#find package/*/ -maxdepth 2 -path "*/Makefile" | xargs -i sed -i 's/PKG_SOURCE_URL:=\@GHCODELOAD/PKG_SOURCE_URL:=https:\/\/codeload\.github\.com/g' {}
 
 ./scripts/feeds update -a
 ./scripts/feeds install -a
