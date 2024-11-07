@@ -1,7 +1,7 @@
 #!/bin/bash
 #============================================================
 # sxml
-# 2024-11-07 18.06
+# 2024-11-08 18.06
 #https://github.com/HoldOnBro/Actions-OpenWrt
 #https://github.com/breakings/OpenWrt
 #============================================================
@@ -14,20 +14,12 @@ rm -fr feeds/luci/themes/luci-theme-design
 rm -rf feeds/luci/applications/luci-app-ddns-go
 rm -rf feeds/packages/net/ddns-go
 
-# 设置ttyd免帐号登录
-sed -i 's/\/bin\/login/\/bin\/login -f root/' feeds/packages/utils/ttyd/files/ttyd.config
-
-# smartdns
-git clone --depth=1 -b master https://github.com/pymumu/luci-app-smartdns.git package/luci-app-smartdns
-git clone --depth=1 https://github.com/pymumu/openwrt-smartdns package/smartdns
-
 # 克隆 kenzok8仓库
-#git clone --depth=1 https://github.com/kenzok8/openwrt-packages.git kenzok8-packages
-#cp -rf kenzok8-packages/smartdns package/smartdns
-#cp -rf kenzok8-packages/luci-app-smartdns package/luci-app-smartdns
+git clone --depth=1 https://github.com/kenzok8/openwrt-packages.git kenzok8-packages
+cp -rf kenzok8-packages/smartdns package/smartdns
+cp -rf kenzok8-packages/luci-app-smartdns package/luci-app-smartdns
 #cp -rf kenzok8-packages/luci-theme-argon package/luci-theme-argon
 #cp -rf kenzok8-packages/ddns-go package/ddns-go
-#-------------
 #cp -rf kenzok8-packages/gost package/gost
 #git clone --depth=1 https://github.com/pymumu/luci-app-smartdns.git package/luci-app-smartdns
 #git clone --depth=1 https://github.com/kenzok8/small-package.git small-package
@@ -39,14 +31,27 @@ git clone --depth=1 https://github.com/pymumu/openwrt-smartdns package/smartdns
 # 克隆 fw876 仓库
 git clone --depth=1 -b main https://github.com/fw876/helloworld.git
 #cp -rf helloworld/luci-app-ssr-plus package/luci-app-ssr-plus
+cp -rf helloworld/xray-core package/xray-core
+cp -rf helloworld/xray-plugin package/xray-plugin
+cp -rf helloworld/shadowsocks-rust package/shadowsocks-rust
+cp -rf helloworld/shadowsocksr-libev package/shadowsocksr-libev
+cp -rf helloworld/v2ray-plugin package/v2ray-plugin
+cp -rf helloworld/v2ray-core package/v2ray-core
 #cp -rf helloworld/v2ray-geodata package/v2ray-geodata
+cp -rf helloworld/trojan package/trojan
 #cp -rf helloworld/sagernet-core package/sagernet-core
+cp -rf helloworld/microsocks package/microsocks
 cp -rf helloworld/redsocks2 package/redsocks2
+cp -rf helloworld/ipt2socks package/ipt2socks
+cp -rf helloworld/dns2socks package/dns2socks
 cp -rf helloworld/lua-neturl package/lua-neturl
+cp -rf helloworld/gn package/gn
 cp -rf helloworld/shadow-tls package/shadow-tls
+cp -rf helloworld/tuic-client package/tuic-client
+cp -rf helloworld/naiveproxy package/naiveproxy
 #rm -rf helloworld
 
-# 克隆xiaorouji openwrt-passwall仓库
+# 克隆openwrt-passwall仓库
 git clone --depth=1 https://github.com/xiaorouji/openwrt-passwall-packages.git
 cp -rf openwrt-passwall-packages/brook package/brook
 cp -rf openwrt-passwall-packages/ssocks package/ssocks
@@ -60,19 +65,6 @@ cp -rf openwrt-passwall-packages/hysteria package/hysteria
 cp -rf openwrt-passwall-packages/dns2tcp package/dns2tcp
 cp -rf openwrt-passwall-packages/sing-box package/sing-box
 cp -rf openwrt-passwall-packages/v2ray-geodata package/v2ray-geodata
-cp -rf openwrt-passwall-packages/xray-core package/xray-core
-cp -rf openwrt-passwall-packages/xray-plugin package/xray-plugin
-cp -rf openwrt-passwall-packages/shadowsocks-rust package/shadowsocks-rust
-cp -rf openwrt-passwall-packages/shadowsocksr-libev package/shadowsocksr-libev
-cp -rf openwrt-passwall-packages/v2ray-plugin package/v2ray-plugin
-cp -rf openwrt-passwall-packages/v2ray-core package/v2ray-core
-cp -rf openwrt-passwall-packages/trojan package/trojan
-cp -rf openwrt-passwall-packages/microsocks package/microsocks
-cp -rf openwrt-passwall-packages/ipt2socks package/ipt2socks
-cp -rf openwrt-passwall-packages/dns2socks package/dns2socks
-cp -rf openwrt-passwall-packages/gn package/gn
-cp -rf openwrt-passwall-packages/tuic-client package/tuic-client
-cp -rf openwrt-passwall-packages/naiveproxy package/naiveproxy
 #rm -rf openwrt-passwall-packages
 
 #passwall
@@ -119,8 +111,8 @@ git clone -b v5-lua https://github.com/sbwml/luci-app-mosdns package/mosdns
 #添加ddns-go 动态域名解析
 #git clone --depth=1 https://github.com/sirpdboy/luci-app-ddns-go.git package/ddns-go
 git clone --depth=1 https://github.com/sirpdboy/luci-app-ddns-go.git
-cp -rf luci-app-ddns-go/luci-app-ddns-go package/luci-app-ddns-go
 cp -rf luci-app-ddns-go/ddns-go package/ddns-go
+cp -rf luci-app-ddns-go/luci-app-ddns-go package/luci-app-ddns-go
 
 #文件浏览器
 git clone --depth=1 https://github.com/sxml/luci-app-filebrowser.git package/luci-app-filebrowser
@@ -129,12 +121,6 @@ git clone --depth=1 https://github.com/sxml/luci-app-filebrowser.git package/luc
 git clone --depth=1 https://github.com/morytyann/OpenWrt-mihomo.git
 cp -rf OpenWrt-mihomo/luci-app-mihomo package/luci-app-mihomo
 cp -rf OpenWrt-mihomo/mihomo package/mihomo
-
-#修正部分从第三方仓库拉取的软件 Makefile 路径问题
-find package/*/ -maxdepth 2 -path "*/Makefile" | xargs -i sed -i 's/..\/..\/luci.mk/$(TOPDIR)\/feeds\/luci\/luci.mk/g' {}
-find package/*/ -maxdepth 2 -path "*/Makefile" | xargs -i sed -i 's/..\/..\/lang\/golang\/golang-package.mk/$(TOPDIR)\/feeds\/packages\/lang\/golang\/golang-package.mk/g' {}
-find package/*/ -maxdepth 2 -path "*/Makefile" | xargs -i sed -i 's/PKG_SOURCE_URL:=@GHREPO/PKG_SOURCE_URL:=https:\/\/github.com/g' {}
-find package/*/ -maxdepth 2 -path "*/Makefile" | xargs -i sed -i 's/PKG_SOURCE_URL:=@GHCODELOAD/PKG_SOURCE_URL:=https:\/\/codeload.github.com/g' {}
 
 ./scripts/feeds update -a
 ./scripts/feeds install -a
