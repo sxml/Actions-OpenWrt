@@ -27,6 +27,7 @@ git clone --depth=1 https://github.com/pymumu/openwrt-smartdns package/smartdns
 #cp -rf kenzok8-packages/luci-app-smartdns package/luci-app-smartdns
 #cp -rf kenzok8-packages/luci-theme-argon package/luci-theme-argon
 #cp -rf kenzok8-packages/ddns-go package/ddns-go
+#-------------
 #cp -rf kenzok8-packages/gost package/gost
 #git clone --depth=1 https://github.com/pymumu/luci-app-smartdns.git package/luci-app-smartdns
 #git clone --depth=1 https://github.com/kenzok8/small-package.git small-package
@@ -126,9 +127,6 @@ git clone --depth=1 https://github.com/sxml/luci-app-filebrowser.git package/luc
 
 # mihomo
 git clone --depth=1 https://github.com/morytyann/OpenWrt-mihomo package/luci-app-mihomo
-#git clone --depth=1 https://github.com/morytyann/OpenWrt-mihomo.git
-#cp -rf OpenWrt-mihomo/luci-app-mihomo package/luci-app-mihomo
-#cp -rf OpenWrt-mihomo/mihomo package/mihomo
 
 #修改makefile
 find package/*/ -maxdepth 2 -path "*/Makefile" | xargs -i sed -i 's/include\ \.\.\/\.\.\/luci\.mk/include \$(TOPDIR)\/feeds\/luci\/luci\.mk/g' {}
