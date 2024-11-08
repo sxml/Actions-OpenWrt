@@ -126,9 +126,10 @@ cp -rf luci-app-ddns-go/ddns-go package/ddns-go
 git clone --depth=1 https://github.com/sxml/luci-app-filebrowser.git package/luci-app-filebrowser
 
 # mihomo
-git clone --depth=1 https://github.com/morytyann/OpenWrt-mihomo.git
-cp -rf OpenWrt-mihomo/luci-app-mihomo package/luci-app-mihomo
-cp -rf OpenWrt-mihomo/mihomo package/mihomo
+git clone --depth=1 https://github.com/morytyann/OpenWrt-mihomo package/luci-app-mihomo
+#git clone --depth=1 https://github.com/morytyann/OpenWrt-mihomo.git
+#cp -rf OpenWrt-mihomo/luci-app-mihomo package/luci-app-mihomo
+#cp -rf OpenWrt-mihomo/mihomo package/mihomo
 
 #修正部分从第三方仓库拉取的软件 Makefile 路径问题
 find package/*/ -maxdepth 2 -path "*/Makefile" | xargs -i sed -i 's/..\/..\/luci.mk/$(TOPDIR)\/feeds\/luci\/luci.mk/g' {}
