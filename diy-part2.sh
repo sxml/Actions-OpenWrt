@@ -18,6 +18,7 @@ rm -rf feeds/packages/net/ddns-go
 git clone --depth=1 https://github.com/kenzok8/openwrt-packages.git kenzok8-packages
 cp -rf kenzok8-packages/smartdns package/smartdns
 cp -rf kenzok8-packages/luci-app-smartdns package/luci-app-smartdns
+cp -rf kenzok8-packages/lua-maxminddb package/lua-maxminddb
 #cp -rf kenzok8-packages/luci-theme-argon package/luci-theme-argon
 #cp -rf kenzok8-packages/ddns-go package/ddns-go
 #cp -rf kenzok8-packages/gost package/gost
@@ -76,9 +77,6 @@ cp -rf openwrt-passwall-packages/naiveproxy package/naiveproxy
 git clone --depth=1 https://github.com/xiaorouji/openwrt-passwall2.git
 cp -rf openwrt-passwall2/luci-app-passwall2 package/luci-app-passwall2
 #rm -rf openwrt-passwall2
-
-#解析
-git clone --depth=1 https://github.com/jerrykuku/lua-maxminddb.git package/lua-maxminddb
 
 #添加luci-app-amlogic
 git clone --depth=1 https://github.com/ophub/luci-app-amlogic.git
