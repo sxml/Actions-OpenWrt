@@ -14,9 +14,6 @@ rm -fr feeds/luci/themes/luci-theme-design
 rm -rf feeds/luci/applications/luci-app-ddns-go
 rm -rf feeds/packages/net/ddns-go
 
-# 设置ttyd免帐号登录
-sed -i 's/\/bin\/login/\/bin\/login -f root/' feeds/packages/utils/ttyd/files/ttyd.config
-
 # 定义拉取多级子目录的函数
 fetch_subdirectory() {
     repo_url=$1          # 远程仓库URL
@@ -56,6 +53,9 @@ rm -rf feeds/luci/applications/luci-app-cifs-mount
 #fetch_subdirectory "https://github.com/coolsnowwolf/luci.git" "applications/luci-app-cifs-mount" "feeds/luci/applications/luci-app-cifs-mount"
 #(使用openwrt-23.05分支)
 fetch_subdirectory "https://github.com/immortalwrt/luci.git" "applications/luci-app-cifs-mount" "feeds/luci/applications/luci-app-cifs-mount" "openwrt-23.05"
+
+# 设置ttyd免帐号登录
+sed -i 's/\/bin\/login/\/bin\/login -f root/' feeds/packages/utils/ttyd/files/ttyd.config
 
 # 克隆 kenzok8仓库
 git clone --depth=1 https://github.com/kenzok8/openwrt-packages.git kenzok8-packages
