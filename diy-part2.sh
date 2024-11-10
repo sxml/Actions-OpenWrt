@@ -1,7 +1,7 @@
 #!/bin/bash
 #============================================================
 # sxml
-# 2024-11-09 23.05
+# 2024-11-10 18.06
 #https://github.com/HoldOnBro/Actions-OpenWrt
 #https://github.com/breakings/OpenWrt
 #============================================================
@@ -14,46 +14,6 @@ rm -fr feeds/luci/themes/luci-theme-design
 rm -rf feeds/luci/applications/luci-app-ddns-go
 rm -rf feeds/packages/net/ddns-go
 
-# 定义拉取多级子目录的函数
-fetch_subdirectory() {
-    repo_url=$1          # 远程仓库URL
-    subdirectory=$2      # 需要拉取的子目录
-    target_path=$3       # 目标路径
-    branch=${4:-master}  # 分支名称，默认为 master
-
-    # 创建临时目录并进行 sparse-checkout
-    mkdir -p temp_repo
-    cd temp_repo || exit
-
-    git init
-    git remote add origin "$repo_url"
-    git config core.sparseCheckout true
-    echo "$subdirectory" > .git/info/sparse-checkout
-
-    # 拉取指定子目录内容
-    git pull --depth=1 origin "$branch"
-
-    # 将拉取的内容直接复制到目标目录，避免多余的嵌套
-    mkdir -p "../$target_path"
-    cp -rf ./"$subdirectory"/* "../$target_path"
-
-    # 清理临时目录
-    cd ..
-    rm -rf temp_repo
-}
-
-# 使用函数拉取指定的子目录
-# 拉取 luci-app-nfs 
-rm -rf feeds/luci/applications/luci-app-nfs
-fetch_subdirectory "https://github.com/immortalwrt/luci.git" "applications/luci-app-nfs" "feeds/luci/applications/luci-app-nfs" "openwrt-23.05"
-
-# 拉取 luci-app-cifs-mount
-rm -rf feeds/luci/applications/luci-app-cifs-mount
-#(使用 master 分支)
-#fetch_subdirectory "https://github.com/coolsnowwolf/luci.git" "applications/luci-app-cifs-mount" "feeds/luci/applications/luci-app-cifs-mount"
-#(使用openwrt-23.05分支)
-fetch_subdirectory "https://github.com/immortalwrt/luci.git" "applications/luci-app-cifs-mount" "feeds/luci/applications/luci-app-cifs-mount" "openwrt-23.05"
-
 # 设置ttyd免帐号登录
 sed -i 's/\/bin\/login/\/bin\/login -f root/' feeds/packages/utils/ttyd/files/ttyd.config
 
@@ -61,7 +21,7 @@ sed -i 's/\/bin\/login/\/bin\/login -f root/' feeds/packages/utils/ttyd/files/tt
 git clone --depth=1 https://github.com/kenzok8/openwrt-packages.git kenzok8-packages
 cp -rf kenzok8-packages/smartdns package/smartdns
 cp -rf kenzok8-packages/luci-app-smartdns package/luci-app-smartdns
-cp -rf kenzok8-packages/luci-theme-argon package/luci-theme-argon
+#cp -rf kenzok8-packages/luci-theme-argon package/luci-theme-argon
 #cp -rf kenzok8-packages/ddns-go package/ddns-go
 #cp -rf kenzok8-packages/gost package/gost
 #git clone --depth=1 https://github.com/pymumu/luci-app-smartdns.git package/luci-app-smartdns
@@ -139,8 +99,8 @@ sed -i "s|.img.gz|.img.gz|g" package/luci-app-amlogic/root/etc/config/amlogic
 sed -i "s|http.*/library|https://github.com/breakings/OpenWrt/tree/main/opt/kernel|g" package/luci-app-amlogic/root/etc/config/amlogic
 
 # themes 主题
-#git clone --depth=1 https://github.com/sxml/luci-theme-design.git package/luci-theme-design
-#git clone --depth=1 https://github.com/sxml/luci-app-design-config.git package/luci-app-design-config
+git clone --depth=1 https://github.com/sxml/luci-theme-design.git package/luci-theme-design
+git clone --depth=1 https://github.com/sxml/luci-app-design-config.git package/luci-app-design-config
 
 #mosdns
 rm -rf feeds/packages/net/mosdns
@@ -158,12 +118,6 @@ cp -rf luci-app-ddns-go/luci-app-ddns-go package/luci-app-ddns-go
 #文件浏览器
 git clone --depth=1 https://github.com/sxml/luci-app-filebrowser.git package/luci-app-filebrowser
 
-# mihomo
-#git clone --depth=1 https://github.com/morytyann/OpenWrt-mihomo package/luci-app-mihomo
-git clone --depth=1 https://github.com/morytyann/OpenWrt-mihomo.git
-cp -rf OpenWrt-mihomo/luci-app-mihomo package/luci-app-mihomo
-cp -rf OpenWrt-mihomo/mihomo package/mihomo
-
 #小猫
 git clone --depth=1 https://github.com/vernesong/OpenClash.git
 cp -rf OpenClash/luci-app-openclash package/luci-app-openclash
@@ -172,6 +126,9 @@ pushd package/luci-app-openclash/tools/po2lmo
 make && sudo make install
 popd
 #rm -rf OpenClash
+
+# mihomo
+#git clone --depth=1 https://github.com/morytyann/OpenWrt-mihomo package/luci-app-mihomo
 
 ./scripts/feeds update -a
 ./scripts/feeds install -a
