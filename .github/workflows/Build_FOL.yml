@@ -10,8 +10,10 @@ on:
 #   - cron: 0 16 */2 * *
 
 env:
-  REPO_URL: https://github.com/coolsnowwolf/lede
-  REPO_BRANCH: master
+#lede版  REPO_URL: https://github.com/coolsnowwolf/lede
+#  REPO_BRANCH: maste
+  REPO_URL: https://github.com/immortalwrt/immortalwrt
+  REPO_BRANCH: openwrt-23.05
   FEEDS_CONF: feeds.conf.default
   CONFIG_FILE: aarch64/ARMv8_FOL.config
   DIY_P1_SH: diy-part1.sh
