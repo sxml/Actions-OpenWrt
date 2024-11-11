@@ -130,13 +130,5 @@ popd
 # mihomo
 #git clone --depth=1 https://github.com/morytyann/OpenWrt-mihomo package/luci-app-mihomo
 
-#immortalwrt仓库
-rm -rf feeds/luci/applications/luci-app-nfs
-rm -rf feeds/luci/applications/luci-app-cifs-mount
-git clone --depth=1 -b openwrt-23.05 https://github.com/immortalwrt/luci.git
-cp -rf luci/applications/luci-app-nfs package/luci-app-nfs
-cp -rf luci/applications/luci-app-cifs-mount package/luci-app-cifs-mount
-cp -rf luci/applications/luci-app-homeproxy package/luci-app-homeproxy
-
 ./scripts/feeds update -a
 ./scripts/feeds install -a
