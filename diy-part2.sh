@@ -1,7 +1,7 @@
 #!/bin/bash
 #============================================================
 # sxml
-# 2024-11-10 18.06
+# 2024-11-11 23.05
 #https://github.com/HoldOnBro/Actions-OpenWrt
 #https://github.com/breakings/OpenWrt
 #============================================================
@@ -21,7 +21,7 @@ sed -i 's/\/bin\/login/\/bin\/login -f root/' feeds/packages/utils/ttyd/files/tt
 git clone --depth=1 https://github.com/kenzok8/openwrt-packages.git kenzok8-packages
 cp -rf kenzok8-packages/smartdns package/smartdns
 cp -rf kenzok8-packages/luci-app-smartdns package/luci-app-smartdns
-#cp -rf kenzok8-packages/luci-theme-argon package/luci-theme-argon
+cp -rf kenzok8-packages/luci-theme-argon package/luci-theme-argon
 #cp -rf kenzok8-packages/ddns-go package/ddns-go
 #cp -rf kenzok8-packages/gost package/gost
 #git clone --depth=1 https://github.com/pymumu/luci-app-smartdns.git package/luci-app-smartdns
@@ -99,8 +99,8 @@ sed -i "s|.img.gz|.img.gz|g" package/luci-app-amlogic/root/etc/config/amlogic
 sed -i "s|http.*/library|https://github.com/breakings/OpenWrt/tree/main/opt/kernel|g" package/luci-app-amlogic/root/etc/config/amlogic
 
 # themes 主题
-git clone --depth=1 https://github.com/sxml/luci-theme-design.git package/luci-theme-design
-git clone --depth=1 https://github.com/sxml/luci-app-design-config.git package/luci-app-design-config
+#git clone --depth=1 https://github.com/sxml/luci-theme-design.git package/luci-theme-design
+#git clone --depth=1 https://github.com/sxml/luci-app-design-config.git package/luci-app-design-config
 
 #mosdns
 rm -rf feeds/packages/net/mosdns
@@ -116,7 +116,7 @@ cp -rf luci-app-ddns-go/ddns-go package/ddns-go
 cp -rf luci-app-ddns-go/luci-app-ddns-go package/luci-app-ddns-go
 
 #文件浏览器
-git clone --depth=1 https://github.com/sxml/luci-app-filebrowser.git package/luci-app-filebrowser
+#git clone --depth=1 https://github.com/sxml/luci-app-filebrowser.git package/luci-app-filebrowser
 
 #小猫
 git clone --depth=1 https://github.com/vernesong/OpenClash.git
@@ -129,6 +129,14 @@ popd
 
 # mihomo
 #git clone --depth=1 https://github.com/morytyann/OpenWrt-mihomo package/luci-app-mihomo
+
+#immortalwrt仓库
+rm -rf feeds/luci/applications/luci-app-nfs
+rm -rf feeds/luci/applications/luci-app-cifs-mount
+git clone --depth=1 -b openwrt-23.05 https://github.com/immortalwrt/luci.git
+cp -rf luci/applications/luci-app-nfs package/luci-app-nfs
+cp -rf luci/applications/luci-app-cifs-mount package/luci-app-cifs-mount
+cp -rf luci/applications/luci-app-homeproxy package/luci-app-homeproxy
 
 ./scripts/feeds update -a
 ./scripts/feeds install -a
