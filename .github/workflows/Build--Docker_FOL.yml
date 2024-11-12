@@ -1,7 +1,7 @@
 #
 # 2024.10.25  编译 ARMv8-Docker_FOL
 #
-name: 编译op-Docker_FOL
+name: 编译Lede-Docker_FOL
 on:
   repository_dispatch:
   workflow_dispatch:
