@@ -1,7 +1,7 @@
 #
-# 2024.10.25  编译ARMv8_imm-Dockert_FOL
+# 2024.10.25  ARMv8_ImmortalWrt-Dockert_FOL
 #
-name: 编译ImmortalWrt_FOL
+name: 编译ARMv8_imm-Dockert_FOL
 on:
   repository_dispatch:
   workflow_dispatch:
