@@ -10,10 +10,8 @@ on:
 #   - cron: 0 16 */2 * *
 
 env:
-#lede版  REPO_URL: https://github.com/coolsnowwolf/lede
-#  REPO_BRANCH: maste
-  REPO_URL: https://github.com/immortalwrt/immortalwrt
-  REPO_BRANCH: openwrt-23.05
+  REPO_URL: https://github.com/coolsnowwolf/lede
+  REPO_BRANCH: master
   FEEDS_CONF: feeds.conf.default
   CONFIG_FILE: aarch64/ARMv8_FOL.config
   DIY_P1_SH: diy-part1.sh
@@ -44,8 +42,8 @@ jobs:
         sudo -E apt -y purge azure-cli* docker* ghc* zulu* llvm* firefox google* dotnet* powershell* openjdk* mysql* php* mongodb* dotnet* snap* aspnetcore*
         [ -n "$AGENT_TOOLSDIRECTORY" ] && sudo rm -rf "$AGENT_TOOLSDIRECTORY"
         sudo -E apt update
-        # 添加 subversion 等其他依赖安装
-        sudo -E apt -y install $(curl -fsSL https://is.gd/depends_ubuntu_2204) subversion ecj gnutls-dev lib32gcc-s1 libncurses-dev libyaml-dev lld llvm python3-docutils python3-ply re2c
+        # 添加 subversion 安装
+        sudo -E apt -y install $(curl -fsSL https://is.gd/depends_ubuntu_2204) subversion
         sudo -E apt -y autoremove --purge
         sudo -E systemctl daemon-reload
         sudo -E apt clean
@@ -92,12 +90,12 @@ jobs:
 #        clean: 'false'
 #        prefix: ${{ github.workspace }}/openwrt
 
-#    - name: 加载自定义配置
-#      run: |
-#        [ -e $FEEDS_CONF ] && mv $FEEDS_CONF openwrt/feeds.conf.default
-#        chmod +x $DIY_P1_SH
-#        cd openwrt
-#        $GITHUB_WORKSPACE/$DIY_P1_SH
+    - name: 加载自定义配置
+      run: |
+        [ -e $FEEDS_CONF ] && mv $FEEDS_CONF openwrt/feeds.conf.default
+        chmod +x $DIY_P1_SH
+        cd openwrt
+        $GITHUB_WORKSPACE/$DIY_P1_SH
 
     - name: 更新软件包
       run: cd openwrt && ./scripts/feeds update -a
@@ -113,7 +111,7 @@ jobs:
         cd openwrt
         $GITHUB_WORKSPACE/$DIY_P2_SH
         sed -i 's/192.168.1.1/192.168.2.1/g' package/base-files/files/bin/config_generate
-#        sed -i 's/OpenWrt/MRG AutoBuild ${{ env.DATE1 }} @ OpenWrt/g' package/lean/default-settings/files/zzz-default-settings
+        sed -i 's/OpenWrt/MRG AutoBuild ${{ env.DATE1 }} @ OpenWrt/g' package/lean/default-settings/files/zzz-default-settings
         
     - name: 下载软件包
       id: package
@@ -186,7 +184,8 @@ jobs:
         commit: master
         token: ${{ secrets.RELEASES_TOKEN }}
         body: |
-          编译immortalwrt固件，Flippy打包用！
+          编译Lede固件，Flippy打包用！
+          当前使用版本:【编译前的最后一次[➦主源码](https://github.com/coolsnowwolf/lede)更新记录】
           ${{ env.useVersionInfo }}
         artifacts: ${{ env.FIRMWARE }}/*
 
