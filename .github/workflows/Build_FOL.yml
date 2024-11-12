@@ -44,8 +44,8 @@ jobs:
         sudo -E apt -y purge azure-cli* docker* ghc* zulu* llvm* firefox google* dotnet* powershell* openjdk* mysql* php* mongodb* dotnet* snap* aspnetcore*
         [ -n "$AGENT_TOOLSDIRECTORY" ] && sudo rm -rf "$AGENT_TOOLSDIRECTORY"
         sudo -E apt update
-        # 添加 subversion 安装
-        sudo -E apt -y install $(curl -fsSL https://is.gd/depends_ubuntu_2204) subversion
+        # 添加 subversion 等其他依赖安装
+        sudo -E apt -y install $(curl -fsSL https://is.gd/depends_ubuntu_2204) subversion ecj gnutls-dev lib32gcc-s1 libncurses-dev libyaml-dev lld llvm python3-docutils python3-ply re2c
         sudo -E apt -y autoremove --purge
         sudo -E systemctl daemon-reload
         sudo -E apt clean
