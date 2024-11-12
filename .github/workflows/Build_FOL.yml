@@ -1,7 +1,7 @@
 #
 # 2024.10.25  编译 ARMv8_FOL
 #
-name: 编译op_FOL
+name: 编译Lede_FOL
 on:
   repository_dispatch:
   workflow_dispatch:
