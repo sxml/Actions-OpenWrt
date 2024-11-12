@@ -1,5 +1,5 @@
 #
-# 2024.10.25  编译 ARMv8_ImmortalWrt_FOL
+# 2024.10.25  编译ARMv8_imm-Dockert_FOL
 #
 name: 编译ImmortalWrt_FOL
 on:
