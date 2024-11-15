@@ -1,4 +1,4 @@
-name: 提取Lede-config
+name: 提取Ledeconfig
 on:
   repository_dispatch:
   workflow_dispatch:
@@ -7,7 +7,6 @@ on:
         description: 'SSH connection to Actions'
         required: false
         default: 'false'
-
 
 env:
   REPO_URL: https://github.com/coolsnowwolf/lede
