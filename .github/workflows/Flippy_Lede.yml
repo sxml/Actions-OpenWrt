@@ -8,7 +8,7 @@
 #
 # 2023.04.10  Flippy打包
 #
-name: Flippy打包
+name: F打包_Lede固件
 
 on:
   repository_dispatch:
