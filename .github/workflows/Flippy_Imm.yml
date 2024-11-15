@@ -1,0 +1,147 @@
+# Copyright (c) 2019-2020 P3TERX <https://p3terx.com>
+#
+# This is free software, licensed under the MIT License.
+# See /LICENSE for more information.
+#
+# https://github.com/P3TERX/Actions-OpenWrt
+# Description: Build OpenWrt using GitHub Actions
+#
+# 2023.11.15  Flippy打包 ImmortalWrt
+#
+name: F打包_imm固件
+
+on:
+  repository_dispatch:
+  workflow_dispatch:
+#  schedule:
+#    - cron: 0 22 * 11 *
+
+env:
+  REPO_URL: https://github.com/immortalwrt/immortalwrt
+  REPO_BRANCH: openwrt-23.05
+  Update_Ver_SH: aarch64/immortalwrt/autoVersion.sh
+  Get_Imgs_SH: aarch64/immortalwrt/getImgs.sh
+  DELETE_RELEASE: true    # 删除旧版本   
+  DELETE_ARTIFACTS: true  # 删除旧的工作流程运行和工件
+  TZ: Asia/Shanghai
+  FILE_NAME: imm
+  PRODUCT_NAME: imm
+
+jobs:
+  build:
+    runs-on: ubuntu-20.04
+    if: github.event.repository.owner.id == github.event.sender.id
+
+    name: Flippy打包
+    strategy:
+      fail-fast: false
+      
+    steps:
+    - name: 准备
+      uses: actions/checkout@master
+
+    - name: 部署编译环境
+      env:
+        DEBIAN_FRONTEND: noninteractive
+      run: |
+        sudo rm -rf /etc/apt/sources.list.d/* /usr/share/dotnet /usr/local/lib/android /opt/ghc
+        sudo -E apt-get -qq update
+        sudo -E apt-get -qq install $(curl -fsSL git.io/depends-ubuntu-2004)
+        sudo -E apt-get -qq install rename
+        sudo -E apt-get -qq install pigz
+        sudo -E apt-get -qq install time
+        sudo -E apt-get -qq install sshpass
+        sudo -E apt-get -qq autoremove --purge
+        sudo -E apt-get -qq clean
+        sudo timedatectl set-timezone "$TZ"
+        sudo mkdir -p /workdir
+        sudo chown $USER:$GROUPS /workdir
+
+    - name: 克隆源代码
+      working-directory: /workdir
+      run: |
+        df -hT $PWD
+        git clone $REPO_URL -b $REPO_BRANCH openwrt
+        ln -sf /workdir/openwrt $GITHUB_WORKSPACE/openwrt
+        cd openwrt
+        useVersionInfo=$(git show -s --date=short --format="Author: %an<br/>date: %cd<br/>commit: %s<br/>commit hash: %H")
+        echo "useVersionInfo=$useVersionInfo" >> $GITHUB_ENV
+        echo "DATE=$(date "+%Y-%m-%d %H:%M:%S")" >> $GITHUB_ENV
+        echo "DATE1=$(date "+%Y%m%d%H%M")" >> $GITHUB_ENV
+
+    - name: 打包固件
+      id: build
+      run: |
+        echo $PWD
+        sudo mkdir /opt/kernel
+        cd /opt/kernel
+        chmod +x $GITHUB_WORKSPACE/$Get_Imgs_SH
+        sudo $GITHUB_WORKSPACE/$Get_Imgs_SH
+        cd /opt
+        #sudo cp $GITHUB_WORKSPACE/scripts/patches/*.patch ./
+        sudo cp $GITHUB_WORKSPACE/scripts/respawn_mks.sh ./
+        sudo git clone https://github.com/unifreq/openwrt_packit
+        sudo chmod +x ./respawn_mks.sh
+        sudo ./respawn_mks.sh
+        cd /opt/openwrt_packit
+        sudo wget $(curl -s https://api.github.com/repos/sxml/Actions-OpenWrt/releases/51378035 | grep browser_download_url | cut -d '"' -f 4)
+        chmod +x $GITHUB_WORKSPACE/$Update_Ver_SH
+        sudo $GITHUB_WORKSPACE/$Update_Ver_SH
+        sudo cp $GITHUB_WORKSPACE/scripts/whoami ./
+        sudo ./mk_s905d_n1_basic.sh
+        sudo ./mk_s905d_n1_plus.sh
+        sudo ./mk_s905x3_multi_basic.sh
+        sudo ./mk_s905x3_multi_plus.sh
+        #sudo cp ./*AllPackages.tar.gz ./output/
+        sudo cp ./files/update-amlogic-openwrt.sh ./output/
+        echo "status=success" >> $GITHUB_OUTPUT
+
+    - name: 整理文件
+      id: organize
+      if: steps.build.outputs.status == 'success' && !cancelled()
+      run: |
+        cd /opt/openwrt_packit/output
+        pigz -6 -p $(nproc) *.img
+        echo "FIRMWARE=$PWD" >> $GITHUB_ENV
+        echo "status=success" >> $GITHUB_OUTPUT
+
+    - name: 编译后硬盘容量
+      if: (!cancelled())
+      run: df -hT
+        
+    - name: 固件发布信息
+      id: release
+      uses: ncipollo/release-action@v1
+      with:
+        name: ${{ env.FILE_NAME }}-${{ env.DATE }}
+        allowUpdates: true
+        tag: ${{ env.FILE_NAME }}-${{ env.DATE1 }}
+        commit: master
+        token: ${{ secrets.RELEASES_TOKEN }}
+        body: |
+          默认IP：192.168.1.1 默认密码： password
+          immortalwrt无wifi 
+        artifacts: ${{ env.FIRMWARE }}/*
+      
+    - name: 删除旧版本
+      uses: dev-drprasad/delete-older-releases@master
+      if: env.DELETE_RELEASE == 'true'
+      with:
+        keep_latest: 2                               # 要保留的最新版本数 0删除所有版本
+        delete_tag_pattern: ${{ env.FILE_NAME }}     # 指定标签
+        delete_tags: true                            #指定是否删除与旧版本关联的标签
+      env:
+        GITHUB_TOKEN: ${{ secrets.RELEASES_TOKEN }}  # 令牌
+
+    - name: 删除旧的工作流程运行和工件
+      uses: Mattraks/delete-workflow-runs@main
+      if: env.DELETE_ARTIFACTS == 'true'
+      with:
+        token: ${{ secrets.RELEASES_TOKEN }}    # 令牌
+        repository: ${{ github.repository }}    # 运行工作流的存储库的名称。
+        retain_days: 1                          # 工作流的保留天数进行比较的天数       
+        keep_minimum_runs: 0                    # 工作流程保留的最少运行次数
+   
+    - name: 电报机器人信息通知
+      if: steps.organize.outputs.status == 'success' && !cancelled()
+      run: curl -k --data chat_id="${{ secrets.TELEGRAM_CHAT_ID }}" --data "text=${{ env.FILE_NAME }}打包完成" "https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage"
