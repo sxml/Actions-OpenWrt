@@ -14,8 +14,7 @@ env:
 #  REPO_BRANCH: master
   REPO_URL: https://github.com/immortalwrt/immortalwrt
   REPO_BRANCH: openwrt-23.05
-  CONFIG_FILE: aarch64/immortalwrt/SSHCONFIG.config
-  #CONFIG_FILE: aarch64/ARMv8_SF.config   
+  CONFIG_FILE: aarch64/immortalwrt/immortalwrt.config   
   DIY_P2_SH: aarch64/immortalwrt/diy-part3.sh
   SSH_ACTIONS: true
   UPLOAD_CONFIG: true
