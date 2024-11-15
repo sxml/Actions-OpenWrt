@@ -1,7 +1,7 @@
 #
 # 2024.11.15  ARMv8_ImmortalWrt
 #
-name: 编译ImmortalWrt23.05
+name: 编译ImmortalWrt 23.05
 on:
   repository_dispatch:
   workflow_dispatch:
