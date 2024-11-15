@@ -19,8 +19,8 @@ env:
   DIY_P1_SH: aarch64/immortalwrt/diy-part1.sh
   DIY_P2_SH: aarch64/immortalwrt/diy-part3.sh
   TZ: Asia/Shanghai
-  FILE_NAME: Build
-  PRODUCT_NAME: Build_FOL
+  FILE_NAME: immortalwrt
+  PRODUCT_NAME: Build_imm
 
 jobs:
   build:
@@ -201,7 +201,7 @@ jobs:
         name: ${{ env.FILE_NAME }}
         allowUpdates: true
         tag: ${{ env.FILE_NAME }}
-        commit: master
+        commit: openwrt-23.05
         token: ${{ secrets.RELEASES_TOKEN }}
         body: |
           编译immortalwrt固件，Flippy打包用！
