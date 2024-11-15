@@ -68,9 +68,9 @@ jobs:
         sudo vgcreate github /dev/loop6 /dev/loop7
         sudo lvcreate -n runner -l 100%FREE github
         sudo mkfs.xfs /dev/github/runner
-        sudo mkdir -p /builder
-        sudo mount /dev/github/runner /builder
-        sudo chown -R runner.runner /builder
+        sudo mkdir -p /workdir
+        sudo mount /dev/github/runner /workdir
+        sudo chown -R runner.runner /workdir
         df -Th
 
     - name: 检查服务器性能
