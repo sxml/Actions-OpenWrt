@@ -1,4 +1,4 @@
-name: 提取Ledeconfig
+name: 提取Lede-config
 on:
   repository_dispatch:
   workflow_dispatch:
