@@ -120,11 +120,11 @@ sed -i "s|http.*/library|https://github.com/breakings/OpenWrt/tree/main/opt/kern
 #git clone --depth=1 https://github.com/sxml/luci-app-design-config.git package/luci-app-design-config
 
 #mosdns
-rm -rf feeds/packages/net/mosdns
-rm -rf feeds/luci/applications/luci-app-mosdns
+#rm -rf feeds/packages/net/mosdns
+#rm -rf feeds/luci/applications/luci-app-mosdns
 #命令中的 -b v5-lua 的意思是指定要克隆的分支（branch）为 v5-lua
-git clone -b v5-lua https://github.com/sbwml/luci-app-mosdns package/luci-app-mosdns
-git clone -b v5-lua https://github.com/sbwml/luci-app-mosdns package/mosdns
+#git clone -b v5-lua https://github.com/sbwml/luci-app-mosdns package/luci-app-mosdns
+#git clone -b v5-lua https://github.com/sbwml/luci-app-mosdns package/mosdns
 
 #添加ddns-go 动态域名解析
 ##git clone --depth=1 https://github.com/sirpdboy/luci-app-ddns-go.git package/ddns-go
