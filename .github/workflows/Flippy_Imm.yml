@@ -19,8 +19,8 @@ on:
 env:
   REPO_URL: https://github.com/immortalwrt/immortalwrt
   REPO_BRANCH: openwrt-23.05
-  Update_Ver_SH: aarch64/immortalwrt/autoVersion.sh
-  Get_Imgs_SH: aarch64/immortalwrt/getImgs.sh
+  Update_Ver_SH: aarch64/autoVersion.sh
+  Get_Imgs_SH: aarch64/getImgs.sh
   DELETE_RELEASE: true    # 删除旧版本   
   DELETE_ARTIFACTS: true  # 删除旧的工作流程运行和工件
   TZ: Asia/Shanghai
