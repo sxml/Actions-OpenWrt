@@ -24,7 +24,7 @@ env:
   DELETE_RELEASE: true    # 删除旧版本   
   DELETE_ARTIFACTS: true  # 删除旧的工作流程运行和工件
   TZ: Asia/Shanghai
-  FILE_NAME: immortalwrt
+  FILE_NAME: imm
   PRODUCT_NAME: Build_imm
 
 jobs:
