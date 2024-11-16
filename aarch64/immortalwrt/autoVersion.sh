@@ -1,7 +1,9 @@
 #!/bin/bash
 
+OpVersion=$(echo "$(cat /workdir/openwrt/package/lean/default-settings/files/zzz-default-settings)" | grep -Po "DISTRIB_REVISION=\'\K[^\']*")
 #OpVersion=$(echo "$(cat /workdir/openwrt/package/base-files/files/etc/openwrt_release)" | grep -Po "DISTRIB_REVISION=\'\K[^\']*")
-OpVersion='R$(date +%Y.%m.%d)'
+#OpVersion='R$(date +%Y.%m.%d)'
+
 echo $OpVersion
 echo $PWD
 
