@@ -19,7 +19,7 @@ env:
   DIY_P2_SH: aarch64/immortalwrt/diy-part3.sh
   TZ: Asia/Shanghai
   FILE_NAME: immortalwrt
-  PRODUCT_NAME: Build_imm
+  PRODUCT_NAME: Build_immortalwrt
 
 jobs:
   build:
