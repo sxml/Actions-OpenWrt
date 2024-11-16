@@ -201,7 +201,7 @@ jobs:
         name: ${{ env.FILE_NAME }}
         allowUpdates: true
         tag: ${{ env.FILE_NAME }}
-        commit: openwrt-23.05
+        commit: master
         token: ${{ secrets.RELEASES_TOKEN }}
         body: |
           编译immortalwrt固件，Flippy打包用！
