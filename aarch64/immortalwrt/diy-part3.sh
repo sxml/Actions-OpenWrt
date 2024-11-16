@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-#   immortalwrt 2024-11-15 23.05
+#   immortalwrt 2024-11-16 23.05
 #========================================================================================================================
 # https://github.com/ophub/amlogic-s9xxx-openwrt
 # Description: Automatically Build OpenWrt
@@ -119,30 +119,11 @@ sed -i "s|http.*/library|https://github.com/breakings/OpenWrt/tree/main/opt/kern
 #git clone --depth=1 https://github.com/sxml/luci-theme-design.git package/luci-theme-design
 #git clone --depth=1 https://github.com/sxml/luci-app-design-config.git package/luci-app-design-config
 
-#mosdns
-#rm -rf feeds/packages/net/mosdns
-#rm -rf feeds/luci/applications/luci-app-mosdns
-#命令中的 -b v5-lua 的意思是指定要克隆的分支（branch）为 v5-lua
-#git clone -b v5-lua https://github.com/sbwml/luci-app-mosdns package/luci-app-mosdns
-#git clone -b v5-lua https://github.com/sbwml/luci-app-mosdns package/mosdns
-
-#添加ddns-go 动态域名解析
-##git clone --depth=1 https://github.com/sirpdboy/luci-app-ddns-go.git package/ddns-go
-#git clone --depth=1 https://github.com/sirpdboy/luci-app-ddns-go.git
-#cp -rf luci-app-ddns-go/ddns-go package/ddns-go
-#cp -rf luci-app-ddns-go/luci-app-ddns-go package/luci-app-ddns-go
-
-#文件浏览器
-#git clone --depth=1 https://github.com/sxml/luci-app-filebrowser.git package/luci-app-filebrowser
-
 # mihomo
 #git clone --depth=1 https://github.com/morytyann/OpenWrt-mihomo package/luci-app-mihomo
 
 # 应用补丁
 # git apply ../config/patches/{0001*,0002*}.patch --directory=feeds/luci
-
-#readd cpufreq for aarch64
-sed -i 's/LUCI_DEPENDS.*/LUCI_DEPENDS:=\@\(aarch64\|\|arm\)/g' feeds/luci/applications/luci-app-cpufreq/Makefile
 
 ./scripts/feeds update -a
 ./scripts/feeds install -a
