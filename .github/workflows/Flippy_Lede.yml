@@ -6,7 +6,7 @@
 # https://github.com/P3TERX/Actions-OpenWrt
 # Description: Build OpenWrt using GitHub Actions
 #
-# 2023.04.10  Flippy打包
+# 2023.04.10  Flippy打包 Lede版本
 #
 name: F打包_Lede固件
 
@@ -120,7 +120,7 @@ jobs:
         token: ${{ secrets.RELEASES_TOKEN }}
         body: |
           默认IP：192.168.2.1 默认密码： password
-          Flippy打包,自用无wifi 
+          Lede版本，Flippy打包,自用无wifi 
           s905x3(X96-Max+),s905d(Phicomm-N1)
           +o版 +版（Flowoffload加速+SFE加速)
         artifacts: ${{ env.FIRMWARE }}/*
