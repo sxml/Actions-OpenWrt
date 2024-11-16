@@ -6,7 +6,7 @@
 # https://github.com/P3TERX/Actions-OpenWrt
 # Description: Build OpenWrt using GitHub Actions
 #
-# 2023.11.15  Flippy打包 ImmortalWrt
+# 2023.11.15  Flippy打包 immortalwrt版本 ARMv8固件
 #
 name: F打包_imm固件
 
@@ -120,7 +120,7 @@ jobs:
         token: ${{ secrets.RELEASES_TOKEN }}
         body: |
           默认IP：192.168.1.1 默认密码： password
-          immortalwrt无wifi 
+          Flippy打包,immortalwrt版本ARMv8固件,无wifi 
         artifacts: ${{ env.FIRMWARE }}/*
       
     - name: 删除旧版本
