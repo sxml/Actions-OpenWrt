@@ -24,8 +24,8 @@ env:
   DELETE_RELEASE: true    # 删除旧版本   
   DELETE_ARTIFACTS: true  # 删除旧的工作流程运行和工件
   TZ: Asia/Shanghai
-  FILE_NAME: imm
-  PRODUCT_NAME: imm
+  FILE_NAME: immortalwrt
+  PRODUCT_NAME: Build_imm
 
 jobs:
   build:
@@ -84,7 +84,7 @@ jobs:
         sudo chmod +x ./respawn_mks.sh
         sudo ./respawn_mks.sh
         cd /opt/openwrt_packit
-        sudo wget $(curl -s https://api.github.com/repos/sxml/Actions-OpenWrt/releases/51378035 | grep browser_download_url | cut -d '"' -f 4)
+        sudo wget $(curl -s https://api.github.com/repos/sxml/Actions-OpenWrt/releases/185738469 | grep browser_download_url | cut -d '"' -f 4)
         chmod +x $GITHUB_WORKSPACE/$Update_Ver_SH
         sudo $GITHUB_WORKSPACE/$Update_Ver_SH
         sudo cp $GITHUB_WORKSPACE/scripts/whoami ./
