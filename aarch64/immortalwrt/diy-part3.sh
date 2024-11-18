@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-#   immortalwrt 2024-11-17 23.05
+#   immortalwrt 2024-11-18 23.05
 #========================================================================================================================
 # https://github.com/ophub/amlogic-s9xxx-openwrt
 # Description: Automatically Build OpenWrt
