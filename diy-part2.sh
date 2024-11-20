@@ -1,7 +1,7 @@
 #!/bin/bash
 #============================================================
 # sxml
-# 2024-11-12 1806
+# 2024-11-21 1806
 #https://github.com/HoldOnBro/Actions-OpenWrt
 #https://github.com/breakings/OpenWrt
 #============================================================
@@ -71,8 +71,8 @@ cp -rf openwrt-passwall-packages/v2ray-geodata package/v2ray-geodata
 #rm -rf openwrt-passwall-packages
 
 #passwall
-#git clone --depth=1 https://github.com/xiaorouji/openwrt-passwall.git
-#cp -rf openwrt-passwall/luci-app-passwall package/luci-app-passwall
+git clone --depth=1 https://github.com/xiaorouji/openwrt-passwall.git
+cp -rf openwrt-passwall/luci-app-passwall package/luci-app-passwall
 #rm -rf openwrt-passwall
 
 #passwall2
@@ -128,9 +128,9 @@ popd
 #rm -rf OpenClash
 
 # aria2
-sed -i 's/PKG_VERSION:=.*/PKG_VERSION:=1.37.0/g' feeds/packages/net/aria2/Makefile
-sed -i 's/PKG_RELEASE:=.*/PKG_RELEASE:=1/g' feeds/packages/net/aria2/Makefile
-sed -i 's/PKG_HASH:=.*/PKG_HASH:=60a420ad7085eb616cb6e2bdf0a7206d68ff3d37fb5a956dc44242eb2f79b66b/g' feeds/packages/net/aria2/Makefile
+#sed -i 's/PKG_VERSION:=.*/PKG_VERSION:=1.37.0/g' feeds/packages/net/aria2/Makefile
+#sed -i 's/PKG_RELEASE:=.*/PKG_RELEASE:=1/g' feeds/packages/net/aria2/Makefile
+#sed -i 's/PKG_HASH:=.*/PKG_HASH:=60a420ad7085eb616cb6e2bdf0a7206d68ff3d37fb5a956dc44242eb2f79b66b/g' feeds/packages/net/aria2/Makefile
 
 # mihomo
 #git clone --depth=1 https://github.com/morytyann/OpenWrt-mihomo package/luci-app-mihomo
