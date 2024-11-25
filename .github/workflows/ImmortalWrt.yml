@@ -26,7 +26,7 @@ jobs:
     runs-on: ubuntu-22.04
     #if: github.event.repository.owner.id == github.event.sender.id || ! github.event.sender.id
 
-    name: 编译op
+    name: 编译imm2305
     strategy:
       fail-fast: false
       
