@@ -1,5 +1,5 @@
 #
-# 2024.10.25  编译 ARMv8_FOL
+# 2024.10.25  编译 Lede-18.06-ARMv8_FOL
 #
 name: 编译Lede_FOL1806
 on:
