@@ -11,8 +11,8 @@ on:
 env:
   REPO_URL: https://github.com/coolsnowwolf/lede
   REPO_BRANCH: master
-  CONFIG_FILE: aarch64/ARMv8_FOL.config  
-  DIY_P2_SH: diy-part2.sh
+  CONFIG_FILE: aarch64/Lede1806/1806SSHCONFIG.config  
+  DIY_P2_SH: aarch64/Lede1806/1806diy-part2.sh
   SSH_ACTIONS: true
   UPLOAD_CONFIG: true
   DELETE_ARTIFACTS: true   # 删除旧的工作流程运行和工件
