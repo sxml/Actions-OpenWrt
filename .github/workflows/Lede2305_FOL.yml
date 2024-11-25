@@ -1,7 +1,7 @@
 #
 # 2024.11.25  编译 Lede-23.05-ARMv8_FOL
 #
-name: 编译Lede_FOL2305
+name: 编译Lede2305_FOL
 on:
   repository_dispatch:
   workflow_dispatch:
@@ -12,13 +12,13 @@ on:
 env:
   REPO_URL: https://github.com/coolsnowwolf/lede
   REPO_BRANCH: master
-  FEEDS_CONF: feeds.conf.default
-  CONFIG_FILE: aarch64/ARMv8_FOL.config
-  DIY_P1_SH: diy-part1.sh
-  DIY_P2_SH: diy-part2.sh
+  FEEDS_CONF: aarch64/Lede2305/feeds.conf.default
+  CONFIG_FILE: aarch64/Lede2305/Lede2305_FOL.config
+  DIY_P1_SH: aarch64/Lede2305/2305diy-part1.sh
+  DIY_P2_SH: aarch64/Lede2305/2305diy-part2.sh
   TZ: Asia/Shanghai
-  FILE_NAME: Build
-  PRODUCT_NAME: Build_FOL
+  FILE_NAME: Build2305
+  PRODUCT_NAME: Build2305_FOL
 
 jobs:
   build:
@@ -202,7 +202,7 @@ jobs:
         commit: master
         token: ${{ secrets.RELEASES_TOKEN }}
         body: |
-          编译Lede固件，Flippy打包用！
+          编译Lede 23.05固件，Flippy打包用！
           当前使用版本:【编译前的最后一次[➦主源码](https://github.com/coolsnowwolf/lede)更新记录】
           ${{ env.useVersionInfo }}
         artifacts: ${{ env.FIRMWARE }}/*
