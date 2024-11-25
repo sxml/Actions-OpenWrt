@@ -18,7 +18,7 @@ env:
   DIY_P2_SH: aarch64/Lede1806/1806diy-part2.sh
   TZ: Asia/Shanghai
   FILE_NAME: Build1806
-  PRODUCT_NAME: Build_FOL
+  PRODUCT_NAME: Build1806_FOL
 
 jobs:
   build:
@@ -202,7 +202,7 @@ jobs:
         commit: master
         token: ${{ secrets.RELEASES_TOKEN }}
         body: |
-          编译Lede固件，Flippy打包用！
+          编译Lede 18.06固件，Flippy打包用！
           当前使用版本:【编译前的最后一次[➦主源码](https://github.com/coolsnowwolf/lede)更新记录】
           ${{ env.useVersionInfo }}
         artifacts: ${{ env.FIRMWARE }}/*
