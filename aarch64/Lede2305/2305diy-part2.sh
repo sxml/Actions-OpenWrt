@@ -1,7 +1,7 @@
 #!/bin/bash
 #============================================================
 # sxml
-# 2024-11-21 23.05
+# 2024-11-25 23.05
 #https://github.com/HoldOnBro/Actions-OpenWrt
 #https://github.com/breakings/OpenWrt
 #============================================================
@@ -10,9 +10,9 @@ rm -rf feeds/luci/applications/luci-app-dockerman
 #rm -rf package/lean/luci-app-wrtbwmon
 rm -rf feeds/packages/net/smartdns
 rm -rf feeds/luci/applications/luci-app-smartdns
-rm -fr feeds/luci/themes/luci-theme-design
-rm -rf feeds/luci/applications/luci-app-ddns-go
-rm -rf feeds/packages/net/ddns-go
+#rm -fr feeds/luci/themes/luci-theme-design
+#rm -rf feeds/luci/applications/luci-app-ddns-go
+#rm -rf feeds/packages/net/ddns-go
 
 # 设置ttyd免帐号登录
 sed -i 's/\/bin\/login/\/bin\/login -f root/' feeds/packages/utils/ttyd/files/ttyd.config
@@ -21,7 +21,7 @@ sed -i 's/\/bin\/login/\/bin\/login -f root/' feeds/packages/utils/ttyd/files/tt
 git clone --depth=1 https://github.com/kenzok8/openwrt-packages.git kenzok8-packages
 cp -rf kenzok8-packages/smartdns package/smartdns
 cp -rf kenzok8-packages/luci-app-smartdns package/luci-app-smartdns
-#cp -rf kenzok8-packages/luci-theme-argon package/luci-theme-argon
+cp -rf kenzok8-packages/luci-theme-argon package/luci-theme-argon
 #cp -rf kenzok8-packages/ddns-go package/ddns-go
 #cp -rf kenzok8-packages/gost package/gost
 #git clone --depth=1 https://github.com/pymumu/luci-app-smartdns.git package/luci-app-smartdns
@@ -91,7 +91,7 @@ cp -rf luci-app-amlogic/luci-app-amlogic package/luci-app-amlogic
 # 1.设置OpenWrt 文件的下载仓库
 sed -i "s|https.*/OpenWrt|https://github.com/sxml/Actions-OpenWrt|g" package/luci-app-amlogic/root/etc/config/amlogic
 # 2.设置 Releases 里 Tags 的关键字
-sed -i "s|ARMv8|ARMv8|g" package/luci-app-amlogic/root/etc/config/amlogic
+sed -i "s|Lede2305|Lede2305|g" package/luci-app-amlogic/root/etc/config/amlogic
 # 3.设置 Releases 里 OpenWrt 文件的后缀
 sed -i "s|.img.gz|.img.gz|g" package/luci-app-amlogic/root/etc/config/amlogic
 # 4.设置 OpenWrt 内核的下载路径
@@ -99,8 +99,8 @@ sed -i "s|.img.gz|.img.gz|g" package/luci-app-amlogic/root/etc/config/amlogic
 sed -i "s|http.*/library|https://github.com/breakings/OpenWrt/tree/main/opt/kernel|g" package/luci-app-amlogic/root/etc/config/amlogic
 
 # themes 主题
-git clone --depth=1 https://github.com/sxml/luci-theme-design.git package/luci-theme-design
-git clone --depth=1 https://github.com/sxml/luci-app-design-config.git package/luci-app-design-config
+#git clone --depth=1 https://github.com/sxml/luci-theme-design.git package/luci-theme-design
+#git clone --depth=1 https://github.com/sxml/luci-app-design-config.git package/luci-app-design-config
 
 #mosdns
 rm -rf feeds/packages/net/mosdns
@@ -111,29 +111,27 @@ git clone -b v5-lua https://github.com/sbwml/luci-app-mosdns package/mosdns
 
 #添加ddns-go 动态域名解析
 #git clone --depth=1 https://github.com/sirpdboy/luci-app-ddns-go.git package/ddns-go
-git clone --depth=1 https://github.com/sirpdboy/luci-app-ddns-go.git
-cp -rf luci-app-ddns-go/ddns-go package/ddns-go
-cp -rf luci-app-ddns-go/luci-app-ddns-go package/luci-app-ddns-go
+#git clone --depth=1 https://github.com/sirpdboy/luci-app-ddns-go.git
+#cp -rf luci-app-ddns-go/ddns-go package/ddns-go
+#cp -rf luci-app-ddns-go/luci-app-ddns-go package/luci-app-ddns-go
 
 #文件浏览器
-git clone --depth=1 https://github.com/sxml/luci-app-filebrowser.git package/luci-app-filebrowser
+#git clone --depth=1 https://github.com/sxml/luci-app-filebrowser.git package/luci-app-filebrowser
 
 #小猫
-git clone --depth=1 https://github.com/vernesong/OpenClash.git
-cp -rf OpenClash/luci-app-openclash package/luci-app-openclash
+#git clone --depth=1 https://github.com/vernesong/OpenClash.git
+#cp -rf OpenClash/luci-app-openclash package/luci-app-openclash
 # 编译 po2lmo (如果有po2lmo可跳过)
 pushd package/luci-app-openclash/tools/po2lmo
-make && sudo make install
+#make && sudo make install
 popd
 #rm -rf OpenClash
 
-# aria2
-#sed -i 's/PKG_VERSION:=.*/PKG_VERSION:=1.37.0/g' feeds/packages/net/aria2/Makefile
-#sed -i 's/PKG_RELEASE:=.*/PKG_RELEASE:=1/g' feeds/packages/net/aria2/Makefile
-#sed -i 's/PKG_HASH:=.*/PKG_HASH:=60a420ad7085eb616cb6e2bdf0a7206d68ff3d37fb5a956dc44242eb2f79b66b/g' feeds/packages/net/aria2/Makefile
-
 # mihomo
-#git clone --depth=1 https://github.com/morytyann/OpenWrt-mihomo package/luci-app-mihomo
+##git clone --depth=1 https://github.com/morytyann/OpenWrt-mihomo package/luci-app-mihomo
+git clone --depth=1 https://github.com/morytyann/OpenWrt-mihomo.git
+cp -rf OpenWrt-mihomo/luci-app-mihomo package/luci-app-mihomo
+cp -rf OpenWrt-mihomo/mihomo package/mihomo
 
 ./scripts/feeds update -a
 ./scripts/feeds install -a
