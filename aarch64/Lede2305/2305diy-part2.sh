@@ -121,10 +121,10 @@ git clone -b v5-lua https://github.com/sbwml/luci-app-mosdns package/mosdns
 #小猫
 #git clone --depth=1 https://github.com/vernesong/OpenClash.git
 #cp -rf OpenClash/luci-app-openclash package/luci-app-openclash
-# 编译 po2lmo (如果有po2lmo可跳过)
-pushd package/luci-app-openclash/tools/po2lmo
+## 编译 po2lmo (如果有po2lmo可跳过)
+#pushd package/luci-app-openclash/tools/po2lmo
 #make && sudo make install
-popd
+#popd
 #rm -rf OpenClash
 
 # mihomo
