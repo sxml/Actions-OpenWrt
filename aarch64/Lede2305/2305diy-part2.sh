@@ -129,9 +129,9 @@ git clone -b v5-lua https://github.com/sbwml/luci-app-mosdns package/mosdns
 
 # mihomo
 ##git clone --depth=1 https://github.com/morytyann/OpenWrt-mihomo package/luci-app-mihomo
-#git clone --depth=1 https://github.com/morytyann/OpenWrt-mihomo.git
-#cp -rf OpenWrt-mihomo/luci-app-mihomo package/luci-app-mihomo
-#cp -rf OpenWrt-mihomo/mihomo package/mihomo
+git clone --depth=1 https://github.com/morytyann/OpenWrt-mihomo.git
+cp -rf OpenWrt-mihomo/luci-app-mihomo package/luci-app-mihomo
+cp -rf OpenWrt-mihomo/mihomo package/mihomo
 
 ./scripts/feeds update -a
 ./scripts/feeds install -a
