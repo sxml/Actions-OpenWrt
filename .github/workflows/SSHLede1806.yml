@@ -1,4 +1,4 @@
-name: 提取Lede-config
+name: 提取Lede1806-config
 on:
   repository_dispatch:
   workflow_dispatch:
@@ -25,7 +25,7 @@ jobs:
     runs-on: ubuntu-20.04
     if: github.event.repository.owner.id == github.event.sender.id
 
-    name: 提取config
+    name: 提取Lede1806-config
     strategy:
       fail-fast: false
       
