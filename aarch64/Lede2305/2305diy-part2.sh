@@ -1,7 +1,7 @@
 #!/bin/bash
 #============================================================
 # sxml
-# 2024-11-25 23.05
+# 2024-11-28 23.05
 #https://github.com/HoldOnBro/Actions-OpenWrt
 #https://github.com/breakings/OpenWrt
 #============================================================
@@ -119,19 +119,19 @@ git clone -b v5-lua https://github.com/sbwml/luci-app-mosdns package/mosdns
 #git clone --depth=1 https://github.com/sxml/luci-app-filebrowser.git package/luci-app-filebrowser
 
 #小猫
-#git clone --depth=1 https://github.com/vernesong/OpenClash.git
-#cp -rf OpenClash/luci-app-openclash package/luci-app-openclash
-## 编译 po2lmo (如果有po2lmo可跳过)
-#pushd package/luci-app-openclash/tools/po2lmo
-#make && sudo make install
-#popd
+git clone --depth=1 https://github.com/vernesong/OpenClash.git
+cp -rf OpenClash/luci-app-openclash package/luci-app-openclash
+# 编译 po2lmo (如果有po2lmo可跳过)
+pushd package/luci-app-openclash/tools/po2lmo
+make && sudo make install
+popd
 #rm -rf OpenClash
 
 # mihomo
 ##git clone --depth=1 https://github.com/morytyann/OpenWrt-mihomo package/luci-app-mihomo
-git clone --depth=1 https://github.com/morytyann/OpenWrt-mihomo.git
-cp -rf OpenWrt-mihomo/luci-app-mihomo package/luci-app-mihomo
-cp -rf OpenWrt-mihomo/mihomo package/mihomo
+#git clone --depth=1 https://github.com/morytyann/OpenWrt-mihomo.git
+#cp -rf OpenWrt-mihomo/luci-app-mihomo package/luci-app-mihomo
+#cp -rf OpenWrt-mihomo/mihomo package/mihomo
 
 ./scripts/feeds update -a
 ./scripts/feeds install -a
