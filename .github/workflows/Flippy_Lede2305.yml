@@ -119,7 +119,7 @@ jobs:
         commit: master
         token: ${{ secrets.RELEASES_TOKEN }}
         body: |
-          默认IP：192.168.2.1 默认密码： password
+          默认IP：192.168.1.1 默认密码： password
           Lede 23.05版本，Flippy打包,自用无wifi 
           s905x3(X96-Max+),s905d(Phicomm-N1)
           +o版 +版（Flowoffload加速+SFE加速)
