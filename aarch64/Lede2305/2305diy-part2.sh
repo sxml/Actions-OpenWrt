@@ -1,7 +1,7 @@
 #!/bin/bash
 #============================================================
 # sxml
-# 2024-11-28 23.05
+# 2024-11-30 23.05
 #https://github.com/HoldOnBro/Actions-OpenWrt
 #https://github.com/breakings/OpenWrt
 #============================================================
@@ -10,9 +10,13 @@ rm -rf feeds/luci/applications/luci-app-dockerman
 #rm -rf package/lean/luci-app-wrtbwmon
 rm -rf feeds/packages/net/smartdns
 rm -rf feeds/luci/applications/luci-app-smartdns
+rm -fr feeds/luci/themes/luci-theme-argon
 #rm -fr feeds/luci/themes/luci-theme-design
 #rm -rf feeds/luci/applications/luci-app-ddns-go
 #rm -rf feeds/packages/net/ddns-go
+
+#修改IP
+sed -i 's/192.168.1.1/192.168.2.1/g' package/base-files/luci2/bin/config_generate
 
 # 设置ttyd免帐号登录
 sed -i 's/\/bin\/login/\/bin\/login -f root/' feeds/packages/utils/ttyd/files/ttyd.config
@@ -21,7 +25,7 @@ sed -i 's/\/bin\/login/\/bin\/login -f root/' feeds/packages/utils/ttyd/files/tt
 git clone --depth=1 https://github.com/kenzok8/openwrt-packages.git kenzok8-packages
 cp -rf kenzok8-packages/smartdns package/smartdns
 cp -rf kenzok8-packages/luci-app-smartdns package/luci-app-smartdns
-cp -rf kenzok8-packages/luci-theme-argon package/luci-theme-argon
+#cp -rf kenzok8-packages/luci-theme-argon package/luci-theme-argon
 #cp -rf kenzok8-packages/ddns-go package/ddns-go
 #cp -rf kenzok8-packages/gost package/gost
 #git clone --depth=1 https://github.com/pymumu/luci-app-smartdns.git package/luci-app-smartdns
@@ -99,8 +103,10 @@ sed -i "s|.img.gz|.img.gz|g" package/luci-app-amlogic/root/etc/config/amlogic
 sed -i "s|http.*/library|https://github.com/breakings/OpenWrt/tree/main/opt/kernel|g" package/luci-app-amlogic/root/etc/config/amlogic
 
 # themes 主题
-#git clone --depth=1 https://github.com/sxml/luci-theme-design.git package/luci-theme-design
-#git clone --depth=1 https://github.com/sxml/luci-app-design-config.git package/luci-app-design-config
+#1806 git clone --depth=1 https://github.com/sxml/luci-theme-design.git package/luci-theme-design
+#1806 git clone --depth=1 https://github.com/sxml/luci-app-design-config.git package/luci-app-design-config
+git clone --depth=1 https://github.com/jerrykuku/luci-theme-argon package/luci-theme-argon
+git clone --depth=1 -b js https://github.com/lwb1978/luci-theme-kucat package/luci-theme-kucat
 
 #mosdns
 rm -rf feeds/packages/net/mosdns
@@ -108,15 +114,6 @@ rm -rf feeds/luci/applications/luci-app-mosdns
 #命令中的 -b v5-lua 的意思是指定要克隆的分支（branch）为 v5-lua
 git clone -b v5-lua https://github.com/sbwml/luci-app-mosdns package/luci-app-mosdns
 git clone -b v5-lua https://github.com/sbwml/luci-app-mosdns package/mosdns
-
-#添加ddns-go 动态域名解析
-#git clone --depth=1 https://github.com/sirpdboy/luci-app-ddns-go.git package/ddns-go
-#git clone --depth=1 https://github.com/sirpdboy/luci-app-ddns-go.git
-#cp -rf luci-app-ddns-go/ddns-go package/ddns-go
-#cp -rf luci-app-ddns-go/luci-app-ddns-go package/luci-app-ddns-go
-
-#文件浏览器
-#git clone --depth=1 https://github.com/sxml/luci-app-filebrowser.git package/luci-app-filebrowser
 
 #小猫
 git clone --depth=1 https://github.com/vernesong/OpenClash.git
@@ -126,12 +123,6 @@ pushd package/luci-app-openclash/tools/po2lmo
 make && sudo make install
 popd
 #rm -rf OpenClash
-
-# mihomo
-##git clone --depth=1 https://github.com/morytyann/OpenWrt-mihomo package/luci-app-mihomo
-#git clone --depth=1 https://github.com/morytyann/OpenWrt-mihomo.git
-#cp -rf OpenWrt-mihomo/luci-app-mihomo package/luci-app-mihomo
-#cp -rf OpenWrt-mihomo/mihomo package/mihomo
 
 ./scripts/feeds update -a
 ./scripts/feeds install -a
