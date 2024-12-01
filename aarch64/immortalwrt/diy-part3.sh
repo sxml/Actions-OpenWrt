@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-#   immortalwrt 2024-11-19 23.05
+#   immortalwrt 2024-12-01 23.05
 #========================================================================================================================
 # https://github.com/ophub/amlogic-s9xxx-openwrt
 # Description: Automatically Build OpenWrt
@@ -39,7 +39,7 @@ sed -i 's/\/bin\/login/\/bin\/login -f root/' feeds/packages/utils/ttyd/files/tt
 git clone --depth=1 https://github.com/kenzok8/openwrt-packages.git kenzok8-packages
 cp -rf kenzok8-packages/smartdns package/smartdns
 cp -rf kenzok8-packages/luci-app-smartdns package/luci-app-smartdns
-cp -rf kenzok8-packages/luci-theme-argon package/luci-theme-argon
+#cp -rf kenzok8-packages/luci-theme-argon package/luci-theme-argon
 #cp -rf kenzok8-packages/ddns-go package/ddns-go
 #cp -rf kenzok8-packages/gost package/gost
 #git clone --depth=1 https://github.com/pymumu/luci-app-smartdns.git package/luci-app-smartdns
@@ -109,7 +109,7 @@ cp -rf luci-app-amlogic/luci-app-amlogic package/luci-app-amlogic
 # 1.设置OpenWrt 文件的下载仓库
 sed -i "s|https.*/OpenWrt|https://github.com/sxml2015/amlogic-s9xxx-openwrt|g" package/luci-app-amlogic/root/etc/config/amlogic
 # 2.设置 Releases 里 Tags 的关键字
-sed -i "s|immortalwrt|immortalwrt|g" package/luci-app-amlogic/root/etc/config/amlogic
+sed -i "s|imm|imm|g" package/luci-app-amlogic/root/etc/config/amlogic
 # 3.设置 Releases 里 OpenWrt 文件的后缀
 sed -i "s|.img.gz|.img.gz|g" package/luci-app-amlogic/root/etc/config/amlogic
 # 4.设置 OpenWrt 内核的下载路径
@@ -117,8 +117,8 @@ sed -i "s|.img.gz|.img.gz|g" package/luci-app-amlogic/root/etc/config/amlogic
 sed -i "s|http.*/library|https://github.com/breakings/OpenWrt/tree/main/opt/kernel|g" package/luci-app-amlogic/root/etc/config/amlogic
 
 # themes 主题
-#git clone --depth=1 https://github.com/sxml/luci-theme-design.git package/luci-theme-design
-#git clone --depth=1 https://github.com/sxml/luci-app-design-config.git package/luci-app-design-config
+git clone --depth=1 https://github.com/jerrykuku/luci-theme-argon package/luci-theme-argon
+git clone --depth=1 -b js https://github.com/lwb1978/luci-theme-kucat package/luci-theme-kucat
 
 # mihomo
 ##git clone --depth=1 https://github.com/morytyann/OpenWrt-mihomo package/luci-app-mihomo
