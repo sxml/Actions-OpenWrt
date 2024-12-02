@@ -1,7 +1,7 @@
 #!/bin/bash
 #============================================================
 # sxml
-# 2024-11-28 1806
+# 2024-12-02 1806
 #https://github.com/HoldOnBro/Actions-OpenWrt
 #https://github.com/breakings/OpenWrt
 #============================================================
@@ -126,14 +126,6 @@ pushd package/luci-app-openclash/tools/po2lmo
 make && sudo make install
 popd
 #rm -rf OpenClash
-
-# aria2
-#sed -i 's/PKG_VERSION:=.*/PKG_VERSION:=1.37.0/g' feeds/packages/net/aria2/Makefile
-#sed -i 's/PKG_RELEASE:=.*/PKG_RELEASE:=1/g' feeds/packages/net/aria2/Makefile
-#sed -i 's/PKG_HASH:=.*/PKG_HASH:=60a420ad7085eb616cb6e2bdf0a7206d68ff3d37fb5a956dc44242eb2f79b66b/g' feeds/packages/net/aria2/Makefile
-
-# mihomo
-#git clone --depth=1 https://github.com/morytyann/OpenWrt-mihomo package/luci-app-mihomo
 
 ./scripts/feeds update -a
 ./scripts/feeds install -a
