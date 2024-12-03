@@ -1,7 +1,7 @@
 #!/bin/bash
 #============================================================
 # sxml
-# 2024-12-02 1806
+# 2024-12-03 1806
 #https://github.com/HoldOnBro/Actions-OpenWrt
 #https://github.com/breakings/OpenWrt
 #============================================================
@@ -13,6 +13,11 @@ rm -rf feeds/luci/applications/luci-app-smartdns
 rm -fr feeds/luci/themes/luci-theme-design
 rm -rf feeds/luci/applications/luci-app-ddns-go
 rm -rf feeds/packages/net/ddns-go
+
+#重新编译时没有旧的或不必要的文件干扰
+#staging_dir：编译生成的文件和依赖库
+#build_dir：软件包的源代码和编译生成的文件
+rm -rf staging_dir build_dir
 
 # 设置ttyd免帐号登录
 sed -i 's/\/bin\/login/\/bin\/login -f root/' feeds/packages/utils/ttyd/files/ttyd.config
