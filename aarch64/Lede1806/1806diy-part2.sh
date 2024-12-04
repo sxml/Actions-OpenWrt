@@ -1,7 +1,7 @@
 #!/bin/bash
 #============================================================
 # sxml
-# 2024-11-28 1806
+# 2024-12-03 1806
 #https://github.com/HoldOnBro/Actions-OpenWrt
 #https://github.com/breakings/OpenWrt
 #============================================================
@@ -13,6 +13,11 @@ rm -rf feeds/luci/applications/luci-app-smartdns
 rm -fr feeds/luci/themes/luci-theme-design
 rm -rf feeds/luci/applications/luci-app-ddns-go
 rm -rf feeds/packages/net/ddns-go
+
+#重新编译时没有旧的或不必要的文件干扰
+#staging_dir：编译生成的文件和依赖库
+#build_dir：软件包的源代码和编译生成的文件
+rm -rf staging_dir build_dir
 
 # 设置ttyd免帐号登录
 sed -i 's/\/bin\/login/\/bin\/login -f root/' feeds/packages/utils/ttyd/files/ttyd.config
@@ -126,14 +131,6 @@ pushd package/luci-app-openclash/tools/po2lmo
 make && sudo make install
 popd
 #rm -rf OpenClash
-
-# aria2
-#sed -i 's/PKG_VERSION:=.*/PKG_VERSION:=1.37.0/g' feeds/packages/net/aria2/Makefile
-#sed -i 's/PKG_RELEASE:=.*/PKG_RELEASE:=1/g' feeds/packages/net/aria2/Makefile
-#sed -i 's/PKG_HASH:=.*/PKG_HASH:=60a420ad7085eb616cb6e2bdf0a7206d68ff3d37fb5a956dc44242eb2f79b66b/g' feeds/packages/net/aria2/Makefile
-
-# mihomo
-#git clone --depth=1 https://github.com/morytyann/OpenWrt-mihomo package/luci-app-mihomo
 
 ./scripts/feeds update -a
 ./scripts/feeds install -a
