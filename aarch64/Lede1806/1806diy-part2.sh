@@ -17,7 +17,7 @@ rm -rf feeds/packages/net/ddns-go
 #重新编译时没有旧的或不必要的文件干扰
 #staging_dir：编译生成的文件和依赖库
 #build_dir：软件包的源代码和编译生成的文件
-rm -rf staging_dir build_dir
+#rm -rf staging_dir build_dir
 
 # 设置ttyd免帐号登录
 sed -i 's/\/bin\/login/\/bin\/login -f root/' feeds/packages/utils/ttyd/files/ttyd.config
