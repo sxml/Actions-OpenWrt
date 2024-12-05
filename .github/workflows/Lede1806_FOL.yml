@@ -1,13 +1,10 @@
 #
-# 2024.10.25  编译 Lede-18.06-ARMv8_FOL
+# 2024.12.05 AI修改  编译 Lede-18.06-ARMv8_FOL
 #
 name: 编译Lede1806_FOL
 on:
   repository_dispatch:
   workflow_dispatch:
-# 定时触发开始编译(把下面两个#去掉开启,时间设置请看定时编译说明)
-#  schedule:
-#   - cron: 0 16 */2 * *
 
 env:
   REPO_URL: https://github.com/coolsnowwolf/lede
@@ -19,16 +16,15 @@ env:
   TZ: Asia/Shanghai
   FILE_NAME: Build1806
   PRODUCT_NAME: Build1806_FOL
+  CCACHE_DISABLE: 1  # 禁用 ccache
 
 jobs:
   build:
     runs-on: ubuntu-22.04
-    #if: github.event.repository.owner.id == github.event.sender.id || ! github.event.sender.id
-
     name: 编译Lede1806
     strategy:
       fail-fast: false
-      
+
     steps:
     - name: 准备
       uses: actions/checkout@master
@@ -52,6 +48,10 @@ jobs:
         sudo chown $USER:$GROUPS /workdir
         echo "status=success" >> $GITHUB_OUTPUT
         df -Th
+
+    - name: 清理 ccache 缓存
+      run: |
+        ccache -C  # 清除 ccache 缓存
 
     - name: 创建模拟物理磁盘
       run: |
@@ -101,12 +101,11 @@ jobs:
         echo "DATE=$(date "+%Y-%m-%d %H:%M:%S")" >> $GITHUB_ENV
         echo "DATE1=$(date "+%Y-%m-%d")" >> $GITHUB_ENV
 
-#    - name: 缓存加速
-#      uses: klever1988/cachewrtbuild@main
-#      with:
-#        ccache: 'true'
-#        clean: 'false'
-#        prefix: ${{ github.workspace }}/openwrt
+    - name: 设置编译环境变量
+      run: |
+        export CC=/usr/bin/gcc
+        export CXX=/usr/bin/g++
+        export CCACHE_DISABLE=1
 
     - name: 加载自定义配置
       run: |
@@ -130,7 +129,7 @@ jobs:
         $GITHUB_WORKSPACE/$DIY_P2_SH
         sed -i 's/192.168.1.1/192.168.2.1/g' package/base-files/files/bin/config_generate
         sed -i 's/OpenWrt/MRG AutoBuild ${{ env.DATE1 }} @ OpenWrt/g' package/lean/default-settings/files/zzz-default-settings
-        
+
     - name: 下载软件包
       id: package
       run: |
@@ -148,7 +147,7 @@ jobs:
       run: |
         cd openwrt
         echo -e "$(nproc) thread compile"
-        make -j$(nproc) || make -j1 || make -j1 V=s
+        make CCACHE=0 -j$(nproc) || make CCACHE=0 -j1 || make CCACHE=0 -j1 V=s
         grep '^CONFIG_TARGET.*DEVICE.*=y' .config | sed -r 's/.*DEVICE_(.*)=y/\1/' > DEVICE_NAME
         [ -s DEVICE_NAME ] && echo "DEVICE_NAME=_$(cat DEVICE_NAME)" >> $GITHUB_ENV
         echo "FILE_DATE=_$(date +"%Y%m%d%H%M")" >> $GITHUB_ENV
@@ -170,7 +169,10 @@ jobs:
         tar -zcvf AllPackages.tar.gz ./*
         cp AllPackages.tar.gz $GITHUB_WORKSPACE/openwrt/bin/targets/*/*
         cd $GITHUB_WORKSPACE/openwrt/bin/targets/*/*
-        rm -rf packages sha256sums feeds.buildinfo openwrt-armvirt-64-default.manifest openwrt-armvirt-64-Image openwrt-armvirt-64-rootfs-ext4.img version.buildinfo openwrt-armvirt-64-generic-initramfs-kernel.bin openwrt-armvirt-64-generic-kernel.bin openwrt-armvirt-64-generic.manifest profiles.json
+        rm -rf packages sha256sums feeds.buildinfo openwrt-armvirt-64-default.manifest \
+               openwrt-armvirt-64-Image openwrt-armvirt-64-rootfs-ext4.img version.buildinfo \
+               openwrt-armvirt-64-generic-initramfs-kernel.bin openwrt-armvirt-64-generic-kernel.bin \
+               openwrt-armvirt-64-generic.manifest profiles.json
         echo "FIRMWARE=$PWD" >> $GITHUB_ENV
         echo "status=success" >> $GITHUB_OUTPUT
 
@@ -209,4 +211,6 @@ jobs:
 
     - name: 电报机器人信息通知
       if: steps.organize.outputs.status == 'success' && !cancelled()
-      run: curl -k --data chat_id="${{ secrets.TELEGRAM_CHAT_ID }}" --data "text=${{ env.FILE_NAME }}编译完成" "https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage"
+      run: curl -k --data chat_id="${{ secrets.TELEGRAM_CHAT_ID }}" \
+                 --data "text=${{ env.FILE_NAME }}编译完成" \
+                 "https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage"
