@@ -14,7 +14,7 @@ rm -fr feeds/luci/themes/luci-theme-design
 rm -rf feeds/luci/applications/luci-app-ddns-go
 rm -rf feeds/packages/net/ddns-go
 #重新编译时没有旧的或不必要的文件干扰 #staging_dir：编译生成的文件和依赖库 #build_dir：软件包的源代码和编译生成的文件
-rm -rf staging_dir build_dir
+#rm -rf staging_dir build_dir
 
 # 修改默认主题（从 uci-theme-bootstrap 更改为 luci-theme-material）
 sed -i 's/luci-theme-bootstrap/luci-theme-material/g' ./feeds/luci/collections/luci/Makefile
@@ -135,18 +135,11 @@ make && sudo make install
 popd
 #rm -rf OpenClash
 
-echo "==== 修复 libcryptopp 编译问题 ===="
-# 设置编译器环境变量
-export PATH=/workdir/openwrt/staging_dir/toolchain-aarch64_generic_gcc-11.3.0_musl/bin:$PATH
-export CC="aarch64-openwrt-linux-musl-gcc"
-export CXX="aarch64-openwrt-linux-musl-g++"
-export CCACHE_DISABLE=1
+#试libcryptopp 编译问题
 # 在 Makefile 中显式指定编译器
 sed -i '/include $(INCLUDE_DIR)\/package.mk/a TARGET_CC:=aarch64-openwrt-linux-musl-gcc\nTARGET_CXX:=aarch64-openwrt-linux-musl-g++' package/lean/libcryptopp/Makefile
-# 禁用 autoreconf（如果可能有问题）
-sed -i 's/PKG_FIXUP:=autoreconf/# PKG_FIXUP:=autoreconf/' package/lean/libcryptopp/Makefile
 # 清理 libcryptopp 的缓存
-make package/lean/libcryptopp/clean
+#make package/lean/libcryptopp/clean
 
 #修改makefile
 find package/*/ -maxdepth 2 -path "*/Makefile" | xargs -i sed -i 's/include\ \.\.\/\.\.\/luci\.mk/include \$(TOPDIR)\/feeds\/luci\/luci\.mk/g' {}
