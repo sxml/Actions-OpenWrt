@@ -1,5 +1,5 @@
 #
-# 2024.10.25  编译 Lede-18.06-ARMv8_FOL
+# 2024.12.06  编译 Lede-18.06-ARMv8_FOL
 #
 name: 编译Lede1806_FOL
 on:
@@ -101,12 +101,16 @@ jobs:
         echo "DATE=$(date "+%Y-%m-%d %H:%M:%S")" >> $GITHUB_ENV
         echo "DATE1=$(date "+%Y-%m-%d")" >> $GITHUB_ENV
 
-#    - name: 缓存加速
+    - name: 缓存加速
 #      uses: klever1988/cachewrtbuild@main
-#      with:
-#        ccache: 'true'
-#        clean: 'false'
-#        prefix: ${{ github.workspace }}/openwrt
+      uses: stupidloud/cachewrtbuild@main
+      with:
+        mixkey: 'Build1806'
+        ccache: true
+        skip: true
+        toolchain: true
+        clean: false
+        prefix: ${{ github.workspace }}/openwrt
 
     - name: 加载自定义配置
       run: |
@@ -155,12 +159,12 @@ jobs:
         echo "DATE_YMD=_$(date +"%Y%m%d")" >> $GITHUB_ENV
         echo "status=success" >> $GITHUB_OUTPUT
 
-#    - name: 清理服务器空间
-#      if: steps.compile.outputs.status == 'success' && !cancelled()
-#      run: |
-#        cd openwrt/
-#        rm -rf $(ls . | grep -v "^bin$" | xargs) 2>/dev/null
-#        df -hT ${PWD}
+    - name: 清理服务器空间
+      if: steps.compile.outputs.status == 'success' && !cancelled()
+      run: |
+        cd openwrt/
+        rm -rf $(ls . | grep -v "^bin$" | xargs) 2>/dev/null
+        df -hT ${PWD}
   
     - name: 整理固件文件夹
       id: organize
