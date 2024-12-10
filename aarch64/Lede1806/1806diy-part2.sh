@@ -16,8 +16,8 @@ rm -rf feeds/packages/net/ddns-go
 #重新编译时没有旧的或不必要的文件干扰 #staging_dir：编译生成的文件和依赖库 #build_dir：软件包的源代码和编译生成的文件
 #rm -rf staging_dir build_dir
 
-# 修改默认主题（从 uci-theme-bootstrap 更改为 luci-theme-material）
-sed -i 's/luci-theme-bootstrap/luci-theme-material/g' ./feeds/luci/collections/luci/Makefile
+# 修改默认主题（从 uci-theme-bootstrap 更改为 luci-theme-design）
+sed -i 's/luci-theme-bootstrap/luci-theme-design/g' ./feeds/luci/collections/luci/Makefile
 
 # 修改默认IP
 sed -i 's/192.168.1.1/192.168.2.1/g' package/base-files/files/bin/config_generate
