@@ -135,7 +135,7 @@ make && sudo make install
 popd
 #rm -rf OpenClash
 
-#试libcryptopp 编译问题
+#libcryptopp 编译问题
 # 在 Makefile 中显式指定编译器
 sed -i '/include $(INCLUDE_DIR)\/package.mk/a TARGET_CC:=aarch64-openwrt-linux-musl-gcc\nTARGET_CXX:=aarch64-openwrt-linux-musl-g++' package/lean/libcryptopp/Makefile
 # 清理 libcryptopp 的缓存
