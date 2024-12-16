@@ -1,7 +1,7 @@
 #!/bin/bash
 #============================================================
 # sxml
-# 2024-12-16 1806
+# 2024-12-16-2 1806
 #https://github.com/HoldOnBro/Actions-OpenWrt
 #https://github.com/breakings/OpenWrt
 #============================================================
@@ -33,11 +33,12 @@ cp -rf kenzok8-packages/luci-app-smartdns package/luci-app-smartdns
 #cp -rf kenzok8-packages/ddns-go package/ddns-go
 #cp -rf kenzok8-packages/gost package/gost
 #git clone --depth=1 https://github.com/pymumu/luci-app-smartdns.git package/luci-app-smartdns
-#git clone --depth=1 https://github.com/kenzok8/small-package.git small-package
+git clone --depth=1 https://github.com/kenzok8/small-package.git small-package
 #cp -rf small-package/gost package/gost
 #cp -rf small-package/luci-app-gost package/luci-app-gost
 #cp -rf small-package/sagernet-core package/sagernet-core
 #cp -rf small-package/v2ray-geodata package/v2ray-geodata
+cp -rf small-package/v2ray-geoview package/v2ray-geoview
 
 # 克隆 fw876 仓库
 git clone --depth=1 -b main https://github.com/fw876/helloworld.git
