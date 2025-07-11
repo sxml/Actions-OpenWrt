@@ -1,7 +1,7 @@
 #!/bin/bash
 #============================================================
 # sxml
-# 2025-07-11 1806
+# 2025-03-30 1806
 #https://github.com/HoldOnBro/Actions-OpenWrt
 #https://github.com/breakings/OpenWrt
 #============================================================
@@ -147,24 +147,6 @@ find package/*/ -maxdepth 2 -path "*/Makefile" | xargs -i sed -i 's/include\ \.\
 find package/*/ -maxdepth 2 -path "*/Makefile" | xargs -i sed -i 's/include\ \.\.\/\.\.\/lang\/golang\/golang\-package\.mk/include \$(TOPDIR)\/feeds\/packages\/lang\/golang\/golang\-package\.mk/g' {}
 find package/*/ -maxdepth 2 -path "*/Makefile" | xargs -i sed -i 's/PKG_SOURCE_URL:=\@GHREPO/PKG_SOURCE_URL:=https:\/\/github\.com/g' {}
 find package/*/ -maxdepth 2 -path "*/Makefile" | xargs -i sed -i 's/PKG_SOURCE_URL:=\@GHCODELOAD/PKG_SOURCE_URL:=https:\/\/codeload\.github\.com/g' {}
-
-# # 修复 GCC 工具链配置以支持 QEMU ARMv8 Cortex-A53
-# echo "Fixing GCC architecture configuration for Cortex-A53..."
-# sed -i 's/--with-arch=armv8-a+crypto/--with-arch=armv8-a --with-cpu=cortex-a53/' toolchain/gcc/initial/Makefile
-
-# # 验证 GCC 配置
-# echo "Verifying GCC configuration..."
-# grep --with-arch toolchain/gcc/initial/Makefile
-
-# # 检查 GCC 支持的架构
-# echo "Checking supported architectures by GCC..."
-# gcc --target-help | grep -E "armv8-a|cortex-a53"
-
-# 更新 GCC 版本
-echo "Updating GCC version to 12.3.0..."
-sed -i 's/gcc-11.3.0/gcc-12.3.0/' toolchain/gcc/initial/Makefile
-sed -i 's/GCC_VERSION:=11.3.0/GCC_VERSION:=12.3.0/' toolchain/gcc/initial/Makefile
-sed -i 's|https://gcc.gnu.org/pub/gcc/releases/gcc-11.3.0/|https://gcc.gnu.org/pub/gcc/releases/gcc-12.3.0/|' toolchain/gcc/initial/Makefile
 
 ./scripts/feeds update -a
 ./scripts/feeds install -a
