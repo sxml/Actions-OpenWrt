@@ -48,6 +48,7 @@ jobs:
         sudo -E apt-get -qq update
         sudo -E apt-get -qq install $(cat $GITHUB_WORKSPACE/depends-ubuntu-2204)
         #sudo -E apt-get -qq install $(curl -fsSL git.io/depends-ubuntu-2004)
+        sudo -E apt-get -qq install $(curl -fsSL https://tinyurl.com/ubuntu2204-make-openwrt)
         sudo -E apt-get -qq install rename
         sudo -E apt-get -qq install pigz
         sudo -E apt-get -qq install time
