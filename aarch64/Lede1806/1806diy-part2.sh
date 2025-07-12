@@ -144,11 +144,12 @@ sed -i '/include $(INCLUDE_DIR)\/package.mk/a TARGET_CC:=aarch64-openwrt-linux-m
 
 # 清理工具链缓存 
 echo "Cleaning toolchain build directory..." 
-make toolchain/gcc/initial/clean 
+make toolchain/gcc/initial/clean
 
 # 修复 GCC 工具链配置以支持 QEMU ARMv8 Cortex-A53 
 echo "Fixing GCC architecture configuration for Cortex-A53..." 
-sed -i 's/--with-arch=armv8-a+crypto/--with-arch=armv8-a --with-cpu=cortex-a53/' toolchain/gcc/initial/Makefile 
+#sed -i 's/--with-arch=armv8-a+crypto/--with-arch=armv8-a --with-cpu=cortex-a53/' toolchain/gcc/initial/Makefile
+sed -i 's/--with-arch=armv8-a+crypto/--with-arch=armv8-a+crc+crypto --with-cpu=cortex-a53/' toolchain/gcc/initial/Makefile
 
 #修改makefile
 find package/*/ -maxdepth 2 -path "*/Makefile" | xargs -i sed -i 's/include\ \.\.\/\.\.\/luci\.mk/include \$(TOPDIR)\/feeds\/luci\/luci\.mk/g' {}
