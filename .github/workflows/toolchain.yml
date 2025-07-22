@@ -2,7 +2,7 @@
 # 分离工具链构建 工具链工作流 (toolchain.yml)
 # 2025.07.22
 #
-name: 编译工具链
+name: toolchain编译工具链
 on:
   workflow_dispatch:  # 手动触发，支持输入参数 允许用户指定是否强制编译工具链或选择特定架构（如 aarch64）
     inputs:
