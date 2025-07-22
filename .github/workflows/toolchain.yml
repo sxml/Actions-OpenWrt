@@ -4,18 +4,32 @@
 #
 name: 编译工具链
 on:
-  workflow_dispatch:
+  workflow_dispatch:  # 手动触发，支持输入参数 允许用户指定是否强制编译工具链或选择特定架构（如 aarch64）
+    inputs:
+      force_rebuild:
+        description: '是否强制重新编译工具链'
+        required: false
+        default: 'false'
+      target_arch:
+        description: '目标架构 (默认: aarch64)'
+        required: false
+        default: 'aarch64'
   push:
     branches:
       - master
     paths:
-      - 'aarch64/Lede1806/Lede1806_FOL.config'
-      - 'aarch64/Lede1806/1806diy-part1.sh'
+      - 'aarch64/Lede1806/Lede1806_FOL.config'  # 配置文件变化
+      - 'aarch64/Lede1806/feeds.conf.default'   # 软件包源变化
+      - 'aarch64/Lede1806/1806diy-part1.sh'     # DIY 脚本变化
       - 'aarch64/Lede1806/1806diy-part2.sh'
+      - '.github/workflows/build.yml'            # 主工作流变化
+  schedule:
+    - cron: '0 0 * * 0'  # 每周日凌晨检查，处理源码更新
 
 jobs:
   build-toolchain:
     runs-on: ubuntu-22.04
+    if: github.event_name == 'workflow_dispatch' || github.event.inputs.force_rebuild == 'true' || contains(github.event.head_commit.message, 'toolchain') || contains(github.event.head_commit.message, 'aarch64')
     steps:
       - name: 检出仓库
         uses: actions/checkout@v4
@@ -59,6 +73,12 @@ jobs:
           git clone https://github.com/coolsnowwolf/lede -b master openwrt
           ln -sf /workdir/openwrt $GITHUB_WORKSPACE/openwrt
 
+      - name: 调试配置文件
+        run: |
+          echo "检查 aarch64/Lede1806/Lede1806_FOL.config 架构..."
+          grep "CONFIG_TARGET" aarch64/Lede1806/Lede1806_FOL.config
+          grep "CONFIG_ARCH" aarch64/Lede1806/Lede1806_FOL.config
+
       - name: 加载配置文件
         run: |
           [ -e aarch64/Lede1806/feeds.conf.default ] && cp aarch64/Lede1806/feeds.conf.default openwrt/feeds.conf.default
@@ -67,12 +87,21 @@ jobs:
           ./scripts/feeds update -a
           ./scripts/feeds install -a
           make defconfig
+          # 强制设置 aarch64 架构
+          ./scripts/config -e CONFIG_TARGET_armvirt
+          ./scripts/config -e CONFIG_TARGET_armvirt_64
+          ./scripts/config -s CONFIG_ARCH "aarch64"
+          ./scripts/config -s CONFIG_TARGET_ARCH_PACKAGES "aarch64_generic"
+          echo "检查 defconfig 后架构..."
+          grep "CONFIG_TARGET" .config
+          grep "CONFIG_ARCH" .config
 
       - name: 编译工具链
         run: |
           cd openwrt
           export CROSS_COMPILE=aarch64-linux-gnu-
           export ARCH=aarch64
+          export CONFIG_TARGET_ARCH_PACKAGES=aarch64_generic
           make -j$(nproc) toolchain/install V=s
 
       - name: 上传工具链
