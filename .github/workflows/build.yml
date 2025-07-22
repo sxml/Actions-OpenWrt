@@ -2,7 +2,7 @@
 # 分离工具链构建 主工作流 (build.yml)
 # 2025.07.22  X 编译 Lede-18.06-ARMv8_FOL
 #
-name: 编译Lede1806_FOL
+name: build编译Lede1806_FOL
 on:
   repository_dispatch:
   workflow_dispatch:
