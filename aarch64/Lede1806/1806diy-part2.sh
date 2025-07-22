@@ -38,6 +38,11 @@ git clone --depth=1 https://github.com/kenzok8/small-package.git small-package
 #cp -rf small-package/luci-app-gost package/luci-app-gost
 #cp -rf small-package/sagernet-core package/sagernet-core
 #cp -rf small-package/v2ray-geodata package/v2ray-geodata
+cp -rf small-package/brook package/brook
+cp -rf small-package/ssocks package/ssocks
+cp -rf small-package/pdnsd-alt package/pdnsd-alt
+cp -rf small-package/trojan-go package/trojan-go
+cp -rf small-package/dns2tcp package/dns2tcp
 cp -rf small-package/v2ray-geoview package/v2ray-geoview
 
 # 克隆 fw876 仓库
@@ -65,16 +70,16 @@ cp -rf helloworld/naiveproxy package/naiveproxy
 
 # 克隆openwrt-passwall仓库
 git clone --depth=1 https://github.com/xiaorouji/openwrt-passwall-packages.git
-cp -rf openwrt-passwall-packages/brook package/brook
-cp -rf openwrt-passwall-packages/ssocks package/ssocks
+#cp -rf openwrt-passwall-packages/brook package/brook
+#cp -rf openwrt-passwall-packages/ssocks package/ssocks
 cp -rf openwrt-passwall-packages/simple-obfs package/simple-obfs
-cp -rf openwrt-passwall-packages/pdnsd-alt package/pdnsd-alt
+#cp -rf openwrt-passwall-packages/pdnsd-alt package/pdnsd-alt
 cp -rf openwrt-passwall-packages/chinadns-ng package/chinadns-ng
 cp -rf openwrt-passwall-packages/tcping package/tcping
-cp -rf openwrt-passwall-packages/trojan-go package/trojan-go
+#cp -rf openwrt-passwall-packages/trojan-go package/trojan-go
 cp -rf openwrt-passwall-packages/trojan-plus package/trojan-plus
 cp -rf openwrt-passwall-packages/hysteria package/hysteria
-cp -rf openwrt-passwall-packages/dns2tcp package/dns2tcp
+#cp -rf openwrt-passwall-packages/dns2tcp package/dns2tcp
 cp -rf openwrt-passwall-packages/sing-box package/sing-box
 cp -rf openwrt-passwall-packages/v2ray-geodata package/v2ray-geodata
 #rm -rf openwrt-passwall-packages
