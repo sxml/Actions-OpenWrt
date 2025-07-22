@@ -153,6 +153,9 @@ find package/*/ -maxdepth 2 -path "*/Makefile" | xargs -i sed -i 's/include\ \.\
 find package/*/ -maxdepth 2 -path "*/Makefile" | xargs -i sed -i 's/PKG_SOURCE_URL:=\@GHREPO/PKG_SOURCE_URL:=https:\/\/github\.com/g' {}
 find package/*/ -maxdepth 2 -path "*/Makefile" | xargs -i sed -i 's/PKG_SOURCE_URL:=\@GHCODELOAD/PKG_SOURCE_URL:=https:\/\/codeload\.github\.com/g' {}
 
+#强制设置工具链
+sed -i 's/--with-arch=[^ ]*/--with-arch=armv8-a+crc+crypto/' toolchain/gcc/initial/Makefile
+
 # 清理工具链缓存 
 #echo "Cleaning toolchain build directory..." 
 #make toolchain/gcc/initial/clean
