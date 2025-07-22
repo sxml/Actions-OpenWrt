@@ -25,10 +25,10 @@ jobs:
       fail-fast: false
       
     steps:
-    - name: 准备
-      uses: actions/checkout@v4  # 更新到最新版本
+    - name: 检出仓库
+      uses: actions/checkout@v4
       with:
-        fetch-depth: 0  # 确保完整检出仓库
+        fetch-depth: 0
 
     - name: 部署编译环境
       env:
@@ -43,7 +43,6 @@ jobs:
         #sudo -E apt-get -y install build-essential gcc-11 g++-11 libstdc++-11-dev gcc-aarch64-linux-gnu g++-aarch64-linux-gnu        
         sudo -E apt-get -y install build-essential gcc-11 g++-11 libstdc++-11-dev gcc-aarch64-linux-gnu g++-aarch64-linux-gnu libncurses5-dev gawk git subversion gettext libssl-dev zlib1g-dev flex bison clang llvm
         sudo -E apt -y autoremove --purge
-        sudo -E systemctl daemon-reload
         sudo -E apt clean
         sudo timedatectl set-timezone "$TZ"
         sudo mkdir -p /workdir
@@ -99,34 +98,49 @@ jobs:
         echo "DATE=$(date "+%Y-%m-%d %H:%M:%S")" >> $GITHUB_ENV
         echo "DATE1=$(date "+%Y-%m-%d")" >> $GITHUB_ENV
 
+    - name: 验证系统工具链
+      run: |
+        if command -v aarch64-linux-gnu-gcc >/dev/null; then
+          echo "系统已安装 aarch64 工具链"
+          echo "TOOLCHAIN_AVAILABLE=true" >> $GITHUB_ENV
+        else
+          echo "警告：未找到系统工具链，可能需要缓存或预编译工具链"
+          echo "TOOLCHAIN_AVAILABLE=false" >> $GITHUB_ENV
+        fi
+
     - name: 缓存加速
       uses: stupidloud/cachewrtbuild@main
       with:
         mixkey: 'Build1806'
         ccache: true
-        skip: true
+        skip: false  # 确保检查缓存
         toolchain: true
-        clean: true
+        clean: false  # 保留缓存
         prefix: ${{ github.workspace }}/openwrt
 
     - name: 调试文件路径
       run: |
         echo "检查 CONFIG_FILE 是否存在："
-        ls -la $CONFIG_FILE
+        ls -la $CONFIG_FILE || echo "CONFIG_FILE 不存在"
         echo "检查 FEEDS_CONF 是否存在："
-        ls -la $FEEDS_CONF
+        ls -la $FEEDS_CONF || echo "FEEDS_CONF 不存在"
         echo "检查 DIY_P1_SH 是否存在："
-        ls -la $DIY_P1_SH
+        ls -la $DIY_P1_SH || echo "DIY_P1_SH 不存在"
+        echo "检查 DIY_P2_SH 是否存在："
+        ls -la $DIY_P2_SH || echo "DIY_P2_SH 不存在"
+        echo "检查 openwrt/.config 是否存在："
+        ls -la openwrt/.config || echo "openwrt/.config 不存在"
 
     - name: 加载自定义配置
       run: |
-        [ -e $FEEDS_CONF ] && cp $FEEDS_CONF openwrt/feeds.conf.default  # 使用 cp 保留原始文件
+        [ -e $FEEDS_CONF ] && cp $FEEDS_CONF openwrt/feeds.conf.default
         chmod +x $DIY_P1_SH
         cd openwrt
+        cp $GITHUB_WORKSPACE/$CONFIG_FILE .config
         $GITHUB_WORKSPACE/$DIY_P1_SH
         echo "检查DIY Part1后架构..."
-        grep "CONFIG_TARGET" $GITHUB_WORKSPACE/$CONFIG_FILE  # 使用完整路径
-        grep "CONFIG_ARCH" $GITHUB_WORKSPACE/$CONFIG_FILE
+        grep "CONFIG_TARGET" .config
+        grep "CONFIG_ARCH" .config
 
     - name: 更新软件包
       run: cd openwrt && ./scripts/feeds update -a
@@ -137,12 +151,12 @@ jobs:
     - name: 加载自定义配置
       run: |
         [ -e files ] && mv files openwrt/files
-        [ -e $CONFIG_FILE ] && cp $CONFIG_FILE openwrt/.config  # 使用 cp 保留原始文件
+        [ -e $CONFIG_FILE ] && cp $CONFIG_FILE openwrt/.config
         chmod +x $DIY_P2_SH
         cd openwrt
         $GITHUB_WORKSPACE/$DIY_P2_SH
         echo "检查DIY Part2后架构..."
-        grep "CONFIG_TARGET" .config  # 检查 openwrt/.config
+        grep "CONFIG_TARGET" .config
         grep "CONFIG_ARCH" .config
         sed -i 's/192.168.1.1/192.168.2.1/g' package/base-files/files/bin/config_generate
         sed -i 's/OpenWrt/MRG AutoBuild ${{ env.DATE1 }} @ OpenWrt/g' package/lean/default-settings/files/zzz-default-settings
@@ -153,13 +167,6 @@ jobs:
         echo "检查目标架构..."
         grep "CONFIG_TARGET" .config
         grep "CONFIG_ARCH" .config
-
-    - name: 构建工具链
-      run: |
-        cd openwrt
-        export CROSS_COMPILE=aarch64-linux-gnu-
-        export ARCH=aarch64
-        make -j$(nproc) toolchain/install V=s
 
     - name: 下载软件包
       id: package
