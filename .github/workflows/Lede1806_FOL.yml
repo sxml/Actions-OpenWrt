@@ -1,5 +1,5 @@
 #
-# 2024.07.22  X优化2 编译 Lede-18.06-ARMv8_FOL
+# 2025.07.22 X优化3 编译 Lede-18.06-ARMv8_FOL
 #
 name: 编译Lede1806_FOL
 on:
@@ -39,8 +39,6 @@ jobs:
         sudo -E apt -y purge azure-cli* docker* ghc* zulu* firefox google* dotnet* powershell* openjdk* mysql* mongodb* dotnet* snap* aspnetcore*
         [ -n "$AGENT_TOOLSDIRECTORY" ] && sudo rm -rf "$AGENT_TOOLSDIRECTORY"
         sudo -E apt update
-        #sudo -E apt -y install $(curl -fsSL https://tinyurl.com/ubuntu2204-make-openwrt) subversion clang llvm
-        #sudo -E apt-get -y install build-essential gcc-11 g++-11 libstdc++-11-dev gcc-aarch64-linux-gnu g++-aarch64-linux-gnu        
         sudo -E apt-get -y install build-essential gcc-11 g++-11 libstdc++-11-dev gcc-aarch64-linux-gnu g++-aarch64-linux-gnu libncurses5-dev gawk git subversion gettext libssl-dev zlib1g-dev flex bison clang llvm
         sudo -E apt -y autoremove --purge
         sudo -E apt clean
@@ -104,8 +102,9 @@ jobs:
           echo "系统已安装 aarch64 工具链"
           echo "TOOLCHAIN_AVAILABLE=true" >> $GITHUB_ENV
         else
-          echo "警告：未找到系统工具链，可能需要缓存或预编译工具链"
+          echo "错误：未找到 aarch64 工具链，编译可能失败"
           echo "TOOLCHAIN_AVAILABLE=false" >> $GITHUB_ENV
+          exit 1
         fi
 
     - name: 缓存加速
@@ -113,9 +112,9 @@ jobs:
       with:
         mixkey: 'Build1806'
         ccache: true
-        skip: false  # 确保检查缓存
+        skip: false
         toolchain: true
-        clean: false  # 保留缓存
+        clean: false
         prefix: ${{ github.workspace }}/openwrt
 
     - name: 调试文件路径
@@ -128,8 +127,12 @@ jobs:
         ls -la $DIY_P1_SH || echo "DIY_P1_SH 不存在"
         echo "检查 DIY_P2_SH 是否存在："
         ls -la $DIY_P2_SH || echo "DIY_P2_SH 不存在"
-        echo "检查 openwrt/.config 是否存在："
-        ls -la openwrt/.config || echo "openwrt/.config 不存在"
+
+    - name: 调试 CONFIG_FILE 内容
+      run: |
+        echo "检查 aarch64/Lede1806/Lede1806_FOL.config 架构..."
+        grep "CONFIG_TARGET" $CONFIG_FILE
+        grep "CONFIG_ARCH" $CONFIG_FILE
 
     - name: 加载自定义配置
       run: |
@@ -172,6 +175,7 @@ jobs:
       id: package
       run: |
         cd openwrt
+        cp $GITHUB_WORKSPACE/$CONFIG_FILE .config  # 再次确保 .config 正确
         make defconfig
         make download -j8
         find dl -size -1024c -exec ls -l {} \;
@@ -180,6 +184,13 @@ jobs:
         rm -rf $GITHUB_WORKSPACE/opt
         df -Th
 
+    - name: 验证 defconfig 后架构
+      run: |
+        cd openwrt
+        echo "检查 defconfig 后架构..."
+        grep "CONFIG_TARGET" .config
+        grep "CONFIG_ARCH" .config
+
     - name: 编译固件
       id: compile
       run: |
@@ -187,6 +198,7 @@ jobs:
         echo -e "$(nproc) thread compile"
         export CROSS_COMPILE=aarch64-linux-gnu-
         export ARCH=aarch64
+        export CONFIG_TARGET_ARCH_PACKAGES=aarch64_generic
         make -j$(nproc) V=s
         grep '^CONFIG_TARGET.*DEVICE.*=y' .config | sed -r 's/.*DEVICE_(.*)=y/\1/' > DEVICE_NAME
         [ -s DEVICE_NAME ] && echo "DEVICE_NAME=_$(cat DEVICE_NAME)" >> $GITHUB_ENV
@@ -249,3 +261,4 @@ jobs:
     - name: 电报机器人信息通知
       if: steps.organize.outputs.status == 'success' && !cancelled()
       run: curl -k --data chat_id="${{ secrets.TELEGRAM_CHAT_ID }}" --data "text=${{ env.FILE_NAME }}编译完成" "https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage"
+
