@@ -14,7 +14,7 @@ rm -fr feeds/luci/themes/luci-theme-design
 rm -rf feeds/luci/applications/luci-app-ddns-go
 rm -rf feeds/packages/net/ddns-go
 #重新编译时没有旧的或不必要的文件干扰 #staging_dir：编译生成的文件和依赖库 #build_dir：软件包的源代码和编译生成的文件
-rm -rf staging_dir build_dir
+#rm -rf staging_dir build_dir
 
 # 修改默认主题（从 uci-theme-bootstrap 更改为 luci-theme-design）
 sed -i 's/luci-theme-bootstrap/luci-theme-design/g' ./feeds/luci/collections/luci/Makefile
@@ -138,7 +138,7 @@ popd
 
 #libcryptopp 编译问题
 # 在 Makefile 中显式指定编译器
-sed -i '/include $(INCLUDE_DIR)\/package.mk/a TARGET_CC:=aarch64-openwrt-linux-musl-gcc\nTARGET_CXX:=aarch64-openwrt-linux-musl-g++' package/lean/libcryptopp/Makefile
+#sed -i '/include $(INCLUDE_DIR)\/package.mk/a TARGET_CC:=aarch64-openwrt-linux-musl-gcc\nTARGET_CXX:=aarch64-openwrt-linux-musl-g++' package/lean/libcryptopp/Makefile
 # 清理 libcryptopp 的缓存
 #make package/lean/libcryptopp/clean
 
@@ -149,13 +149,13 @@ find package/*/ -maxdepth 2 -path "*/Makefile" | xargs -i sed -i 's/PKG_SOURCE_U
 find package/*/ -maxdepth 2 -path "*/Makefile" | xargs -i sed -i 's/PKG_SOURCE_URL:=\@GHCODELOAD/PKG_SOURCE_URL:=https:\/\/codeload\.github\.com/g' {}
 
 # 清理工具链缓存 
-echo "Cleaning toolchain build directory..." 
-make toolchain/gcc/initial/clean
+#echo "Cleaning toolchain build directory..." 
+#make toolchain/gcc/initial/clean
 
 # 修复 GCC 工具链配置以支持 QEMU ARMv8 Cortex-A53 
-echo "Fixing GCC architecture configuration for Cortex-A53..." 
+#echo "Fixing GCC architecture configuration for Cortex-A53..." 
 #sed -i 's/--with-arch=armv8-a+crypto/--with-arch=armv8-a --with-cpu=cortex-a53/' toolchain/gcc/initial/Makefile
-sed -i 's/--with-arch=armv8-a+crypto/--with-arch=armv8-a+crc+crypto --with-cpu=cortex-a53/' toolchain/gcc/initial/Makefil
+#sed -i 's/--with-arch=armv8-a+crypto/--with-arch=armv8-a+crc+crypto --with-cpu=cortex-a53/' toolchain/gcc/initial/Makefil
 
 # # 更新 GCC 版本
 # echo "Updating GCC version to 12.3.0..."
