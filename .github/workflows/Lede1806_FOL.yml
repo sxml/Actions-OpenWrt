@@ -1,5 +1,5 @@
 #
-# 2024.07.22  X优化 编译 Lede-18.06-ARMv8_FOL
+# 2024.07.22  X优化2 编译 Lede-18.06-ARMv8_FOL
 #
 name: 编译Lede1806_FOL
 on:
@@ -26,7 +26,9 @@ jobs:
       
     steps:
     - name: 准备
-      uses: actions/checkout@master
+      uses: actions/checkout@v4  # 更新到最新版本
+      with:
+        fetch-depth: 0  # 确保完整检出仓库
 
     - name: 部署编译环境
       env:
@@ -38,7 +40,7 @@ jobs:
         [ -n "$AGENT_TOOLSDIRECTORY" ] && sudo rm -rf "$AGENT_TOOLSDIRECTORY"
         sudo -E apt update
         #sudo -E apt -y install $(curl -fsSL https://tinyurl.com/ubuntu2204-make-openwrt) subversion clang llvm
-        #sudo -E apt-get -y install build-essential gcc-11 g++-11 libstdc++-11-dev gcc-aarch64-linux-gnu g++-aarch64-linux-gnu
+        #sudo -E apt-get -y install build-essential gcc-11 g++-11 libstdc++-11-dev gcc-aarch64-linux-gnu g++-aarch64-linux-gnu        
         sudo -E apt-get -y install build-essential gcc-11 g++-11 libstdc++-11-dev gcc-aarch64-linux-gnu g++-aarch64-linux-gnu libncurses5-dev gawk git subversion gettext libssl-dev zlib1g-dev flex bison clang llvm
         sudo -E apt -y autoremove --purge
         sudo -E systemctl daemon-reload
@@ -107,15 +109,24 @@ jobs:
         clean: true
         prefix: ${{ github.workspace }}/openwrt
 
+    - name: 调试文件路径
+      run: |
+        echo "检查 CONFIG_FILE 是否存在："
+        ls -la $CONFIG_FILE
+        echo "检查 FEEDS_CONF 是否存在："
+        ls -la $FEEDS_CONF
+        echo "检查 DIY_P1_SH 是否存在："
+        ls -la $DIY_P1_SH
+
     - name: 加载自定义配置
       run: |
-        [ -e $FEEDS_CONF ] && mv $FEEDS_CONF openwrt/feeds.conf.default
+        [ -e $FEEDS_CONF ] && cp $FEEDS_CONF openwrt/feeds.conf.default  # 使用 cp 保留原始文件
         chmod +x $DIY_P1_SH
         cd openwrt
         $GITHUB_WORKSPACE/$DIY_P1_SH
         echo "检查DIY Part1后架构..."
-        grep "CONFIG_TARGET" .config
-        grep "CONFIG_ARCH" .config
+        grep "CONFIG_TARGET" $GITHUB_WORKSPACE/$CONFIG_FILE  # 使用完整路径
+        grep "CONFIG_ARCH" $GITHUB_WORKSPACE/$CONFIG_FILE
 
     - name: 更新软件包
       run: cd openwrt && ./scripts/feeds update -a
@@ -126,12 +137,12 @@ jobs:
     - name: 加载自定义配置
       run: |
         [ -e files ] && mv files openwrt/files
-        [ -e $CONFIG_FILE ] && mv $CONFIG_FILE openwrt/.config
+        [ -e $CONFIG_FILE ] && cp $CONFIG_FILE openwrt/.config  # 使用 cp 保留原始文件
         chmod +x $DIY_P2_SH
         cd openwrt
         $GITHUB_WORKSPACE/$DIY_P2_SH
         echo "检查DIY Part2后架构..."
-        grep "CONFIG_TARGET" .config
+        grep "CONFIG_TARGET" .config  # 检查 openwrt/.config
         grep "CONFIG_ARCH" .config
         sed -i 's/192.168.1.1/192.168.2.1/g' package/base-files/files/bin/config_generate
         sed -i 's/OpenWrt/MRG AutoBuild ${{ env.DATE1 }} @ OpenWrt/g' package/lean/default-settings/files/zzz-default-settings
