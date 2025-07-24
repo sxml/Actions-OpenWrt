@@ -113,10 +113,10 @@ jobs:
         echo "DATE=$(date "+%Y-%m-%d %H:%M:%S")" >> $GITHUB_ENV
         echo "DATE1=$(date "+%Y-%m-%d")" >> $GITHUB_ENV
 
-    - name: 缓存加速
+   # - name: 缓存加速
       # This step was causing the syntax error. The 'uses' keyword expects a value on the same line or as a block.
       # The comments were breaking the YAML parser.
-      uses: klever1988/cachewrtbuild@main
+      #uses: klever1988/cachewrtbuild@main
       # uses: stupidloud/cachewrtbuild@main
       # with:
       #   mixkey: 'Build1806'
