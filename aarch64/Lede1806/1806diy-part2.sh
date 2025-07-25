@@ -158,6 +158,9 @@ find package/*/ -maxdepth 2 -path "*/Makefile" | xargs -i sed -i 's/PKG_SOURCE_U
 #sed -i 's/--with-arch=armv8-a+crypto/--with-arch=armv8-a --with-cpu=cortex-a53/' toolchain/gcc/initial/Makefile
 #sed -i 's/--with-arch=armv8-a+crypto/--with-arch=armv8-a+crc+crypto --with-cpu=cortex-a53/' toolchain/gcc/initial/Makefil
 
+#强制GCC配置接 受加密扩展
+sed -i 's/--with-arch=armv8-a+crypto/--with-arch=armv8-a --with-cpu=cortex-a53 --enable-crypto/g' /workdir/openwrt/toolchain/gcc/initial/Makefile
+
 # # 更新 GCC 版本
 # echo "Updating GCC version to 12.3.0..."
 # sed -i 's/gcc-11.3.0/gcc-12.3.0/' toolchain/gcc/initial/Makefile
