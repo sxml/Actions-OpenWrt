@@ -26,13 +26,19 @@ sed -i 's/192.168.1.1/192.168.2.1/g' package/base-files/files/bin/config_generat
 sed -i 's/\/bin\/login/\/bin\/login -f root/' feeds/packages/utils/ttyd/files/ttyd.config
 
 # 克隆 kenzok8仓库
-git clone --depth=1 https://github.com/kenzok8/openwrt-packages.git kenzok8-packages
-cp -rf kenzok8-packages/smartdns package/smartdns
-cp -rf kenzok8-packages/luci-app-smartdns package/luci-app-smartdns
+# git clone --depth=1 https://github.com/kenzok8/openwrt-packages.git kenzok8-packages
+# cp -rf kenzok8-packages/smartdns package/smartdns
+# cp -rf kenzok8-packages/luci-app-smartdns package/luci-app-smartdns
 #cp -rf kenzok8-packages/luci-theme-argon package/luci-theme-argon
 #cp -rf kenzok8-packages/ddns-go package/ddns-go
 #cp -rf kenzok8-packages/gost package/gost
+
+#克隆 pymumu 仓库 smartdns 20251021
 #git clone --depth=1 https://github.com/pymumu/luci-app-smartdns.git package/luci-app-smartdns
+git_clone lede https://github.com/pymumu/luci-app-smartdns luci-app-smartdns
+git_clone https://github.com/pymumu/openwrt-smartdns smartdns
+
+# 克隆 kenzok8 small仓库
 git clone --depth=1 https://github.com/kenzok8/small-package.git small-package
 #cp -rf small-package/gost package/gost
 #cp -rf small-package/luci-app-gost package/luci-app-gost
