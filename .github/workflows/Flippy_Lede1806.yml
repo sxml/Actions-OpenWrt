@@ -121,7 +121,7 @@ jobs:
         commit: master
         token: ${{ secrets.RELEASES_TOKEN }}
         body: |
-          默认IP：192.168.2.1 默认密码： password
+          默认IP：192.168.1.1 默认密码： password
           Lede 18.06版本，Flippy打包,自用无wifi 
           s905x3(X96-Max+),s905d(Phicomm-N1)
           +o版 +版（Flowoffload加速+SFE加速)
@@ -149,3 +149,4 @@ jobs:
     - name: 电报机器人信息通知
       if: steps.organize.outputs.status == 'success' && !cancelled()
       run: curl -k --data chat_id="${{ secrets.TELEGRAM_CHAT_ID }}" --data "text=${{ env.FILE_NAME }}打包完成" "https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage"
+
