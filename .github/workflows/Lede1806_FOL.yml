@@ -1,5 +1,5 @@
 #
-# 2024.12.06 2025.10.20使用 编译 Lede-18.06-ARMv8_FOL
+# 2024.12.06 2025.10.21使用 编译 Lede-18.06-ARMv8_FOL
 #
 name: 编译Lede1806_FOL
 on:
@@ -133,8 +133,8 @@ jobs:
         chmod +x $DIY_P2_SH
         cd openwrt
         $GITHUB_WORKSPACE/$DIY_P2_SH
-        sed -i 's/192.168.1.1/192.168.2.1/g' package/base-files/files/bin/config_generate
-        sed -i 's/OpenWrt/MRG AutoBuild ${{ env.DATE1 }} @ OpenWrt/g' package/lean/default-settings/files/zzz-default-settings
+        # sed -i 's/192.168.1.1/192.168.2.1/g' package/base-files/files/bin/config_generate
+        # sed -i 's/OpenWrt/MRG AutoBuild ${{ env.DATE1 }} @ OpenWrt/g' package/lean/default-settings/files/zzz-default-settings
         
     - name: 下载软件包
       id: package
