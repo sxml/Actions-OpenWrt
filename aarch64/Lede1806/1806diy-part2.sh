@@ -21,29 +21,6 @@ sed -i 's/luci-theme-bootstrap/luci-theme-design/g' ./feeds/luci/collections/luc
 
 # 修改默认IP
 #sed -i 's/192.168.1.1/192.168.2.1/g' package/base-files/files/bin/config_generate
-#!/bin/bash
-#============================================================
-# sxml
-# 2025-10-21 1806
-#https://github.com/HoldOnBro/Actions-OpenWrt
-#https://github.com/breakings/OpenWrt
-#============================================================
-#移除不用软件包
-rm -rf feeds/luci/applications/luci-app-dockerman
-#rm -rf package/lean/luci-app-wrtbwmon
-rm -rf feeds/packages/net/smartdns
-rm -rf feeds/luci/applications/luci-app-smartdns
-rm -fr feeds/luci/themes/luci-theme-design
-rm -rf feeds/luci/applications/luci-app-ddns-go
-rm -rf feeds/packages/net/ddns-go
-#重新编译时没有旧的或不必要的文件干扰 #staging_dir：编译生成的文件和依赖库 #build_dir：软件包的源代码和编译生成的文件
-rm -rf staging_dir build_dir
-
-# 修改默认主题（从 uci-theme-bootstrap 更改为 luci-theme-design）
-sed -i 's/luci-theme-bootstrap/luci-theme-design/g' ./feeds/luci/collections/luci/Makefile
-
-# 修改默认IP
-sed -i 's/192.168.1.1/192.168.2.1/g' package/base-files/files/bin/config_generate
 
 # 设置ttyd免帐号登录
 sed -i 's/\/bin\/login/\/bin\/login -f root/' feeds/packages/utils/ttyd/files/ttyd.config
@@ -59,7 +36,7 @@ sed -i 's/\/bin\/login/\/bin\/login -f root/' feeds/packages/utils/ttyd/files/tt
 #克隆 pymumu 仓库 smartdns 20251021
 #git clone --depth=1 https://github.com/pymumu/luci-app-smartdns.git package/luci-app-smartdns
 git clone --depth=1 -b lede https://github.com/pymumu/luci-app-smartdns.git package/luci-app-smartdns
-git clone --depth=1 https://github.com/pymumu/openwrt-smartdns.git package/smartdns
+git clone --depth=1 https://github.com/pymumu/openwrt-smartdns package/smartdns
 
 # 克隆 kenzok8 small仓库
 git clone --depth=1 https://github.com/kenzok8/small-package.git small-package
