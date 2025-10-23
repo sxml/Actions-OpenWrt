@@ -43,8 +43,8 @@ jobs:
         [ -n "$AGENT_TOOLSDIRECTORY" ] && sudo rm -rf "$AGENT_TOOLSDIRECTORY"
         sudo -E apt update
         # 添加 subversion 安装
-        sudo -E apt-get -y install $(cat $GITHUB_WORKSPACE/depends-ubuntu-2204) subversion clang llvm
-        #sudo -E apt -y install $(curl -fsSL https://tinyurl.com/ubuntu2204-make-openwrt) subversion clang llvm
+        #sudo -E apt-get -y install $(cat $GITHUB_WORKSPACE/depends-ubuntu-2204) subversion clang llvm
+        sudo -E apt -y install $(curl -fsSL https://tinyurl.com/ubuntu2204-make-openwrt) subversion clang llvm
         sudo -E apt -y autoremove --purge
         sudo -E systemctl daemon-reload
         sudo -E apt clean
