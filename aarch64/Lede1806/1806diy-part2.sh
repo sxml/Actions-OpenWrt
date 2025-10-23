@@ -26,17 +26,17 @@ sed -i 's/luci-theme-bootstrap/luci-theme-design/g' ./feeds/luci/collections/luc
 sed -i 's/\/bin\/login/\/bin\/login -f root/' feeds/packages/utils/ttyd/files/ttyd.config
 
 # 克隆 kenzok8仓库
-# git clone --depth=1 https://github.com/kenzok8/openwrt-packages.git kenzok8-packages
-# cp -rf kenzok8-packages/smartdns package/smartdns
-# cp -rf kenzok8-packages/luci-app-smartdns package/luci-app-smartdns
+git clone --depth=1 https://github.com/kenzok8/openwrt-packages.git kenzok8-packages
+cp -rf kenzok8-packages/smartdns package/smartdns
+cp -rf kenzok8-packages/luci-app-smartdns package/luci-app-smartdns
 #cp -rf kenzok8-packages/luci-theme-argon package/luci-theme-argon
 #cp -rf kenzok8-packages/ddns-go package/ddns-go
 #cp -rf kenzok8-packages/gost package/gost
 
 #克隆 pymumu 仓库 smartdns 20251021
 #git clone --depth=1 https://github.com/pymumu/luci-app-smartdns.git package/luci-app-smartdns
-git clone --depth=1 -b lede https://github.com/pymumu/luci-app-smartdns.git package/luci-app-smartdns
-git clone https://github.com/pymumu/openwrt-smartdns package/smartdns
+#git clone --depth=1 -b lede https://github.com/pymumu/luci-app-smartdns.git package/luci-app-smartdns
+#git clone https://github.com/pymumu/openwrt-smartdns package/smartdns
 
 # 克隆 kenzok8 small仓库
 git clone --depth=1 https://github.com/kenzok8/small-package.git small-package
