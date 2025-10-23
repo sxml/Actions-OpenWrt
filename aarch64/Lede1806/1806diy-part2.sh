@@ -36,7 +36,7 @@ sed -i 's/\/bin\/login/\/bin\/login -f root/' feeds/packages/utils/ttyd/files/tt
 #克隆 pymumu 仓库 smartdns 20251021
 #git clone --depth=1 https://github.com/pymumu/luci-app-smartdns.git package/luci-app-smartdns
 git clone --depth=1 -b lede https://github.com/pymumu/luci-app-smartdns.git package/luci-app-smartdns
-git clone --depth=1 https://github.com/pymumu/openwrt-smartdns package/smartdns
+git clone https://github.com/pymumu/openwrt-smartdns package/smartdns
 
 # 克隆 kenzok8 small仓库
 git clone --depth=1 https://github.com/kenzok8/small-package.git small-package
