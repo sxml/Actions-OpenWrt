@@ -38,7 +38,6 @@ sed -i 's/\/bin\/login/\/bin\/login -f root/' feeds/packages/utils/ttyd/files/tt
 git clone --depth=1 -b lede https://github.com/pymumu/luci-app-smartdns.git luci-app-smartdns
 # 复制界面到编译目录（确保目录层级正确）
 cp -rf luci-app-smartdns/luci-app-smartdns package/luci-app-smartdns
-
 # 克隆smartdns核心组件
 git clone --depth=1 https://github.com/pymumu/openwrt-smartdns.git openwrt-smartdns
 # 检查内部目录后复制（假设无嵌套子目录）
