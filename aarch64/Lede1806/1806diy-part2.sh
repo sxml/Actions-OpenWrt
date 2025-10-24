@@ -8,8 +8,8 @@
 #移除不用软件包
 rm -rf feeds/luci/applications/luci-app-dockerman
 #rm -rf package/lean/luci-app-wrtbwmon
-rm -rf feeds/packages/net/smartdns
-rm -rf feeds/luci/applications/luci-app-smartdns
+#rm -rf feeds/packages/net/smartdns
+#rm -rf feeds/luci/applications/luci-app-smartdns
 rm -fr feeds/luci/themes/luci-theme-design
 rm -rf feeds/luci/applications/luci-app-ddns-go
 rm -rf feeds/packages/net/ddns-go
@@ -35,13 +35,13 @@ sed -i 's/\/bin\/login/\/bin\/login -f root/' feeds/packages/utils/ttyd/files/tt
 
 #克隆 pymumu 仓库 smartdns 20251021
 # 克隆LEDE分支的luci界面（适配旧版）
-git clone --depth=1 -b lede https://github.com/pymumu/luci-app-smartdns.git luci-app-smartdns
+#git clone --depth=1 -b lede https://github.com/pymumu/luci-app-smartdns.git luci-app-smartdns
 # 复制界面到编译目录（确保目录层级正确）
-cp -rf luci-app-smartdns/luci-app-smartdns package/luci-app-smartdns
+#cp -rf luci-app-smartdns/luci-app-smartdns package/luci-app-smartdns
 # 克隆smartdns核心组件
-git clone --depth=1 https://github.com/pymumu/openwrt-smartdns.git openwrt-smartdns
+#git clone --depth=1 https://github.com/pymumu/openwrt-smartdns.git openwrt-smartdns
 # 检查内部目录后复制（假设无嵌套子目录）
-cp -rf openwrt-smartdns package/smartdns
+#cp -rf openwrt-smartdns package/smartdns
 
 # 克隆 kenzok8 small仓库
 git clone --depth=1 https://github.com/kenzok8/small-package.git small-package
