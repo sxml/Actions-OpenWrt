@@ -24,8 +24,8 @@ env:
 
 jobs:
   build:
-    runs-on: ubuntu-22.04
-    #if: github.event.repository.owner.id == github.event.sender.id || ! github.event.sender.id
+    runs-on: ubuntu-20.04
+    if: github.event.repository.owner.id == github.event.sender.id
 
     name: 提取Lede2305-config
     strategy:
@@ -39,21 +39,16 @@ jobs:
       env:
         DEBIAN_FRONTEND: noninteractive
       run: |
-        docker rmi `docker images -q`
-        sudo -E rm -rf /usr/share/dotnet /etc/mysql /etc/php /etc/apt/sources.list.d /usr/local/lib/android
-        sudo -E apt -y purge azure-cli* docker* ghc* zulu* firefox google* dotnet* powershell* openjdk* mysql* mongodb* dotnet* snap* aspnetcore*
-        [ -n "$AGENT_TOOLSDIRECTORY" ] && sudo rm -rf "$AGENT_TOOLSDIRECTORY"
-        sudo -E apt update
-        # 添加 subversion 安装
-        sudo -E apt -y install $(curl -fsSL https://is.gd/depends_ubuntu_2204) subversion clang llvm
-        sudo -E apt -y autoremove --purge
-        sudo -E systemctl daemon-reload
-        sudo -E apt clean
+        sudo rm -rf /etc/apt/sources.list.d/* /usr/share/dotnet /usr/local/lib/android /opt/ghc
+        sudo -E apt-get -qq update
+        sudo -E apt-get -qq install $(curl -fsSL https://is.gd/depends_ubuntu_2204)
+        sudo -E apt-get -qq install rename
+        sudo -E apt-get -qq install time
+        sudo -E apt-get -qq autoremove --purge
+        sudo -E apt-get -qq clean
         sudo timedatectl set-timezone "$TZ"
         sudo mkdir -p /workdir
         sudo chown $USER:$GROUPS /workdir
-        echo "status=success" >> $GITHUB_OUTPUT
-        df -Th
 
     - name: 下载源码
       working-directory: /workdir
