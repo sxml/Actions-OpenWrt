@@ -16,15 +16,15 @@ rm -fr feeds/luci/themes/luci-theme-argon
 # rm -rf feeds/packages/net/ddns-go
 
 #修改IP
-sed -i 's/192.168.1.1/192.168.2.1/g' package/base-files/luci2/bin/config_generate
+# sed -i 's/192.168.1.1/192.168.2.1/g' package/base-files/luci2/bin/config_generate
 
 # 设置ttyd免帐号登录
 sed -i 's/\/bin\/login/\/bin\/login -f root/' feeds/packages/utils/ttyd/files/ttyd.config
 
 # 克隆 kenzok8仓库
-git clone --depth=1 https://github.com/kenzok8/openwrt-packages.git kenzok8-packages
-cp -rf kenzok8-packages/smartdns package/smartdns
-cp -rf kenzok8-packages/luci-app-smartdns package/luci-app-smartdns
+# git clone --depth=1 https://github.com/kenzok8/openwrt-packages.git kenzok8-packages
+# cp -rf kenzok8-packages/smartdns package/smartdns
+# cp -rf kenzok8-packages/luci-app-smartdns package/luci-app-smartdns
 #cp -rf kenzok8-packages/luci-theme-argon package/luci-theme-argon
 #cp -rf kenzok8-packages/ddns-go package/ddns-go
 #cp -rf kenzok8-packages/gost package/gost
@@ -39,6 +39,14 @@ cp -rf small-package/pdnsd-alt package/pdnsd-alt
 cp -rf small-package/trojan-go package/trojan-go
 cp -rf small-package/dns2tcp package/dns2tcp
 cp -rf small-package/v2ray-geoview package/v2ray-geoview
+
+#克隆 pymumu 仓库 smartdns 20251024
+# 改用master分支的luci界面（适配新版）
+git clone --depth=1 -b master https://github.com/pymumu/luci-app-smartdns.git luci-app-smartdns
+cp -rf luci-app-smartdns/luci-app-smartdns package/luci-app-smartdns
+# 核心组件复制保持不变（需确认目录层级）
+git clone --depth=1 https://github.com/pymumu/openwrt-smartdns.git openwrt-smartdns
+cp -rf openwrt-smartdns package/smartdns  # 移除多余的子目录层级
 
 # 克隆 fw876 仓库
 git clone --depth=1 -b main https://github.com/fw876/helloworld.git
