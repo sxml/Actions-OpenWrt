@@ -46,7 +46,7 @@ jobs:
       run: |
         sudo rm -rf /etc/apt/sources.list.d/* /usr/share/dotnet /usr/local/lib/android /opt/ghc
         sudo -E apt-get -qq update
-        sudo -E apt-get -qq install $(curl -fsSL git.io/depends-ubuntu-2004)
+        sudo -E apt-get -qq install $(curl -fsSL https://tinyurl.com/ubuntu2204-make-openwrt)
         sudo -E apt-get -qq install rename
         sudo -E apt-get -qq install pigz
         sudo -E apt-get -qq install time
@@ -147,3 +147,4 @@ jobs:
     - name: 电报机器人信息通知
       if: steps.organize.outputs.status == 'success' && !cancelled()
       run: curl -k --data chat_id="${{ secrets.TELEGRAM_CHAT_ID }}" --data "text=${{ env.FILE_NAME }}打包完成" "https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage"
+
