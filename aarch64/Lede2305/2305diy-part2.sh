@@ -1,7 +1,7 @@
 #!/bin/bash
 #============================================================
 # sxml
-# 2024-11-30 23.05
+# # 2025-10-24 23.05
 #https://github.com/HoldOnBro/Actions-OpenWrt
 #https://github.com/breakings/OpenWrt
 #============================================================
@@ -11,9 +11,9 @@ rm -rf feeds/luci/applications/luci-app-dockerman
 rm -rf feeds/packages/net/smartdns
 rm -rf feeds/luci/applications/luci-app-smartdns
 rm -fr feeds/luci/themes/luci-theme-argon
-#rm -fr feeds/luci/themes/luci-theme-design
-#rm -rf feeds/luci/applications/luci-app-ddns-go
-#rm -rf feeds/packages/net/ddns-go
+# rm -fr feeds/luci/themes/luci-theme-design
+# rm -rf feeds/luci/applications/luci-app-ddns-go
+# rm -rf feeds/packages/net/ddns-go
 
 #修改IP
 sed -i 's/192.168.1.1/192.168.2.1/g' package/base-files/luci2/bin/config_generate
@@ -28,12 +28,17 @@ cp -rf kenzok8-packages/luci-app-smartdns package/luci-app-smartdns
 #cp -rf kenzok8-packages/luci-theme-argon package/luci-theme-argon
 #cp -rf kenzok8-packages/ddns-go package/ddns-go
 #cp -rf kenzok8-packages/gost package/gost
-#git clone --depth=1 https://github.com/pymumu/luci-app-smartdns.git package/luci-app-smartdns
-#git clone --depth=1 https://github.com/kenzok8/small-package.git small-package
+git clone --depth=1 https://github.com/kenzok8/small-package.git small-package
 #cp -rf small-package/gost package/gost
 #cp -rf small-package/luci-app-gost package/luci-app-gost
 #cp -rf small-package/sagernet-core package/sagernet-core
 #cp -rf small-package/v2ray-geodata package/v2ray-geodata
+cp -rf small-package/brook package/brook
+cp -rf small-package/ssocks package/ssocks
+cp -rf small-package/pdnsd-alt package/pdnsd-alt
+cp -rf small-package/trojan-go package/trojan-go
+cp -rf small-package/dns2tcp package/dns2tcp
+cp -rf small-package/v2ray-geoview package/v2ray-geoview
 
 # 克隆 fw876 仓库
 git clone --depth=1 -b main https://github.com/fw876/helloworld.git
@@ -60,16 +65,16 @@ cp -rf helloworld/naiveproxy package/naiveproxy
 
 # 克隆openwrt-passwall仓库
 git clone --depth=1 https://github.com/xiaorouji/openwrt-passwall-packages.git
-cp -rf openwrt-passwall-packages/brook package/brook
-cp -rf openwrt-passwall-packages/ssocks package/ssocks
+# cp -rf openwrt-passwall-packages/brook package/brook
+# cp -rf openwrt-passwall-packages/ssocks package/ssocks
 cp -rf openwrt-passwall-packages/simple-obfs package/simple-obfs
-cp -rf openwrt-passwall-packages/pdnsd-alt package/pdnsd-alt
+# cp -rf openwrt-passwall-packages/pdnsd-alt package/pdnsd-alt
 cp -rf openwrt-passwall-packages/chinadns-ng package/chinadns-ng
 cp -rf openwrt-passwall-packages/tcping package/tcping
-cp -rf openwrt-passwall-packages/trojan-go package/trojan-go
+# cp -rf openwrt-passwall-packages/trojan-go package/trojan-go
 cp -rf openwrt-passwall-packages/trojan-plus package/trojan-plus
 cp -rf openwrt-passwall-packages/hysteria package/hysteria
-cp -rf openwrt-passwall-packages/dns2tcp package/dns2tcp
+# cp -rf openwrt-passwall-packages/dns2tcp package/dns2tcp
 cp -rf openwrt-passwall-packages/sing-box package/sing-box
 cp -rf openwrt-passwall-packages/v2ray-geodata package/v2ray-geodata
 #rm -rf openwrt-passwall-packages
@@ -105,8 +110,8 @@ sed -i "s|http.*/library|https://github.com/breakings/OpenWrt/tree/main/opt/kern
 # themes 主题
 #1806 git clone --depth=1 https://github.com/sxml/luci-theme-design.git package/luci-theme-design
 #1806 git clone --depth=1 https://github.com/sxml/luci-app-design-config.git package/luci-app-design-config
-git clone --depth=1 https://github.com/jerrykuku/luci-theme-argon package/luci-theme-argon
-git clone --depth=1 -b js https://github.com/lwb1978/luci-theme-kucat package/luci-theme-kucat
+# git clone --depth=1 https://github.com/jerrykuku/luci-theme-argon package/luci-theme-argon
+# git clone --depth=1 -b js https://github.com/lwb1978/luci-theme-kucat package/luci-theme-kucat
 
 #mosdns
 rm -rf feeds/packages/net/mosdns
@@ -123,6 +128,24 @@ pushd package/luci-app-openclash/tools/po2lmo
 make && sudo make install
 popd
 #rm -rf OpenClash
+
+#添加ddns-go 动态域名解析
+#git clone --depth=1 https://github.com/sirpdboy/luci-app-ddns-go.git package/ddns-go
+# git clone --depth=1 https://github.com/sirpdboy/luci-app-ddns-go.git
+# cp -rf luci-app-ddns-go/ddns-go package/ddns-go
+# cp -rf luci-app-ddns-go/luci-app-ddns-go package/luci-app-ddns-go
+
+#libcryptopp 编译问题
+# 在 Makefile 中显式指定编译器
+# sed -i '/include $(INCLUDE_DIR)\/package.mk/a TARGET_CC:=aarch64-openwrt-linux-musl-gcc\nTARGET_CXX:=aarch64-openwrt-linux-musl-g++' package/lean/libcryptopp/Makefile
+# # 清理 libcryptopp 的缓存
+# make package/lean/libcryptopp/clean
+
+#修改makefile
+find package/*/ -maxdepth 2 -path "*/Makefile" | xargs -i sed -i 's/include\ \.\.\/\.\.\/luci\.mk/include \$(TOPDIR)\/feeds\/luci\/luci\.mk/g' {}
+find package/*/ -maxdepth 2 -path "*/Makefile" | xargs -i sed -i 's/include\ \.\.\/\.\.\/lang\/golang\/golang\-package\.mk/include \$(TOPDIR)\/feeds\/packages\/lang\/golang\/golang\-package\.mk/g' {}
+find package/*/ -maxdepth 2 -path "*/Makefile" | xargs -i sed -i 's/PKG_SOURCE_URL:=\@GHREPO/PKG_SOURCE_URL:=https:\/\/github\.com/g' {}
+find package/*/ -maxdepth 2 -path "*/Makefile" | xargs -i sed -i 's/PKG_SOURCE_URL:=\@GHCODELOAD/PKG_SOURCE_URL:=https:\/\/codeload\.github\.com/g' {}
 
 ./scripts/feeds update -a
 ./scripts/feeds install -a
