@@ -1,5 +1,5 @@
 #
-# 2024.11.25  编译 Lede-23.05-ARMv8_FOL
+# 2025.10.24  编译 Lede-23.05-ARMv8_FOL
 #
 name: 编译Lede2305_FOL
 on:
@@ -43,7 +43,8 @@ jobs:
         [ -n "$AGENT_TOOLSDIRECTORY" ] && sudo rm -rf "$AGENT_TOOLSDIRECTORY"
         sudo -E apt update
         # 添加 subversion 安装
-        sudo -E apt -y install $(curl -fsSL https://is.gd/depends_ubuntu_2204) subversion clang llvm
+        #sudo -E apt-get -y install $(cat $GITHUB_WORKSPACE/depends-ubuntu-2204) subversion clang llvm
+        sudo -E apt -y install $(curl -fsSL https://tinyurl.com/ubuntu2204-make-openwrt) subversion clang llvm
         sudo -E apt -y autoremove --purge
         sudo -E systemctl daemon-reload
         sudo -E apt clean
@@ -155,12 +156,12 @@ jobs:
         echo "DATE_YMD=_$(date +"%Y%m%d")" >> $GITHUB_ENV
         echo "status=success" >> $GITHUB_OUTPUT
 
-#    - name: 清理服务器空间
-#      if: steps.compile.outputs.status == 'success' && !cancelled()
-#      run: |
-#        cd openwrt/
-#        rm -rf $(ls . | grep -v "^bin$" | xargs) 2>/dev/null
-#        df -hT ${PWD}
+   - name: 清理服务器空间
+     if: steps.compile.outputs.status == 'success' && !cancelled()
+     run: |
+       cd openwrt/
+       rm -rf $(ls . | grep -v "^bin$" | xargs) 2>/dev/null
+       df -hT ${PWD}
   
     - name: 整理固件文件夹
       id: organize
