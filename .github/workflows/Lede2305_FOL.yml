@@ -1,5 +1,5 @@
 #
-# 2025.10.24.  编译 Lede-23.05-ARMv8_FOL
+# 2025.10.24  编译 Lede-23.05-ARMv8_FOL
 #
 name: 编译Lede2305_FOL
 on:
