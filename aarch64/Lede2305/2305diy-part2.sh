@@ -8,8 +8,8 @@
 #移除不用软件包
 rm -rf feeds/luci/applications/luci-app-dockerman
 #rm -rf package/lean/luci-app-wrtbwmon
-rm -rf feeds/packages/net/smartdns
-rm -rf feeds/luci/applications/luci-app-smartdns
+#rm -rf feeds/packages/net/smartdns
+#rm -rf feeds/luci/applications/luci-app-smartdns
 rm -fr feeds/luci/themes/luci-theme-argon
 # rm -fr feeds/luci/themes/luci-theme-design
 # rm -rf feeds/luci/applications/luci-app-ddns-go
@@ -42,11 +42,11 @@ cp -rf small-package/v2ray-geoview package/v2ray-geoview
 
 #克隆 pymumu 仓库 smartdns 20251024
 # 改用master分支的luci界面（适配新版）
-git clone --depth=1 -b master https://github.com/pymumu/luci-app-smartdns.git luci-app-smartdns
-cp -rf luci-app-smartdns/luci-app-smartdns package/luci-app-smartdns
+#git clone --depth=1 -b master https://github.com/pymumu/luci-app-smartdns.git luci-app-smartdns
+#cp -rf luci-app-smartdns/luci-app-smartdns package/luci-app-smartdns
 # 核心组件复制保持不变（需确认目录层级）
-git clone --depth=1 https://github.com/pymumu/openwrt-smartdns.git openwrt-smartdns
-cp -rf openwrt-smartdns package/smartdns  # 移除多余的子目录层级
+#git clone --depth=1 https://github.com/pymumu/openwrt-smartdns.git openwrt-smartdns
+#cp -rf openwrt-smartdns package/smartdns  # 移除多余的子目录层级
 
 # 克隆 fw876 仓库
 git clone --depth=1 -b main https://github.com/fw876/helloworld.git
