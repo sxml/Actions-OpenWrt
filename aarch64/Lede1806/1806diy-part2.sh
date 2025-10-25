@@ -164,6 +164,16 @@ sed -i '/include $(INCLUDE_DIR)\/package.mk/a TARGET_CC:=aarch64-openwrt-linux-m
 # 清理 libcryptopp 的缓存
 make package/lean/libcryptopp/clean
 
+#fullconenat-nft手动修补源码（临时方案
+# 进入源码目录 
+cd feeds/packages/net/fullconenat-nft/src 
+# 修改函数签名（支持新内核） 
+sed -i 's/validate(const struct nft_ctx \*ctx, const struct nft_expr \*expr)/validate(const struct nft_ctx \*ctx, const struct nft_expr \*expr, const struct nft_data \*\*data)/g' nft_ext_fullcone.c 
+# 如果函数定义也需改（打开文件手动修改） 
+# vim nft_ext_fullcone.c 
+# 找到 nft_fullcone_validate 函数，改为： 
+# int nft_fullcone_validate(const struct nft_ctx *ctx, const struct nft_expr *expr, const struct nft_data **data)
+
 #修改makefile
 find package/*/ -maxdepth 2 -path "*/Makefile" | xargs -i sed -i 's/include\ \.\.\/\.\.\/luci\.mk/include \$(TOPDIR)\/feeds\/luci\/luci\.mk/g' {}
 find package/*/ -maxdepth 2 -path "*/Makefile" | xargs -i sed -i 's/include\ \.\.\/\.\.\/lang\/golang\/golang\-package\.mk/include \$(TOPDIR)\/feeds\/packages\/lang\/golang\/golang\-package\.mk/g' {}
