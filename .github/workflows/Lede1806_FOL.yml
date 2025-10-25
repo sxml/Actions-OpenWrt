@@ -109,6 +109,7 @@ jobs:
         echo "useVersionInfo=$useVersionInfo" >> $GITHUB_ENV
         echo "DATE=$(date "+%Y-%m-%d %H:%M:%S")" >> $GITHUB_ENV
         echo "DATE1=$(date "+%Y-%m-%d")" >> $GITHUB_ENV
+        echo "DATE_YMD=_$(date +"%Y%m%d")" >> $GITHUB_ENV  # 如果需要
 
     # - name: 缓存加速
 # ##      uses: klever1988/cachewrtbuild@main
@@ -127,6 +128,11 @@ jobs:
         chmod +x $DIY_P1_SH
         cd openwrt
         $GITHUB_WORKSPACE/$DIY_P1_SH
+
+    - name: Clean cache  # <--- 这里添加了清理步骤
+      run: |
+        cd openwrt
+        rm -rf feeds build_dir
 
     - name: 更新软件包
       run: cd openwrt && ./scripts/feeds update -a
