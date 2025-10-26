@@ -1,15 +1,15 @@
 #!/bin/bash
 #============================================================
 # sxml
-# 2025-10-22 1806
+# 2025-10-26 1806
 #https://github.com/HoldOnBro/Actions-OpenWrt
 #https://github.com/breakings/OpenWrt
 #============================================================
 #移除不用软件包
 rm -rf feeds/luci/applications/luci-app-dockerman
 #rm -rf package/lean/luci-app-wrtbwmon
-#rm -rf feeds/packages/net/smartdns
-#rm -rf feeds/luci/applications/luci-app-smartdns
+rm -rf feeds/packages/net/smartdns
+rm -rf feeds/luci/applications/luci-app-smartdns
 rm -fr feeds/luci/themes/luci-theme-design
 rm -rf feeds/luci/applications/luci-app-ddns-go
 rm -rf feeds/packages/net/ddns-go
@@ -26,22 +26,28 @@ sed -i 's/luci-theme-bootstrap/luci-theme-design/g' ./feeds/luci/collections/luc
 sed -i 's/\/bin\/login/\/bin\/login -f root/' feeds/packages/utils/ttyd/files/ttyd.config
 
 # 克隆 kenzok8仓库
-#git clone --depth=1 https://github.com/kenzok8/openwrt-packages.git kenzok8-packages
-#cp -rf kenzok8-packages/smartdns package/smartdns
-#cp -rf kenzok8-packages/luci-app-smartdns package/luci-app-smartdns
+# git clone --depth=1 https://github.com/kenzok8/openwrt-packages.git kenzok8-packages
+# cp -rf kenzok8-packages/smartdns package/smartdns
+# cp -rf kenzok8-packages/luci-app-smartdns package/luci-app-smartdns
 #cp -rf kenzok8-packages/luci-theme-argon package/luci-theme-argon
 #cp -rf kenzok8-packages/ddns-go package/ddns-go
 #cp -rf kenzok8-packages/gost package/gost
 
 #克隆 pymumu 仓库 smartdns 20251021
 # 克隆LEDE分支的luci界面（适配旧版）
-#git clone --depth=1 -b lede https://github.com/pymumu/luci-app-smartdns.git luci-app-smartdns
-# 复制界面到编译目录（确保目录层级正确）
-#cp -rf luci-app-smartdns/luci-app-smartdns package/luci-app-smartdns
-# 克隆smartdns核心组件
-#git clone --depth=1 https://github.com/pymumu/openwrt-smartdns.git openwrt-smartdns
-# 检查内部目录后复制（假设无嵌套子目录）
-#cp -rf openwrt-smartdns package/smartdns
+# git clone --depth=1 -b lede https://github.com/pymumu/luci-app-smartdns.git luci-app-smartdns
+# # 复制界面到编译目录（确保目录层级正确）
+# cp -rf luci-app-smartdns/luci-app-smartdns package/luci-app-smartdns
+# # 克隆smartdns核心组件
+# git clone --depth=1 https://github.com/pymumu/openwrt-smartdns.git openwrt-smartdns
+# # 检查内部目录后复制（假设无嵌套子目录）
+# cp -rf openwrt-smartdns package/smartdns
+
+# 克隆immortalwrt-luci仓库
+git clone --depth=1 -b openwrt-18.06 https://github.com/immortalwrt/luci.git immortalwrt-luci
+cp -rf immortalwrt-luci/applications/luci-app-socat package/luci-app-socat
+cp -rf immortalwrt-luci/applications/luci-app-gost package/luci-app-gost
+cp -rf immortalwrt-luci/applications/luci-app-smartdns package/luci-app-smartdns
 
 # 克隆 kenzok8 small仓库
 git clone --depth=1 https://github.com/kenzok8/small-package.git small-package
@@ -55,6 +61,7 @@ cp -rf small-package/pdnsd-alt package/pdnsd-alt
 cp -rf small-package/trojan-go package/trojan-go
 cp -rf small-package/dns2tcp package/dns2tcp
 cp -rf small-package/v2ray-geoview package/v2ray-geoview
+cp -rf small-package/smartdns package/smartdns
 
 # 克隆 fw876 仓库
 git clone --depth=1 -b main https://github.com/fw876/helloworld.git
@@ -163,16 +170,6 @@ popd
 sed -i '/include $(INCLUDE_DIR)\/package.mk/a TARGET_CC:=aarch64-openwrt-linux-musl-gcc\nTARGET_CXX:=aarch64-openwrt-linux-musl-g++' package/lean/libcryptopp/Makefile
 # 清理 libcryptopp 的缓存
 make package/lean/libcryptopp/clean
-
-#fullconenat-nft手动修补源码（临时方案
-# 进入源码目录 
-cd feeds/packages/net/fullconenat-nft/src 
-# 修改函数签名（支持新内核） 
-sed -i 's/validate(const struct nft_ctx \*ctx, const struct nft_expr \*expr)/validate(const struct nft_ctx \*ctx, const struct nft_expr \*expr, const struct nft_data \*\*data)/g' nft_ext_fullcone.c 
-# 如果函数定义也需改（打开文件手动修改） 
-# vim nft_ext_fullcone.c 
-# 找到 nft_fullcone_validate 函数，改为： 
-# int nft_fullcone_validate(const struct nft_ctx *ctx, const struct nft_expr *expr, const struct nft_data **data)
 
 #修改makefile
 find package/*/ -maxdepth 2 -path "*/Makefile" | xargs -i sed -i 's/include\ \.\.\/\.\.\/luci\.mk/include \$(TOPDIR)\/feeds\/luci\/luci\.mk/g' {}
