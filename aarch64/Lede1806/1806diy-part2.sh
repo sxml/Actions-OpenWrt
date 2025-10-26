@@ -45,8 +45,6 @@ sed -i 's/\/bin\/login/\/bin\/login -f root/' feeds/packages/utils/ttyd/files/tt
 
 # 克隆immortalwrt-luci仓库
 git clone --depth=1 -b openwrt-18.06 https://github.com/immortalwrt/luci.git immortalwrt-luci
-cp -rf immortalwrt-luci/applications/luci-app-socat package/luci-app-socat
-cp -rf immortalwrt-luci/applications/luci-app-gost package/luci-app-gost
 cp -rf immortalwrt-luci/applications/luci-app-smartdns package/luci-app-smartdns
 
 # 克隆 kenzok8 small仓库
