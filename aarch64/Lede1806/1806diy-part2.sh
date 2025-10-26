@@ -1,7 +1,7 @@
 #!/bin/bash
 #============================================================
 # sxml
-# 2025-10-26 1806
+# 2025-10-26.02 1806
 #https://github.com/HoldOnBro/Actions-OpenWrt
 #https://github.com/breakings/OpenWrt
 #============================================================
@@ -33,19 +33,19 @@ sed -i 's/\/bin\/login/\/bin\/login -f root/' feeds/packages/utils/ttyd/files/tt
 #cp -rf kenzok8-packages/ddns-go package/ddns-go
 #cp -rf kenzok8-packages/gost package/gost
 
-#克隆 pymumu 仓库 smartdns 20251021
+#克隆 pymumu 仓库 smartdns 20251026
 # 克隆LEDE分支的luci界面（适配旧版）
-# git clone --depth=1 -b lede https://github.com/pymumu/luci-app-smartdns.git luci-app-smartdns
+git clone --depth=1 -b lede https://github.com/pymumu/luci-app-smartdns.git luci-app-smartdns
 # # 复制界面到编译目录（确保目录层级正确）
-# cp -rf luci-app-smartdns/luci-app-smartdns package/luci-app-smartdns
+cp -rf luci-app-smartdns/luci-app-smartdns package/luci-app-smartdns
 # # 克隆smartdns核心组件
-# git clone --depth=1 https://github.com/pymumu/openwrt-smartdns.git openwrt-smartdns
+git clone --depth=1 https://github.com/pymumu/openwrt-smartdns.git openwrt-smartdns
 # # 检查内部目录后复制（假设无嵌套子目录）
-# cp -rf openwrt-smartdns package/smartdns
+cp -rf openwrt-smartdns package/smartdns
 
 # 克隆immortalwrt-luci仓库
-git clone --depth=1 -b openwrt-18.06 https://github.com/immortalwrt/luci.git immortalwrt-luci
-cp -rf immortalwrt-luci/applications/luci-app-smartdns package/luci-app-smartdns
+# git clone --depth=1 -b openwrt-18.06 https://github.com/immortalwrt/luci.git immortalwrt-luci
+# cp -rf immortalwrt-luci/applications/luci-app-smartdns package/luci-app-smartdns
 
 # 克隆 kenzok8 small仓库
 git clone --depth=1 https://github.com/kenzok8/small-package.git small-package
@@ -59,14 +59,14 @@ cp -rf small-package/pdnsd-alt package/pdnsd-alt
 cp -rf small-package/trojan-go package/trojan-go
 cp -rf small-package/dns2tcp package/dns2tcp
 cp -rf small-package/v2ray-geoview package/v2ray-geoview
-cp -rf small-package/smartdns package/smartdns
+# cp -rf small-package/smartdns package/smartdns
 
 # 克隆 fw876 仓库
 git clone --depth=1 -b main https://github.com/fw876/helloworld.git
 #cp -rf helloworld/luci-app-ssr-plus package/luci-app-ssr-plus
 cp -rf helloworld/xray-core package/xray-core
 cp -rf helloworld/xray-plugin package/xray-plugin
-cp -rf helloworld/shadowsocks-rust package/shadowsocks-rust
+# cp -rf helloworld/shadowsocks-rust package/shadowsocks-rust
 #cp -rf helloworld/shadowsocksr-libev package/shadowsocksr-libev
 cp -rf helloworld/v2ray-plugin package/v2ray-plugin
 cp -rf helloworld/v2ray-core package/v2ray-core
@@ -88,6 +88,7 @@ cp -rf helloworld/naiveproxy package/naiveproxy
 #命令中的 -b v5 的意思是指定要克隆的分支（branch）为 v5
 #命令中的--depth=1 只复制仓库最新的1个提交历史
 git clone --depth=1 -b v5 https://github.com/sbwml/openwrt_helloworld.git
+cp -rf openwrt_helloworld/shadowsocks-rust package/shadowsocks-rust
 cp -rf openwrt_helloworld/shadowsocksr-libev package/shadowsocksr-libev
 
 # 克隆openwrt-passwall仓库
