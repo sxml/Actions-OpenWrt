@@ -100,7 +100,8 @@ jobs:
         sed -i 's/OpenWrt/MRG AutoBuild ${{ env.DATE1 }} @ OpenWrt/g' package/lean/default-settings/files/zzz-default-settings
         
     - name: SSH远程连接（配置固件）
-      uses: csexton/debugger-action@master
+      #uses: csexton/debugger-action@master
+      uses: 281677160/common@need
       if: (github.event.inputs.ssh == 'true' && github.event.inputs.ssh  != 'false') || contains(github.event.action, 'ssh')
       env:
         TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
