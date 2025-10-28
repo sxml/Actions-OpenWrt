@@ -6,7 +6,7 @@
 # https://github.com/P3TERX/Actions-OpenWrt
 # Description: Build OpenWrt using GitHub Actions
 #
-# 2023.04.10  Flippy打包 Lede2305版本
+# 2025.10.28  Flippy打包 Lede2305版本
 #
 name: F打包_Lede2305
 
@@ -29,7 +29,7 @@ env:
 
 jobs:
   build:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     if: github.event.repository.owner.id == github.event.sender.id
 
     name: Flippy打包
@@ -46,6 +46,8 @@ jobs:
       run: |
         sudo rm -rf /etc/apt/sources.list.d/* /usr/share/dotnet /usr/local/lib/android /opt/ghc
         sudo -E apt-get -qq update
+        #sudo -E apt-get -qq install $(cat $GITHUB_WORKSPACE/depends-ubuntu-2204)
+        #sudo -E apt-get -qq install $(curl -fsSL git.io/depends-ubuntu-2004)
         sudo -E apt-get -qq install $(curl -fsSL https://tinyurl.com/ubuntu2204-make-openwrt)
         sudo -E apt-get -qq install rename
         sudo -E apt-get -qq install pigz
@@ -119,7 +121,7 @@ jobs:
         commit: master
         token: ${{ secrets.RELEASES_TOKEN }}
         body: |
-          默认IP：192.168.2.1 默认密码： password
+          默认IP：192.168.1.1 默认密码： password
           Lede 23.05版本，Flippy打包,自用无wifi 
           s905x3(X96-Max+),s905d(Phicomm-N1)
           +o版 +版（Flowoffload加速+SFE加速)
