@@ -35,17 +35,17 @@ sed -i 's/\/bin\/login/\/bin\/login -f root/' feeds/packages/utils/ttyd/files/tt
 
 #克隆 pymumu 仓库 smartdns 20251026
 # 克隆LEDE分支的luci界面（适配旧版）
-git clone --depth=1 -b lede https://github.com/pymumu/luci-app-smartdns.git luci-app-smartdns
-# # 复制界面到编译目录（确保目录层级正确）
-cp -rf luci-app-smartdns/luci-app-smartdns package/luci-app-smartdns
+# git clone --depth=1 -b lede https://github.com/pymumu/luci-app-smartdns.git luci-app-smartdns
+# # # 复制界面到编译目录（确保目录层级正确）
+# cp -rf luci-app-smartdns/luci-app-smartdns package/luci-app-smartdns
 # # 克隆smartdns核心组件
 # git clone --depth=1 https://github.com/pymumu/openwrt-smartdns.git openwrt-smartdns
 # # 检查内部目录后复制（假设无嵌套子目录）
 # cp -rf openwrt-smartdns package/smartdns
 
 # 克隆immortalwrt-luci仓库
-# git clone --depth=1 -b openwrt-18.06 https://github.com/immortalwrt/luci.git immortalwrt-luci
-# cp -rf immortalwrt-luci/applications/luci-app-smartdns package/luci-app-smartdns
+git clone --depth=1 -b openwrt-18.06 https://github.com/immortalwrt/luci.git immortalwrt-luci
+cp -rf immortalwrt-luci/applications/luci-app-smartdns package/luci-app-smartdns
 
 # 克隆 kenzok8 small仓库
 git clone --depth=1 https://github.com/kenzok8/small-package.git small-package
