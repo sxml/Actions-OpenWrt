@@ -8,11 +8,11 @@
 
     页面运行到SSH connection to Actions 复制 ssh 会话：ssh FWKDeLwu1LMd2zeKgKpJ@sfo2.tmate.io 
 
-1 键盘 按 <q> 或 <ctrl-c> 继续
+1 键盘 按 q 或 ctrl-c 继续
 
                                输入 yes  （重新连接有这一步）
 
-   如果执行 touch /tmp/keepalive 命令去解除15分钟限制
+                              如果执行 touch /tmp/keepalive 命令去解除15分钟限制
 
 2  cd openwrt && make menuconfig
 
