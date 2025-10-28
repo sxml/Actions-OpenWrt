@@ -6,7 +6,7 @@
 
     Actions→ 选择 提取config.yml→ 然后单击Run workflow右侧的按钮。设置SSH connection to Actions 输入 true  点 Run workflow 运行
 
-    页面运行到SSH connection to Actions 复制 ssh 会话：ssh 7PbAHFWKDNLwF4LMd2zeKgKpJ@sfo2.tmate.io 
+    页面运行到SSH connection to Actions 复制 ssh 会话：ssh FWKDeLwu1LMd2zeKgKpJ@sfo2.tmate.io 
 
 1 键盘 按 <q> 或 <ctrl-c> 继续   （Web终端可能会遇到黑屏，只需按即可Ctrl+C）
 
