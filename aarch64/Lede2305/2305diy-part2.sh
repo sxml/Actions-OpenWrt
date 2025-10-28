@@ -1,7 +1,7 @@
 #!/bin/bash
 #============================================================
 # sxml
-# # 2025-10-24 23.05
+# # 2025-10-28 23.05
 #https://github.com/HoldOnBro/Actions-OpenWrt
 #https://github.com/breakings/OpenWrt
 #============================================================
@@ -139,9 +139,9 @@ popd
 
 #添加ddns-go 动态域名解析
 #git clone --depth=1 https://github.com/sirpdboy/luci-app-ddns-go.git package/ddns-go
-# git clone --depth=1 https://github.com/sirpdboy/luci-app-ddns-go.git
-# cp -rf luci-app-ddns-go/ddns-go package/ddns-go
-# cp -rf luci-app-ddns-go/luci-app-ddns-go package/luci-app-ddns-go
+git clone --depth=1 https://github.com/sirpdboy/luci-app-ddns-go.git
+cp -rf luci-app-ddns-go/ddns-go package/ddns-go
+cp -rf luci-app-ddns-go/luci-app-ddns-go package/luci-app-ddns-go
 
 #libcryptopp 编译问题
 # 在 Makefile 中显式指定编译器
