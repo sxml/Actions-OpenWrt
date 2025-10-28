@@ -8,7 +8,7 @@
 
     页面运行到SSH connection to Actions 复制 ssh 会话：ssh FWKDeLwu1LMd2zeKgKpJ@sfo2.tmate.io 
 
-1 键盘 按 <q> 或 <ctrl-c> 继续   （Web终端可能会遇到黑屏，只需按即可Ctrl+C）
+1 键盘 按 q 或 ctrl-c 继续   （Web终端可能会遇到黑屏，只需按即可Ctrl+C）
 
 2  输入 yes  （重新连接需要这一步）
 
