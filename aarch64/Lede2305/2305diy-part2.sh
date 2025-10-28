@@ -12,8 +12,8 @@ rm -rf feeds/packages/net/smartdns
 rm -rf feeds/luci/applications/luci-app-smartdns
 rm -fr feeds/luci/themes/luci-theme-argon
 # rm -fr feeds/luci/themes/luci-theme-design
-# rm -rf feeds/luci/applications/luci-app-ddns-go
-# rm -rf feeds/packages/net/ddns-go
+rm -rf feeds/luci/applications/luci-app-ddns-go
+rm -rf feeds/packages/net/ddns-go
 
 #修改IP
 # sed -i 's/192.168.1.1/192.168.2.1/g' package/base-files/luci2/bin/config_generate
