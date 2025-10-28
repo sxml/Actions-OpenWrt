@@ -6,12 +6,22 @@
 
     Actions→ 选择 提取config.yml→ 然后单击Run workflow右侧的按钮。设置SSH connection to Actions 输入 true  点 Run workflow 运行
 
-    页面运行到SSH connection to Actions 点击显示的连接 进入SSH
+    页面运行到SSH connection to Actions 复制 ssh 会话：ssh 7PbAHFWKDNLwF4LMd2zeKgKpJ@sfo2.tmate.io 
 
-   （Web终端可能会遇到黑屏，只需按即可Ctrl+C）
+1 键盘 按 <q> 或 <ctrl-c> 继续   （Web终端可能会遇到黑屏，只需按即可Ctrl+C）
 
-    输入命令：cd openwrt && make menuconfig 进行个性化配置。
+2  输入 yes  （重新连接需要这一步）
 
+2  现执行 touch /tmp/keepalive  命令去解除15分钟限制
+
+3     输入命令：cd openwrt/ 
+
+4     输入命令：make menuconfig   进行个性化配置
+
+注意：不要退出，退出后无法保存连接状态。如果退出后，重新进入，会还原系统状态。
+
+5  编译完成后 点Y 
+ 
    完成后，按快捷键Ctrl+D或执行exit命令以退出，随后的编译工作将自动进行
    
 -----------------------------------------------------------------------------------------------
