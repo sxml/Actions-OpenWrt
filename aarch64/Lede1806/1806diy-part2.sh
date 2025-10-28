@@ -1,14 +1,14 @@
 #!/bin/bash
 #============================================================
 # sxml
-# 2025-10-26.02 1806
+# 2025-10-28 1806
 #https://github.com/HoldOnBro/Actions-OpenWrt
 #https://github.com/breakings/OpenWrt
 #============================================================
 #移除不用软件包
 rm -rf feeds/luci/applications/luci-app-dockerman
 #rm -rf package/lean/luci-app-wrtbwmon
-rm -rf feeds/packages/net/smartdns
+#rm -rf feeds/packages/net/smartdns
 rm -rf feeds/luci/applications/luci-app-smartdns
 rm -fr feeds/luci/themes/luci-theme-design
 rm -rf feeds/luci/applications/luci-app-ddns-go
@@ -26,22 +26,22 @@ sed -i 's/luci-theme-bootstrap/luci-theme-design/g' ./feeds/luci/collections/luc
 sed -i 's/\/bin\/login/\/bin\/login -f root/' feeds/packages/utils/ttyd/files/ttyd.config
 
 # 克隆 kenzok8仓库
-git clone --depth=1 https://github.com/kenzok8/openwrt-packages.git kenzok8-packages
-cp -rf kenzok8-packages/smartdns package/smartdns
-cp -rf kenzok8-packages/luci-app-smartdns package/luci-app-smartdns
+# git clone --depth=1 https://github.com/kenzok8/openwrt-packages.git kenzok8-packages
+# cp -rf kenzok8-packages/smartdns package/smartdns
+# cp -rf kenzok8-packages/luci-app-smartdns package/luci-app-smartdns
 #cp -rf kenzok8-packages/luci-theme-argon package/luci-theme-argon
 #cp -rf kenzok8-packages/ddns-go package/ddns-go
 #cp -rf kenzok8-packages/gost package/gost
 
 #克隆 pymumu 仓库 smartdns 20251026
 # 克隆LEDE分支的luci界面（适配旧版）
-#git clone --depth=1 -b lede https://github.com/pymumu/luci-app-smartdns.git luci-app-smartdns
+git clone --depth=1 -b lede https://github.com/pymumu/luci-app-smartdns.git luci-app-smartdns
 # # 复制界面到编译目录（确保目录层级正确）
-#cp -rf luci-app-smartdns/luci-app-smartdns package/luci-app-smartdns
+cp -rf luci-app-smartdns/luci-app-smartdns package/luci-app-smartdns
 # # 克隆smartdns核心组件
-#git clone --depth=1 https://github.com/pymumu/openwrt-smartdns.git openwrt-smartdns
+# git clone --depth=1 https://github.com/pymumu/openwrt-smartdns.git openwrt-smartdns
 # # 检查内部目录后复制（假设无嵌套子目录）
-#cp -rf openwrt-smartdns package/smartdns
+# cp -rf openwrt-smartdns package/smartdns
 
 # 克隆immortalwrt-luci仓库
 # git clone --depth=1 -b openwrt-18.06 https://github.com/immortalwrt/luci.git immortalwrt-luci
@@ -148,7 +148,7 @@ git clone -b v5-lua https://github.com/sbwml/luci-app-mosdns package/mosdns
 
 #添加ddns-go 动态域名解析
 #git clone --depth=1 https://github.com/sirpdboy/luci-app-ddns-go.git package/ddns-go
-git clone --depth=1 https://github.com/sirpdboy/luci-app-ddns-go.git
+git clone --depth=1 -b lua https://github.com/sirpdboy/luci-app-ddns-go.git
 cp -rf luci-app-ddns-go/ddns-go package/ddns-go
 cp -rf luci-app-ddns-go/luci-app-ddns-go package/luci-app-ddns-go
 
