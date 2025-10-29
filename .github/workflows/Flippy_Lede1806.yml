@@ -29,8 +29,8 @@ env:
 
 jobs:
   build:
-    runs-on: ubuntu-22.04
-    #if: github.event.repository.owner.id == github.event.sender.id
+    runs-on: ubuntu-20.04
+    if: github.event.repository.owner.id == github.event.sender.id
 
     name: Flippy打包
     strategy:
@@ -46,9 +46,8 @@ jobs:
       run: |
         sudo rm -rf /etc/apt/sources.list.d/* /usr/share/dotnet /usr/local/lib/android /opt/ghc
         sudo -E apt-get -qq update
-        #sudo -E apt-get -qq install $(cat $GITHUB_WORKSPACE/depends-ubuntu-2204)
+        sudo -E apt-get -qq install $(cat $GITHUB_WORKSPACE/depends-ubuntu-2204)
         #sudo -E apt-get -qq install $(curl -fsSL git.io/depends-ubuntu-2004)
-        sudo -E apt-get -qq install $(curl -fsSL https://tinyurl.com/ubuntu2204-make-openwrt)
         sudo -E apt-get -qq install rename
         sudo -E apt-get -qq install pigz
         sudo -E apt-get -qq install time
@@ -121,7 +120,7 @@ jobs:
         commit: master
         token: ${{ secrets.RELEASES_TOKEN }}
         body: |
-          默认IP：192.168.1.1 默认密码： password
+          默认IP：192.168.2.1 默认密码： password
           Lede 18.06版本，Flippy打包,自用无wifi 
           s905x3(X96-Max+),s905d(Phicomm-N1)
           +o版 +版（Flowoffload加速+SFE加速)
@@ -149,5 +148,3 @@ jobs:
     - name: 电报机器人信息通知
       if: steps.organize.outputs.status == 'success' && !cancelled()
       run: curl -k --data chat_id="${{ secrets.TELEGRAM_CHAT_ID }}" --data "text=${{ env.FILE_NAME }}打包完成" "https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage"
-
-
