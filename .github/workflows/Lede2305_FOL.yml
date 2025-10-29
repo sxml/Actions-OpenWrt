@@ -1,5 +1,5 @@
 #
-# 2025.10.28  编译 Lede-23.05-ARMv8_FOL
+# 2024.11.25  编译 Lede-23.05-ARMv8_FOL
 #
 name: 编译Lede2305_FOL
 on:
@@ -22,8 +22,7 @@ env:
 
 jobs:
   build:
-    runs-on: ubuntu-24.04
-    if: ${{ github.event.repository.owner.id }} == ${{ github.event.sender.id }}
+    runs-on: ubuntu-22.04
     #if: github.event.repository.owner.id == github.event.sender.id || ! github.event.sender.id
 
     name: 编译Lede2305
@@ -31,102 +30,65 @@ jobs:
       fail-fast: false
       
     steps:
-    - name: 释放磁盘空间之前
-      run: |
-        echo "Before freeing up disk space"
-        echo "=============================================================================="
-        df -hT
-        echo "=============================================================================="
-
-    - name: "优化磁盘空间"
-      uses: "hugoalh/disk-space-optimizer-ghaction@v0.8.1"
-      with:
-        operate_sudo: "True"
-        general_include: ".+"
-        general_exclude: |-
-          ^GCC$
-          ^G\+\+$
-          Clang
-          LLVM
-        docker_include: ".+"
-        docker_prune: "True"
-        docker_clean: "True"
-        apt_prune: "True"
-        apt_clean: "True"
-        homebrew_prune: "True"
-        homebrew_clean: "True"
-        npm_prune: "True"
-        npm_clean: "True"
-        os_swap: "True"
-       # swap-size-mb: 1建议改为 swap-size-mb: 0 或移除该参数（默认不创建 swap）。当前值可能导致 Actions 警告或无效操作
-    - name: 释放磁盘空间
-      uses: easimon/maximize-build-space@master
-      with:
-        root-reserve-mb: 3072
-        swap-size-mb: 1
-        remove-dotnet: "true"
-        remove-android: "true"
-        remove-haskell: "true"
-        remove-codeql: "true"
-        remove-docker-images: "true"
-
-    - name: 释放磁盘空间完成
-      run: |
-        echo "Free up disk space complete"
-        echo "=============================================================================="
-        df -hT
-        echo "=============================================================================="
-
     - name: 准备
-      uses: actions/checkout@v4
+      uses: actions/checkout@master
 
     - name: 部署编译环境
       env:
         DEBIAN_FRONTEND: noninteractive
       run: |
-        docker rmi -f $(docker images -q) 2>/dev/null || true
-        [[ -n "${AGENT_TOOLSDIRECTORY}" ]] && sudo rm -rf "${AGENT_TOOLSDIRECTORY}"
-        sudo rm -rf /usr/share/dotnet /usr/local/lib/android 2>/dev/null
-        sudo swapoff -a
-        sudo rm -f /swapfile /mnt/swapfile
-        #编译失败于空间不足，建议在“部署编译环境”前添加更多清理命令
-        #sudo rm -rf /usr/share/dotnet /opt/hostedtoolcache /usr/local/.ghcup /usr/local/share/powershell /usr/local/share/chromium /usr/local/lib/android /usr/local/lib/node_modules
-        sudo -E apt-get -y update
-        sudo -E apt-get -y purge azure-cli ghc* zulu* llvm* firefox google* dotnet* powershell openjdk* mongodb* moby* || true
-        sudo -E apt-get -y install $(curl -fsSL https://ophub.org/ubuntu2404-make-openwrt-depends)
+        docker rmi `docker images -q`
+        sudo -E rm -rf /usr/share/dotnet /etc/mysql /etc/php /etc/apt/sources.list.d /usr/local/lib/android
+        sudo -E apt -y purge azure-cli* docker* ghc* zulu* firefox google* dotnet* powershell* openjdk* mysql* mongodb* dotnet* snap* aspnetcore*
+        [ -n "$AGENT_TOOLSDIRECTORY" ] && sudo rm -rf "$AGENT_TOOLSDIRECTORY"
+        sudo -E apt update
+        # 添加 subversion 安装
+        #sudo -E apt -y install $(curl -fsSL https://tinyurl.com/ubuntu2204-make-openwrt) subversion clang llvm
+        sudo -E apt -y install $(curl -fsSL https://is.gd/depends_ubuntu_2204) subversion clang llvm
+        sudo -E apt -y autoremove --purge
         sudo -E systemctl daemon-reload
-        #sudo -E apt-get -y full-upgrade
-        sudo -E apt-get -y autoremove --purge
-        sudo -E apt-get clean
-        sudo sed -i '/NVM_DIR/d;/skel/d' /root/{.bashrc,.profile}
-        sudo rm -rf ~/{.cargo,.dotnet,.rustup}
-        sudo -E timedatectl set-timezone "${TZ:-Etc/UTC}"
-        sudo -E ntpdate ntp.ubuntu.com 0.pool.ntp.org || true
-        sudo -E timedatectl set-ntp true
-        date -u
-        timedatectl status || true
+        sudo -E apt clean
+        sudo timedatectl set-timezone "$TZ"
         sudo mkdir -p /workdir
         sudo chown $USER:$GROUPS /workdir
         echo "status=success" >> $GITHUB_OUTPUT
         df -Th
 
-    # - name: 检查服务器性能
-      # run: |
-        # echo "警告⚠"
-        # echo "若分配的服务器性能不足，务必及时取消，重新运行！"
-        # echo "已知编译成功CPU型号：8370C,8171M"
-        # echo "已知性能不足CPU型号：8272CL"
-        # echo -e "-------------- ------------CPU信息------------------------------------------\n"
-        # echo "CPU物理数量:$(cat /proc/cpuinfo| grep "physical id"| sort| uniq| wc -l)"
-        # echo -e "CPU核心及版本信息：$(cat /proc/cpuinfo | grep name | cut -f2 -d: | uniq -c) \n"
-        # echo "-------------------------------内存信息-------------------------------------------"
-        # echo "已安装内存详细信息："
-        # sudo lshw -short -C memory | grep GiB
-        # echo -e "\n"
-        # echo "-----------------------------硬盘信息---------------------------------------------"
-        # echo -e  "硬盘数量：$(ls /dev/sd* | grep -v [1-9] | wc -l) \n"
-        # echo "硬盘详情："
-        # df -Th
+    - name: 创建模拟物理磁盘
+      run: |
+        mnt_size=$(expr $(df -h /mnt | tail -1 | awk '{print $4}' | sed 's/[[:alpha:]]//g' | sed 's/\..*//') - 1)
+        root_size=$(expr $(df -h / | tail -1 | awk '{print $4}' | sed 's/[[:alpha:]]//g' | sed 's/\..*//') - 4)
+        sudo truncate -s "${mnt_size}"G /mnt/mnt.img
+        sudo truncate -s "${root_size}"G /root.img
+        sudo losetup /dev/loop6 /mnt/mnt.img
+        sudo losetup /dev/loop7 /root.img
+        sudo pvcreate /dev/loop6
+        sudo pvcreate /dev/loop7
+        sudo vgcreate github /dev/loop6 /dev/loop7
+        sudo lvcreate -n runner -l 100%FREE github
+        sudo mkfs.xfs /dev/github/runner
+        sudo mkdir -p /workdir
+        sudo mount /dev/github/runner /workdir
+        sudo chown -R runner.runner /workdir
+        df -Th
+
+    - name: 检查服务器性能
+      run: |
+        echo "警告⚠"
+        echo "若分配的服务器性能不足，务必及时取消，重新运行！"
+        echo "已知编译成功CPU型号：8370C,8171M"
+        echo "已知性能不足CPU型号：8272CL"
+        echo -e "-------------- ------------CPU信息------------------------------------------\n"
+        echo "CPU物理数量:$(cat /proc/cpuinfo| grep "physical id"| sort| uniq| wc -l)"
+        echo -e "CPU核心及版本信息：$(cat /proc/cpuinfo | grep name | cut -f2 -d: | uniq -c) \n"
+        echo "-------------------------------内存信息-------------------------------------------"
+        echo "已安装内存详细信息："
+        sudo lshw -short -C memory | grep GiB
+        echo -e "\n"
+        echo "-----------------------------硬盘信息---------------------------------------------"
+        echo -e  "硬盘数量：$(ls /dev/sd* | grep -v [1-9] | wc -l) \n"
+        echo "硬盘详情："
+        df -Th
 
     - name: 下载源码
       working-directory: /workdir
@@ -200,7 +162,7 @@ jobs:
 #        cd openwrt/
 #        rm -rf $(ls . | grep -v "^bin$" | xargs) 2>/dev/null
 #        df -hT ${PWD}
-
+  
     - name: 整理固件文件夹
       id: organize
       if: steps.compile.outputs.status == 'success' && !cancelled()
@@ -212,6 +174,24 @@ jobs:
         rm -rf packages sha256sums feeds.buildinfo openwrt-armvirt-64-default.manifest openwrt-armvirt-64-Image openwrt-armvirt-64-rootfs-ext4.img version.buildinfo openwrt-armvirt-64-generic-initramfs-kernel.bin openwrt-armvirt-64-generic-kernel.bin openwrt-armvirt-64-generic.manifest profiles.json
         echo "FIRMWARE=$PWD" >> $GITHUB_ENV
         echo "status=success" >> $GITHUB_OUTPUT
+
+    - name: 再次检查服务器性能
+      run: |
+        echo "警告⚠"
+        echo "若分配的服务器性能不足，务必及时取消，重新运行！"
+        echo "已知编译成功CPU型号：8370C,8171M"
+        echo "已知性能不足CPU型号：8272CL"
+        echo -e "-------------- ------------CPU信息------------------------------------------\n"
+        echo "CPU物理数量:$(cat /proc/cpuinfo| grep "physical id"| sort| uniq| wc -l)"
+        echo -e "CPU核心及版本信息：$(cat /proc/cpuinfo | grep name | cut -f2 -d: | uniq -c) \n"
+        echo "-------------------------------内存信息-------------------------------------------"
+        echo "已安装内存详细信息："
+        sudo lshw -short -C memory | grep GiB
+        echo -e "\n"
+        echo "-----------------------------硬盘信息---------------------------------------------"
+        echo -e  "硬盘数量：$(ls /dev/sd* | grep -v [1-9] | wc -l) \n"
+        echo "硬盘详情："
+        df -Th
 
     - name: 固件发布信息
       id: release
