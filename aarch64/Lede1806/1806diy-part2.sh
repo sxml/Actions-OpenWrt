@@ -1,7 +1,7 @@
 #!/bin/bash
 #============================================================
 # sxml
-# 2025-10-29 1806
+# 2025-10-30 1806
 #https://github.com/HoldOnBro/Actions-OpenWrt
 #https://github.com/breakings/OpenWrt
 #============================================================
@@ -26,8 +26,8 @@ sed -i 's/luci-theme-bootstrap/luci-theme-design/g' ./feeds/luci/collections/luc
 sed -i 's/\/bin\/login/\/bin\/login -f root/' feeds/packages/utils/ttyd/files/ttyd.config
 
 # 克隆 kenzok8仓库
-#git clone --depth=1 https://github.com/kenzok8/openwrt-packages.git kenzok8-packages
-#cp -rf kenzok8-packages/smartdns package/smartdns
+# git clone --depth=1 https://github.com/kenzok8/openwrt-packages.git kenzok8-packages
+# cp -rf kenzok8-packages/smartdns package/smartdns
 # cp -rf kenzok8-packages/luci-app-smartdns package/luci-app-smartdns
 #cp -rf kenzok8-packages/luci-theme-argon package/luci-theme-argon
 #cp -rf kenzok8-packages/ddns-go package/ddns-go
@@ -66,8 +66,8 @@ git clone --depth=1 -b main https://github.com/fw876/helloworld.git
 #cp -rf helloworld/luci-app-ssr-plus package/luci-app-ssr-plus
 cp -rf helloworld/xray-core package/xray-core
 cp -rf helloworld/xray-plugin package/xray-plugin
-#cp -rf helloworld/shadowsocks-rust package/shadowsocks-rust
-#cp -rf helloworld/shadowsocksr-libev package/shadowsocksr-libev
+cp -rf helloworld/shadowsocks-rust package/shadowsocks-rust
+cp -rf helloworld/shadowsocksr-libev package/shadowsocksr-libev
 cp -rf helloworld/v2ray-plugin package/v2ray-plugin
 cp -rf helloworld/v2ray-core package/v2ray-core
 #cp -rf helloworld/v2ray-geodata package/v2ray-geodata
@@ -87,10 +87,9 @@ cp -rf helloworld/naiveproxy package/naiveproxy
 # 克隆 sbwml 仓库 shadowsocksr-libev 问题 20251021
 #命令中的 -b v5 的意思是指定要克隆的分支（branch）为 v5
 #命令中的--depth=1 只复制仓库最新的1个提交历史
-git clone --depth=1 -b v5 https://github.com/sbwml/openwrt_helloworld.git
-cp -rf openwrt_helloworld/shadowsocks-rust package/shadowsocks-rust
-cp -rf openwrt_helloworld/shadowsocks-libev package/shadowsocks-libev
-cp -rf openwrt_helloworld/shadowsocksr-libev package/shadowsocksr-libev
+# git clone --depth=1 -b v5 https://github.com/sbwml/openwrt_helloworld.git
+# cp -rf openwrt_helloworld/shadowsocks-rust package/shadowsocks-rust
+# cp -rf openwrt_helloworld/shadowsocksr-libev package/shadowsocksr-libev
 
 # 克隆openwrt-passwall仓库
 git clone --depth=1 https://github.com/xiaorouji/openwrt-passwall-packages.git
@@ -170,6 +169,11 @@ popd
 sed -i '/include $(INCLUDE_DIR)\/package.mk/a TARGET_CC:=aarch64-openwrt-linux-musl-gcc\nTARGET_CXX:=aarch64-openwrt-linux-musl-g++' package/lean/libcryptopp/Makefile
 # 清理 libcryptopp 的缓存
 make package/lean/libcryptopp/clean
+
+# ============ 临时mbedtls 回退解决 ============
+rm -rf package/libs/mbedtls
+git_clone_path(){local c=$1;local r=$2;shift 2;for p in "$@";do echo -e "\n📦 从 $r (提交 $c) 克隆 $p ...";git clone --no-checkout --filter=blob:none --sparse "$r" temp_clone||exit 1;cd temp_clone||exit 1;git fetch origin||exit 1;git checkout "$c"||exit 1;git sparse-checkout set "$p"||exit 1;mkdir -p "../$(dirname "$p")";cp -rf "$p" "../$p";cd ..;rm -rf temp_clone;echo "✅ 已成功复制 $p";done;}
+git_clone_path 4bb635d https://github.com/coolsnowwolf/lede package/libs/mbedtls
 
 #修改makefile
 find package/*/ -maxdepth 2 -path "*/Makefile" | xargs -i sed -i 's/include\ \.\.\/\.\.\/luci\.mk/include \$(TOPDIR)\/feeds\/luci\/luci\.mk/g' {}
