@@ -15,7 +15,7 @@ rm -rf feeds/luci/applications/luci-app-ddns-go
 rm -rf feeds/packages/net/ddns-go
 #重新编译时没有旧的或不必要的文件干扰 #staging_dir：编译生成的文件和依赖库 #build_dir：软件包的源代码和编译生成的文件
 rm -rf staging_dir build_dir
-rm -rf feeds/packages/net/shadowsocks-libev
+#rm -rf feeds/packages/net/shadowsocks-libev
 
 # 修改默认主题（从 uci-theme-bootstrap 更改为 luci-theme-design）
 sed -i 's/luci-theme-bootstrap/luci-theme-design/g' ./feeds/luci/collections/luci/Makefile
@@ -67,7 +67,6 @@ git clone --depth=1 -b main https://github.com/fw876/helloworld.git
 #cp -rf helloworld/luci-app-ssr-plus package/luci-app-ssr-plus
 cp -rf helloworld/xray-core package/xray-core
 cp -rf helloworld/xray-plugin package/xray-plugin
-cp -rf helloworld/shadowsocks-libev package/shadowsocks-libev
 cp -rf helloworld/shadowsocks-rust package/shadowsocks-rust
 cp -rf helloworld/shadowsocksr-libev package/shadowsocksr-libev
 cp -rf helloworld/v2ray-plugin package/v2ray-plugin
