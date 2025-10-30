@@ -170,10 +170,38 @@ sed -i '/include $(INCLUDE_DIR)\/package.mk/a TARGET_CC:=aarch64-openwrt-linux-m
 # 清理 libcryptopp 的缓存
 make package/lean/libcryptopp/clean
 
-# ============ 临时mbedtls 回退解决 ============
-rm -rf package/libs/mbedtls
-git_clone_path(){local c=$1;local r=$2;shift 2;for p in "$@";do echo -e "\n📦 从 $r (提交 $c) 克隆 $p ...";git clone --no-checkout --filter=blob:none --sparse "$r" temp_clone||exit 1;cd temp_clone||exit 1;git fetch origin||exit 1;git checkout "$c"||exit 1;git sparse-checkout set "$p"||exit 1;mkdir -p "../$(dirname "$p")";cp -rf "$p" "../$p";cd ..;rm -rf temp_clone;echo "✅ 已成功复制 $p";done;}
-git_clone_path 4bb635d https://github.com/coolsnowwolf/lede package/libs/mbedtls
+# ============ 修正的 mbedtls 回退解决方案 ============
+echo "应用 mbedtls 回退解决方案..."
+
+# 在主仓库根目录回退 mbedtls 到特定提交
+git checkout 89e46be -- package/libs/mbedtls/
+
+# 检查是否成功
+if [ $? -eq 0 ]; then
+    echo "✅ mbedtls 回退成功"
+else
+    echo "❌ mbedtls 回退失败，尝试备用方案..."
+    # 备用方案：重新克隆特定版本
+    rm -rf package/libs/mbedtls
+    git clone --depth=1 https://github.com/coolsnowwolf/lede.git temp_lede
+    cd temp_lede
+    git checkout 89e46be -- package/libs/mbedtls
+    cp -r package/libs/mbedtls ../
+    cd ..
+    rm -rf temp_lede
+    echo "✅ mbedtls 备用方案回退成功"
+fi
+
+# 清理编译缓存
+rm -rf ./build_dir/target-*/mbedtls-* 2>/dev/null || true
+rm -rf ./build_dir/target-*/shadowsocks-libev-* 2>/dev/null || true
+
+echo "mbedtls 版本回退完成"
+# ============ mbedtls 回退解决方案结束 ============
+# ============ 临时mbedtls 回退解决 另外一种============
+# rm -rf package/libs/mbedtls
+# git_clone_path(){local c=$1;local r=$2;shift 2;for p in "$@";do echo -e "\n📦 从 $r (提交 $c) 克隆 $p ...";git clone --no-checkout --filter=blob:none --sparse "$r" temp_clone||exit 1;cd temp_clone||exit 1;git fetch origin||exit 1;git checkout "$c"||exit 1;git sparse-checkout set "$p"||exit 1;mkdir -p "../$(dirname "$p")";cp -rf "$p" "../$p";cd ..;rm -rf temp_clone;echo "✅ 已成功复制 $p";done;}
+# git_clone_path 4bb635d https://github.com/coolsnowwolf/lede package/libs/mbedtls
 
 #修改makefile
 find package/*/ -maxdepth 2 -path "*/Makefile" | xargs -i sed -i 's/include\ \.\.\/\.\.\/luci\.mk/include \$(TOPDIR)\/feeds\/luci\/luci\.mk/g' {}
