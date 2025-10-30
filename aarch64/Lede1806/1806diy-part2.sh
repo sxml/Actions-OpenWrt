@@ -200,7 +200,6 @@ echo "mbedtls 版本回退完成"
 # ============ mbedtls 回退解决方案结束 ============
 # ============ 临时mbedtls 回退解决 另外一种============
 # rm -rf package/libs/mbedtls
-# git_clone_path(){local c=$1;local r=$2;shift 2;for p in "$@";do echo -e "\n📦 从 $r (提交 $c) 克隆 $p ...";git clone --no-checkout --filter=blob:none --sparse "$r" temp_clone||exit 1;cd temp_clone||exit 1;git fetch origin||exit 1;git checkout "$c"||exit 1;git sparse-checkout set "$p"||exit 1;mkdir -p "../$(dirname "$p")";cp -rf "$p" "../$p";cd ..;rm -rf temp_clone;echo "✅ 已成功复制 $p";done;}
 # git_clone_path 4bb635d https://github.com/coolsnowwolf/lede package/libs/mbedtls
 
 #修改makefile
