@@ -15,7 +15,7 @@ rm -rf feeds/luci/applications/luci-app-ddns-go
 rm -rf feeds/packages/net/ddns-go
 #重新编译时没有旧的或不必要的文件干扰 #staging_dir：编译生成的文件和依赖库 #build_dir：软件包的源代码和编译生成的文件
 rm -rf staging_dir build_dir
-#rm -rf feeds/packages/net/shadowsocks-libev
+rm -rf feeds/packages/net/shadowsocks-libev
 
 # 修改默认主题（从 uci-theme-bootstrap 更改为 luci-theme-design）
 sed -i 's/luci-theme-bootstrap/luci-theme-design/g' ./feeds/luci/collections/luci/Makefile
@@ -67,8 +67,9 @@ git clone --depth=1 -b main https://github.com/fw876/helloworld.git
 #cp -rf helloworld/luci-app-ssr-plus package/luci-app-ssr-plus
 cp -rf helloworld/xray-core package/xray-core
 cp -rf helloworld/xray-plugin package/xray-plugin
+cp -rf helloworld/shadowsocks-libev package/shadowsocks-libev
 cp -rf helloworld/shadowsocks-rust package/shadowsocks-rust
-cp -rf helloworld/shadowsocksr-libev package/shadowsocksr-libev
+#cp -rf helloworld/shadowsocksr-libev package/shadowsocksr-libev
 cp -rf helloworld/v2ray-plugin package/v2ray-plugin
 cp -rf helloworld/v2ray-core package/v2ray-core
 #cp -rf helloworld/v2ray-geodata package/v2ray-geodata
@@ -88,9 +89,9 @@ cp -rf helloworld/naiveproxy package/naiveproxy
 # 克隆 sbwml 仓库 shadowsocksr-libev 问题 20251021
 #命令中的 -b v5 的意思是指定要克隆的分支（branch）为 v5
 #命令中的--depth=1 只复制仓库最新的1个提交历史
-# git clone --depth=1 -b v5 https://github.com/sbwml/openwrt_helloworld.git
+git clone --depth=1 -b v5 https://github.com/sbwml/openwrt_helloworld.git
 # cp -rf openwrt_helloworld/shadowsocks-rust package/shadowsocks-rust
-# cp -rf openwrt_helloworld/shadowsocksr-libev package/shadowsocksr-libev
+cp -rf openwrt_helloworld/shadowsocksr-libev package/shadowsocksr-libev
 
 # 克隆openwrt-passwall仓库
 git clone --depth=1 https://github.com/xiaorouji/openwrt-passwall-packages.git
