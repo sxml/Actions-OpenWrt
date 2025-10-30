@@ -15,6 +15,7 @@ rm -rf feeds/luci/applications/luci-app-ddns-go
 rm -rf feeds/packages/net/ddns-go
 #重新编译时没有旧的或不必要的文件干扰 #staging_dir：编译生成的文件和依赖库 #build_dir：软件包的源代码和编译生成的文件
 rm -rf staging_dir build_dir
+rm -rf feeds/packages/net/shadowsocks-libev
 
 # 修改默认主题（从 uci-theme-bootstrap 更改为 luci-theme-design）
 sed -i 's/luci-theme-bootstrap/luci-theme-design/g' ./feeds/luci/collections/luci/Makefile
@@ -66,6 +67,7 @@ git clone --depth=1 -b main https://github.com/fw876/helloworld.git
 #cp -rf helloworld/luci-app-ssr-plus package/luci-app-ssr-plus
 cp -rf helloworld/xray-core package/xray-core
 cp -rf helloworld/xray-plugin package/xray-plugin
+cp -rf helloworld/shadowsocks-libev package/shadowsocks-libev
 cp -rf helloworld/shadowsocks-rust package/shadowsocks-rust
 cp -rf helloworld/shadowsocksr-libev package/shadowsocksr-libev
 cp -rf helloworld/v2ray-plugin package/v2ray-plugin
@@ -169,38 +171,6 @@ popd
 sed -i '/include $(INCLUDE_DIR)\/package.mk/a TARGET_CC:=aarch64-openwrt-linux-musl-gcc\nTARGET_CXX:=aarch64-openwrt-linux-musl-g++' package/lean/libcryptopp/Makefile
 # 清理 libcryptopp 的缓存
 make package/lean/libcryptopp/clean
-
-# ============ 修正的 mbedtls 回退解决方案 ============
-echo "应用 mbedtls 回退解决方案..."
-
-# 在主仓库根目录回退 mbedtls 到特定提交
-git checkout 89e46be -- package/libs/mbedtls/
-
-# 检查是否成功
-if [ $? -eq 0 ]; then
-    echo "✅ mbedtls 回退成功"
-else
-    echo "❌ mbedtls 回退失败，尝试备用方案..."
-    # 备用方案：重新克隆特定版本
-    rm -rf package/libs/mbedtls
-    git clone --depth=1 https://github.com/coolsnowwolf/lede.git temp_lede
-    cd temp_lede
-    git checkout 89e46be -- package/libs/mbedtls
-    cp -r package/libs/mbedtls ../
-    cd ..
-    rm -rf temp_lede
-    echo "✅ mbedtls 备用方案回退成功"
-fi
-
-# 清理编译缓存
-rm -rf ./build_dir/target-*/mbedtls-* 2>/dev/null || true
-rm -rf ./build_dir/target-*/shadowsocks-libev-* 2>/dev/null || true
-
-echo "mbedtls 版本回退完成"
-# ============ mbedtls 回退解决方案结束 ============
-# ============ 临时mbedtls 回退解决 另外一种============
-# rm -rf package/libs/mbedtls
-# git_clone_path 4bb635d https://github.com/coolsnowwolf/lede package/libs/mbedtls
 
 #修改makefile
 find package/*/ -maxdepth 2 -path "*/Makefile" | xargs -i sed -i 's/include\ \.\.\/\.\.\/luci\.mk/include \$(TOPDIR)\/feeds\/luci\/luci\.mk/g' {}
