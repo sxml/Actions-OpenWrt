@@ -14,6 +14,9 @@ rm -fr feeds/luci/themes/luci-theme-argon
 # rm -fr feeds/luci/themes/luci-theme-design
 rm -rf feeds/luci/applications/luci-app-ddns-go
 rm -rf feeds/packages/net/ddns-go
+#重新编译时没有旧的或不必要的文件干扰 #staging_dir：编译生成的文件和依赖库 #build_dir：软件包的源代码和编译生成的文件
+rm -rf staging_dir build_dir
+rm -rf feeds/packages/net/shadowsocks-libev
 
 #修改IP
 # sed -i 's/192.168.1.1/192.168.2.1/g' package/base-files/luci2/bin/config_generate
@@ -53,8 +56,9 @@ git clone --depth=1 -b main https://github.com/fw876/helloworld.git
 #cp -rf helloworld/luci-app-ssr-plus package/luci-app-ssr-plus
 cp -rf helloworld/xray-core package/xray-core
 cp -rf helloworld/xray-plugin package/xray-plugin
+cp -rf helloworld/shadowsocks-libev package/shadowsocks-libev
 cp -rf helloworld/shadowsocks-rust package/shadowsocks-rust
-# cp -rf helloworld/shadowsocksr-libev package/shadowsocksr-libev
+cp -rf helloworld/shadowsocksr-libev package/shadowsocksr-libev
 cp -rf helloworld/v2ray-plugin package/v2ray-plugin
 cp -rf helloworld/v2ray-core package/v2ray-core
 #cp -rf helloworld/v2ray-geodata package/v2ray-geodata
@@ -74,8 +78,8 @@ cp -rf helloworld/naiveproxy package/naiveproxy
 # 克隆 sbwml 仓库 shadowsocksr-libev 问题 20251021
 #命令中的 -b v5 的意思是指定要克隆的分支（branch）为 v5
 #命令中的--depth=1 只复制仓库最新的1个提交历史
-git clone --depth=1 -b v5 https://github.com/sbwml/openwrt_helloworld.git
-cp -rf openwrt_helloworld/shadowsocksr-libev package/shadowsocksr-libev
+# git clone --depth=1 -b v5 https://github.com/sbwml/openwrt_helloworld.git
+# cp -rf openwrt_helloworld/shadowsocksr-libev package/shadowsocksr-libev
 
 # 克隆openwrt-passwall仓库
 git clone --depth=1 https://github.com/xiaorouji/openwrt-passwall-packages.git
@@ -154,28 +158,6 @@ cp -rf luci-app-ddns-go/luci-app-ddns-go package/luci-app-ddns-go
 sed -i '/include $(INCLUDE_DIR)\/package.mk/a TARGET_CC:=aarch64-openwrt-linux-musl-gcc\nTARGET_CXX:=aarch64-openwrt-linux-musl-g++' package/lean/libcryptopp/Makefile
 # # 清理 libcryptopp 的缓存
 make package/lean/libcryptopp/clean
-
-# ============ 修正的 mbedtls 回退解决方案 ============
-echo "应用 mbedtls 回退解决方案..."
-
-# 在主仓库根目录回退 mbedtls 到特定提交
-git checkout 89e46be -- package/libs/mbedtls/
-
-# 检查是否成功
-if [ $? -eq 0 ]; then
-    echo "✅ mbedtls 回退成功"
-else
-    echo "❌ mbedtls 回退失败，尝试备用方案..."
-    # 备用方案：重新克隆特定版本
-    rm -rf package/libs/mbedtls
-    git clone --depth=1 https://github.com/coolsnowwolf/lede.git temp_lede
-    cd temp_lede
-    git checkout 89e46be -- package/libs/mbedtls
-    cp -r package/libs/mbedtls ../
-    cd ..
-    rm -rf temp_lede
-    echo "✅ mbedtls 备用方案回退成功"
-fi
 
 #修改makefile
 find package/*/ -maxdepth 2 -path "*/Makefile" | xargs -i sed -i 's/include\ \.\.\/\.\.\/luci\.mk/include \$(TOPDIR)\/feeds\/luci\/luci\.mk/g' {}
