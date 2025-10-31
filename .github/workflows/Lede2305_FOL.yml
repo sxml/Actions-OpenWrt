@@ -191,4 +191,4 @@ jobs:
 
     - name: 电报机器人信息通知
       if: steps.organize.outputs.status == 'success' && !cancelled()
-      run: curl -k --data chat_id="${{ secrets.TELEGRAM_CHAT_ID }}" --data "text=${{ env.FILE_NAME }}编译完成, CPU: $(cat /proc/cpuinfo | grep name | cut -f2 -d: | uniq -c), 时间: ${{ env.DATE }}" "https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage"
+      run: curl -k --data chat_id="${{ secrets.TELEGRAM_CHAT_ID }}" --data "text=${{ env.FILE_NAME }}编译完成" "https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage"
