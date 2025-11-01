@@ -1,5 +1,5 @@
 #
-# 2025.11.01  编译  Lede-23.05-ARMv8_FOL
+# 2025.11.01  编译 Lede-23.05-ARMv8_FOL
 #
 name: 编译Lede2305_FOL
 on:
@@ -77,7 +77,7 @@ jobs:
         echo "=============================================================================="
 
     - name: 准备
-      uses: actions/checkout@v4
+      uses: actions/checkout@master
 
     - name: 部署编译环境
       env:
