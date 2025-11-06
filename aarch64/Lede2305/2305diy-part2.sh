@@ -116,6 +116,7 @@ rm -rf openwrt-passwall2
 
 #解析
 git clone --depth=1 https://github.com/jerrykuku/lua-maxminddb.git package/lua-maxminddb
+rm -rf lua-maxminddb
 
 #晶晨宝盒
 git clone --depth=1 https://github.com/ophub/luci-app-amlogic.git
