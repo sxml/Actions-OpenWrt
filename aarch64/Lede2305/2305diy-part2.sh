@@ -1,7 +1,7 @@
 #!/bin/bash
 #============================================================
 # sxml
-# # 2025-11-05 23.05
+# # 2025-11-06 23.05
 #https://github.com/HoldOnBro/Actions-OpenWrt
 #https://github.com/breakings/OpenWrt
 #============================================================
@@ -18,11 +18,11 @@ rm -rf feeds/packages/net/ddns-go
 rm -rf staging_dir build_dir
 rm -rf feeds/packages/net/shadowsocks-libev
 
+# 最大连接数修改为65535
+sed -i '/customized in this file/a net.netfilter.nf_conntrack_max=65535' package/base-files/files/etc/sysctl.conf
+
 #修改IP
 # sed -i 's/192.168.1.1/192.168.2.1/g' package/base-files/luci2/bin/config_generate
-
-# 设置ttyd免帐号登录
-sed -i 's/\/bin\/login/\/bin\/login -f root/' feeds/packages/utils/ttyd/files/ttyd.config
 
 # 克隆 kenzok8仓库
 # git clone --depth=1 https://github.com/kenzok8/openwrt-packages.git kenzok8-packages
@@ -42,6 +42,7 @@ cp -rf small-package/pdnsd-alt package/pdnsd-alt
 cp -rf small-package/trojan-go package/trojan-go
 cp -rf small-package/dns2tcp package/dns2tcp
 cp -rf small-package/v2ray-geoview package/v2ray-geoview
+rm -rf small-package
 
 #克隆 pymumu 仓库 smartdns 20251024
 # 改用master分支的luci界面（适配新版）
@@ -54,6 +55,7 @@ cp -rf small-package/v2ray-geoview package/v2ray-geoview
 # 克隆immortalwrt-luci仓库
 git clone --depth=1 -b openwrt-23.05 https://github.com/immortalwrt/luci.git immortalwrt-luci
 cp -rf immortalwrt-luci/applications/luci-app-smartdns package/luci-app-smartdns
+rm -rf immortalwrt-luci
 
 # 克隆 fw876 仓库
 git clone --depth=1 -b main https://github.com/fw876/helloworld.git
@@ -77,13 +79,14 @@ cp -rf helloworld/gn package/gn
 cp -rf helloworld/shadow-tls package/shadow-tls
 cp -rf helloworld/tuic-client package/tuic-client
 cp -rf helloworld/naiveproxy package/naiveproxy
-#rm -rf helloworld
+rm -rf helloworld
 
 # 克隆 sbwml 仓库 shadowsocksr-libev 问题 20251021
 #命令中的 -b v5 的意思是指定要克隆的分支（branch）为 v5
 #命令中的--depth=1 只复制仓库最新的1个提交历史
 git clone --depth=1 -b v5 https://github.com/sbwml/openwrt_helloworld.git
 cp -rf openwrt_helloworld/shadowsocksr-libev package/shadowsocksr-libev
+rm -rf openwrt_helloworld
 
 # 克隆openwrt-passwall仓库
 git clone --depth=1 https://github.com/xiaorouji/openwrt-passwall-packages.git
@@ -99,25 +102,25 @@ cp -rf openwrt-passwall-packages/hysteria package/hysteria
 # cp -rf openwrt-passwall-packages/dns2tcp package/dns2tcp
 cp -rf openwrt-passwall-packages/sing-box package/sing-box
 cp -rf openwrt-passwall-packages/v2ray-geodata package/v2ray-geodata
-#rm -rf openwrt-passwall-packages
+rm -rf openwrt-passwall-packages
 
 #passwall
 git clone --depth=1 https://github.com/xiaorouji/openwrt-passwall.git
 cp -rf openwrt-passwall/luci-app-passwall package/luci-app-passwall
-#rm -rf openwrt-passwall
+rm -rf openwrt-passwall
 
 #passwall2
 git clone --depth=1 https://github.com/xiaorouji/openwrt-passwall2.git
 cp -rf openwrt-passwall2/luci-app-passwall2 package/luci-app-passwall2
-#rm -rf openwrt-passwall2
+rm -rf openwrt-passwall2
 
 #解析
 git clone --depth=1 https://github.com/jerrykuku/lua-maxminddb.git package/lua-maxminddb
 
-#添加luci-app-amlogic
+#晶晨宝盒
 git clone --depth=1 https://github.com/ophub/luci-app-amlogic.git
 cp -rf luci-app-amlogic/luci-app-amlogic package/luci-app-amlogic
-#rm -rf luci-app-amlogic
+rm -rf luci-app-amlogic
 #修改晶晨宝盒默认配置
 # 1.设置OpenWrt 文件的下载仓库
 sed -i "s|https.*/OpenWrt|https://github.com/sxml/Actions-OpenWrt|g" package/luci-app-amlogic/root/etc/config/amlogic
@@ -141,6 +144,8 @@ rm -rf feeds/luci/applications/luci-app-mosdns
 #命令中的 -b v5-lua 的意思是指定要克隆的分支（branch）为 v5-lua
 git clone -b v5-lua https://github.com/sbwml/luci-app-mosdns package/luci-app-mosdns
 git clone -b v5-lua https://github.com/sbwml/luci-app-mosdns package/mosdns
+rm -rf luci-app-mosdns
+rm -rf mosdns
 
 #小猫
 git clone --depth=1 https://github.com/vernesong/OpenClash.git
@@ -149,13 +154,14 @@ cp -rf OpenClash/luci-app-openclash package/luci-app-openclash
 pushd package/luci-app-openclash/tools/po2lmo
 make && sudo make install
 popd
-#rm -rf OpenClash
+rm -rf OpenClash
 
 #添加ddns-go 动态域名解析
 #git clone --depth=1 https://github.com/sirpdboy/luci-app-ddns-go.git package/ddns-go
 git clone --depth=1 https://github.com/sirpdboy/luci-app-ddns-go.git
 cp -rf luci-app-ddns-go/ddns-go package/ddns-go
 cp -rf luci-app-ddns-go/luci-app-ddns-go package/luci-app-ddns-go
+rm -rf luci-app-ddns-go
 
 #libcryptopp 编译问题
 # 在 Makefile 中显式指定编译器
@@ -163,21 +169,22 @@ sed -i '/include $(INCLUDE_DIR)\/package.mk/a TARGET_CC:=aarch64-openwrt-linux-m
 # # 清理 libcryptopp 的缓存
 make package/lean/libcryptopp/clean
 
-# ttyd 移到 系统 组
+# 设置TTYD免帐号登录
+sed -i 's/\/bin\/login/\/bin\/login -f root/' feeds/packages/utils/ttyd/files/ttyd.config
+# TTYD 移到 系统 组
 sed -i 's/services/system/g' feeds/luci/applications/luci-app-ttyd/root/usr/share/luci/menu.d/luci-app-ttyd.json
-# sed -i 's|"admin/services/ttyd"|"admin/system/ttyd"|' \
-# applications/luci-app-ttyd/root/usr/share/luci/menu.d/luci-app-ttyd.json
+# 排序 order: 50 数值越小越靠前
+sed -i '3 a\\t\t"order": 50,' feeds/luci/applications/luci-app-ttyd/root/usr/share/luci/menu.d/luci-app-ttyd.json
+# 输出和错误日志记录 1 启用 0 禁用
+sed -i 's/procd_set_param stdout 1/procd_set_param stdout 0/g' feeds/packages/utils/ttyd/files/ttyd.init
+sed -i 's/procd_set_param stderr 1/procd_set_param stderr 0/g' feeds/packages/utils/ttyd/files/ttyd.init
 
 # filebrowser 移到 NAS 组
 sed -i 's/services/nas/g' feeds/luci/applications/luci-app-filebrowser/root/usr/share/luci/menu.d/luci-app-filebrowser.json
-# sed -i 's|"admin/services/filebrowser"|"admin/nas/filebrowser"|' \
-# applications/luci-app-filebrowser/root/usr/share/luci/menu.d/luci-app-filebrowser.json
 
 # nlbwmon移到 网络 组
 sed -i 's/services/network/g' feeds/luci/applications/luci-app-nlbwmon/root/usr/share/luci/menu.d/luci-app-nlbwmon.json
 sed -i 's/services/network/g' feeds/luci/applications/luci-app-nlbwmon/htdocs/luci-static/resources/view/nlbw/config.js
-# sed -i 's|"admin/services/nlbw"|"admin/network/nlbw"|' \
-# applications/luci-app-nlbwmon/root/usr/share/luci/menu.d/luci-app-nlbwmon.json
 
 #修改makefile
 find package/*/ -maxdepth 2 -path "*/Makefile" | xargs -i sed -i 's/include\ \.\.\/\.\.\/luci\.mk/include \$(TOPDIR)\/feeds\/luci\/luci\.mk/g' {}
