@@ -18,9 +18,6 @@ rm -rf feeds/packages/net/ddns-go
 rm -rf staging_dir build_dir
 rm -rf feeds/packages/net/shadowsocks-libev
 
-# 最大连接数修改为65535
-sed -i '/customized in this file/a net.netfilter.nf_conntrack_max=65535' package/base-files/files/etc/sysctl.conf
-
 #修改IP
 # sed -i 's/192.168.1.1/192.168.2.1/g' package/base-files/luci2/bin/config_generate
 
@@ -175,7 +172,7 @@ sed -i 's/\/bin\/login/\/bin\/login -f root/' feeds/packages/utils/ttyd/files/tt
 # TTYD 移到 系统 组
 sed -i 's/services/system/g' feeds/luci/applications/luci-app-ttyd/root/usr/share/luci/menu.d/luci-app-ttyd.json
 # 排序 order: 50 数值越小越靠前
-sed -i '3 a\\t\t"order": 50,' feeds/luci/applications/luci-app-ttyd/root/usr/share/luci/menu.d/luci-app-ttyd.json
+sed -i '3 a\\t\t"order": 30,' feeds/luci/applications/luci-app-ttyd/root/usr/share/luci/menu.d/luci-app-ttyd.json
 # 输出和错误日志记录 1 启用 0 禁用
 sed -i 's/procd_set_param stdout 1/procd_set_param stdout 0/g' feeds/packages/utils/ttyd/files/ttyd.init
 sed -i 's/procd_set_param stderr 1/procd_set_param stderr 0/g' feeds/packages/utils/ttyd/files/ttyd.init
