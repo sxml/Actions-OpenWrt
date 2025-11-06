@@ -12,8 +12,6 @@ rm -rf feeds/luci/applications/luci-app-dockerman
 rm -rf feeds/luci/applications/luci-app-smartdns
 rm -fr feeds/luci/themes/luci-theme-argon
 # rm -fr feeds/luci/themes/luci-theme-design
-rm -fr feeds/luci/themes/luci-theme-bootstrapdark
-rm -fr feeds/luci/themes/luci-theme-bootstraplight
 rm -rf feeds/luci/applications/luci-app-ddns-go
 rm -rf feeds/packages/net/ddns-go
 #重新编译时没有旧的或不必要的文件干扰 #staging_dir：编译生成的文件和依赖库 #build_dir：软件包的源代码和编译生成的文件
@@ -137,10 +135,6 @@ sed -i "s|http.*/library|https://github.com/breakings/OpenWrt/tree/main/opt/kern
 # git clone --depth=1 https://github.com/jerrykuku/luci-theme-argon package/luci-theme-argon
 # git clone --depth=1 -b js https://github.com/lwb1978/luci-theme-kucat package/luci-theme-kucat
 
-#添加luci-theme-design(Js版)
-rm -rf feeds/luci/themes/luci-theme-design
-git clone -b js https://github.com/papagaye744/luci-theme-design package/luci-theme-design
-
 #mosdns
 rm -rf feeds/packages/net/mosdns
 rm -rf feeds/luci/applications/luci-app-mosdns
@@ -169,24 +163,21 @@ sed -i '/include $(INCLUDE_DIR)\/package.mk/a TARGET_CC:=aarch64-openwrt-linux-m
 # # 清理 libcryptopp 的缓存
 make package/lean/libcryptopp/clean
 
-# nlbwmon到 网络 组
-# sed -i 's/services/network/g' feeds/luci/applications/luci-app-nlbwmon/root/usr/share/luci/menu.d/luci-app-nlbwmon.json
-# sed -i 's/services/network/g' feeds/luci/applications/luci-app-nlbwmon/htdocs/luci-static/resources/view/nlbw/config.js
-
-# 修改 nlbwmon 到 网络 组
-# sed -i 's|"admin/services/nlbw"|"admin/network/nlbw"|' \
-# applications/luci-app-nlbwmon/root/usr/share/luci/menu.d/luci-app-nlbwmon.json
-sed -i 's|"admin": \[|"admin/network": \[|' feeds/luci/applications/luci-app-nlbwmon/root/usr/share/luci/menu.d/luci-app-nlbwmon.json
-
-# 修改 ttyd 到 系统 组
+# ttyd 移到 系统 组
+sed -i 's/services/system/g' feeds/luci/applications/luci-app-ttyd/root/usr/share/luci/menu.d/luci-app-ttyd.json
 # sed -i 's|"admin/services/ttyd"|"admin/system/ttyd"|' \
 # applications/luci-app-ttyd/root/usr/share/luci/menu.d/luci-app-ttyd.json
-sed -i 's|"admin": {|"admin/system": {|' package/lean/luci-app-ttyd/root/usr/share/luci/menu.d/luci-app-ttyd.json
 
-# 修改 filebrowser 到 NAS 组
+# filebrowser 移到 NAS 组
+sed -i 's/services/nas/g' feeds/luci/applications/luci-app-filebrowser/root/usr/share/luci/menu.d/luci-app-filebrowser.json
 # sed -i 's|"admin/services/filebrowser"|"admin/nas/filebrowser"|' \
 # applications/luci-app-filebrowser/root/usr/share/luci/menu.d/luci-app-filebrowser.json
-sed -i 's|"admin": {|"admin/nas": {|' package/lean/luci-app-filebrowser/root/usr/share/luci/menu.d/luci-app-filebrowser.json
+
+# nlbwmon移到 网络 组
+sed -i 's/services/network/g' feeds/luci/applications/luci-app-nlbwmon/root/usr/share/luci/menu.d/luci-app-nlbwmon.json
+sed -i 's/services/network/g' feeds/luci/applications/luci-app-nlbwmon/htdocs/luci-static/resources/view/nlbw/config.js
+# sed -i 's|"admin/services/nlbw"|"admin/network/nlbw"|' \
+# applications/luci-app-nlbwmon/root/usr/share/luci/menu.d/luci-app-nlbwmon.json
 
 #修改makefile
 find package/*/ -maxdepth 2 -path "*/Makefile" | xargs -i sed -i 's/include\ \.\.\/\.\.\/luci\.mk/include \$(TOPDIR)\/feeds\/luci\/luci\.mk/g' {}
