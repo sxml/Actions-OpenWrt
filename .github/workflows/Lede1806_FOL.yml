@@ -1,5 +1,5 @@
 #
-# 2025.10.30 编译 Lede-18.06-ARMv8_FOL
+# 2026.01.18 编译 Lede-18.06-ARMv8_FOL
 #
 name: 编译Lede1806_FOL
 on:
@@ -37,7 +37,7 @@ jobs:
       env:
         DEBIAN_FRONTEND: noninteractive
       run: |
-        docker rmi `docker images -q`
+        docker rmi $(docker images -q) || true
         sudo rm -rf /etc/apt/sources.list.d/* /usr/share/dotnet /usr/local/lib/android /opt/ghc /etc/mysql /etc/php
         sudo -E apt-get -y purge azure-cli* docker* ghc* zulu* hhvm* llvm* firefox* google* dotnet* aspnetcore* powershell* openjdk* adoptopenjdk* mysql* php* mongodb* moby* snap* || true
         sudo -E apt-get -qq update
