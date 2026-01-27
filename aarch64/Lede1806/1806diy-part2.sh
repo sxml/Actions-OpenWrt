@@ -1,7 +1,7 @@
 #!/bin/bash
 #============================================================
 # sxml
-# 2025-11-14 1806
+# 2026-01-27 1806
 #https://github.com/HoldOnBro/Actions-OpenWrt
 #https://github.com/breakings/OpenWrt
 #============================================================
@@ -84,11 +84,11 @@ rm -rf helloworld
 # 克隆 sbwml 仓库 shadowsocksr-libev 问题 20251021
 #命令中的 -b v5 的意思是指定要克隆的分支（branch）为 v5
 #命令中的--depth=1 只复制仓库最新的1个提交历史
-git clone --depth=1 -b v5 https://github.com/sbwml/openwrt_helloworld.git
-cp -rf openwrt_helloworld/shadowsocksr-libev package/shadowsocksr-libev
+# git clone --depth=1 -b v5 https://github.com/sbwml/openwrt_helloworld.git
+# cp -rf openwrt_helloworld/shadowsocksr-libev package/shadowsocksr-libev
 
 # 克隆openwrt-passwall仓库
-git clone --depth=1 https://github.com/xiaorouji/openwrt-passwall-packages.git
+git clone --depth=1 https://github.com/Openwrt-Passwall/openwrt-passwall-packages.git
 #cp -rf openwrt-passwall-packages/brook package/brook
 #cp -rf openwrt-passwall-packages/ssocks package/ssocks
 cp -rf openwrt-passwall-packages/simple-obfs package/simple-obfs
@@ -101,15 +101,16 @@ cp -rf openwrt-passwall-packages/hysteria package/hysteria
 #cp -rf openwrt-passwall-packages/dns2tcp package/dns2tcp
 cp -rf openwrt-passwall-packages/sing-box package/sing-box
 cp -rf openwrt-passwall-packages/v2ray-geodata package/v2ray-geodata
+cp -rf openwrt-passwall-packages/shadowsocksr-libev package/shadowsocksr-libev
 rm -rf openwrt-passwall-packages
 
 #passwall
-git clone --depth=1 https://github.com/xiaorouji/openwrt-passwall.git
+git clone --depth=1 https://github.com/Openwrt-Passwall/openwrt-passwall.git
 cp -rf openwrt-passwall/luci-app-passwall package/luci-app-passwall
 rm -rf openwrt-passwall
 
 #passwall2
-git clone --depth=1 https://github.com/xiaorouji/openwrt-passwall2.git
+git clone --depth=1 https://github.com/Openwrt-Passwall/openwrt-passwall2.git
 cp -rf openwrt-passwall2/luci-app-passwall2 package/luci-app-passwall2
 rm -rf openwrt-passwall2
 
