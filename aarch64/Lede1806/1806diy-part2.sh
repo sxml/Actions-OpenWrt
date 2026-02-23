@@ -54,6 +54,7 @@ cp -rf small-package/ssocks package/ssocks
 cp -rf small-package/pdnsd-alt package/pdnsd-alt
 cp -rf small-package/trojan-go package/trojan-go
 cp -rf small-package/dns2tcp package/dns2tcp
+cp -rf small-package/xray-plugin package/xray-plugin
 # cp -rf small-package/v2ray-geoview package/v2ray-geoview
 rm -rf small-package
 
@@ -61,7 +62,7 @@ rm -rf small-package
 git clone --depth=1 -b main https://github.com/fw876/helloworld.git
 #cp -rf helloworld/luci-app-ssr-plus package/luci-app-ssr-plus
 cp -rf helloworld/xray-core package/xray-core
-cp -rf helloworld/xray-plugin package/xray-plugin
+#cp -rf helloworld/xray-plugin package/xray-plugin
 # cp -rf helloworld/shadowsocks-libev package/shadowsocks-libev
 cp -rf helloworld/shadowsocks-rust package/shadowsocks-rust
 #cp -rf helloworld/shadowsocksr-libev package/shadowsocksr-libev
