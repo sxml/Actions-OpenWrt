@@ -54,7 +54,6 @@ cp -rf small-package/ssocks package/ssocks
 cp -rf small-package/pdnsd-alt package/pdnsd-alt
 cp -rf small-package/trojan-go package/trojan-go
 cp -rf small-package/dns2tcp package/dns2tcp
-cp -rf small-package/xray-plugin package/xray-plugin
 # cp -rf small-package/v2ray-geoview package/v2ray-geoview
 rm -rf small-package
 
@@ -102,6 +101,7 @@ cp -rf openwrt-passwall-packages/hysteria package/hysteria
 #cp -rf openwrt-passwall-packages/dns2tcp package/dns2tcp
 cp -rf openwrt-passwall-packages/sing-box package/sing-box
 cp -rf openwrt-passwall-packages/v2ray-geodata package/v2ray-geodata
+cp -rf openwrt-passwall-packages/xray-plugin package/xray-plugin
 cp -rf openwrt-passwall-packages/shadowsocksr-libev package/shadowsocksr-libev
 rm -rf openwrt-passwall-packages
 
