@@ -41,7 +41,7 @@ git clone --depth=1 -b lede https://github.com/pymumu/luci-app-smartdns.git feed
 # cp -rf immortalwrt-luci/applications/luci-app-smartdns package/luci-app-smartdns
 
 # 克隆 kenzok8 small仓库
-git clone --depth=1 https://github.com/kenzok8/small-package.git small-package
+git clone --depth=1 https://github.com/kenzok8/small.git small-package
 #cp -rf small-package/gost package/gost
 #cp -rf small-package/luci-app-gost package/luci-app-gost
 #cp -rf small-package/sagernet-core package/sagernet-core
