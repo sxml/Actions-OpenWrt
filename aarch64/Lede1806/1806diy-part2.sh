@@ -1,7 +1,7 @@
 #!/bin/bash
 #============================================================
 # sxml
-# 2026-04-05 1806
+# 2026-04-23 1806
 #https://github.com/HoldOnBro/Actions-OpenWrt
 #https://github.com/breakings/OpenWrt
 #============================================================
@@ -10,7 +10,7 @@ rm -rf feeds/luci/applications/luci-app-dockerman
 #rm -rf package/lean/luci-app-wrtbwmon
 rm -rf feeds/packages/net/smartdns
 rm -rf feeds/luci/applications/luci-app-smartdns
-rm -fr feeds/luci/themes/luci-theme-design
+#rm -fr feeds/luci/themes/luci-theme-design
 rm -rf feeds/luci/applications/luci-app-ddns-go
 rm -rf feeds/packages/net/ddns-go
 #重新编译时没有旧的或不必要的文件干扰 #staging_dir：编译生成的文件和依赖库 #build_dir：软件包的源代码和编译生成的文件
@@ -132,10 +132,10 @@ sed -i "s|.img.gz|.img.gz|g" package/luci-app-amlogic/root/etc/config/amlogic
 sed -i "s|http.*/library|https://github.com/breakings/OpenWrt/tree/main/opt/kernel|g" package/luci-app-amlogic/root/etc/config/amlogic
 
 # themes 主题
-git clone --depth=1 https://github.com/sxml/luci-theme-design.git package/luci-theme-design
-git clone --depth=1 https://github.com/sxml/luci-app-design-config.git package/luci-app-design-config
-rm -rf luci-theme-design
-rm -rf luci-app-design-config
+# git clone --depth=1 https://github.com/sxml/luci-theme-design.git package/luci-theme-design
+# git clone --depth=1 https://github.com/sxml/luci-app-design-config.git package/luci-app-design-config
+# rm -rf luci-theme-design
+# rm -rf luci-app-design-config
 
 #mosdns
 rm -rf feeds/packages/net/mosdns
