@@ -1,7 +1,7 @@
 #!/bin/bash
 #============================================================
 # sxml
-# 2026-04-23 1806
+# 2026-07-30 2512
 #https://github.com/HoldOnBro/Actions-OpenWrt
 #https://github.com/breakings/OpenWrt
 #============================================================
@@ -168,6 +168,10 @@ rm -rf OpenClash
 sed -i '/include $(INCLUDE_DIR)\/package.mk/a TARGET_CC:=aarch64-openwrt-linux-musl-gcc\nTARGET_CXX:=aarch64-openwrt-linux-musl-g++' package/lean/libcryptopp/Makefile
 # # 清理 libcryptopp 的缓存
 make package/lean/libcryptopp/clean
+
+#202607 vim报错
+rm -rf feeds/packages/utils/vim
+git clone https://github.com/openwrt/packages.git -b openwrt-18.06 feeds/packages --depth=1
 
 #修改makefile
 find package/*/ -maxdepth 2 -path "*/Makefile" | xargs -i sed -i 's/include\ \.\.\/\.\.\/luci\.mk/include \$(TOPDIR)\/feeds\/luci\/luci\.mk/g' {}
