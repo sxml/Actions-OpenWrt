@@ -151,6 +151,9 @@ jobs:
       id: compile
       run: |
         cd openwrt
+        # 新增：清理旧编译缓存，释放磁盘空间
+        rm -rf build_dir staging_dir tmp
+        make clean
         echo -e "$(nproc) thread compile"
         make -j$(nproc) || make -j1 || make -j1 V=s
         grep '^CONFIG_TARGET.*DEVICE.*=y' .config | sed -r 's/.*DEVICE_(.*)=y/\1/' > DEVICE_NAME
