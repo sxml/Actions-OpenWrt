@@ -171,7 +171,9 @@ make package/lean/libcryptopp/clean
 
 #202607 vim报错
 rm -rf feeds/packages/utils/vim
-git clone https://github.com/openwrt/packages.git -b openwrt-18.06 feeds/packages --depth=1
+git clone https://github.com/openwrt/packages.git --depth=1 -b openwrt-18.06 feeds-tmp
+cp -r feeds-t/utils/vim feeds/packages/utils/
+rm -rf feeds-tmp
 
 #修改makefile
 find package/*/ -maxdepth 2 -path "*/Makefile" | xargs -i sed -i 's/include\ \.\.\/\.\.\/luci\.mk/include \$(TOPDIR)\/feeds\/luci\/luci\.mk/g' {}
