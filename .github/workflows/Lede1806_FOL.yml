@@ -1,5 +1,5 @@
 #
-# 2026.07.30 编译 Lede-2512-ARMv8_FOL
+# 2026.10.06 豆包修改 编译 Lede-2512-ARMv8_FOL
 #
 name: 编译Lede1806_FOL
 on:
@@ -31,7 +31,7 @@ jobs:
       
     steps:
     - name: 准备
-      uses: actions/checkout@master
+      uses: actions/checkout@v4
 
     - name: 部署编译环境
       env:
@@ -101,16 +101,15 @@ jobs:
         echo "DATE=$(date "+%Y-%m-%d %H:%M:%S")" >> $GITHUB_ENV
         echo "DATE1=$(date "+%Y-%m-%d")" >> $GITHUB_ENV
 
-    # - name: 缓存加速
-# ##      uses: klever1988/cachewrtbuild@main
-      # uses: stupidloud/cachewrtbuild@main
-      # with:
-        # mixkey: 'Build1806'
-        # ccache: true
-        # skip: true
-        # toolchain: true
-        # clean: false
-        # prefix: ${{ github.workspace }}/openwrt
+    - name: 缓存加速
+      uses: stupidloud/cachewrtbuild@main
+      with:
+        mixkey: 'Build1806'
+        ccache: true
+        skip: false
+        toolchain: true
+        clean: false
+        prefix: ${{ github.workspace }}/openwrt
 
     - name: 加载自定义配置
       run: |
@@ -162,13 +161,6 @@ jobs:
         echo "DATE_YMD=_$(date +"%Y%m%d")" >> $GITHUB_ENV
         echo "status=success" >> $GITHUB_OUTPUT
 
-    - name: 清理服务器空间
-      if: steps.compile.outputs.status == 'success' && !cancelled()
-      run: |
-        cd openwrt/
-        rm -rf $(ls . | grep -v "^bin$" | xargs) 2>/dev/null
-        df -hT ${PWD}
-  
     - name: 整理固件文件夹
       id: organize
       if: steps.compile.outputs.status == 'success' && !cancelled()
@@ -206,7 +198,6 @@ jobs:
         name: ${{ env.FILE_NAME }}
         allowUpdates: true
         tag: ${{ env.FILE_NAME }}
-        commit: master
         token: ${{ secrets.RELEASES_TOKEN }}
         body: |
           编译Lede 18.06固件，Flippy打包用！
