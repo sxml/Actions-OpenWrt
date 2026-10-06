@@ -170,9 +170,9 @@ rm -rf ddns-go
 #小猫
 git clone --depth=1 https://github.com/vernesong/OpenClash.git
 cp -rf OpenClash/luci-app-openclash package/luci-app-openclash
-# 编译 po2lmo (如果有po2lmo可跳过)
+# 编译 po2lmo (如果有po2lmo可跳过，增加容错||true，失败不终止脚本)
 pushd package/luci-app-openclash/tools/po2lmo
-make && sudo make install
+make && sudo make install || true
 popd
 rm -rf OpenClash
 
