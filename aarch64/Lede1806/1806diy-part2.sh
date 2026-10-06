@@ -16,7 +16,7 @@ rm -rf feeds-tmp
 
 #=====修复 igmpproxy automake编译报错【需要IPTV保留；不需要可以直接整块删除】=====
 rm -rf feeds/packages/net/igmpproxy
-git clone https://github.com/openwrt/packages.git -b openwrt-18.06 feeds-tmp-igmpproxy
+git clone https://github.com/openwrt/packages.git --depth=1 -b openwrt-18.06 feeds-tmp-igmpproxy
 cp -r feeds-tmp-igmpproxy/net/igmpproxy feeds/packages/net/
 rm -rf feeds-tmp-igmpproxy
 
