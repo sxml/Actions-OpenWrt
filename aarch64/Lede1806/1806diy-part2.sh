@@ -1,7 +1,7 @@
 #!/bin/bash
 #============================================================
 # sxml
-# 2026-10-06 2512
+# 2026-10-07 2512
 # part2 开头执行 vim、igmpproxy 修复（feeds 已经 update/install 完毕，不会被覆盖）
 # part2 在 feeds update、feeds install完成之后执行
 #============================================================
@@ -17,6 +17,12 @@ git clone https://github.com/openwrt/packages.git --depth=1 -b openwrt-18.06 fee
 # ⚠️重点：18.06分支仓库根目录下是packages文件夹！
 cp -r feeds-tmp-igmpproxy/packages/net/igmpproxy feeds/packages/net/
 rm -rf feeds-tmp-igmpproxy
+
+#修复 python‑cython host编译whl缺失报错
+rm -rf feeds/packages/lang/python/python-cython
+git clone --depth=1 -b openwrt-18.06 https://github.com/openwrt/packages.git feeds‑tmp‑cython
+cp -r feeds‑tmp‑cython/packages/lang/python/python-cython feeds/packages/lang/python/
+rm -rf feeds‑tmp‑cython
 
 #替换完feeds内软件包，重新install注册包
 ./scripts/feeds install -a
