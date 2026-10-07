@@ -1,5 +1,5 @@
 #
-# 2026.10.06 豆包修改 编译 Lede-2512-ARMv8_FOL
+# 2026.10.07 豆包修改 编译 Lede-2512-ARMv8_FOL
 #
 name: 编译Lede1806_FOL
 on:
@@ -31,7 +31,8 @@ jobs:
       
     steps:
     - name: 准备
-      uses: actions/checkout@v4
+      #uses: actions/checkout@v4 豆包修改的
+      uses: actions/checkout@master
 
     - name: 部署编译环境
       env:
