@@ -18,11 +18,11 @@ git clone https://github.com/openwrt/packages.git --depth=1 -b openwrt-18.06 fee
 cp -r feeds-tmp-igmpproxy/packages/net/igmpproxy feeds/packages/net/
 rm -rf feeds-tmp-igmpproxy
 
-#修复 python‑cython host编译whl缺失报错
-rm -rf feeds/packages/lang/python/python-cython
-git clone --depth=1 -b openwrt-18.06 https://github.com/openwrt/packages.git feeds‑tmp‑cython
-cp -r feeds‑tmp‑cython/packages/lang/python/python-cython feeds/packages/lang/python/
-rm -rf feeds‑tmp‑cython
+# #修复 python‑cython host编译whl缺失报错
+# rm -rf feeds/packages/lang/python/python-cython
+# git clone --depth=1 -b openwrt-18.06 https://github.com/openwrt/packages.git feeds‑tmp‑cython
+# cp -r feeds‑tmp‑cython/packages/lang/python/python-cython feeds/packages/lang/python/
+# rm -rf feeds‑tmp‑cython
 
 #替换完feeds内软件包，重新install注册包
 ./scripts/feeds install -a
@@ -31,4 +31,3 @@ rm -rf feeds‑tmp‑cython
 ###########################################################################
 #示例（你原有注释参考）
 #sed -i 's/192.168.1.1/192.168.2.1/g' package/base-files/files/bin/config_generate
-
