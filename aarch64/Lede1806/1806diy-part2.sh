@@ -24,6 +24,13 @@ rm -rf feeds-tmp-igmpproxy
 # cp -r feeds‑tmp‑cython/packages/lang/python/python-cython feeds/packages/lang/python/
 # rm -rf feeds‑tmp‑cython
 
+# 20261009修复 python-cython host 构建失败
+rm -rf build_dir/hostpkg/pypi/Cython-* 
+rm -rf staging_dir/hostpkg/stamp/.python-cython*
+rm -rf tmp/host-stage-python-cython 
+# 强制重新编译相关 host 包
+make package/feeds/packages/python-cython/host/{clean,compile} -j1 V=s
+
 #替换完feeds内软件包，重新install注册包
 ./scripts/feeds install -a
 ###########################################################################
