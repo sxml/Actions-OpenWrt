@@ -175,12 +175,12 @@ git clone https://github.com/openwrt/packages.git --depth=1 -b openwrt-18.06 fee
 cp -r feeds-t/utils/vim feeds/packages/utils/
 rm -rf feeds-tmp
 
-#=====修复 igmpproxy automake编译报错【需要IPTV保留；不需要可以直接整块删除】=====
-rm -rf feeds/packages/net/igmpproxy
-git clone https://github.com/openwrt/packages.git --depth=1 -b openwrt-18.06 feeds-tmp-igmpproxy
-# ⚠️重点：18.06分支仓库根目录下是packages文件夹！
-cp -r feeds-tmp-igmpproxy/packages/net/igmpproxy feeds/packages/net/
-rm -rf feeds-tmp-igmpproxy
+# #=====修复 igmpproxy automake编译报错【需要IPTV保留；不需要可以直接整块删除】=====
+# rm -rf feeds/packages/net/igmpproxy
+# git clone https://github.com/openwrt/packages.git --depth=1 -b openwrt-18.06 feeds-tmp-igmpproxy
+# # ⚠️重点：18.06分支仓库根目录下是packages文件夹！
+# cp -r feeds-tmp-igmpproxy/packages/net/igmpproxy feeds/packages/net/
+# rm -rf feeds-tmp-igmpproxy
 
 #修改makefile
 find package/*/ -maxdepth 2 -path "*/Makefile" | xargs -i sed -i 's/include\ \.\.\/\.\.\/luci\.mk/include \$(TOPDIR)\/feeds\/luci\/luci\.mk/g' {}
@@ -191,44 +191,44 @@ find package/*/ -maxdepth 2 -path "*/Makefile" | xargs -i sed -i 's/PKG_SOURCE_U
 ./scripts/feeds update -a
 ./scripts/feeds install -a
 
-# ========== 20261011 强化修复 python-cython host（放在最后执行）==========
-echo ">>> Force fixing python-cython host..."
+# # ========== 20261011 强化修复 python-cython host（放在最后执行）==========
+# echo ">>> Force fixing python-cython host..."
 
-# 彻底清理残留
-rm -rf build_dir/hostpkg/pypi/Cython-*
-rm -rf build_dir/hostpkg/pypi/PyYAML-*
-rm -rf staging_dir/hostpkg/stamp/.python-cython*
-rm -rf staging_dir/hostpkg/stamp/.python-yaml*
-rm -rf tmp/host-stage-python-cython*
-rm -rf staging_dir/hostpkg/lib/python*/site-packages/Cython*
-rm -rf staging_dir/hostpkg/lib/python*/site-packages/cython*
-rm -rf staging_dir/hostpkg/lib/python*/site-packages/yaml*
-rm -rf staging_dir/hostpkg/lib/python*/site-packages/PyYAML*
+# # 彻底清理残留
+# rm -rf build_dir/hostpkg/pypi/Cython-*
+# rm -rf build_dir/hostpkg/pypi/PyYAML-*
+# rm -rf staging_dir/hostpkg/stamp/.python-cython*
+# rm -rf staging_dir/hostpkg/stamp/.python-yaml*
+# rm -rf tmp/host-stage-python-cython*
+# rm -rf staging_dir/hostpkg/lib/python*/site-packages/Cython*
+# rm -rf staging_dir/hostpkg/lib/python*/site-packages/cython*
+# rm -rf staging_dir/hostpkg/lib/python*/site-packages/yaml*
+# rm -rf staging_dir/hostpkg/lib/python*/site-packages/PyYAML*
 
-# 确保基础工具先编译好
-make package/feeds/packages/python-build/host/compile -j1 V=s || true
-make package/feeds/packages/python-installer/host/compile -j1 V=s || true
-make package/feeds/packages/python-wheel/host/compile -j1 V=s || true
+# # 确保基础工具先编译好
+# make package/feeds/packages/python-build/host/compile -j1 V=s || true
+# make package/feeds/packages/python-installer/host/compile -j1 V=s || true
+# make package/feeds/packages/python-wheel/host/compile -j1 V=s || true
 
-# 先强制清理并编译一次
-make package/feeds/packages/python-cython/host/clean -j1 || true
-make package/feeds/packages/python-cython/host/compile -j1 V=s || true
+# # 先强制清理并编译一次
+# make package/feeds/packages/python-cython/host/clean -j1 || true
+# make package/feeds/packages/python-cython/host/compile -j1 V=s || true
 
-# ========== 关键：修复 Makefile 中 wheel 路径匹配问题 ==========
-if [ -f feeds/packages/lang/python/python-cython/Makefile ]; then
-  echo ">>> Patching python-cython Makefile..."
-  # 把通配符改成实际能找到的写法
-  sed -i 's|Cython-\$(PKG_VERSION)-\*\.whl|Cython-\$(PKG_VERSION)-*.whl|g' feeds/packages/lang/python/python-cython/Makefile
-  # 更稳妥：让它自动查找生成的 wheel 文件
-  sed -i 's|"\$(PKG_BUILD_DIR)/openwrt-build/Cython-\$(PKG_VERSION)-\*\.whl"|$$(find \$(PKG_BUILD_DIR) -name "Cython-\$(PKG_VERSION)-*.whl" 2>/dev/null | head -n1)|g' feeds/packages/lang/python/python-cython/Makefile
-fi
+# # ========== 关键：修复 Makefile 中 wheel 路径匹配问题 ==========
+# if [ -f feeds/packages/lang/python/python-cython/Makefile ]; then
+  # echo ">>> Patching python-cython Makefile..."
+  # # 把通配符改成实际能找到的写法
+  # sed -i 's|Cython-\$(PKG_VERSION)-\*\.whl|Cython-\$(PKG_VERSION)-*.whl|g' feeds/packages/lang/python/python-cython/Makefile
+  # # 更稳妥：让它自动查找生成的 wheel 文件
+  # sed -i 's|"\$(PKG_BUILD_DIR)/openwrt-build/Cython-\$(PKG_VERSION)-\*\.whl"|$$(find \$(PKG_BUILD_DIR) -name "Cython-\$(PKG_VERSION)-*.whl" 2>/dev/null | head -n1)|g' feeds/packages/lang/python/python-cython/Makefile
+# fi
 
-# 再次强制清理并编译
-make package/feeds/packages/python-cython/host/clean -j1 || true
-make package/feeds/packages/python-cython/host/compile -j1 V=s || true
+# # 再次强制清理并编译
+# make package/feeds/packages/python-cython/host/clean -j1 || true
+# make package/feeds/packages/python-cython/host/compile -j1 V=s || true
 
-# 再编译依赖它的 python-yaml
-make package/feeds/packages/python-yaml/clean -j1 || true
-make package/feeds/packages/python-yaml/compile -j1 V=s || true
+# # 再编译依赖它的 python-yaml
+# make package/feeds/packages/python-yaml/clean -j1 || true
+# make package/feeds/packages/python-yaml/compile -j1 V=s || true
 
-echo ">>> python-cython force fix finished."
+# echo ">>> python-cython force fix finished."
