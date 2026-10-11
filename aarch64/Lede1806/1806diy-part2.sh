@@ -191,9 +191,10 @@ find package/*/ -maxdepth 2 -path "*/Makefile" | xargs -i sed -i 's/PKG_SOURCE_U
 ./scripts/feeds update -a
 ./scripts/feeds install -a
 
-# ========== 20261011修复 python-cython host（放在最后执行）==========
-echo ">>> Cleaning and rebuilding python-cython host..."
+# ========== 20261011 强化修复 python-cython host（放在最后执行）==========
+echo ">>> Force fixing python-cython host..."
 
+# 彻底清理残留
 rm -rf build_dir/hostpkg/pypi/Cython-*
 rm -rf build_dir/hostpkg/pypi/PyYAML-*
 rm -rf staging_dir/hostpkg/stamp/.python-cython*
@@ -204,17 +205,30 @@ rm -rf staging_dir/hostpkg/lib/python*/site-packages/cython*
 rm -rf staging_dir/hostpkg/lib/python*/site-packages/yaml*
 rm -rf staging_dir/hostpkg/lib/python*/site-packages/PyYAML*
 
-# 先确保基础构建工具就绪
+# 确保基础工具先编译好
 make package/feeds/packages/python-build/host/compile -j1 V=s || true
 make package/feeds/packages/python-installer/host/compile -j1 V=s || true
 make package/feeds/packages/python-wheel/host/compile -j1 V=s || true
 
-# 强制单线程重新编译 python-cython
+# 先强制清理并编译一次
 make package/feeds/packages/python-cython/host/clean -j1 || true
 make package/feeds/packages/python-cython/host/compile -j1 V=s || true
 
-# 再编译 python-yaml
+# ========== 关键：修复 Makefile 中 wheel 路径匹配问题 ==========
+if [ -f feeds/packages/lang/python/python-cython/Makefile ]; then
+  echo ">>> Patching python-cython Makefile..."
+  # 把通配符改成实际能找到的写法
+  sed -i 's|Cython-\$(PKG_VERSION)-\*\.whl|Cython-\$(PKG_VERSION)-*.whl|g' feeds/packages/lang/python/python-cython/Makefile
+  # 更稳妥：让它自动查找生成的 wheel 文件
+  sed -i 's|"\$(PKG_BUILD_DIR)/openwrt-build/Cython-\$(PKG_VERSION)-\*\.whl"|$$(find \$(PKG_BUILD_DIR) -name "Cython-\$(PKG_VERSION)-*.whl" 2>/dev/null | head -n1)|g' feeds/packages/lang/python/python-cython/Makefile
+fi
+
+# 再次强制清理并编译
+make package/feeds/packages/python-cython/host/clean -j1 || true
+make package/feeds/packages/python-cython/host/compile -j1 V=s || true
+
+# 再编译依赖它的 python-yaml
 make package/feeds/packages/python-yaml/clean -j1 || true
 make package/feeds/packages/python-yaml/compile -j1 V=s || true
 
-echo ">>> python-cython fix finished."
+echo ">>> python-cython force fix finished."
