@@ -1,5 +1,5 @@
 #
-# 2026.10.07 豆包修改 编译 Lede-2512-ARMv8_FOL
+# 2026.10.11 修改 编译 Lede-2512-ARMv8_FOL
 #
 name: 编译Lede1806_FOL
 on:
@@ -45,7 +45,7 @@ jobs:
         sudo -E apt-get -qq update
         #sudo -E apt -y install $(curl -fsSL https://tinyurl.com/ubuntu2204-make-openwrt) subversion clang llvm
         #sudo -E apt-get -qq install libfuse-dev $(curl -fsSL https://tinyurl.com/ubuntu2204-make-openwrt)
-        sudo -E apt-get -qq install $(cat $GITHUB_WORKSPACE/depends-ubuntu-2204)
+        sudo -E apt-get -qq install $(cat $GITHUB_WORKSPACE/depends-ubuntu-2204) cython3 python3-dev
         sudo -E apt-get -qq autoremove --purge
         sudo -E apt-get -qq clean
         #sudo timedatectl set-timezone "$TZ"
