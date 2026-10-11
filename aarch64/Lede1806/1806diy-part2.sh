@@ -183,10 +183,10 @@ cp -r feeds-tmp-igmpproxy/packages/net/igmpproxy feeds/packages/net/
 rm -rf feeds-tmp-igmpproxy
 
 #修复 python‑cython host编译whl缺失报错
-rm -rf feeds/packages/lang/python/python-cython
-git clone --depth=1 -b openwrt-25.12 https://github.com/openwrt/packages.git feeds-tmp-cython
-cp -r feeds‑tmp‑cython/packages/lang/python/python-cython feeds/packages/lang/python/
-rm -rf feeds‑tmp‑cython
+#rm -rf feeds/packages/lang/python/python-cython
+#git clone --depth=1 -b openwrt-25.12 https://github.com/openwrt/packages.git feeds-tmp-cython
+#cp -r feeds‑tmp‑cython/packages/lang/python/python-cython feeds/packages/lang/python/
+#rm -rf feeds‑tmp‑cython
 
 #修改makefile
 find package/*/ -maxdepth 2 -path "*/Makefile" | xargs -i sed -i 's/include\ \.\.\/\.\.\/luci\.mk/include \$(TOPDIR)\/feeds\/luci\/luci\.mk/g' {}
