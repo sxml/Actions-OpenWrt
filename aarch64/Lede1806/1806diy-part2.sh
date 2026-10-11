@@ -182,11 +182,31 @@ git clone https://github.com/openwrt/packages.git --depth=1 -b openwrt-18.06 fee
 cp -r feeds-tmp-igmpproxy/packages/net/igmpproxy feeds/packages/net/
 rm -rf feeds-tmp-igmpproxy
 
-#修复 python‑cython host编译whl缺失报错
-#rm -rf feeds/packages/lang/python/python-cython
-#git clone --depth=1 -b openwrt-25.12 https://github.com/openwrt/packages.git feeds-tmp-cython
-#cp -r feeds‑tmp‑cython/packages/lang/python/python-cython feeds/packages/lang/python/
-#rm -rf feeds‑tmp‑cython
+# ========== 修复 python-cython host ==========
+echo ">>> Cleaning python-cython and related host packages..."
+
+rm -rf build_dir/hostpkg/pypi/Cython-*
+rm -rf build_dir/hostpkg/pypi/PyYAML-*
+rm -rf staging_dir/hostpkg/stamp/.python-cython*
+rm -rf staging_dir/hostpkg/stamp/.python-yaml*
+rm -rf tmp/host-stage-python-cython*
+rm -rf staging_dir/hostpkg/lib/python*/site-packages/Cython*
+rm -rf staging_dir/hostpkg/lib/python*/site-packages/cython*
+rm -rf staging_dir/hostpkg/lib/python*/site-packages/yaml*
+rm -rf staging_dir/hostpkg/lib/python*/site-packages/PyYAML*
+
+# 先确保基础构建工具就绪
+make package/feeds/packages/python-build/host/compile -j1 V=s || true
+make package/feeds/packages/python-installer/host/compile -j1 V=s || true
+make package/feeds/packages/python-wheel/host/compile -j1 V=s || true
+
+# 强制单线程重新编译 python-cython
+make package/feeds/packages/python-cython/host/clean -j1
+make package/feeds/packages/python-cython/host/compile -j1 V=s
+
+# 再编译 python-yaml
+make package/feeds/packages/python-yaml/clean -j1
+make package/feeds/packages/python-yaml/compile -j1 V=s
 
 #修改makefile
 find package/*/ -maxdepth 2 -path "*/Makefile" | xargs -i sed -i 's/include\ \.\.\/\.\.\/luci\.mk/include \$(TOPDIR)\/feeds\/luci\/luci\.mk/g' {}
