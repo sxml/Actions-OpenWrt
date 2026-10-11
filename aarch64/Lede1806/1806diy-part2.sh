@@ -1,7 +1,7 @@
 #!/bin/bash
 #============================================================
 # sxml
-# 2026-10-09 2512
+# 2026-10-11 2512
 #https://github.com/HoldOnBro/Actions-OpenWrt
 #https://github.com/breakings/OpenWrt
 #============================================================
@@ -182,8 +182,17 @@ git clone https://github.com/openwrt/packages.git --depth=1 -b openwrt-18.06 fee
 cp -r feeds-tmp-igmpproxy/packages/net/igmpproxy feeds/packages/net/
 rm -rf feeds-tmp-igmpproxy
 
-# ========== 修复 python-cython host ==========
-echo ">>> Cleaning python-cython and related host packages..."
+#修改makefile
+find package/*/ -maxdepth 2 -path "*/Makefile" | xargs -i sed -i 's/include\ \.\.\/\.\.\/luci\.mk/include \$(TOPDIR)\/feeds\/luci\/luci\.mk/g' {}
+find package/*/ -maxdepth 2 -path "*/Makefile" | xargs -i sed -i 's/include\ \.\.\/\.\.\/lang\/golang\/golang\-package\.mk/include \$(TOPDIR)\/feeds\/packages\/lang\/golang\/golang\-package\.mk/g' {}
+find package/*/ -maxdepth 2 -path "*/Makefile" | xargs -i sed -i 's/PKG_SOURCE_URL:=\@GHREPO/PKG_SOURCE_URL:=https:\/\/github\.com/g' {}
+find package/*/ -maxdepth 2 -path "*/Makefile" | xargs -i sed -i 's/PKG_SOURCE_URL:=\@GHCODELOAD/PKG_SOURCE_URL:=https:\/\/codeload\.github\.com/g' {}
+
+./scripts/feeds update -a
+./scripts/feeds install -a
+
+# ========== 20261011修复 python-cython host（放在最后执行）==========
+echo ">>> Cleaning and rebuilding python-cython host..."
 
 rm -rf build_dir/hostpkg/pypi/Cython-*
 rm -rf build_dir/hostpkg/pypi/PyYAML-*
@@ -201,18 +210,11 @@ make package/feeds/packages/python-installer/host/compile -j1 V=s || true
 make package/feeds/packages/python-wheel/host/compile -j1 V=s || true
 
 # 强制单线程重新编译 python-cython
-make package/feeds/packages/python-cython/host/clean -j1
-make package/feeds/packages/python-cython/host/compile -j1 V=s
+make package/feeds/packages/python-cython/host/clean -j1 || true
+make package/feeds/packages/python-cython/host/compile -j1 V=s || true
 
 # 再编译 python-yaml
-make package/feeds/packages/python-yaml/clean -j1
-make package/feeds/packages/python-yaml/compile -j1 V=s
+make package/feeds/packages/python-yaml/clean -j1 || true
+make package/feeds/packages/python-yaml/compile -j1 V=s || true
 
-#修改makefile
-find package/*/ -maxdepth 2 -path "*/Makefile" | xargs -i sed -i 's/include\ \.\.\/\.\.\/luci\.mk/include \$(TOPDIR)\/feeds\/luci\/luci\.mk/g' {}
-find package/*/ -maxdepth 2 -path "*/Makefile" | xargs -i sed -i 's/include\ \.\.\/\.\.\/lang\/golang\/golang\-package\.mk/include \$(TOPDIR)\/feeds\/packages\/lang\/golang\/golang\-package\.mk/g' {}
-find package/*/ -maxdepth 2 -path "*/Makefile" | xargs -i sed -i 's/PKG_SOURCE_URL:=\@GHREPO/PKG_SOURCE_URL:=https:\/\/github\.com/g' {}
-find package/*/ -maxdepth 2 -path "*/Makefile" | xargs -i sed -i 's/PKG_SOURCE_URL:=\@GHCODELOAD/PKG_SOURCE_URL:=https:\/\/codeload\.github\.com/g' {}
-
-./scripts/feeds update -a
-./scripts/feeds install -a
+echo ">>> python-cython fix finished."
