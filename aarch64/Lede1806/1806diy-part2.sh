@@ -191,30 +191,46 @@ find package/*/ -maxdepth 2 -path "*/Makefile" | xargs -i sed -i 's/PKG_SOURCE_U
 ./scripts/feeds update -a
 ./scripts/feeds install -a
 
-echo "=== 开始修复 python-cython host 构建问题 ==="
+# ========== 20261011 强化修复 python-cython host（放在最后执行）==========
+echo ">>> Force fixing python-cython host..."
 
-# 定位到 feeds 中的 Makefile
-CYTHON_MAKEFILE="feeds/packages/lang/python/python-cython/Makefile"
+# 彻底清理残留
+rm -rf build_dir/hostpkg/pypi/Cython-*
+rm -rf build_dir/hostpkg/pypi/PyYAML-*
+rm -rf staging_dir/hostpkg/stamp/.python-cython*
+rm -rf staging_dir/hostpkg/stamp/.python-yaml*
+rm -rf tmp/host-stage-python-cython*
+rm -rf staging_dir/hostpkg/lib/python*/site-packages/Cython*
+rm -rf staging_dir/hostpkg/lib/python*/site-packages/cython*
+rm -rf staging_dir/hostpkg/lib/python*/site-packages/yaml*
+rm -rf staging_dir/hostpkg/lib/python*/site-packages/PyYAML*
 
-if [ -f "$CYTHON_MAKEFILE" ]; then
-    echo "找到 Makefile: $CYTHON_MAKEFILE"
-    
-    # 打印修改前的相关行，便于调试
-    echo "--- 修改前 ---"
-    grep -n "whl" "$CYTHON_MAKEFILE" || true
-    
-    # 使用更健壮的方式安装 wheel 文件
-    # 将硬编码的通配符路径替换为使用 ls 命令查找第一个匹配的 whl 文件
-    sed -i 's|openwrt-build/Cython-$(PKG_VERSION)-\*.whl|$$(ls openwrt-build/Cython-*.whl \| head -1)|g' "$CYTHON_MAKEFILE"
-    
-    # 如果上面的规则没匹配到，尝试替换所有 *.whl 的硬编码路径
-    sed -i 's|openwrt-build/Cython-[^/]*\.whl|$$(ls openwrt-build/Cython-*.whl \| head -1)|g' "$CYTHON_MAKEFILE"
+# 确保基础工具先编译好
+make package/feeds/packages/python-build/host/compile -j1 V=s || true
+make package/feeds/packages/python-installer/host/compile -j1 V=s || true
+make package/feeds/packages/python-wheel/host/compile -j1 V=s || true
 
-    echo "--- 修改后 ---"
-    grep -n "whl" "$CYTHON_MAKEFILE" || true
-else
-    echo "警告: 未找到 Makefile: $CYTHON_MAKEFILE"
+# 先强制清理并编译一次
+make package/feeds/packages/python-cython/host/clean -j1 || true
+make package/feeds/packages/python-cython/host/compile -j1 V=s || true
+
+# ========== 关键：修复 Makefile 中 wheel 路径匹配问题 ==========
+if [ -f feeds/packages/lang/python/python-cython/Makefile ]; then
+  echo ">>> Patching python-cython Makefile..."
+  # 把通配符改成实际能找到的写法
+  sed -i 's|Cython-\$(PKG_VERSION)-\*\.whl|Cython-\$(PKG_VERSION)-*.whl|g' feeds/packages/lang/python/python-cython/Makefile
+  # 更稳妥：让它自动查找生成的 wheel 文件
+  sed -i 's|"\$(PKG_BUILD_DIR)/openwrt-build/Cython-\$(PKG_VERSION)-\*\.whl"|$$(find \$(PKG_BUILD_DIR) -name "Cython-\$(PKG_VERSION)-*.whl" 2>/dev/null | head -n1)|g' feeds/packages/lang/python/python-cython/Makefile
 fi
 
-echo "=== python-cython 修复完成 ==="
+# 再次强制清理并编译
+make package/feeds/packages/python-cython/host/clean -j1 || true
+make package/feeds/packages/python-cython/host/compile -j1 V=s || true
+
+# 再编译依赖它的 python-yaml
+make package/feeds/packages/python-yaml/clean -j1 || true
+make package/feeds/packages/python-yaml/compile -j1 V=s || true
+
+echo ">>> python-cython force fix finished."
+
 
