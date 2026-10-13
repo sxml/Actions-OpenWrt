@@ -175,13 +175,6 @@ git clone https://github.com/openwrt/packages.git --depth=1 -b openwrt-18.06 fee
 cp -r feeds-t/utils/vim feeds/packages/utils/
 rm -rf feeds-tmp
 
-# #=====修复 igmpproxy automake编译报错【需要IPTV保留；不需要可以直接整块删除】=====
-# rm -rf feeds/packages/net/igmpproxy
-# git clone https://github.com/openwrt/packages.git --depth=1 -b openwrt-18.06 feeds-tmp-igmpproxy
-# # ⚠️重点：18.06分支仓库根目录下是packages文件夹！
-# cp -r feeds-tmp-igmpproxy/packages/net/igmpproxy feeds/packages/net/
-# rm -rf feeds-tmp-igmpproxy
-
 #修改makefile
 find package/*/ -maxdepth 2 -path "*/Makefile" | xargs -i sed -i 's/include\ \.\.\/\.\.\/luci\.mk/include \$(TOPDIR)\/feeds\/luci\/luci\.mk/g' {}
 find package/*/ -maxdepth 2 -path "*/Makefile" | xargs -i sed -i 's/include\ \.\.\/\.\.\/lang\/golang\/golang\-package\.mk/include \$(TOPDIR)\/feeds\/packages\/lang\/golang\/golang\-package\.mk/g' {}
@@ -190,49 +183,3 @@ find package/*/ -maxdepth 2 -path "*/Makefile" | xargs -i sed -i 's/PKG_SOURCE_U
 
 ./scripts/feeds update -a
 ./scripts/feeds install -a
-
-# ========== 20261012 最终强制修复 python-cython host ==========
-echo ">>> Ultimate fix for python-cython host..."
-
-# 1. 彻底清理
-rm -rf build_dir/hostpkg/pypi/Cython-*
-rm -rf build_dir/hostpkg/pypi/PyYAML-*
-rm -rf staging_dir/hostpkg/stamp/.python-cython*
-rm -rf staging_dir/hostpkg/stamp/.python-yaml*
-rm -rf tmp/host-stage-python-cython*
-rm -rf staging_dir/hostpkg/lib/python*/site-packages/Cython*
-rm -rf staging_dir/hostpkg/lib/python*/site-packages/cython*
-rm -rf staging_dir/hostpkg/lib/python*/site-packages/yaml*
-rm -rf staging_dir/hostpkg/lib/python*/site-packages/PyYAML*
-
-# 2. 确保基础工具
-make package/feeds/packages/python-build/host/compile -j1 V=s || true
-make package/feeds/packages/python-installer/host/compile -j1 V=s || true
-make package/feeds/packages/python-wheel/host/compile -j1 V=s || true
-
-# 3. 强制修补 Makefile（关键步骤）
-if [ -f feeds/packages/lang/python/python-cython/Makefile ]; then
-  echo ">>> Patching python-cython Makefile aggressively..."
-  # 备份
-  cp feeds/packages/lang/python/python-cython/Makefile feeds/packages/lang/python/python-cython/Makefile.bak
-
-  # 把 installer 那行改成自动查找实际生成的 wheel
-  sed -i 's|"\$(PKG_BUILD_DIR)/openwrt-build/Cython-\$(PKG_VERSION)-\*\.whl"|$$(find \$(PKG_BUILD_DIR) -name "Cython-\$(PKG_VERSION)-*.whl" 2>/dev/null | head -n1)|g' \
-    feeds/packages/lang/python/python-cython/Makefile
-
-  # 再加一层保险：如果找不到就跳过安装（避免直接失败）
-  sed -i '/-m installer/i\        if [ -z "$$(find \$(PKG_BUILD_DIR) -name "Cython-\$(PKG_VERSION)-*.whl" 2>/dev/null | head -n1)" ]; then echo "No wheel found, skip install"; exit 0; fi' \
-    feeds/packages/lang/python/python-cython/Makefile
-fi
-
-# 4. 强制单线程编译
-make package/feeds/packages/python-cython/host/clean -j1 || true
-make package/feeds/packages/python-cython/host/compile -j1 V=s || true
-
-# 5. 再处理 python-yaml
-make package/feeds/packages/python-yaml/clean -j1 || true
-make package/feeds/packages/python-yaml/compile -j1 V=s || true
-
-echo ">>> Ultimate python-cython fix finished."
-
-
