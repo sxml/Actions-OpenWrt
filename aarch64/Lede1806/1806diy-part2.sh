@@ -183,3 +183,36 @@ find package/*/ -maxdepth 2 -path "*/Makefile" | xargs -i sed -i 's/PKG_SOURCE_U
 
 ./scripts/feeds update -a
 ./scripts/feeds install -a
+
+#==============================================================================
+# 2026-10-16 修复编译中断：python-cython [host] failed to build
+#------------------------------------------------------------------------------
+# 根因：新版 setuptools(>=75) 生成 wheel 文件名时按 PEP 503 做「小写规范化」，
+#       例如 Cython -> cython-3.0.10-*.whl，PyYAML -> pyyaml-6.0.1-*.whl；
+#       而 OpenWrt 的 python3-package.mk / python3-host-build.mk 用
+#       PYPI_NAME（含大写）拼出期望文件名去 glob：Cython-3.0.10-*.whl。
+#       Linux 文件系统区分大小写 => glob 匹配为空 => installer 报
+#       FileNotFoundError: .../build_dir/hostpkg/pypi/Cython-3.0.10//openwrt-build/Cython-3.0.10-*.whl
+# 方案：对 PYPI_NAME 含大写字母的包，覆盖其期望 wheel 名称为小写规范化名。
+#       仅改「期望文件名」，不动下载地址 / 包版本 / 源码目录，最小改动、无额外下载。
+#       上游同等修复：openwrt/packages 7f233be4(python-cython)、python-markupsafe 增加
+#       PYPI_SOURCE_NAME:=<小写名>。
+# 说明：必须在 feeds update/install 之后执行（feeds 更新会覆盖这些 Makefile）。
+#==============================================================================
+for mk in feeds/packages/lang/python/*/Makefile; do
+  [ -f "$mk" ] || continue
+  # 期望名来源：优先 PYPI_SOURCE_NAME，其次 PYPI_NAME（与 python3-package.mk 一致）
+  name=$(sed -n 's/^PYPI_SOURCE_NAME:=\(.*\)$/\1/p' "$mk" | head -n1)
+  [ -n "$name" ] || name=$(sed -n 's/^PYPI_NAME:=\(.*\)$/\1/p' "$mk" | head -n1)
+  [ -n "$name" ] || continue
+  # 只处理含大写字母的（小写包名本来就是对的）
+  case "$name" in
+    *[A-Z]*) : ;;
+    *) continue ;;
+  esac
+  # 幂等：已修复过则跳过
+  if grep -q '^PYTHON3_HOST_WHEEL_NAME:=' "$mk"; then continue; fi
+  lower=$(printf '%s' "$name" | tr 'A-Z' 'a-z' | sed 's/[-_.]\+/_/g')
+  sed -i "/^PKG_RELEASE:=/a PYTHON3_PKG_WHEEL_NAME:=$lower\nPYTHON3_HOST_WHEEL_NAME:=$lower" "$mk"
+  echo "[wheel-name-fix] $(basename "$(dirname "$mk")"): $name -> $lower"
+done
