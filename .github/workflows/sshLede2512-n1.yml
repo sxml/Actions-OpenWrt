@@ -16,8 +16,8 @@ env:
   REPO_BRANCH: master
   FEEDS_CONF: aarch64/Lede2512-n1/feeds.conf.default
   CONFIG_FILE: aarch64/Lede2512-n1/SSH-Lede2512-n1.config
-  DIY_P1_SH: aarch64/Lede2512-n1/Lede2512-n1-part1.sh
-  DIY_P2_SH: aarch64/Lede2512-n1/Lede2512-n1-part2.sh
+  DIY_P1_SH: aarch64/Lede2512-n1/Lede2512-part1.sh
+  DIY_P2_SH: aarch64/Lede2512-n1/Lede2512-part2.sh
   SSH_ACTIONS: true
   UPLOAD_CONFIG: true
   DELETE_ARTIFACTS: true   # 删除旧的工作流程运行和工件
