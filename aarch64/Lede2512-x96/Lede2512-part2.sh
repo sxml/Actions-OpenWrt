@@ -1,6 +1,6 @@
 #!/bin/bash
 #============================================================
-# 2026-10-19   sxml
+# 2026-10-20   sxml
 #============================================================
 #移除不用软件包
 rm -rf feeds/luci/applications/luci-app-dockerman
@@ -254,3 +254,70 @@ for _f in feeds/packages/lang/python/*/Makefile; do
     echo "[wheel-glob-fix] 清除历史覆盖: $(basename "$(dirname "$_f")") ($_pn)"
   fi
 done
+
+#==============================================================================
+# 2026-10-20 精简 LuCI 状态菜单：去掉「信道分析」（channel_analysis）
+#------------------------------------------------------------------------------
+# 1) 它属于 luci-mod-status（LuCI 核心包，概览/路由/防火墙/日志/进程/实时信息都在里面），
+#    不能整体关掉这个包，只能在 feeds install 之后从包内移除。
+# 2) 两处都要处理：
+#    · 菜单项在 root/usr/share/luci/menu.d/luci-mod-status.json 的
+#      "admin/status/channel_analysis" 键；
+#    · 视图在 htdocs/luci-static/resources/view/status/channel_analysis.js（约 27KB）。
+#    只删视图不删菜单 → 点进去报错；只删菜单不删视图 → 文件照样打进固件白占空间。
+# 3) 电视盒子没有 wifi 硬件，这个页面恒为空白（菜单靠 depends.uci wireless
+#    @wifi-device 才会显示，Lede 默认 /etc/config/wireless 里有个 disabled 的 radio0）。
+# 4) feeds 是每次编译全新 clone 的临时目录，rm 不会有副作用。
+#==============================================================================
+LMS_DIR=feeds/luci/modules/luci-mod-status
+MENU_DIR="$LMS_DIR/root/usr/share/luci/menu.d"
+CA_JS="$LMS_DIR/htdocs/luci-static/resources/view/status/channel_analysis.js"
+
+if [ ! -d "$LMS_DIR" ]; then
+  echo "[part2] 跳过信道分析清理：$LMS_DIR 不存在"
+else
+  # 第一步：删菜单项。python 失败只告警，绝不中断编译。
+  # KEEP_JS 默认 1（保守保留视图），只有「确实删掉了菜单项」才置 0。
+  KEEP_JS=1
+  if [ -d "$MENU_DIR" ] && command -v python3 >/dev/null 2>&1; then
+    if CA_OUT=$(python3 - "$MENU_DIR" <<'PY'
+import glob, io, json, os, sys
+
+menu_dir = sys.argv[1]
+changed = 0
+for path in glob.glob(os.path.join(menu_dir, "*.json")):
+    with io.open(path, encoding="utf-8") as fh:
+        data = json.load(fh)
+    if "admin/status/channel_analysis" in data:
+        del data["admin/status/channel_analysis"]
+        with io.open(path, "w", encoding="utf-8", newline="\n") as fh:
+            fh.write(json.dumps(data, indent="\t", ensure_ascii=False) + "\n")
+        changed += 1
+        print("[part2] 已移除菜单项 admin/status/channel_analysis -> %s" % path)
+print("[part2] 信道分析菜单清理完成，改动文件数: %d" % changed)
+PY
+    ); then
+      printf '%s\n' "$CA_OUT"
+      case "$CA_OUT" in
+        *"改动文件数: 0"*) KEEP_JS=1 ;;
+        *) KEEP_JS=0 ;;
+      esac
+    else
+      printf '%s\n' "$CA_OUT"
+      echo "[part2] !! 菜单清理失败（已忽略，不中断编译）"
+    fi
+  else
+    echo "[part2] 未找到 python3 或 menu.d，跳过菜单清理"
+  fi
+
+  # 第二步：只有确认菜单项已消失，才删视图。
+  # 顺序不能反：视图没了菜单还在 → 点进去报错；菜单没了视图还在，只是白占 27KB，无害。
+  if [ "$KEEP_JS" = "1" ]; then
+    echo "[part2] 未确认菜单项被移除（可能上游改名/无 python3），保留 channel_analysis.js 以免点进去报错"
+  elif [ -f "$CA_JS" ]; then
+    rm -f "$CA_JS"
+    echo "[part2] 已移除信道分析视图: channel_analysis.js"
+  else
+    echo "[part2] 信道分析视图不在（或路径变化），跳过删除"
+  fi
+fi
